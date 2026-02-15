@@ -1,0 +1,36 @@
+# Domain Configuration for 44-2025-ND
+# Auto-generated from document: Nghị định 44/2025/NĐ-CP về quản lý lao động, tiền lương trong doanh nghiệp nhà nước
+#
+# This file can be manually edited to:
+# - Add/remove abbreviations
+# - Customize synonyms
+# - Add chapter selection examples
+#
+# Usage: TreeTraversalRetriever(forest, domain_config=DomainConfig.from_yaml("config/domains/44-2025-ND.yaml"))
+#
+
+abbreviations:
+  BTCN: Bộ trưởng, Chủ nhiệm
+  Bộ Công an: Bộ Công an
+  DNTN: Doanh nghiệp tư nhân
+  Giám đốc: Giám đốc
+  HĐND: Hội đồng nhân dân
+  Nghị định: Nghị định
+  Nhà nước: Nhà nước
+  NĐ-CP: Nghị định - Chính phủ
+  PCN: Phó Chủ nhiệm
+  TGĐ: Tổng Giám đốc
+  TNHH: Trách nhiệm hữu hạn
+  TTĐT: Thông tin điện tử
+  UBND: Ủy ban nhân dân
+  VPCP: Văn phòng Chính phủ
+  ĐMDN: Đổi mới doanh nghiệp
+article_selection_examples: []
+chapter_selection_examples: []
+description: Nghị định 44/2025/NĐ-CP về quản lý lao động, tiền lương trong doanh nghiệp
+  nhà nước
+language: vi
+name: 44-2025-ND
+synonyms: {}
+system_prompt_suffix: ''
+topic_hints: {}

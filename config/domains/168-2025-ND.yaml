@@ -1,0 +1,37 @@
+# Domain Configuration for 168-2025-ND
+# Auto-generated from document: Nghị định 168/2025/NĐ-CP về đăng ký doanh nghiệp
+#
+# This file can be manually edited to:
+# - Add/remove abbreviations
+# - Customize synonyms
+# - Add chapter selection examples
+#
+# Usage: TreeTraversalRetriever(forest, domain_config=DomainConfig.from_yaml("config/domains/168-2025-ND.yaml"))
+#
+
+abbreviations:
+  BTCN: Bộ trưởng, Chủ nhiệm
+  DNTN: Doanh nghiệp tư nhân
+  Giấy: Giấy
+  HĐND: Hội đồng nhân dân
+  Hệ thống: Hệ thống
+  Hộ: Hộ
+  Luật: Luật
+  Nghị định: Nghị định
+  NĐ-CP: Nghị định - Chính phủ
+  PCN: Phó Chủ nhiệm
+  TGĐ: Tổng Giám đốc
+  TNHH: Trách nhiệm hữu hạn
+  TTĐT: Thông tin điện tử
+  UBND: Ủy ban nhân dân
+  VPCP: Văn phòng Chính phủ
+  ĐMDN: Đổi mới doanh nghiệp
+  Điều: Điều
+article_selection_examples: []
+chapter_selection_examples: []
+description: Nghị định 168/2025/NĐ-CP về đăng ký doanh nghiệp
+language: vi
+name: 168-2025-ND
+synonyms: {}
+system_prompt_suffix: ''
+topic_hints: {}

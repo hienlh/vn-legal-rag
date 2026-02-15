@@ -1,0 +1,36 @@
+# Domain Configuration for 248-2025-ND
+# Auto-generated from document: Nghị định 248/2025/NĐ-CP chế độ tiền lương đối với Kiểm soát viên trong doanh nghiệp nhà nước
+#
+# This file can be manually edited to:
+# - Add/remove abbreviations
+# - Customize synonyms
+# - Add chapter selection examples
+#
+# Usage: TreeTraversalRetriever(forest, domain_config=DomainConfig.from_yaml("config/domains/248-2025-ND.yaml"))
+#
+
+abbreviations:
+  BTCN: Bộ trưởng, Chủ nhiệm
+  DNTN: Doanh nghiệp tư nhân
+  HĐND: Hội đồng nhân dân
+  Nghị định: Nghị định
+  NĐ-CP: Nghị định - Chính phủ
+  PCN: Phó Chủ nhiệm
+  Phụ lục I: Phụ lục I
+  Phụ lục II: Phụ lục II
+  TGĐ: Tổng Giám đốc
+  TNHH: Trách nhiệm hữu hạn
+  TTĐT: Thông tin điện tử
+  Tiền lương: Tiền lương
+  UBND: Ủy ban nhân dân
+  VPCP: Văn phòng Chính phủ
+  ĐMDN: Đổi mới doanh nghiệp
+article_selection_examples: []
+chapter_selection_examples: []
+description: Nghị định 248/2025/NĐ-CP chế độ tiền lương đối với Kiểm soát viên trong
+  doanh nghiệp nhà nước
+language: vi
+name: 248-2025-ND
+synonyms: {}
+system_prompt_suffix: ''
+topic_hints: {}

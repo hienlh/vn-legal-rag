@@ -1,0 +1,35 @@
+# Domain Configuration for 23-2022-ND
+# Auto-generated from document: Nghị định 23/2022/NĐ-CP thành lập doanh nghiệp do Nhà nước nắm giữ 100% vốn điều lệ
+#
+# This file can be manually edited to:
+# - Add/remove abbreviations
+# - Customize synonyms
+# - Add chapter selection examples
+#
+# Usage: TreeTraversalRetriever(forest, domain_config=DomainConfig.from_yaml("config/domains/23-2022-ND.yaml"))
+#
+
+abbreviations:
+  BTCN: Bộ trưởng, Chủ nhiệm
+  CP: Chính phủ
+  DNTN: Doanh nghiệp tư nhân
+  HĐND: Hội đồng nhân dân
+  NĐ-CP: Nghị định - Chính phủ
+  PCN: Phó Chủ nhiệm
+  QT: Quốc hội
+  TGĐ: Tổng Giám đốc
+  TNHH: Trách nhiệm hữu hạn
+  TTĐT: Thông tin điện tử
+  TƯ: Trung ương
+  UBND: Ủy ban nhân dân
+  VPCP: Văn phòng Chính phủ
+  ĐMDN: Đổi mới doanh nghiệp
+article_selection_examples: []
+chapter_selection_examples: []
+description: Nghị định 23/2022/NĐ-CP thành lập doanh nghiệp do Nhà nước nắm giữ 100%
+  vốn điều lệ
+language: vi
+name: 23-2022-ND
+synonyms: {}
+system_prompt_suffix: ''
+topic_hints: {}
