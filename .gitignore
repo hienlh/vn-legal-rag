@@ -2,7 +2,7 @@
 data/legal_docs.db
 data/llm_cache.db
 data/kg_enhanced/
-data/training/
+data/benchmark/
 data/article_to_document_mapping.json
 
 # Python

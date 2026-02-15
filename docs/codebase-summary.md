@@ -119,7 +119,7 @@ data/
 │   ├── article_summaries.json       # Loop 2 summaries for tree traversal
 │   ├── checkpoint.json              # Resume checkpoint for extraction
 │   └── ontology.ttl                 # RDF ontology (OWL)
-└── training/
+└── benchmark/
     └── legal-qa-benchmark.csv        # Evaluation dataset (379 Q&A pairs)
 ```
 
@@ -454,7 +454,7 @@ Located in `tests/` directory:
 
 ```bash
 python scripts/evaluate-retrieval-performance-on-test-set.py \
-    --test-file data/training/legal-qa-benchmark.csv \
+    --test-file data/benchmark/legal-qa-benchmark.csv \
     --disable-tier1  # Optional ablation
 ```
 

@@ -21,7 +21,7 @@ This directory contains all data files for the Vietnamese Legal RAG system.
 | `checkpoint.json` | ~2.9MB | Resume checkpoint for extraction pipeline |
 | `ontology.ttl` | ~4.7KB | Formal ontology (Turtle format) |
 
-### Training & Evaluation (`training/`)
+### Benchmark (`benchmark/`)
 
 | File | Size | Description |
 |------|------|-------------|
@@ -46,7 +46,7 @@ data/
 │   ├── article_summaries.json
 │   ├── checkpoint.json
 │   └── ontology.ttl
-└── training/                        # Q&A training data
+└── benchmark/                       # Evaluation benchmark
     └── legal-qa-benchmark.csv
 ```
 
@@ -74,7 +74,7 @@ with open("data/kg_enhanced/legal_kg.json") as f:
 ```python
 import pandas as pd
 
-df = pd.read_csv("data/training/legal-qa-benchmark.csv")
+df = pd.read_csv("data/benchmark/legal-qa-benchmark.csv")
 ```
 
 ## Git Ignore
