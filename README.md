@@ -109,7 +109,7 @@ data/
 │   ├── checkpoint.json              # Resume checkpoint
 │   └── ontology.ttl                 # Formal ontology
 └── training/
-    └── training_with_ids.csv        # 379 Q&A pairs
+    └── legal-qa-benchmark.csv        # 379 Q&A pairs
 ```
 
 ### Usage
@@ -156,7 +156,7 @@ for citation in result.citations:
 
 ```bash
 # Run full evaluation
-python scripts/evaluate.py --test-file data/training/training_with_ids.csv
+python scripts/evaluate.py --test-file data/training/legal-qa-benchmark.csv
 
 # Ablation study (disable specific tiers)
 python scripts/evaluate.py --disable-tier1  # Disable tree traversal

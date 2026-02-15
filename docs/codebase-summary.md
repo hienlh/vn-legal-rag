@@ -120,7 +120,7 @@ data/
 │   ├── checkpoint.json              # Resume checkpoint for extraction
 │   └── ontology.ttl                 # RDF ontology (OWL)
 └── training/
-    └── training_with_ids.csv        # Evaluation dataset (379 Q&A pairs)
+    └── legal-qa-benchmark.csv        # Evaluation dataset (379 Q&A pairs)
 ```
 
 ## Data Structures
@@ -454,7 +454,7 @@ Located in `tests/` directory:
 
 ```bash
 python scripts/evaluate-retrieval-performance-on-test-set.py \
-    --test-file data/training/training_with_ids.csv \
+    --test-file data/training/legal-qa-benchmark.csv \
     --disable-tier1  # Optional ablation
 ```
 
