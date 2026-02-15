@@ -1,6 +1,6 @@
 # Vietnamese Legal RAG (3-Tier Retrieval)
 
-[![Hit@10](https://img.shields.io/badge/Hit@10-76.53%25-brightgreen)](docs/evaluation.md)
+[![Hit@10](https://img.shields.io/badge/Hit@10-75.20%25-brightgreen)](docs/evaluation.md)
 [![Python](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 
@@ -18,15 +18,27 @@ A state-of-the-art Retrieval-Augmented Generation (RAG) system for Vietnamese le
 
 ## Performance
 
-Evaluation on Vietnamese legal Q&A benchmark:
+Evaluation on 375 Vietnamese legal Q&A pairs:
 
-| Method | Hit@10 | Recall@5 | MRR | Notes |
-|--------|--------|----------|-----|-------|
-| LightRAG | 33.85% | - | - | Graph-based RAG |
-| Pure PageIndex | 35.20% | 18.73% | 0.2456 | Tree traversal only |
-| BM25 | 35.42% | - | - | Sparse retrieval |
-| TF-IDF | 41.41% | 22.43% | 0.2891 | Sparse retrieval |
-| **3-Tier (ours)** | **76.53%** | **58.12%** | **0.5422** | Ensemble approach |
+### Hit Rate Comparison
+
+| Method | Hit@10 | Hit@30 | Hit@50 | Avg Articles |
+|--------|--------|--------|--------|--------------|
+| LightRAG | 33.85% | 66.15% | 70.31% | 32.8 |
+| Pure PageIndex | 35.20% | - | - | ~10 |
+| BM25 | 35.42% | - | - | 10 |
+| TF-IDF | 41.41% | - | - | 10 |
+| **3-Tier (ours)** | **75.20%** | **84.00%** | **86.40%** | 52.3 |
+
+### Detailed Metrics
+
+| Method | Hit@10 | MRR | Recall@5 | Notes |
+|--------|--------|-----|----------|-------|
+| LightRAG | 33.85% | - | - | Graph-based, poor top-10 ranking |
+| TF-IDF | 41.41% | 0.2891 | 22.43% | Sparse retrieval baseline |
+| **3-Tier (ours)** | **75.20%** | **0.5449** | **48.85%** | Ensemble approach |
+
+**Key Insight**: 3-Tier achieves **+41.35%** over LightRAG at Hit@10, and **+17.85%** at Hit@30. LightRAG retrieves many articles but has poor ranking quality.
 
 *Baseline results available in `data/baseline-results/`*
 
