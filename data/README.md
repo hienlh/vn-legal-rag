@@ -27,6 +27,14 @@ This directory contains all data files for the Vietnamese Legal RAG system.
 |------|------|-------------|
 | `legal-qa-benchmark.csv` | ~564KB | 379 Q&A pairs with article references |
 
+### Baseline Results (`baseline-results/`)
+
+| File | Size | Description |
+|------|------|-------------|
+| `02-baseline-384q-full-results.json` | ~1.5MB | TF-IDF/BM25 baseline (41.41% Hit@10) |
+| `03-lightrag-384q-full-results.json` | ~400KB | LightRAG results (77.3% Hit@10) |
+| `10-pure-pageindex-rag-375q-results.json` | ~124KB | PageIndex baseline (35.2% Hit@10) |
+
 ### ID Mapping
 
 | File | Size | Description |
@@ -46,8 +54,12 @@ data/
 │   ├── article_summaries.json
 │   ├── checkpoint.json
 │   └── ontology.ttl
-└── benchmark/                       # Evaluation benchmark
-    └── legal-qa-benchmark.csv
+├── benchmark/                       # Evaluation benchmark
+│   └── legal-qa-benchmark.csv
+└── baseline-results/                # Baseline comparison results
+    ├── 02-baseline-384q-full-results.json
+    ├── 03-lightrag-384q-full-results.json
+    └── 10-pure-pageindex-rag-375q-results.json
 ```
 
 ## Usage

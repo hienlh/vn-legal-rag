@@ -3,6 +3,7 @@ data/legal_docs.db
 data/llm_cache.db
 data/kg_enhanced/
 data/benchmark/
+data/baseline-results/
 data/article_to_document_mapping.json
 
 # Python
