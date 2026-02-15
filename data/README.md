@@ -32,7 +32,7 @@ This directory contains all data files for the Vietnamese Legal RAG system.
 | File | Size | Description |
 |------|------|-------------|
 | `02-baseline-384q-full-results.json` | ~1.5MB | TF-IDF/BM25 baseline (41.41% Hit@10) |
-| `03-lightrag-384q-full-results.json` | ~400KB | LightRAG results (77.3% Hit@10) |
+| `03-lightrag-384q-full-results.json` | ~400KB | LightRAG results (71.35% Hit@all) |
 | `10-pure-pageindex-rag-375q-results.json` | ~124KB | PageIndex baseline (35.2% Hit@10) |
 
 ### ID Mapping
