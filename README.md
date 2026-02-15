@@ -22,23 +22,25 @@ Evaluation on 375 Vietnamese legal Q&A pairs:
 
 ### Hit Rate Comparison
 
-| Method | Hit@10 | Hit@30 | Hit@50 | Avg Articles |
-|--------|--------|--------|--------|--------------|
-| LightRAG | 33.85% | 66.15% | 70.31% | 32.8 |
-| Pure PageIndex | 35.20% | - | - | ~10 |
-| BM25 | 35.42% | - | - | 10 |
-| TF-IDF | 41.41% | - | - | 10 |
-| **3-Tier (ours)** | **75.20%** | **84.00%** | **86.40%** | 52.3 |
+| Method | Hit@5 | Hit@10 | Hit@20 | Hit@30 | Hit@50 | Avg Articles |
+|--------|-------|--------|--------|--------|--------|--------------|
+| BM25 | 17.71% | 35.42% | 35.42% | 35.42% | 35.42% | 10.0 |
+| LightRAG | 18.75% | 33.85% | 51.04% | 66.15% | 70.31% | 32.8 |
+| TF-IDF | 21.35% | 41.41% | 41.41% | 41.41% | 41.41% | 10.0 |
+| PageIndex | 31.73% | 35.20% | 35.20% | 35.20% | 35.20% | 3.9 |
+| **3-Tier (ours)** | **68.53%** | **75.20%** | **82.13%** | **84.00%** | **86.40%** | 52.3 |
 
-### Detailed Metrics
+*Note: BM25, TF-IDF, PageIndex max out at Hit@10 due to limited retrieval (≤10 articles)*
 
-| Method | Hit@10 | MRR | Recall@5 | Notes |
-|--------|--------|-----|----------|-------|
-| LightRAG | 33.85% | - | - | Graph-based, poor top-10 ranking |
-| TF-IDF | 41.41% | 0.2891 | 22.43% | Sparse retrieval baseline |
-| **3-Tier (ours)** | **75.20%** | **0.5449** | **48.85%** | Ensemble approach |
+### Key Insights
 
-**Key Insight**: 3-Tier achieves **+41.35%** over LightRAG at Hit@10, and **+17.85%** at Hit@30. LightRAG retrieves many articles but has poor ranking quality.
+| Comparison | Improvement |
+|------------|-------------|
+| 3-Tier vs LightRAG @Hit@10 | **+41.35%** (75.20% vs 33.85%) |
+| 3-Tier vs LightRAG @Hit@30 | **+17.85%** (84.00% vs 66.15%) |
+| 3-Tier vs TF-IDF @Hit@10 | **+33.79%** (75.20% vs 41.41%) |
+
+**Analysis**: LightRAG retrieves many articles (32.8 avg) but has poor ranking - articles đúng không nằm trong top-10. 3-Tier với 52.3 articles đạt ranking quality cao hơn nhiều.
 
 *Baseline results available in `data/baseline-results/`*
 
