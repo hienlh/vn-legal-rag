@@ -69,8 +69,11 @@ logs/
 *.swp
 
 # Generated outputs
-results*.json
+results.json
+results_2.json
 repomix-output.xml
+
+# Keep only final results (results_3.json is tracked)
 
 # Claude
 .claude/
