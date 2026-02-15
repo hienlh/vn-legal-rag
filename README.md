@@ -20,13 +20,13 @@ A state-of-the-art Retrieval-Augmented Generation (RAG) system for Vietnamese le
 
 Evaluation on Vietnamese legal Q&A benchmark:
 
-| Method | Hit@10 | Hit@all | Recall@5 | MRR | Notes |
-|--------|--------|---------|----------|-----|-------|
-| BM25 | 35.42% | - | - | - | Sparse retrieval baseline |
-| TF-IDF | 41.41% | - | 22.43% | 0.2891 | Sparse retrieval baseline |
-| Pure PageIndex | 35.20% | - | 18.73% | 0.2456 | Tree traversal only |
-| LightRAG | - | 71.35% | - | - | Graph-based RAG (variable k) |
-| **3-Tier (ours)** | **76.53%** | - | **58.12%** | **0.5422** | Ensemble approach |
+| Method | Hit@10 | Recall@5 | MRR | Notes |
+|--------|--------|----------|-----|-------|
+| LightRAG | 33.85% | - | - | Graph-based RAG |
+| Pure PageIndex | 35.20% | 18.73% | 0.2456 | Tree traversal only |
+| BM25 | 35.42% | - | - | Sparse retrieval |
+| TF-IDF | 41.41% | 22.43% | 0.2891 | Sparse retrieval |
+| **3-Tier (ours)** | **76.53%** | **58.12%** | **0.5422** | Ensemble approach |
 
 *Baseline results available in `data/baseline-results/`*
 
