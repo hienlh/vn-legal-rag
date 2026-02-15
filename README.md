@@ -75,7 +75,7 @@ Evaluation on 379 Q&A pairs from Vietnamese legal corpus:
 
 ```bash
 # Clone repository
-git clone https://github.com/yourusername/vn_legal_rag.git
+git clone https://github.com/hienlh/vn-legal-rag.git
 cd vn_legal_rag
 
 # Install package
@@ -91,21 +91,11 @@ cp .env.example .env
 
 ### Data Setup
 
-Download required data files (not included in git):
+Download the data files from Google Drive:
 
-```bash
-# Option 1: Copy from semantica project
-cp /path/to/semantica/data/legal_docs.db data/
-cp /path/to/semantica/data/llm_cache.db data/
-cp -r /path/to/semantica/data/kg_enhanced data/
-cp -r /path/to/semantica/data/training data/
-cp /path/to/semantica/data/article_to_document_mapping.json data/
+📥 **[Download Data](https://drive.google.com/drive/folders/TODO)** *(link will be provided)*
 
-# Option 2: Generate from scratch (requires source HTML files)
-# See docs/data_generation.md for instructions
-```
-
-Required data structure:
+Extract to `data/` folder. Required structure:
 
 ```
 data/
@@ -316,7 +306,7 @@ If you use this work in academic research, please cite:
   title = {Vietnamese Legal RAG: 3-Tier Retrieval for Legal Question Answering},
   author = {Your Name},
   year = {2026},
-  url = {https://github.com/yourusername/vn_legal_rag},
+  url = {https://github.com/hienlh/vn-legal-rag},
   note = {A novel 3-tier retrieval architecture combining tree traversal,
           semantic search, and knowledge graph expansion for Vietnamese legal documents}
 }
@@ -347,7 +337,7 @@ This project is licensed under the MIT License - see [LICENSE](LICENSE) file for
 ## Contact
 
 For questions or collaboration:
-- Issues: https://github.com/yourusername/vn_legal_rag/issues
+- Issues: https://github.com/hienlh/vn-legal-rag/issues
 - Email: your.email@example.com
 
 ---
