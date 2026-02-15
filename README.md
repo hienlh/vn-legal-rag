@@ -24,23 +24,28 @@ Evaluation on 375 Vietnamese legal Q&A pairs:
 
 | Method | Hit@5 | Hit@10 | Hit@20 | Hit@30 | Hit@50 | Avg Articles |
 |--------|-------|--------|--------|--------|--------|--------------|
-| BM25 | 17.71% | 35.42% | 35.42% | 35.42% | 35.42% | 10.0 |
+| Semantic | 7.39% | 15.83% | 38.52% | 44.33% | 48.28% | 50.0 |
+| BM25 | 15.04% | 26.65% | 50.13% | 58.05% | 79.16% | 50.0 |
+| TF-IDF | 15.83% | 28.76% | 50.66% | 62.01% | 82.32% | 50.0 |
 | LightRAG | 18.75% | 33.85% | 51.04% | 66.15% | 70.31% | 32.8 |
-| TF-IDF | 21.35% | 41.41% | 41.41% | 41.41% | 41.41% | 10.0 |
 | PageIndex | 31.73% | 35.20% | 35.20% | 35.20% | 35.20% | 3.9 |
 | **3-Tier (ours)** | **68.53%** | **75.20%** | **82.13%** | **84.00%** | **86.40%** | 52.3 |
 
-*Note: BM25, TF-IDF, PageIndex max out at Hit@10 due to limited retrieval (≤10 articles)*
+*Note: All baselines tested with max_results=50 for fair comparison. PageIndex limited by design (~4 articles avg).*
 
 ### Key Insights
 
 | Comparison | Improvement |
 |------------|-------------|
+| 3-Tier vs TF-IDF @Hit@10 | **+46.44%** (75.20% vs 28.76%) |
 | 3-Tier vs LightRAG @Hit@10 | **+41.35%** (75.20% vs 33.85%) |
-| 3-Tier vs LightRAG @Hit@30 | **+17.85%** (84.00% vs 66.15%) |
-| 3-Tier vs TF-IDF @Hit@10 | **+33.79%** (75.20% vs 41.41%) |
+| 3-Tier vs TF-IDF @Hit@50 | **+4.08%** (86.40% vs 82.32%) |
+| 3-Tier vs LightRAG @Hit@50 | **+16.09%** (86.40% vs 70.31%) |
 
-**Analysis**: LightRAG retrieves many articles (32.8 avg) but has poor ranking - articles đúng không nằm trong top-10. 3-Tier với 52.3 articles đạt ranking quality cao hơn nhiều.
+**Analysis**: 3-Tier significantly outperforms all baselines at every K value. Key advantages:
+- **Superior ranking**: 68.53% Hit@5 vs TF-IDF's 15.83% - correct articles ranked higher
+- **Sustained advantage**: Even at Hit@50, 3-Tier maintains 4-16% lead over best baselines
+- **LightRAG limitation**: Poor ranking despite retrieving 32.8 articles (only 33.85% Hit@10)
 
 *Baseline results available in `data/baseline-results/`*
 
