@@ -499,7 +499,7 @@ def main():
                         help="Article summaries JSON for loop 2")
     parser.add_argument("--document-summaries", default="data/kg_enhanced/document_summaries_loop0.json",
                         help="Document summaries JSON for loop 0 (multi-doc)")
-    parser.add_argument("--training", default="data/training/training_with_ids.csv", help="Training CSV")
+    parser.add_argument("--training", default="data/training/legal-qa-benchmark.csv", help="Training CSV")
     parser.add_argument("--document", default=None,
                         help="Single document ID (disables multi-document mode)")
     parser.add_argument("--single-document", action="store_true",

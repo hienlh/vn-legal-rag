@@ -4,7 +4,7 @@ Evaluate retrieval performance on test set.
 
 Usage:
     # Full evaluation
-    python scripts/evaluate-retrieval-performance-on-test-set.py --test-file data/training/training_with_ids.csv
+    python scripts/evaluate-retrieval-performance-on-test-set.py --test-file data/training/legal-qa-benchmark.csv
 
     # Limit test questions
     python scripts/evaluate-retrieval-performance-on-test-set.py --limit 50 --verbose
@@ -367,8 +367,8 @@ def main():
 
     parser.add_argument(
         "--test-file",
-        default="data/training/training_with_ids.csv",
-        help="Path to test CSV file (default: data/training/training_with_ids.csv)",
+        default="data/training/legal-qa-benchmark.csv",
+        help="Path to test CSV file (default: data/training/legal-qa-benchmark.csv)",
     )
     parser.add_argument(
         "--config",

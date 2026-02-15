@@ -25,7 +25,7 @@ This directory contains all data files for the Vietnamese Legal RAG system.
 
 | File | Size | Description |
 |------|------|-------------|
-| `training_with_ids.csv` | ~564KB | 379 Q&A pairs with article references |
+| `legal-qa-benchmark.csv` | ~564KB | 379 Q&A pairs with article references |
 
 ### ID Mapping
 
@@ -47,7 +47,7 @@ data/
 │   ├── checkpoint.json
 │   └── ontology.ttl
 └── training/                        # Q&A training data
-    └── training_with_ids.csv
+    └── legal-qa-benchmark.csv
 ```
 
 ## Usage
@@ -74,7 +74,7 @@ with open("data/kg_enhanced/legal_kg.json") as f:
 ```python
 import pandas as pd
 
-df = pd.read_csv("data/training/training_with_ids.csv")
+df = pd.read_csv("data/training/legal-qa-benchmark.csv")
 ```
 
 ## Git Ignore
