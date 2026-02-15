@@ -224,7 +224,7 @@ python scripts/evaluate-retrieval-performance-on-test-set.py
 
 # Custom test file
 python scripts/evaluate-retrieval-performance-on-test-set.py \
-    --test-file data/training/legal-qa-benchmark.csv
+    --test-file data/benchmark/legal-qa-benchmark.csv
 
 # Limit test questions
 python scripts/evaluate-retrieval-performance-on-test-set.py --limit 50
@@ -246,7 +246,7 @@ python scripts/evaluate-retrieval-performance-on-test-set.py \
 
 | Option | Default | Description |
 |--------|---------|-------------|
-| `--test-file` | data/training/legal-qa-benchmark.csv | Test CSV path |
+| `--test-file` | data/benchmark/legal-qa-benchmark.csv | Test CSV path |
 | `--config` | config/default.yaml | Config file |
 | `--limit` | None | Limit test questions |
 | `--output` | None | Output JSON path |
@@ -281,7 +281,7 @@ question,article_ids,document_id
 {
   "metadata": {
     "timestamp": "2026-02-14T10:30:00",
-    "test_file": "data/training/legal-qa-benchmark.csv",
+    "test_file": "data/benchmark/legal-qa-benchmark.csv",
     "config": "config/default.yaml",
     "total_queries": 379,
     "limit": null
