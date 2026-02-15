@@ -1,0 +1,28 @@
+# Include documentation
+include README.md
+include LICENSE
+include CHANGELOG.md
+
+# Include configuration files
+recursive-include config *.yaml *.yml
+
+# Include type information
+include vn_legal_rag/py.typed
+
+# Exclude unnecessary files
+exclude .gitignore
+exclude .env
+exclude .env.example
+
+# Exclude directories
+recursive-exclude tests *
+recursive-exclude docs *
+recursive-exclude scripts *
+recursive-exclude data *
+recursive-exclude plans *
+recursive-exclude .git *
+recursive-exclude __pycache__ *
+global-exclude *.pyc
+global-exclude *.pyo
+global-exclude *.db
+global-exclude *.csv

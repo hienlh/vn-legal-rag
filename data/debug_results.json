@@ -1,0 +1,265 @@
+{
+  "metadata": {
+    "timestamp": "2026-02-14T10:38:21.858925",
+    "test_file": "data/training/training_with_ids.csv",
+    "config": "config/default.yaml",
+    "total_queries": 10,
+    "limit": 10
+  },
+  "metrics": {
+    "total_queries": 10,
+    "successful_queries": 0,
+    "failed_queries": 10,
+    "hit_rate@5": 0.0,
+    "hit_rate@10": 0.0,
+    "recall@5": 0.0,
+    "recall@10": 0.0,
+    "mrr": 0.0
+  },
+  "results": [
+    {
+      "index": 0,
+      "question": "cho mình hỏi mình nộp hồ sơ tạm ngừng kinh doanh hồ sơ đã nộp có + thông báo tạm ngừng + biên bản họp + quyết định tạm ngừng mà nhận được thông tin phản hồi cần bổ sung thêm tài liệu là cần bổ sung thêm tài liệu gì vậy mọi người",
+      "expected_ids": [
+        206
+      ],
+      "retrieved_ids": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "query_type": "general",
+      "hit@5": false,
+      "hit@10": false,
+      "recall@5": 0.0,
+      "recall@10": 0.0,
+      "mrr": 0.0,
+      "success": false
+    },
+    {
+      "index": 1,
+      "question": "Nộp hồ sơ tạm ngừng kinh doanh có thông báo tạm ngừng, biên bản họp, quyết định tạm ngừng mà nhận được thông tin phản hồi cần bổ sung thêm tài liệu là cần bổ sung thêm tài liệu gì vậy mọi người?",
+      "expected_ids": [
+        206
+      ],
+      "retrieved_ids": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "query_type": "general",
+      "hit@5": false,
+      "hit@10": false,
+      "recall@5": 0.0,
+      "recall@10": 0.0,
+      "mrr": 0.0,
+      "success": false
+    },
+    {
+      "index": 2,
+      "question": "Trường hợp đi vay để nộp đủ vốn điều lệ khi kiểm tra sau đó rút ra thì quy định xử lý như thế nào ạ?",
+      "expected_ids": [
+        16,
+        47
+      ],
+      "retrieved_ids": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "query_type": "situation_analysis",
+      "hit@5": false,
+      "hit@10": false,
+      "recall@5": 0.0,
+      "recall@10": 0.0,
+      "mrr": 0.0,
+      "success": false
+    },
+    {
+      "index": 3,
+      "question": "Cần đóng cty không hoạt động, cho hỏi thủ tục và chi phí như thế nào vậy ạ?",
+      "expected_ids": [
+        208,
+        210,
+        212,
+        207
+      ],
+      "retrieved_ids": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "query_type": "general",
+      "hit@5": false,
+      "hit@10": false,
+      "recall@5": 0.0,
+      "recall@10": 0.0,
+      "mrr": 0.0,
+      "success": false
+    },
+    {
+      "index": 4,
+      "question": "Công ty bị Sở thu hồi giấy phép do vi phạm pháp luật thì bây giờ cần làm gì để công ty có giấy phép hoạt động tiếp ạ?",
+      "expected_ids": [
+        207,
+        208,
+        17,
+        209,
+        210,
+        212
+      ],
+      "retrieved_ids": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "query_type": "situation_analysis",
+      "hit@5": false,
+      "hit@10": false,
+      "recall@5": 0.0,
+      "recall@10": 0.0,
+      "mrr": 0.0,
+      "success": false
+    },
+    {
+      "index": 5,
+      "question": "CTY CỔ PHẦN tăng vốn cũng phải nộp báo cáo tiến độ góp vốn à anh chị? Báo cáo tiến độ góp vốn này là sẽ ghi hết tất tần tật quá trình từ khi công ty thành lập chuyển nhượng ai hết à? Góp vốn lần nào góp lần đấy luôn có kéo dài đâu mà phải có báo cáo này nhỉ?",
+      "expected_ids": [
+        123
+      ],
+      "retrieved_ids": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "query_type": "general",
+      "hit@5": false,
+      "hit@10": false,
+      "recall@5": 0.0,
+      "recall@10": 0.0,
+      "mrr": 0.0,
+      "success": false
+    },
+    {
+      "index": 6,
+      "question": "Cho mình hỏi bên mình có mua lại công ty tnhh 2 thành viên vào năm 2022 đã hợp đồng chuyển nhượng và xong hết thủ tục đăng ký kinh doanh rồi ạ nhưng có 1 phát sinh là công ty này có nợ 1 bên khác 1 tỷ vào năm 2020 và đang thi hành án để trả nợ và khi mua bên công ty mình đã ký cam kết nếu có nợ trước thời gian công ty e mua thì công ty em có phải trả thay không ạ",
+      "expected_ids": [
+        50,
+        52,
+        46
+      ],
+      "retrieved_ids": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "query_type": "situation_analysis",
+      "hit@5": false,
+      "hit@10": false,
+      "recall@5": 0.0,
+      "recall@10": 0.0,
+      "mrr": 0.0,
+      "success": false
+    },
+    {
+      "index": 7,
+      "question": "Dạ mn tư vấn giúp mình trong trường hợp này với ạ:Năm 2024 mình có góp vốn vào công ty hợp danh căn nhà trị giá 1 tỷ đồng dưới hình thức thành viên góp vốn. Hiện tại, giá trị căn nhà lên 1,5 tỷ, mình muốn rút lại căn nhà có được không và được thực hiện bằng cách nào.",
+      "expected_ids": [
+        186,
+        178,
+        180
+      ],
+      "retrieved_ids": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "query_type": "situation_analysis",
+      "hit@5": false,
+      "hit@10": false,
+      "recall@5": 0.0,
+      "recall@10": 0.0,
+      "mrr": 0.0,
+      "success": false
+    },
+    {
+      "index": 8,
+      "question": "Tại HN nộp hồ sơ giải thể công ty ở địa chỉ nào vậy các bác ?\nTại HN nộp hồ sơ giải thể công ty ở địa chỉ nào vậy các bác ?",
+      "expected_ids": [
+        208,
+        210
+      ],
+      "retrieved_ids": [
+        3,
+        1,
+        2,
+        4,
+        5,
+        6,
+        7
+      ],
+      "query_type": "general",
+      "hit@5": false,
+      "hit@10": false,
+      "recall@5": 0.0,
+      "recall@10": 0.0,
+      "mrr": 0.0,
+      "success": false
+    },
+    {
+      "index": 9,
+      "question": "Giờ làm tạm ngừng có được ko ạ ac?",
+      "expected_ids": [
+        206
+      ],
+      "retrieved_ids": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "query_type": "general",
+      "hit@5": false,
+      "hit@10": false,
+      "recall@5": 0.0,
+      "recall@10": 0.0,
+      "mrr": 0.0,
+      "success": false
+    }
+  ]
+}

@@ -1,0 +1,36 @@
+# Domain Configuration for 47-2021-ND
+# Auto-generated from document: Nghị định 47/2021/NĐ-CP hướng dẫn Luật Doanh nghiệp
+#
+# This file can be manually edited to:
+# - Add/remove abbreviations
+# - Customize synonyms
+# - Add chapter selection examples
+#
+# Usage: TreeTraversalRetriever(forest, domain_config=DomainConfig.from_yaml("config/domains/47-2021-ND.yaml"))
+#
+
+abbreviations:
+  BTCN: Bộ trưởng, Chủ nhiệm
+  CSDL: Cơ sở dữ liệu
+  Cổng TT: Cổng thông tin
+  DN: Doanh nghiệp
+  DNQPAN: Doanh nghiệp quốc phòng an ninh
+  DNTN: Doanh nghiệp tư nhân
+  DNXH: Doanh nghiệp xã hội
+  HĐND: Hội đồng nhân dân
+  NĐ-CP: Nghị định - Chính phủ
+  PCN: Phó Chủ nhiệm
+  TGĐ: Tổng Giám đốc
+  TNHH: Trách nhiệm hữu hạn
+  TTĐT: Thông tin điện tử
+  UBND: Ủy ban nhân dân
+  VPCP: Văn phòng Chính phủ
+  ĐMDN: Đổi mới doanh nghiệp
+article_selection_examples: []
+chapter_selection_examples: []
+description: Nghị định 47/2021/NĐ-CP hướng dẫn Luật Doanh nghiệp
+language: vi
+name: 47-2021-ND
+synonyms: {}
+system_prompt_suffix: ''
+topic_hints: {}

@@ -1,0 +1,78 @@
+# Domain Configuration for 59-2020-QH14
+# Auto-generated from document: Luật Doanh nghiệp 2020 số 59/2020/QH14 áp dụng 2025
+#
+# This file can be manually edited to:
+# - Add/remove abbreviations
+# - Customize synonyms
+# - Add chapter selection examples
+#
+# Usage: TreeTraversalRetriever(forest, domain_config=DomainConfig.from_yaml("config/domains/59-2020-QH14.yaml"))
+#
+
+abbreviations:
+  BTCN: Bộ trưởng, Chủ nhiệm
+  CCT: Căn cước công dân
+  CMND: Giấy chứng minh nhân dân
+  CTY: Công ty
+  DN: Doanh nghiệp
+  DNTN: Doanh nghiệp tư nhân
+  HĐND: Hội đồng nhân dân
+  HĐQT: Hội đồng quản trị
+  HĐTV: Hội đồng thành viên
+  NN: Nhà nước
+  NĐ-CP: Nghị định - Chính phủ
+  PCN: Phó Chủ nhiệm
+  TCT: Tổng giám đốc
+  TGĐ: Tổng Giám đốc
+  TNHH: Trách nhiệm hữu hạn
+  TTĐT: Thông tin điện tử
+  UBND: Ủy ban nhân dân
+  VGBQ: Vốn có quyền biểu quyết
+  VPCP: Văn phòng Chính phủ
+  VT: Vốn điều lệ
+  ĐMDN: Đổi mới doanh nghiệp
+article_selection_examples: []
+chapter_selection_examples: []
+chapter_hints:
+  # Conversion / restructuring queries
+  "tnhh sang cổ phần,cổ phần sang tnhh,chuyển đổi công ty": "Chuyển đổi công ty TNHH thành CTCP và ngược lại"
+  "hộ kinh doanh,hộ lên công ty,hkd sang,hkd thành": "Chuyển đổi hộ kinh doanh thành doanh nghiệp"
+  "dntn sang tnhh,tư nhân sang,chuyển đổi tư nhân": "Chuyển đổi doanh nghiệp tư nhân"
+  "chuyển đổi loại hình,tổ chức lại,tách,sáp nhập,hợp nhất": "Tổ chức lại, giải thể"
+  "giải thể,chấm dứt,thanh lý,đóng công ty": "Tổ chức lại, giải thể"
+  # Legal representative queries - NEED BOTH general + company-specific chapters
+  "người đại diện,đdpl,đại diện pháp luật,tử vong đại diện,chết đại diện,đại diện theo pháp luật,thay đổi đại diện": |
+    Quy định chung về thay đổi nội dung đăng ký (Nghị định) VÀ Người đại diện theo pháp luật của doanh nghiệp
+  # Household business (hộ kinh doanh)
+  "hộ kinh doanh,hkd,kinh doanh hộ gia đình": "Hộ kinh doanh"
+  # Branch / representative office
+  "chi nhánh,văn phòng đại diện,địa điểm kinh doanh": "Chi nhánh, văn phòng đại diện"
+  # Business registration changes - include general provisions chapter
+  "thay đổi đăng ký,đkkd,thay đổi địa chỉ,thay đổi ngành nghề,bổ sung ngành": |
+    Quy định chung về đăng ký doanh nghiệp VÀ Thay đổi nội dung đăng ký doanh nghiệp
+  # Temporary suspension
+  "tạm ngừng,tạm ngưng,ngừng hoạt động tạm thời": "Tạm ngừng kinh doanh"
+  # Registration procedures - often need general provisions
+  "đăng ký,hồ sơ đăng ký,thủ tục đăng ký,erc,giấy chứng nhận": "Quy định chung về đăng ký doanh nghiệp"
+  # Capital (vốn điều lệ) - spans multiple chapters
+  "vốn điều lệ,góp vốn,tăng vốn,giảm vốn,chuyển nhượng vốn,cổ phần": |
+    Quy định chung VÀ quy định riêng theo loại hình doanh nghiệp
+
+# Patterns that trigger including general provisions chapter
+general_provision_trigger_patterns:
+  - "đăng ký"
+  - "thay đổi"
+  - "hồ sơ"
+  - "thủ tục"
+  - "người đại diện"
+  - "đdpl"
+  - "vốn điều lệ"
+  - "ngành nghề"
+  - "mã ngành"
+  - "giấy chứng nhận"
+description: Luật Doanh nghiệp 2020 số 59/2020/QH14 áp dụng 2025
+language: vi
+name: 59-2020-QH14
+synonyms: {}
+system_prompt_suffix: ''
+topic_hints: {}

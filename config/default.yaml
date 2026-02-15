@@ -1,0 +1,33 @@
+# LLM Provider Settings
+llm:
+  provider: "openai"  # openai, anthropic, gemini
+  model: "gpt-4o-mini"
+  base_url: null  # Optional custom base URL
+  use_cache: true
+  cache_db: "data/llm_cache.db"
+
+# Database Settings
+database:
+  path: "data/legal_docs.db"
+
+# KG Settings
+kg:
+  path: "data/kg_enhanced/legal_kg.json"
+  chapter_summaries: "data/kg_enhanced/chapter_summaries.json"
+  article_summaries: "data/kg_enhanced/article_summaries.json"
+
+# Retrieval Settings
+retrieval:
+  max_documents: 3
+  max_chapters: 6
+  max_articles: 7
+  confidence_threshold: 0.7
+
+# DualLevel Weights (must sum to 1.0)
+dual_level:
+  keyphrase_weight: 0.05
+  semantic_weight: 0.20
+  ppr_weight: 0.25
+  concept_weight: 0.20
+  theme_weight: 0.15
+  hierarchy_weight: 0.15

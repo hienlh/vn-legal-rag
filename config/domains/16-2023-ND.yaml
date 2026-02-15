@@ -1,0 +1,35 @@
+# Domain Configuration for 16-2023-ND
+# Auto-generated from document: Nghị định 16/2023/NĐ-CP tổ chức quản lý doanh nghiệp trực tiếp phục vụ quốc phòng an ninh
+#
+# This file can be manually edited to:
+# - Add/remove abbreviations
+# - Customize synonyms
+# - Add chapter selection examples
+#
+# Usage: TreeTraversalRetriever(forest, domain_config=DomainConfig.from_yaml("config/domains/16-2023-ND.yaml"))
+#
+
+abbreviations:
+  BCA: Bộ Công an
+  BQP: Bộ Quốc phòng
+  BTCN: Bộ trưởng, Chủ nhiệm
+  DNTN: Doanh nghiệp tư nhân
+  HĐND: Hội đồng nhân dân
+  Luật: Luật Doanh nghiệp
+  NĐ-CP: Nghị định - Chính phủ
+  PCN: Phó Chủ nhiệm
+  TGĐ: Tổng Giám đốc
+  TNHH: Trách nhiệm hữu hạn
+  TTĐT: Thông tin điện tử
+  UBND: Ủy ban nhân dân
+  VPCP: Văn phòng Chính phủ
+  ĐMDN: Đổi mới doanh nghiệp
+article_selection_examples: []
+chapter_selection_examples: []
+description: Nghị định 16/2023/NĐ-CP tổ chức quản lý doanh nghiệp trực tiếp phục vụ
+  quốc phòng an ninh
+language: vi
+name: 16-2023-ND
+synonyms: {}
+system_prompt_suffix: ''
+topic_hints: {}
