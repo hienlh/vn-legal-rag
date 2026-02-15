@@ -194,7 +194,7 @@ class LegalGraphRAG:
     def query(
         self,
         query: str,
-        max_results: int = 10,
+        max_results: int = 50,
         adaptive_retrieval: bool = True,
     ) -> GraphRAGResponse:
         """
@@ -293,7 +293,7 @@ class LegalGraphRAG:
         # Step 1: DualLevel retrieval FIRST (global semantic search)
         if cfg.enable_dual_level:
             dual_result = self.dual_retriever.retrieve(
-                query, mode="low", max_results=30
+                query, mode="low", max_results=max(50, max_results)
             )
 
         # Step 2: Tree retrieval (structured navigation)
