@@ -390,7 +390,7 @@ def calculate_metrics(expected: set, retrieved: set) -> dict:
 
 
 # Default K values for IR metrics
-K_VALUES = [1, 3, 5, 10]
+K_VALUES = [1, 3, 5, 10, 20, 30, 40, 50]
 
 
 def calculate_ir_metrics(expected: set, ranked_retrieved: list) -> dict:
@@ -624,6 +624,8 @@ def main():
     category_stats = defaultdict(lambda: {"hits": 0, "total": 0})
     results = []
     processed_count = 0
+    # Track cumulative hits at different K values
+    hits_at_k = {k: 0 for k in [5, 10, 20, 30, 40, 50]}
 
     # JSON output (replaces CSV for better structure)
     json_results = []  # Store all results for JSON output
@@ -737,6 +739,11 @@ def main():
                 misses += 1
                 status = "MISS"
 
+            # Track cumulative hits at different K values
+            for k in [5, 10, 20, 30, 40, 50]:
+                if bool(expected & set(ranked_retrieved[:k])):
+                    hits_at_k[k] += 1
+
             category_stats[category]["total"] += 1
             # Track precision/recall/f1 per category
             if "precision_sum" not in category_stats[category]:
@@ -753,17 +760,16 @@ def main():
             for k in K_VALUES:
                 category_stats[category][f"ndcg@{k}_sum"] += ir_metrics[f"ndcg@{k}"]
 
-            # Calculate running rate
+            # Calculate running rates at different K
             total_tested = hits + misses
-            hit_rate = (hits / total_tested * 100) if total_tested > 0 else 0
+            hit_rates_k = {k: (hits_at_k[k] / total_tested * 100) if total_tested > 0 else 0 for k in [5, 10, 20, 30, 40, 50]}
 
-            # Print detailed result
-            cat_short = category[:20] + "..." if len(category) > 20 else category
+            # Print detailed result with Hit@K rates
             tree_status = "T✓" if tree_hit else "T✗"
             kg_status = "K✓" if kg_hit else "K✗"
+            hit_str = f"@5:{hit_rates_k[5]:4.0f}% @10:{hit_rates_k[10]:4.0f}% @20:{hit_rates_k[20]:4.0f}% @30:{hit_rates_k[30]:4.0f}% @40:{hit_rates_k[40]:4.0f}%"
 
-            print(f"[{local_processed:4d}] STT {stt:4s} | {status:4s} | {tree_status} {kg_status} | Hit Rate@10: {hit_rate:5.1f}% | P:{precision:.2f} R:{recall:.2f} F1:{f1:.2f} RR:{ir_metrics['rr']:.2f} | {cat_short}")
-            print(f"       Expected: {sorted(expected)} | Retrieved(ranked): {ranked_retrieved[:5]}")
+            print(f"[{local_processed:4d}] STT {stt:4s} | {status:4s} | {tree_status} {kg_status} | {hit_str}")
 
             # Store full result for JSON output
             result_record = {
