@@ -13,7 +13,7 @@ A state-of-the-art Retrieval-Augmented Generation (RAG) system for Vietnamese le
 - **LLM-Guided Navigation**: PageIndex-style tree traversal with chapter/article summaries
 - **6-Component Semantic Scoring**: Keyphrase, semantic, PPR, concept, theme, and hierarchy
 - **RRF-Based Fusion**: Reciprocal Rank Fusion for robust result merging
-- **Knowledge Graph Integration**: Entity-relation graph with 1299 entities and 2577 relations
+- **Knowledge Graph Integration**: Entity-relation graph with 1299 entities and 2709 relations
 - **Adaptive Retrieval**: Query type detection with specialized retrieval strategies
 
 ## Performance
@@ -126,7 +126,7 @@ data/
 ├── llm_cache.db                     # LLM cache (1.1GB)
 ├── article_to_document_mapping.json # ID mapping (15KB)
 ├── kg_enhanced/                     # Knowledge graph
-│   ├── legal_kg.json                # KG (1299 entities, 2577 relations)
+│   ├── legal_kg.json                # KG (1299 entities, 2709 relations)
 │   ├── chapter_summaries.json       # Tree navigation Loop 1
 │   ├── article_summaries.json       # Tree navigation Loop 2
 │   ├── checkpoint.json              # Resume checkpoint
@@ -191,11 +191,20 @@ python scripts/evaluate.py --disable-tier3  # Disable Semantic Bridge
 
 ```
 vn_legal_rag/
-├── offline/                 # Knowledge graph extraction
-│   ├── database_manager.py              # SQLite DB interface
-│   ├── models.py                        # SQLAlchemy ORM models
-│   ├── unified_entity_relation_extractor.py  # LLM-based extraction
-│   └── incremental_knowledge_graph_builder.py # KG builder
+├── offline/                 # Knowledge graph extraction & offline processing
+│   ├── database_manager.py                           # SQLite DB interface
+│   ├── models.py                                     # SQLAlchemy ORM models
+│   ├── unified_entity_relation_extractor.py          # LLM-based extraction
+│   ├── incremental_knowledge_graph_builder.py        # KG builder
+│   ├── relation-validator-for-kg-pipeline.py         # Relation validation
+│   ├── entity-resolver-for-deduplication.py          # Entity deduplication
+│   ├── terminology-extractor-from-legal-articles.py  # Abbreviation extraction
+│   ├── synonym-miner-from-qa-corpus.py               # Synonym mining
+│   ├── crossref-postprocessor-for-llm-extracted-relations.py  # Cross-ref processing
+│   ├── kg-sqlite-bidirectional-linker.py             # KG↔DB linking
+│   ├── incremental-kg-updater-for-new-documents.py   # Incremental updates
+│   ├── scraper/                                      # Legal document scrapers
+│   └── summary/                                      # Summary generators
 ├── online/                  # 3-Tier retrieval
 │   ├── legal-graphrag-3tier-query-engine.py   # Main entry point
 │   ├── tree-traversal-retriever.py            # Tier 1
@@ -283,6 +292,73 @@ RRF-based fusion + KG expansion for cross-chapter dependencies.
 | situation_analysis | 75 | 71.33% | "What happens if..." |
 | compare_regulations | 32 | 68.75% | Comparison queries |
 | case_law_lookup | 18 | 61.11% | Specific penalties |
+
+## Offline Pipeline
+
+The offline phase builds the knowledge graph and prepares data for retrieval.
+
+### Pipeline Steps
+
+```
+┌─────────────────────────────────────────────────────────────────┐
+│                    OFFLINE PHASE PIPELINE                        │
+├─────────────────────────────────────────────────────────────────┤
+│ Step 1: Scrape/Load Documents → SQLite DB                       │
+│ Step 2: Extract Terminology (regex-based, zero LLM cost)        │
+│ Step 3: Mine Synonyms from Q&A corpus (optional)                │
+│ Step 4: Extract Entities & Relations (LLM-based)                │
+│ Step 5: Validate Relations (filter self-refs, normalize)        │
+│ Step 6: Resolve Entities (dedup, abbreviation expansion)        │
+│ Step 7: Post-process Cross-references                           │
+│ Step 8: Build Knowledge Graph                                   │
+│ Step 9: Link KG ↔ SQLite (bidirectional)                        │
+│ Step 10: Generate Summaries (chapter, article, document)        │
+└─────────────────────────────────────────────────────────────────┘
+```
+
+### Running the Pipeline
+
+```bash
+# Full pipeline
+python scripts/run-complete-offline-pipeline.py --db data/legal_docs.db
+
+# Specific steps only
+python scripts/run-complete-offline-pipeline.py --steps terminology,extraction,kg
+
+# Single document with limit
+python scripts/run-complete-offline-pipeline.py --document 59-2020-QH14 --limit 10
+
+# Resume from checkpoint
+python scripts/run-complete-offline-pipeline.py  # auto-resumes if checkpoint exists
+
+# Start fresh (ignore checkpoint)
+python scripts/run-complete-offline-pipeline.py --no-resume
+```
+
+### Available Steps
+
+| Step | Description | LLM Cost |
+|------|-------------|----------|
+| `terminology` | Extract abbreviations from "Giải thích từ ngữ" articles | Zero |
+| `synonyms` | Mine synonyms from Q&A corpus | Low |
+| `extraction` | Extract entities & relations | High |
+| `validation` | Filter self-refs, normalize types | Zero |
+| `resolution` | Deduplicate entities, expand abbreviations | Zero |
+| `crossref` | Post-process cross-references | Zero |
+| `kg` | Build knowledge graph | Zero |
+| `linking` | Link KG ↔ SQLite | Zero |
+
+### Output Files
+
+```
+data/kg_enhanced/
+├── legal_kg.json              # Knowledge graph (1299 entities, 2709 relations)
+├── crossrefs.json             # Cross-references
+├── extraction_checkpoint.json # Checkpoint for resume
+├── chapter_summaries.json     # Tree navigation summaries
+├── article_summaries.json     # Article summaries
+└── ontology.ttl               # Formal ontology
+```
 
 ## Documentation
 
