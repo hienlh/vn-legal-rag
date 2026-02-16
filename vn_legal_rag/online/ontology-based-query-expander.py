@@ -6,19 +6,25 @@ Expands queries using ontology class hierarchy for better retrieval coverage:
 - Document types: Luat, Nghi dinh, Thong tu, etc.
 - Legal concepts hierarchy traversal
 
-Supports expansion modes: children, parents, siblings, all
+Supports:
+- Dynamic ontology loading from LegalOntology object
+- Fallback to default hardcoded hierarchy
+- Expansion modes: children, parents, siblings, all
 """
 
 from dataclasses import dataclass, field
-from typing import Dict, List, Optional, Set, Tuple
+from typing import Any, Dict, List, Optional, Set, Tuple
+import logging
+
+logger = logging.getLogger(__name__)
 
 
 # ============================================================================
-# Vietnamese Legal Ontology - Class Hierarchy
+# Default Vietnamese Legal Ontology - Class Hierarchy (fallback)
 # ============================================================================
 
 # Class hierarchy: child -> parent mapping
-CLASS_HIERARCHY: Dict[str, Optional[str]] = {
+DEFAULT_CLASS_HIERARCHY: Dict[str, Optional[str]] = {
     # Root classes
     "Thing": None,
     "Organization": "Thing",
@@ -52,7 +58,7 @@ CLASS_HIERARCHY: Dict[str, Optional[str]] = {
 }
 
 # Vietnamese labels for classes
-CLASS_LABELS_VI: Dict[str, str] = {
+DEFAULT_CLASS_LABELS_VI: Dict[str, str] = {
     "Company": "công ty",
     "JointStockCompany": "công ty cổ phần",
     "LimitedLiabilityCompany": "công ty trách nhiệm hữu hạn",
@@ -76,13 +82,12 @@ CLASS_LABELS_VI: Dict[str, str] = {
     "MembersCouncil": "hội đồng thành viên",
 }
 
-# Vietnamese term -> class mapping (for lookup)
-VI_TO_CLASS: Dict[str, str] = {v.lower(): k for k, v in CLASS_LABELS_VI.items()}
-
-# Additional Vietnamese abbreviations and variants
-VI_ABBREVIATIONS: Dict[str, str] = {
+# Vietnamese abbreviations and variants
+VIETNAMESE_ABBREVIATIONS: Dict[str, str] = {
     "ctcp": "JointStockCompany",
+    "cty cp": "JointStockCompany",
     "tnhh": "LimitedLiabilityCompany",
+    "cty tnhh": "LimitedLiabilityCompany",
     "tnhh 1tv": "SingleMemberLLC",
     "tnhh mtv": "SingleMemberLLC",
     "tnhh 2tv": "MultiMemberLLC",
@@ -91,6 +96,9 @@ VI_ABBREVIATIONS: Dict[str, str] = {
     "nđ": "Decree",
     "nd": "Decree",
     "tt": "Circular",
+    "qđ": "Decision",
+    "qd": "Decision",
+    "nq": "Resolution",
     "vđl": "CharterCapital",
     "nddpl": "LegalRepresentative",
     "hđqt": "BoardOfDirectors",
@@ -121,19 +129,102 @@ class OntologyExpander:
     """
     Expands queries using ontology class hierarchy.
 
-    Example:
+    Supports two initialization modes:
+    1. With LegalOntology object: Dynamic hierarchy from ontology
+    2. Without ontology: Uses default hardcoded Vietnamese legal hierarchy
+
+    Example with ontology:
+        >>> from vn_legal_rag.offline import LegalOntology
+        >>> ontology = LegalOntology.from_json_file("data/kg_enhanced/ontology.json")
+        >>> expander = OntologyExpander(ontology=ontology)
+        >>> result = expander.expand_term("công ty", include_children=True)
+
+    Example without ontology (uses defaults):
         >>> expander = OntologyExpander()
         >>> result = expander.expand_term("công ty", include_children=True)
         >>> print(result.expanded_terms_vi)
         ['công ty cổ phần', 'công ty trách nhiệm hữu hạn', ...]
     """
 
-    def __init__(self):
-        """Initialize with built-in Vietnamese legal ontology."""
-        self._hierarchy = CLASS_HIERARCHY
-        self._labels_vi = CLASS_LABELS_VI
-        self._vi_to_class = {**VI_TO_CLASS, **VI_ABBREVIATIONS}
+    def __init__(self, ontology: Optional[Any] = None):
+        """
+        Initialize OntologyExpander.
+
+        Args:
+            ontology: Optional LegalOntology instance for dynamic hierarchy.
+                      If None, uses default hardcoded Vietnamese legal hierarchy.
+        """
+        # Initialize with defaults
+        self._hierarchy: Dict[str, Optional[str]] = {}
+        self._labels_vi: Dict[str, str] = {}
+        self._vi_to_class: Dict[str, str] = {}
+        self._children: Dict[str, List[str]] = {}
+
+        if ontology is not None:
+            # Build from provided ontology
+            self._build_from_ontology(ontology)
+            logger.info(f"OntologyExpander initialized from ontology with {len(self._hierarchy)} classes")
+        else:
+            # Use default hardcoded hierarchy
+            self._use_default_hierarchy()
+            logger.info("OntologyExpander initialized with default Vietnamese legal hierarchy")
+
+        # Add common abbreviations
+        self._add_abbreviations()
+
+    def _use_default_hierarchy(self):
+        """Use default hardcoded Vietnamese legal hierarchy."""
+        self._hierarchy = DEFAULT_CLASS_HIERARCHY.copy()
+        self._labels_vi = DEFAULT_CLASS_LABELS_VI.copy()
+        self._vi_to_class = {v.lower(): k for k, v in self._labels_vi.items()}
         self._children = self._build_children_map()
+
+    def _build_from_ontology(self, ontology: Any):
+        """Build hierarchy from LegalOntology instance."""
+        # Support both LegalOntology object and dict format
+        if hasattr(ontology, "classes"):
+            # LegalOntology object
+            for cls in ontology.classes.values():
+                self._hierarchy[cls.name] = cls.parent
+                self._labels_vi[cls.name] = cls.label
+                self._vi_to_class[cls.label.lower()] = cls.name
+
+                # Build parent → children mapping
+                if cls.parent:
+                    if cls.parent not in self._children:
+                        self._children[cls.parent] = []
+                    if cls.name not in self._children[cls.parent]:
+                        self._children[cls.parent].append(cls.name)
+        elif isinstance(ontology, dict):
+            # Dict format (from JSON)
+            for cls_data in ontology.get("classes", []):
+                name = cls_data.get("name", "")
+                parent = cls_data.get("parent")
+                label = cls_data.get("label", name)
+
+                self._hierarchy[name] = parent
+                self._labels_vi[name] = label
+                self._vi_to_class[label.lower()] = name
+
+                if parent:
+                    if parent not in self._children:
+                        self._children[parent] = []
+                    if name not in self._children[parent]:
+                        self._children[parent].append(name)
+        else:
+            logger.warning(f"Unknown ontology format: {type(ontology)}, using defaults")
+            self._use_default_hierarchy()
+            return
+
+        # Rebuild children map if not built during iteration
+        if not self._children:
+            self._children = self._build_children_map()
+
+    def _add_abbreviations(self):
+        """Add common Vietnamese abbreviations to lookup."""
+        for abbrev, class_name in VIETNAMESE_ABBREVIATIONS.items():
+            if class_name in self._hierarchy:
+                self._vi_to_class[abbrev.lower()] = class_name
 
     def _build_children_map(self) -> Dict[str, List[str]]:
         """Build parent -> children mapping for downward traversal."""
@@ -142,8 +233,45 @@ class OntologyExpander:
             if parent:
                 if parent not in children:
                     children[parent] = []
-                children[parent].append(child)
+                if child not in children[parent]:
+                    children[parent].append(child)
         return children
+
+    def extend_from_ontology(self, ontology: Any):
+        """
+        Extend existing hierarchy with additional ontology.
+
+        Args:
+            ontology: LegalOntology instance or dict to merge
+        """
+        if hasattr(ontology, "classes"):
+            for cls in ontology.classes.values():
+                if cls.name not in self._hierarchy:
+                    self._hierarchy[cls.name] = cls.parent
+                    self._labels_vi[cls.name] = cls.label
+                    self._vi_to_class[cls.label.lower()] = cls.name
+
+                    if cls.parent:
+                        if cls.parent not in self._children:
+                            self._children[cls.parent] = []
+                        if cls.name not in self._children[cls.parent]:
+                            self._children[cls.parent].append(cls.name)
+        elif isinstance(ontology, dict):
+            for cls_data in ontology.get("classes", []):
+                name = cls_data.get("name", "")
+                if name and name not in self._hierarchy:
+                    parent = cls_data.get("parent")
+                    label = cls_data.get("label", name)
+
+                    self._hierarchy[name] = parent
+                    self._labels_vi[name] = label
+                    self._vi_to_class[label.lower()] = name
+
+                    if parent:
+                        if parent not in self._children:
+                            self._children[parent] = []
+                        if name not in self._children[parent]:
+                            self._children[parent].append(name)
 
     def find_class(self, term: str) -> Optional[str]:
         """Find ontology class for Vietnamese term."""
@@ -305,3 +433,39 @@ class OntologyExpander:
             expanded_query = query
 
         return expanded_query, expansions
+
+    def get_related_properties(self, class_name: str) -> List[str]:
+        """
+        Get ontology properties related to a class.
+
+        For use in relation-based graph traversal.
+
+        Args:
+            class_name: Ontology class name
+
+        Returns:
+            List of relevant property names
+        """
+        # Define class → property mappings
+        class_properties = {
+            "LegalDocument": ["references", "amends", "supersedes", "implements"],
+            "Law": ["references", "amends", "supersedes"],
+            "Decree": ["implements", "references", "amends"],
+            "Circular": ["implements", "references"],
+            "Document": ["references", "relatedTo"],
+            "Organization": ["authorizedBy", "performedBy", "includes"],
+            "Company": ["authorizedBy", "includes", "partOf"],
+            "PersonRole": ["authorizedBy", "performedBy"],
+            "LegalConcept": ["definedAs", "includes", "partOf"],
+        }
+
+        properties = class_properties.get(class_name, [])
+
+        # Also check parent classes
+        for parent in self.get_parent_classes(class_name):
+            parent_props = class_properties.get(parent, [])
+            for prop in parent_props:
+                if prop not in properties:
+                    properties.append(prop)
+
+        return properties

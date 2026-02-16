@@ -124,12 +124,12 @@ from vn_legal_rag.offline import LegalDocumentDB
 
 ### Style Standards
 
-**Formatter**: Black (line length: 88 characters)
+**Formatter**: Black (line length: 100 characters, per pyproject.toml)
 **Linter**: Ruff (with configuration in pyproject.toml)
 **Type Checker**: MyPy (strict mode for new code)
 
 ```bash
-# Format code
+# Format code (100-char lines)
 black vn_legal_rag/ tests/
 
 # Lint

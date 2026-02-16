@@ -66,11 +66,28 @@ Vietnamese Legal RAG implements a **3-tier hierarchical retrieval system** for V
         └──────────────────────────┘
 ```
 
+## Offline Components
+
+### Legal Ontology Generator
+
+**Purpose**: Generate OWL ontology from knowledge graph with Vietnamese labels
+
+**Location**: `vn_legal_rag/offline/legal-ontology-generator.py` (551 LOC)
+
+**Features**:
+- Converts knowledge graph to RDF/OWL format
+- Multilingual labels (Vietnamese + English)
+- Relation hierarchy and domain/range specifications
+- Optimized for Vietnamese legal domain
+- Supports ontology-based query expansion in Tier 0
+
+---
+
 ## Tier 0: Query Analyzer
 
 **Purpose**: Understand user intent and prepare query for retrieval
 
-**Location**: `vn_legal_rag/online/vietnamese-legal-query-analyzer.py`
+**Location**: `vn_legal_rag/online/vietnamese-legal-query-analyzer.py` (~482 LOC)
 
 ### Components
 
@@ -109,13 +126,35 @@ class AnalyzedQuery:
    - HĐQT → Hội đồng quản trị
 5. **Domain Detection**: Matches query keywords to domain YAML configs
 
+## Support: Ontology-Based Query Expander
+
+**Purpose**: Expand query terms using generated legal ontology
+
+**Location**: `vn_legal_rag/online/ontology-based-query-expander.py` (~471 LOC)
+
+**Features**:
+- Load and traverse legal ontology (OWL)
+- Semantic expansion via RDF relations
+- Synonym resolution using ontology equivalence classes
+- Integration with Tier 0 query analysis
+- Returns expanded keywords for downstream tiers
+
+**Typical Expansion**:
+```
+Input: "hành vi kinh doanh không đăng ký"
+Ontology expansion: + "hoạt động kinh tế", "doanh nghiệp chưa đăng ký", ...
+Output: Enhanced keyword list for tiers 1-3
+```
+
+---
+
 ## Tier 1: Tree Traversal Retriever
 
 **Purpose**: Navigate document hierarchy using LLM and summaries
 
-**Location**: `vn_legal_rag/online/tree-traversal-retriever.py`
+**Location**: `vn_legal_rag/online/tree-traversal-retriever.py` (777 LOC)
 
-**Performance**: 56.20% Hit@10 (single tier) | 82.05% on article_lookup queries
+**Performance**: ~56% Hit@10 (single tier) | 82.05% on article_lookup queries
 
 ### Architecture
 
@@ -210,9 +249,9 @@ class TreeTraversalRetriever:
 
 **Purpose**: Global semantic search with multi-component scoring
 
-**Location**: `vn_legal_rag/online/dual-level-retriever.py`
+**Location**: `vn_legal_rag/online/dual-level-retriever.py` (472 LOC)
 
-**Performance**: 61.74% Hit@10 (single tier) | Strong on all query types
+**Performance**: ~62% Hit@10 (single tier) | Strong on all query types
 
 ### Architecture
 
@@ -337,13 +376,43 @@ class DualLevelRetriever:
 - Relies on embedding quality
 - Slow for first query (caching helps)
 
+## Support: Cross-Encoder Reranker
+
+**Purpose**: Fine-grained reranking using cross-encoder models
+
+**Location**: `vn_legal_rag/online/cross-encoder-reranker-for-legal-documents.py` (~244 LOC)
+
+**Features**:
+- Cross-encoder model for semantic similarity scoring
+- More accurate than bi-encoder for legal domain
+- Reranks top-k results before final selection
+- Optional integration point in Tier 3
+
+**Note**: Currently optional component; can be integrated into Tier 3 for higher accuracy.
+
+---
+
+## Support: Document-Aware Result Filter
+
+**Purpose**: Post-retrieval filtering with document awareness
+
+**Location**: `vn_legal_rag/online/document-aware-result-filter.py` (~328 LOC)
+
+**Features**:
+- Filters duplicates and near-duplicates
+- Maintains document coverage (avoid article clusters)
+- Enforces minimum quality thresholds
+- Optional integration in Tier 3
+
+---
+
 ## Tier 3: Semantic Bridge (RRF Fusion)
 
 **Purpose**: Merge and enhance Tier 1 & 2 results via fusion and KG expansion
 
-**Location**: `vn_legal_rag/online/semantic-bridge-rrf-merger.py`
+**Location**: `vn_legal_rag/online/semantic-bridge-rrf-merger.py` (~517 LOC)
 
-**Performance**: +5.3% improvement over best single tier
+**Performance**: +5.3% improvement over best single tier (75.20% Hit@10)
 
 ### Architecture
 
@@ -644,6 +713,37 @@ class GraphRAGResponse:
     intent: Optional[QueryIntent]           # Query analysis detail
 ```
 
+## Component Integration Points
+
+### Full Pipeline Integration
+
+```python
+# Legal Ontology Generator
+ontology = LegalOntologyGenerator(kg)
+ontology.save("data/kg_enhanced/ontology.ttl")
+
+# Query Analyzer + Ontology Expander
+analyzer = VietnameseLegalQueryAnalyzer(llm_provider)
+expander = OntologyBasedQueryExpander(ontology)
+analyzed = analyzer.analyze(query)
+expanded_keywords = expander.expand(analyzed.keywords)
+
+# Tiers 1-3
+tier1_results = tier1.retrieve(query, expanded_keywords)
+tier2_results = tier2.retrieve(query)
+
+# Optional: Reranking
+reranker = CrossEncoderReranker(model_name="cross-encoder")
+tier2_reranked = reranker.rerank(tier2_results, query)
+
+# Fusion + Filtering
+filter_component = DocumentAwareResultFilter()
+final_results = tier3.merge_and_expand(tier1_results, tier2_reranked, query)
+final_results = filter_component.filter(final_results)
+```
+
+---
+
 ## Additional Topics
 
 See [Operations & Extensibility Guide](./system-architecture-operations-guide.md) for:
@@ -654,5 +754,5 @@ See [Operations & Extensibility Guide](./system-architecture-operations-guide.md
 
 ---
 
-**Last Updated**: 2026-02-14
-**Version**: 1.0
+**Last Updated**: 2026-02-16
+**Version**: 1.1 (Added missing components documentation)
