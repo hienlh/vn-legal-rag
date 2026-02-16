@@ -14,6 +14,7 @@ This package contains modules for offline processing:
 - Document filtering
 - Summary generators (chapter, article, document)
 - Web scraping (TVPL legal document scraper)
+- Ontology generation, validation, and evaluation
 """
 
 # Database models and manager
@@ -62,6 +63,24 @@ LegalOntologyGenerator = _ontology_gen.LegalOntologyGenerator
 LegalOntology = _ontology_gen.LegalOntology
 OntologyClass = _ontology_gen.OntologyClass
 OntologyProperty = _ontology_gen.OntologyProperty
+
+# Ontology validation (kebab-case filename)
+_ontology_validator = import_module(
+    ".ontology-validator-for-kg-consistency", "vn_legal_rag.offline"
+)
+OntologyValidator = _ontology_validator.OntologyValidator
+OntologyValidationResult = _ontology_validator.ValidationResult
+validate_ontology = _ontology_validator.validate_ontology
+
+# Ontology evaluation (kebab-case filename)
+_ontology_evaluator = import_module(
+    ".ontology-evaluator-for-quality-assessment", "vn_legal_rag.offline"
+)
+OntologyEvaluator = _ontology_evaluator.OntologyEvaluator
+OntologyEvaluationResult = _ontology_evaluator.EvaluationResult
+CompetencyQuestion = _ontology_evaluator.CompetencyQuestion
+CompetencyQuestionsManager = _ontology_evaluator.CompetencyQuestionsManager
+evaluate_ontology = _ontology_evaluator.evaluate_ontology
 
 # Cross-reference post-processor (kebab-case filename)
 _crossref_post = import_module(
@@ -250,11 +269,21 @@ __all__ = [
     "MergedEntity",
     "MergedRelation",
     "slugify_vietnamese",
-    # Ontology
+    # Ontology generation
     "LegalOntologyGenerator",
     "LegalOntology",
     "OntologyClass",
     "OntologyProperty",
+    # Ontology validation
+    "OntologyValidator",
+    "OntologyValidationResult",
+    "validate_ontology",
+    # Ontology evaluation
+    "OntologyEvaluator",
+    "OntologyEvaluationResult",
+    "CompetencyQuestion",
+    "CompetencyQuestionsManager",
+    "evaluate_ontology",
     # Cross-reference post-processor
     "CrossRefPostProcessor",
     "CrossRefCandidate",
