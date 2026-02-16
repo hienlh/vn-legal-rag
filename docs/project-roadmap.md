@@ -71,9 +71,10 @@
 
 ### Phase 2: Production Hardening (CURRENT - Q1 2026)
 
-**Status**: 🟡 In Progress | **Target Completion**: 2026-03-31 | **Duration**: 6 weeks
+**Status**: 🟡 In Progress | **Target Completion**: 2026-04-15 | **Duration**: 8 weeks
+**Updated Timeline**: Extended from 6 weeks based on realistic task estimates
 
-**Epic 1: Performance Optimization** (Week 1-2)
+**Epic 1: Performance Optimization** (Week 1-3)
 
 **Goals**:
 - Reduce query latency from ~7s to <5s (p95)
@@ -81,23 +82,23 @@
 - Reduce memory footprint to <1.5GB
 
 **Tasks**:
-- [ ] Profile tier 1 & 2 execution (identify bottlenecks)
-- [ ] Implement batch embedding inference (Tier 2)
-- [ ] Optimize KG traversal (Tier 3)
-- [ ] Cache article summaries in memory (Tier 1)
-- [ ] Benchmark on 100-query dataset
-- [ ] Document performance tuning guide
+- [ ] Profile tier 1 & 2 execution (identify bottlenecks) - 12h
+- [ ] Implement batch embedding inference (Tier 2) - 20h
+- [ ] Optimize KG traversal (Tier 3) - 16h
+- [ ] Cache article summaries in memory (Tier 1) - 12h
+- [ ] Benchmark on 100-query dataset - 8h
+- [ ] Document performance tuning guide - 10h
 
 **Success Criteria**:
 - Query latency p95 <5 seconds
 - Cache hit rate ≥50% on repeated queries
 - Memory usage <1.5GB during peak load
 
-**Effort**: 80 hours
+**Effort**: 78 hours (realistic estimate)
 
 ---
 
-**Epic 2: Comprehensive Testing** (Week 2-4)
+**Epic 2: Comprehensive Testing** (Week 3-5)
 
 **Goals**:
 - Achieve ≥80% code coverage
@@ -105,24 +106,24 @@
 - Stress test with high concurrency
 
 **Tasks**:
-- [ ] Add unit tests for each module (offline, online, types, utils)
-- [ ] Add integration tests for 3-tier pipeline
-- [ ] Add ablation test (disable each tier independently)
-- [ ] Add stress test (100 parallel queries)
-- [ ] Add regression test suite (all 379 test queries)
-- [ ] Set up CI/CD pipeline (GitHub Actions)
-- [ ] Add code coverage reporting (codecov.io)
+- [ ] Add unit tests for each module (offline, online, types, utils) - 40h
+- [ ] Add integration tests for 3-tier pipeline - 35h
+- [ ] Add ablation test (disable each tier independently) - 20h
+- [ ] Add stress test (100 parallel queries) - 15h
+- [ ] Add regression test suite (all 379 test queries) - 12h
+- [ ] Set up CI/CD pipeline (GitHub Actions) - 15h
+- [ ] Add code coverage reporting (codecov.io) - 10h
 
 **Success Criteria**:
 - Unit + integration coverage ≥80%
 - All tests pass on CI/CD
 - No regressions between versions
 
-**Effort**: 120 hours
+**Effort**: 147 hours (realistic estimate; testing always takes longer)
 
 ---
 
-**Epic 3: Documentation Completion** (Week 3-4)
+**Epic 3: Documentation Completion** (Week 2-4)
 
 **Goals**:
 - Complete all documentation per PDR spec
@@ -130,15 +131,16 @@
 - Generate API reference
 
 **Tasks**:
-- [x] Create codebase-summary.md (overview of all modules)
-- [x] Create project-overview-pdr.md (PDR & requirements)
-- [x] Create code-standards.md (coding conventions)
-- [x] Create system-architecture.md (3-tier design)
-- [x] Create project-roadmap.md (this file)
-- [ ] Create api-reference.md (public API docs)
-- [ ] Create developer-onboarding-guide.md (quickstart for new devs)
-- [ ] Create deployment-guide.md (how to deploy)
-- [ ] Create troubleshooting-guide.md (common issues)
+- [x] Create codebase-summary.md (overview of all modules) ✓
+- [x] Create project-overview-pdr.md (PDR & requirements) ✓
+- [x] Create code-standards.md (coding conventions) ✓
+- [x] Create system-architecture.md (3-tier design + components) ✓
+- [x] Create project-roadmap.md (this file) ✓
+- [ ] Create api-reference.md (public API docs) - 12h
+- [ ] Create developer-onboarding-guide.md (quickstart) - 10h
+- [ ] Create deployment-guide.md (Docker, cloud) - 15h
+- [ ] Create troubleshooting-guide.md (common issues) - 8h
+- [ ] Link validation and cross-reference check - 5h
 
 **Success Criteria**:
 - All docs live in /docs/
@@ -146,11 +148,11 @@
 - Zero broken links in documentation
 - 5+ new developers successfully onboard using guides
 
-**Effort**: 60 hours
+**Effort**: 50 hours (documentation infrastructure in place)
 
 ---
 
-**Epic 4: Security Hardening** (Week 4-5)
+**Epic 4: Security Hardening** (Week 5-6)
 
 **Goals**:
 - Security audit and remediation
@@ -158,24 +160,25 @@
 - OWASP compliance
 
 **Tasks**:
-- [ ] Security code review (3-tier logic)
-- [ ] Dependency audit (check for known CVEs)
-- [ ] SQL injection test (SQLAlchemy parametrization)
-- [ ] API key protection verification (.env only)
-- [ ] Rate limiting implementation (for API)
-- [ ] Input validation audit (query length, ID format)
-- [ ] OWASP top 10 compliance check
+- [ ] Security code review (3-tier logic) - 12h
+- [ ] Dependency audit (check for known CVEs) - 8h
+- [ ] SQL injection test (SQLAlchemy parametrization) - 10h
+- [ ] API key protection verification (.env only) - 6h
+- [ ] Rate limiting implementation (for API) - 12h
+- [ ] Input validation audit (query length, ID format) - 10h
+- [ ] OWASP top 10 compliance check - 8h
+- [ ] Security report writing - 6h
 
 **Success Criteria**:
 - Zero critical/high severity issues
 - All dependencies up-to-date
 - Security report published
 
-**Effort**: 60 hours
+**Effort**: 72 hours
 
 ---
 
-**Epic 5: API & Deployment** (Week 5-6)
+**Epic 5: API & Deployment** (Week 6-8)
 
 **Goals**:
 - Build REST API wrapper
@@ -183,31 +186,35 @@
 - Deployment guide
 
 **Tasks**:
-- [ ] Implement FastAPI wrapper for LegalGraphRAG
-- [ ] Add request/response validation
-- [ ] Create OpenAPI specification (Swagger)
-- [ ] Write Docker Dockerfile and docker-compose.yml
-- [ ] Create deployment guide (local, Docker, cloud)
-- [ ] Test deployment on sample cloud provider
-- [ ] Create performance benchmark suite
+- [ ] Implement FastAPI wrapper for LegalGraphRAG - 18h
+- [ ] Add request/response validation - 12h
+- [ ] Create OpenAPI specification (Swagger) - 8h
+- [ ] Write Docker Dockerfile and docker-compose.yml - 10h
+- [ ] Create deployment guide (local, Docker, cloud) - 15h
+- [ ] Test deployment on sample cloud provider - 12h
+- [ ] Create performance benchmark suite - 18h
 
 **Success Criteria**:
-- REST API responds to legal queries
+- REST API responds to legal queries with <5s latency
 - API documentation (Swagger UI) complete
 - Runs in Docker with <100MB overhead
+- Benchmark results published
 
-**Effort**: 100 hours
+**Effort**: 93 hours
 
 ---
 
 **Phase 2 Summary**:
-- **Total Effort**: ~420 hours (6 person-weeks)
+- **Total Effort**: ~440 hours (~11 person-weeks)
+- **Updated from**: 420 hours (was 6 weeks, realistic is 8 weeks)
 - **Key Dependencies**: None (can run in parallel)
-- **Risk**: Performance optimization may require algorithm changes (medium risk)
+- **Risk Level**: Medium - Performance optimization may require algorithm changes
+- **Contingency**: Built-in slack for testing iterations (+20% buffer)
 
 ### Phase 3: Feature Enhancement (Q2 2026)
 
-**Status**: 📋 Planned | **Target**: 2026-06-30 | **Duration**: 8 weeks
+**Status**: 📋 Planned | **Target**: 2026-07-15 | **Duration**: 8 weeks
+**Note**: Starts after Phase 2 completion (2026-04-15 → 2026-07-15)
 
 **Epic 1: Query Disambiguation & Clarification** (Week 1-2)
 
@@ -396,8 +403,8 @@ Answer:
 | Version | Release Date | Status | Focus |
 |---------|--------------|--------|-------|
 | 1.0.0 | 2026-01-31 | ✓ Released | Core 3-tier system |
-| 1.1.0 | 2026-03-31 | 🟡 Q1 2026 | Performance + testing + docs |
-| 1.2.0 | 2026-06-30 | 📋 Q2 2026 | Query disambiguation + domain expansion |
+| 1.1.0 | 2026-04-15 | 🟡 Q2 2026 | Performance + testing + docs (extended timeline) |
+| 1.2.0 | 2026-07-15 | 📋 Q2-Q3 2026 | Query disambiguation + domain expansion |
 | 2.0.0 | 2026-12-31 | 📋 Q3-Q4 2026 | Ecosystem integration + generative features |
 | 2.1.0 | 2027-06-30 | 📋 2027 | Multi-language support |
 
@@ -496,18 +503,21 @@ Answer:
 
 ## Budget & Resource Allocation
 
-### Phase 2 Budget (6 weeks, $80K)
+### Phase 2 Budget (8 weeks, $105K)
 
 | Category | Effort | Cost |
 |----------|--------|------|
-| Performance optimization | 80h | $8,000 |
-| Testing & QA | 120h | $12,000 |
-| Documentation | 60h | $6,000 |
-| Security audit | 60h | $9,000 |
-| API & deployment | 100h | $10,000 |
-| Infrastructure & tools | - | $20,000 |
-| Contingency (20%) | - | $15,000 |
-| **Total** | 420h | **$80,000** |
+| Performance optimization | 78h | $7,800 |
+| Testing & QA | 147h | $14,700 |
+| Documentation | 50h | $5,000 |
+| Security audit | 72h | $10,800 |
+| API & deployment | 93h | $9,300 |
+| Infrastructure & tools | - | $25,000 |
+| Contingency (20%) | - | $21,000 |
+| Contingency (testing iterations) | - | $11,400 |
+| **Total** | 440h | **$105,000** |
+
+**Updated from $80K**: Extended timeline reveals realistic project scope (7-8 weeks vs 6 weeks initial estimate)
 
 ### Phase 3 Budget (8 weeks, $100K)
 
@@ -556,12 +566,13 @@ Answer:
 
 ### If Performance Optimization (Phase 2) Slips
 
-**Risk**: Query latency exceeds <5s target
+**Risk**: Query latency exceeds <5s target (current: ~7s)
 
 **Mitigation**:
-- Push to Phase 3 with "acceptable" 6-7s latency
+- Release Phase 2 with "acceptable" 6-7s latency (vs. 5s target)
 - Prioritize caching as first optimization in Phase 3
 - Consider outsourcing inference (cloud GPU)
+- Note: Current Hit@10 (75.20%) already exceeds performance target
 
 ### If Domain Expansion (Phase 3) Stalls
 
@@ -641,7 +652,7 @@ Vietnamese Legal RAG started as a research project to demonstrate effectiveness 
 
 ---
 
-**Last Updated**: 2026-02-14
-**Version**: 1.0
+**Last Updated**: 2026-02-16
+**Version**: 1.1 (Realistic Phase 2 timeline and budget)
 **Maintainer**: Project Management Team
-**Next Review Date**: 2026-03-31 (End of Phase 2)
+**Next Review Date**: 2026-03-15 (Mid Phase 2 progress check)

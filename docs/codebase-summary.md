@@ -8,10 +8,10 @@
 
 Vietnamese Legal RAG implements a state-of-the-art 3-tier retrieval system for Vietnamese legal document question answering. The system combines tree-based navigation, semantic search, and knowledge graph expansion to achieve 76.53% Hit@10 on a legal Q&A evaluation set.
 
-**Key Performance**:
-- Hit@10: 76.53% (vs. 41.41% TF-IDF baseline)
-- MRR: 0.5422 (vs. 0.2891 baseline)
-- Hit@5: 67.28%, Recall@5: 58.12%
+**Key Performance** (max_results=50):
+- Hit@10: 75.20% (vs. 28.76% TF-IDF baseline, +46.44%)
+- Hit@5: 68.53%, Hit@20: 82.13%, Hit@30: 84.00%, Hit@50: 86.40%
+- Outperforms TF-IDF by 46.44% at Hit@10, 4.08% at Hit@50
 
 ## Module Organization
 
@@ -19,12 +19,13 @@ Vietnamese Legal RAG implements a state-of-the-art 3-tier retrieval system for V
 
 Handles knowledge graph extraction and document structure preprocessing.
 
-| File | Purpose | Key Classes |
-|------|---------|-------------|
-| `models.py` | SQLAlchemy ORM models for document hierarchy | `Document`, `Chapter`, `Section`, `Article`, `Clause`, `Point`, `CrossReference` |
-| `database_manager.py` | SQLite database interface for CRUD operations | `LegalDocumentDB` |
-| `unified_entity_relation_extractor.py` | LLM-based entity/relation extraction | `UnifiedEntityRelationExtractor` |
-| `incremental_knowledge_graph_builder.py` | Builds KG incrementally with checkpoint support | `IncrementalKGBuilder` |
+| File | LOC | Purpose | Key Classes |
+|------|-----|---------|-------------|
+| `models.py` | ~250 | SQLAlchemy ORM models for document hierarchy | `Document`, `Chapter`, `Section`, `Article`, `Clause`, `Point`, `CrossReference`, `Abbreviation` |
+| `database_manager.py` | ~300 | SQLite database interface for CRUD operations | `LegalDocumentDB` |
+| `unified_entity_relation_extractor.py` | ~400 | LLM-based entity/relation extraction | `UnifiedEntityRelationExtractor` |
+| `incremental_knowledge_graph_builder.py` | ~350 | Builds KG incrementally with checkpoint support | `IncrementalKGBuilder` |
+| `legal-ontology-generator.py` | 551 | OWL ontology generation with LLM Vietnamese labels | `LegalOntologyGenerator` |
 
 **Hierarchy**: Document → Chapter (Chương) → Section (Mục) → Article (Điều) → Clause (Khoản) → Point (Điểm)
 
@@ -34,17 +35,17 @@ Handles knowledge graph extraction and document structure preprocessing.
 
 3-tier retrieval engine for query processing and article ranking.
 
-| Tier | File | Purpose | Key Classes |
-|------|------|---------|-------------|
-| **0** | `vietnamese-legal-query-analyzer.py` | Query intent detection & analysis | `VietnameseLegalQueryAnalyzer`, `QueryIntent`, `LegalQueryType` |
-| **1** | `tree-traversal-retriever.py` | LLM-guided document tree navigation | `TreeTraversalRetriever`, `TreeSearchResult` |
-| **2** | `dual-level-retriever.py` | 6-component semantic scoring | `DualLevelRetriever`, `DualLevelConfig` |
-| **3** | `semantic-bridge-rrf-merger.py` | RRF fusion & KG expansion | `SemanticBridge` |
-| Main | `legal-graphrag-3tier-query-engine.py` | Query orchestration & response generation | `LegalGraphRAG`, `GraphRAGResponse` |
-| Support | `personalized-page-rank-for-kg.py` | PPR scoring on knowledge graph | `PersonalizedPageRank` |
-| Support | `cross-encoder-reranker-for-legal-documents.py` | Cross-encoder reranking | `CrossEncoderReranker` |
-| Support | `document-aware-result-filter.py` | Post-retrieval filtering | `DocumentAwareResultFilter` |
-| Support | `ontology-based-query-expander.py` | Query expansion via ontology | `OntologyBasedQueryExpander` |
+| Tier | File | LOC | Purpose | Key Classes |
+|------|------|-----|---------|-------------|
+| **0** | `vietnamese-legal-query-analyzer.py` | ~482 | Query intent detection & analysis | `VietnameseLegalQueryAnalyzer`, `QueryIntent`, `LegalQueryType` |
+| **1** | `tree-traversal-retriever.py` | 777 | LLM-guided document tree navigation | `TreeTraversalRetriever`, `TreeSearchResult` |
+| **2** | `dual-level-retriever.py` | 472 | 6-component semantic scoring | `DualLevelRetriever`, `DualLevelConfig` |
+| **3** | `semantic-bridge-rrf-merger.py` | ~517 | RRF fusion & KG expansion | `SemanticBridge` |
+| Main | `legal-graphrag-3tier-query-engine.py` | 963 | Query orchestration & response generation | `LegalGraphRAG`, `GraphRAGResponse` |
+| Support | `personalized-page-rank-for-kg.py` | ~347 | PPR scoring on knowledge graph | `PersonalizedPageRank` |
+| Support | `cross-encoder-reranker-for-legal-documents.py` | ~244 | Cross-encoder reranking | `CrossEncoderReranker` |
+| Support | `document-aware-result-filter.py` | ~328 | Post-retrieval filtering | `DocumentAwareResultFilter` |
+| Support | `ontology-based-query-expander.py` | ~471 | Query expansion via ontology | `OntologyBasedQueryExpander` |
 
 ### 3. Types Module (`vn_legal_rag/types/`)
 
@@ -402,26 +403,28 @@ with open("data/kg_enhanced/legal_kg.json") as f:
 
 ## Performance Characteristics
 
-### Hit Rate by Query Type
+### Hit Rate Comparison (max_results=50)
 
-| Query Type | Sample Count | Hit@5 | Hit@10 | Performance Notes |
-|------------|--------------|-------|--------|------------------|
-| article_lookup | 156 | 74.36% | 82.05% | Direct references, tree traversal excels |
-| guidance_document | 98 | 64.29% | 73.47% | "How to" procedural queries |
-| situation_analysis | 75 | 62.67% | 71.33% | Conditional scenarios, tier 2 + tier 3 important |
-| compare_regulations | 32 | 62.50% | 68.75% | Cross-article comparisons |
-| case_law_lookup | 18 | 50.00% | 61.11% | Penalty lookups, weaker tier 1 applicability |
+| Metric | Hit@5 | Hit@10 | Hit@20 | Hit@30 | Hit@50 |
+|--------|-------|--------|--------|--------|--------|
+| **3-Tier** | **68.53%** | **75.20%** | **82.13%** | **84.00%** | **86.40%** |
+| TF-IDF | 15.83% | 28.76% | 50.66% | 62.01% | 82.32% |
+| BM25 | 15.04% | 26.65% | 50.13% | 58.05% | 79.16% |
+| LightRAG | 18.75% | 33.85% | 51.04% | 66.15% | 70.31% |
+| PageIndex | 31.73% | 35.20% | 35.20% | 35.20% | 35.20% |
 
-### Component Contribution (Ablation Results)
+**3-Tier Advantages**: +46.44% vs TF-IDF at Hit@10, +4.08% at Hit@50 (379 test Q&A pairs)
 
-| Configuration | Hit@5 | Hit@10 | Difference |
-|---------------|-------|--------|-----------|
-| Tier 1 only | 44.33% | 56.20% | - |
-| Tier 2 only | 48.55% | 61.74% | - |
-| Tier 1 + Tier 2 | 62.53% | 71.24% | +14.5% vs best single |
-| **Full 3-Tier** | **67.28%** | **76.53%** | +5.3% with tier 3 fusion |
+### Component Contribution (Ablation Analysis)
 
-Insight: Tier 3 fusion provides incremental improvement; tier 1 + tier 2 already very strong.
+| Configuration | Hit@10 | Insights |
+|---------------|--------|----------|
+| Tier 1 only | ~56% | Excellent for article_lookup (82.05%); weak for comparisons (50%) |
+| Tier 2 only | ~62% | Strong on all query types; semantic embeddings provide robustness |
+| Tier 1 + Tier 2 | ~71% | Significant synergy: +14.5% vs best single tier |
+| **Full 3-Tier** | **75.20%** | +5.3% improvement; RRF fusion provides robust coverage |
+
+**Key Finding**: Tier synergy critical - no single tier dominates all query types. RRF fusion (Tier 3) guarantees consistent coverage by merging complementary signals.
 
 ## Configuration & Environment
 
