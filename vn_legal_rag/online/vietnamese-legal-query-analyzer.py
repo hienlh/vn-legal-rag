@@ -8,14 +8,26 @@ Merges query analysis, expansion, and classification into single module:
 - Entity extraction (article refs, law refs, keywords)
 
 Provides optimized retrieval strategy based on query characteristics.
+
+Edge cases handled:
+- Empty/null query validation
+- Query length limits
+- Unicode normalization for Vietnamese text
 """
 
 import re
 import unicodedata
+import logging
 from dataclasses import dataclass, field
 from enum import Enum
 from functools import lru_cache
 from typing import Dict, List, Optional, Set, Tuple
+
+logger = logging.getLogger(__name__)
+
+# Query validation limits
+MAX_QUERY_LENGTH = 2000
+MIN_QUERY_LENGTH = 1
 
 
 # ============================================================================
@@ -261,6 +273,42 @@ class VietnameseLegalQueryAnalyzer:
         """
         self.llm_provider = llm_provider
 
+    def _validate_and_normalize_query(self, query: str) -> str:
+        """
+        Validate and normalize query string.
+
+        - Rejects empty/null queries
+        - Truncates queries exceeding max length
+        - Normalizes Unicode (NFC for Vietnamese)
+
+        Args:
+            query: Raw query string
+
+        Returns:
+            Normalized query string
+
+        Raises:
+            ValueError: If query is empty or None
+        """
+        if query is None:
+            raise ValueError("Query cannot be None")
+
+        # Strip whitespace
+        query = query.strip()
+
+        if not query or len(query) < MIN_QUERY_LENGTH:
+            raise ValueError("Query cannot be empty or too short")
+
+        # Normalize Unicode (important for Vietnamese diacritics)
+        query = unicodedata.normalize('NFC', query)
+
+        # Truncate if too long
+        if len(query) > MAX_QUERY_LENGTH:
+            logger.warning(f"Query truncated from {len(query)} to {MAX_QUERY_LENGTH} chars")
+            query = query[:MAX_QUERY_LENGTH]
+
+        return query
+
     def analyze(self, query: str) -> AnalyzedQuery:
         """
         Analyze query and return comprehensive analysis.
@@ -270,7 +318,13 @@ class VietnameseLegalQueryAnalyzer:
 
         Returns:
             AnalyzedQuery with all extracted information
+
+        Raises:
+            ValueError: If query is empty or None
         """
+        # Validate query
+        query = self._validate_and_normalize_query(query)
+
         # 1. Expand query
         expanded = self._expand_query(query)
 
