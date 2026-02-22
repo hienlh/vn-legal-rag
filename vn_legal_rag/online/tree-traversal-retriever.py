@@ -6,13 +6,20 @@ Implements 3-loop approach for multi-document support:
   Loop 0: Forest → Document (select relevant documents when >1 document)
   Loop 1: Document → Chapter (overview with chapter summaries)
   Loop 2: Chapter → Article (detailed selection with article summaries)
+
+Security:
+- Query sanitization to prevent prompt injection
 """
 
+import html
+import logging
 from dataclasses import dataclass, field
 from typing import Any, Dict, List, Optional, Tuple
 import json
 
 from ..types.tree_models import TreeNode, UnifiedForest, NodeType
+
+logger = logging.getLogger(__name__)
 
 
 @dataclass
@@ -85,6 +92,21 @@ class TreeTraversalRetriever:
         self.domain_config = domain_config
         self.embedding_gen = embedding_gen
         self._dual_retriever = dual_retriever
+
+    def _sanitize_query(self, query: str) -> str:
+        """
+        Sanitize query to prevent prompt injection.
+
+        Escapes HTML/XML special characters that could be used to
+        break out of prompt structure.
+
+        Args:
+            query: Raw user query
+
+        Returns:
+            Sanitized query safe for LLM prompts
+        """
+        return html.escape(query, quote=True)
 
     def _normalize_article_summaries(self, summaries: Optional[Dict[str, Any]]) -> Dict[str, Dict]:
         """Convert article summaries to dict by article_id."""
@@ -275,6 +297,7 @@ class TreeTraversalRetriever:
         slots_remaining = self.max_documents - len(selected_indices)
 
         # LLM prompt for selecting supporting documents
+        sanitized_query = self._sanitize_query(query)
         prompt = f"""<task>Đánh giá xem câu hỏi có cần văn bản hỗ trợ không. KHÔNG giải thích, CHỈ JSON.</task>
 
 <primary_documents_included>
@@ -285,7 +308,7 @@ class TreeTraversalRetriever:
 {json.dumps(remaining_docs, ensure_ascii=False, indent=2)}
 </supporting_documents>
 
-<question>{query}</question>
+<question>{sanitized_query}</question>
 
 <rules>
 - Nếu câu hỏi hỏi về QUY ĐỊNH CHUNG (quyền, nghĩa vụ, điều kiện, khái niệm): KHÔNG cần văn bản hỗ trợ
@@ -355,7 +378,25 @@ JSON:"""
             doc_overview.append(doc_info)
 
         if not all_chapters:
+            # Fallback: Try direct article search for flat document structures
+            all_articles = self._collect_articles_from_documents(documents)
+            if all_articles:
+                logger.info(f"No chapters found - using fallback direct article search ({len(all_articles)} articles)")
+                return all_articles[:self.max_chapters], 0.5, "Flat structure - direct articles"
             return [], 0.0, "No chapters found"
+
+    def _collect_articles_from_documents(self, documents: List[TreeNode]) -> List[TreeNode]:
+        """Collect articles directly from documents without chapter structure."""
+        articles = []
+        for doc in documents:
+            for child in doc.sub_nodes:
+                if child.node_type == NodeType.ARTICLE:
+                    articles.append(child)
+        return articles[:self.max_articles]
+
+    def _loop1_select_chapters_continued(self, query: str, documents: List[TreeNode], topic_hints: List[str] = None) -> Tuple[List[TreeNode], float, str]:
+        """Continuation helper - unused, kept for compatibility."""
+        return [], 0.0, "unused"
 
         # Build topic hint section if available
         hint_section = ""
@@ -366,13 +407,14 @@ JSON:"""
             return all_chapters[:self.max_chapters], 0.5, "No LLM - fallback"
 
         # LLM prompt for chapter selection
+        sanitized_query = self._sanitize_query(query)
         prompt = f"""<task>Chọn index chương phù hợp với câu hỏi. KHÔNG giải thích, CHỈ trả về JSON.</task>
 
 <chapters>
 {json.dumps(doc_overview, ensure_ascii=False, indent=2)}
 </chapters>
 
-<question>{query}</question>{hint_section}
+<question>{sanitized_query}</question>{hint_section}
 
 <rules>
 - Chọn 1-{self.max_chapters} chương phù hợp nhất
@@ -484,6 +526,7 @@ JSON:"""
             )
 
         # LLM prompt for article selection
+        sanitized_query = self._sanitize_query(query)
         prompt = f"""<task>Chọn index điều luật phù hợp. KHÔNG giải thích, CHỈ JSON.</task>
 
 <chapter>{chapter.name}</chapter>
@@ -492,7 +535,7 @@ JSON:"""
 {json.dumps(article_infos, ensure_ascii=False, indent=2)}
 </articles>
 
-<question>{query}</question>
+<question>{sanitized_query}</question>
 
 <rules>
 - Chọn 1-{min(self.max_articles, len(articles))} điều trả lời câu hỏi{score_hint}
@@ -655,10 +698,11 @@ JSON:"""
             return selected, confidence, reasoning
 
         # Ask LLM for alternative chapters
+        sanitized_query = self._sanitize_query(query)
         expansion_prompt = f"""<task>Thêm 1 chương liên quan. KHÔNG giải thích, CHỈ JSON.</task>
 
 <selected>{selected[0].name}</selected>
-<question>{query}</question>
+<question>{sanitized_query}</question>
 
 <other_chapters>
 {json.dumps(remaining_chapters, ensure_ascii=False, indent=2)}
@@ -693,7 +737,7 @@ JSON:"""
         return selected, confidence, reasoning
 
     def _parse_json_response(self, response: str) -> Dict[str, Any]:
-        """Parse JSON from LLM response."""
+        """Parse JSON from LLM response with logging for failures."""
         import re
         # Try to extract JSON from response
         # Handle markdown code blocks
@@ -708,13 +752,14 @@ JSON:"""
         if json_match:
             try:
                 return json.loads(json_match.group())
-            except json.JSONDecodeError:
-                pass
+            except json.JSONDecodeError as e:
+                logger.warning(f"JSON parse failed on regex match: {e}. Response: {response[:100]}...")
 
         # Try direct parse
         try:
             return json.loads(response)
-        except json.JSONDecodeError:
+        except json.JSONDecodeError as e:
+            logger.warning(f"JSON parse failed: {e}. Response: {response[:100]}...")
             return {}
 
     def _include_general_provisions_if_needed(
