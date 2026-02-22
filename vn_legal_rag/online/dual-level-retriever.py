@@ -90,6 +90,11 @@ class DualLevelConfig:
         assert 0.99 <= total <= 1.01, f"Weights must sum to 1.0, got {total}"
 
 
+class KGValidationError(ValueError):
+    """Raised when Knowledge Graph structure is invalid."""
+    pass
+
+
 class DualLevelRetriever:
     """
     Dual-level retriever combining low-level and high-level retrieval.
@@ -121,7 +126,13 @@ class DualLevelRetriever:
             semantic_matcher: Optional SemanticMatcher
             ppr: Optional PersonalizedPageRank
             concept_matcher: Optional ConceptMatcher
+
+        Raises:
+            KGValidationError: If KG structure is invalid
         """
+        # Validate KG structure
+        self._validate_kg(kg)
+
         self.kg = kg
         self.theme_index = theme_index
         self.ontology = ontology
@@ -138,6 +149,39 @@ class DualLevelRetriever:
             e.get("id", ""): e
             for e in kg.get("entities", [])
         }
+
+    def _validate_kg(self, kg: Dict[str, Any]) -> None:
+        """
+        Validate Knowledge Graph structure.
+
+        Raises:
+            KGValidationError: If required keys missing or invalid
+        """
+        if not kg:
+            raise KGValidationError("Knowledge graph cannot be None or empty")
+
+        if not isinstance(kg, dict):
+            raise KGValidationError(f"Knowledge graph must be dict, got {type(kg).__name__}")
+
+        # Check for entities
+        if "entities" not in kg:
+            raise KGValidationError(
+                "Invalid KG: missing 'entities' key. "
+                "Expected dict with 'entities' list."
+            )
+
+        if not isinstance(kg["entities"], list):
+            raise KGValidationError(
+                f"Invalid KG: 'entities' must be list, got {type(kg['entities']).__name__}"
+            )
+
+        # Check for relationships (accept both naming conventions)
+        has_relations = "relationships" in kg or "relations" in kg
+        if not has_relations:
+            raise KGValidationError(
+                "Invalid KG: missing 'relationships' or 'relations' key. "
+                "Expected dict with relationship list."
+            )
 
         # Build article mappings
         self._article_entities: Dict[str, List[str]] = {}
