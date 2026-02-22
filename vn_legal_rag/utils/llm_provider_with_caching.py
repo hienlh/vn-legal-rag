@@ -61,6 +61,9 @@ class LLMProvider:
             try:
                 from openai import OpenAI
                 api_key = self.config.get("api_key") or os.getenv("OPENAI_API_KEY")
+                # When using proxy, allow dummy API key (proxy handles auth)
+                if base_url and not api_key:
+                    api_key = "dummy"
                 client_kwargs = {"api_key": api_key}
                 if base_url:
                     client_kwargs["base_url"] = base_url
@@ -116,24 +119,22 @@ class LLMProvider:
         conn.commit()
         conn.close()
 
+    # Canonical provider/model for cache key stability across proxy switches
+    _CACHE_PROVIDER = "anthropic"
+    _CACHE_MODEL = "claude-3-5-haiku-20241022"
+
     def _get_cache_key(self, prompt: str, **kwargs) -> str:
         """Generate cache key from prompt and parameters.
 
-        Compatible with semantica's LLMCacheManager format.
+        Uses canonical provider/model so cache survives proxy switches.
+        Excludes temperature/params to match semantica's stored cache keys
+        (semantica stored with empty params {}).
         """
-        # Filter relevant params (same as semantica)
-        relevant_params = {
-            k: v for k, v in sorted(kwargs.items())
-            if k in ('temperature', 'max_tokens', 'top_p', 'top_k', 'system_prompt')
-            and v is not None
-        }
-
-        # Match semantica's cache key format
         key_data = {
-            "provider": self.provider.lower(),
-            "model": self.model.lower(),
+            "provider": self._CACHE_PROVIDER,
+            "model": self._CACHE_MODEL,
             "prompt": prompt,
-            "params": relevant_params,
+            "params": {},
         }
         key_str = json.dumps(key_data, sort_keys=True, ensure_ascii=False)
         return hashlib.sha256(key_str.encode('utf-8')).hexdigest()
@@ -173,8 +174,8 @@ class LLMProvider:
             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         """, (
             cache_key,
-            self.provider,
-            self.model,
+            self._CACHE_PROVIDER,
+            self._CACHE_MODEL,
             prompt_hash,
             params_hash,
             prompt,
