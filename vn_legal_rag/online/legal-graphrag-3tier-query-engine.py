@@ -207,12 +207,20 @@ class LegalGraphRAG:
 
         Args:
             query: Natural language question in Vietnamese
-            max_results: Maximum contexts to retrieve
+            max_results: Maximum contexts to retrieve (minimum: 1)
             adaptive_retrieval: Use query-type-based retrieval strategy
 
         Returns:
             GraphRAGResponse with answer and citations
+
+        Raises:
+            ValueError: If query is empty/None or max_results < 1
         """
+        # Validate inputs
+        if not query or not query.strip():
+            raise ValueError("Query cannot be empty or None")
+        max_results = max(1, max_results)  # Ensure at least 1 result
+
         # Step 1: Analyze query
         analyzed = self.query_analyzer.analyze(query)
 
