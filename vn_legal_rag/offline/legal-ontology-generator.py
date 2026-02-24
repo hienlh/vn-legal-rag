@@ -228,6 +228,105 @@ class LegalOntology:
             data = json.load(f)
         return cls.from_dict(data)
 
+    @classmethod
+    def from_ttl_file(cls, path: str) -> "LegalOntology":
+        """
+        Load ontology from Turtle (.ttl) file.
+
+        Parses OWL classes and properties with Vietnamese labels.
+        """
+        import re
+
+        with open(path, "r", encoding="utf-8") as f:
+            content = f.read()
+
+        ontology = cls()
+
+        # Extract base URI
+        base_match = re.search(r'@prefix\s+:\s+<([^>]+)>', content)
+        if base_match:
+            ontology.base_uri = base_match.group(1)
+
+        # Parse classes - extract entire class block then parse attributes
+        class_block_pattern = re.compile(
+            r':(\w+)\s+a\s+owl:Class\s*;([^.]+)\.',
+            re.MULTILINE | re.DOTALL
+        )
+
+        for match in class_block_pattern.finditer(content):
+            name = match.group(1)
+            block = match.group(2)
+
+            # Extract attributes from block
+            label_match = re.search(r'rdfs:label\s+"([^"]+)"@vi', block)
+            parent_match = re.search(r'rdfs:subClassOf\s+:(\w+)', block)
+            comment_match = re.search(r'rdfs:comment\s+"([^"]+)"@vi', block)
+
+            label = label_match.group(1) if label_match else name
+            parent = parent_match.group(1) if parent_match else None
+            description = comment_match.group(1) if comment_match else ""
+
+            ontology.add_class(OntologyClass(
+                name=name,
+                label=label,
+                parent=parent,
+                description=description,
+                uri=f"{ontology.base_uri}{name}",
+            ))
+
+        # Parse object properties - extract block then parse
+        obj_prop_pattern = re.compile(
+            r':(\w+)\s+a\s+owl:ObjectProperty\s*;([^.]+)\.',
+            re.MULTILINE | re.DOTALL
+        )
+
+        for match in obj_prop_pattern.finditer(content):
+            name = match.group(1)
+            block = match.group(2)
+
+            label_match = re.search(r'rdfs:label\s+"([^"]+)"@vi', block)
+            domain_match = re.search(r'rdfs:domain\s+:(\w+)', block)
+            range_match = re.search(r'rdfs:range\s+:(\w+)', block)
+            comment_match = re.search(r'rdfs:comment\s+"([^"]+)"@vi', block)
+
+            ontology.add_property(OntologyProperty(
+                name=name,
+                label=label_match.group(1) if label_match else name,
+                property_type="object",
+                domain=domain_match.group(1) if domain_match else "Thing",
+                range=range_match.group(1) if range_match else "Thing",
+                description=comment_match.group(1) if comment_match else "",
+                uri=f"{ontology.base_uri}{name}",
+            ))
+
+        # Parse data properties - extract block then parse
+        data_prop_pattern = re.compile(
+            r':(\w+)\s+a\s+owl:DatatypeProperty\s*;([^.]+)\.',
+            re.MULTILINE | re.DOTALL
+        )
+
+        for match in data_prop_pattern.finditer(content):
+            name = match.group(1)
+            block = match.group(2)
+
+            label_match = re.search(r'rdfs:label\s+"([^"]+)"@vi', block)
+            domain_match = re.search(r'rdfs:domain\s+:(\w+)', block)
+            range_match = re.search(r'rdfs:range\s+(xsd:\w+|:\w+)', block)
+            comment_match = re.search(r'rdfs:comment\s+"([^"]+)"@vi', block)
+
+            ontology.add_property(OntologyProperty(
+                name=name,
+                label=label_match.group(1) if label_match else name,
+                property_type="data",
+                domain=domain_match.group(1) if domain_match else "Thing",
+                range=range_match.group(1) if range_match else "xsd:string",
+                description=comment_match.group(1) if comment_match else "",
+                uri=f"{ontology.base_uri}{name}",
+            ))
+
+        logger.info(f"Loaded ontology from TTL: {len(ontology.classes)} classes, {len(ontology.properties)} properties")
+        return ontology
+
     def to_json_file(self, path: str) -> None:
         """Save ontology to JSON file."""
         with open(path, "w", encoding="utf-8") as f:

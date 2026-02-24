@@ -45,6 +45,9 @@ LegalQueryType = _query_analyzer.LegalQueryType
 _ppr = import_module(".personalized-page-rank-for-kg", "vn_legal_rag.online")
 PersonalizedPageRank = _ppr.PersonalizedPageRank
 
+_ontology_expander = import_module(".ontology-based-query-expander", "vn_legal_rag.online")
+OntologyExpander = _ontology_expander.OntologyExpander
+
 # Import AblationConfig
 _ablation = import_module(".ablation-config-for-rag-component-testing", "vn_legal_rag.types")
 AblationConfig = _ablation.AblationConfig
@@ -98,6 +101,7 @@ class LegalGraphRAG:
         document_summaries: Optional[List[Dict[str, Any]]] = None,
         config: Optional[Dict[str, Any]] = None,
         ablation_config: Optional[AblationConfig] = None,  # semantica-style
+        ontology_path: Optional[str] = None,  # Path to ontology.json or ontology.ttl
     ):
         """
         Initialize LegalGraphRAG.
@@ -120,6 +124,7 @@ class LegalGraphRAG:
             document_summaries: Document summaries for Loop 0
             config: Optional configuration dict
             ablation_config: AblationConfig for ablation studies (semantica-style)
+            ontology_path: Path to ontology file (.json or .ttl) for query expansion
         """
         self.kg = kg
         self.forest = forest
@@ -151,6 +156,14 @@ class LegalGraphRAG:
 
         # Initialize query analyzer
         self.query_analyzer = VietnameseLegalQueryAnalyzer()
+
+        # Load ontology from file if provided, otherwise use defaults
+        self._ontology = None
+        if ontology_path:
+            self._ontology = self._load_ontology(ontology_path)
+
+        # Initialize OntologyExpander with loaded ontology or defaults
+        self.ontology_expander = OntologyExpander(ontology=self._ontology)
 
         # Initialize PPR if embedding generator available
         self.ppr = None
@@ -224,12 +237,17 @@ class LegalGraphRAG:
         # Step 1: Analyze query
         analyzed = self.query_analyzer.analyze(query)
 
-        # Step 2: Run 3-tier retrieval
-        contexts, tree_result = self._retrieve_contexts(
-            query, analyzed, max_results, adaptive_retrieval
+        # Step 2: Ontology-based query expansion (ported from semantica)
+        effective_query, ontology_expansions = self._expand_query_with_ontology(
+            query, analyzed.query_type
         )
 
-        # Step 3: Generate response with LLM
+        # Step 3: Run 3-tier retrieval with expanded query
+        contexts, tree_result = self._retrieve_contexts(
+            effective_query, analyzed, max_results, adaptive_retrieval
+        )
+
+        # Step 4: Generate response with LLM (use original query, not expanded)
         if self.llm_provider:
             response, confidence = self._generate_response(
                 query=query,
@@ -241,7 +259,7 @@ class LegalGraphRAG:
             response = self._format_contexts(contexts)
             confidence = 0.8 if contexts else 0.0
 
-        # Step 4: Build response
+        # Step 5: Build response
         return GraphRAGResponse(
             response=response,
             citations=self._extract_citations(contexts),
@@ -263,7 +281,16 @@ class LegalGraphRAG:
                     "max_hops": 2,
                     "use_temporal": False,
                 },
-                "ontology_expansion": [],  # Placeholder
+                "ontology_expansion": [
+                    {
+                        "original_term": exp.original_term,
+                        "matched_class": exp.matched_class,
+                        "expanded_terms": exp.expanded_terms_vi,
+                    }
+                    for exp in ontology_expansions
+                    if exp.matched_class
+                ],
+                "effective_query": effective_query if effective_query != query else None,
             },
             tree_search_result=tree_result,  # semantica-style
             intent=analyzed.intent,  # semantica-style
@@ -539,6 +566,105 @@ Trả lời:"""
             pass
 
         return candidates
+
+    # =========================================================================
+    # Ontology Loading (end-to-end connection)
+    # =========================================================================
+
+    def _load_ontology(self, path: str) -> Any:
+        """
+        Load ontology from file (JSON or TTL).
+
+        Args:
+            path: Path to ontology.json or ontology.ttl
+
+        Returns:
+            LegalOntology object or None if failed
+        """
+        try:
+            _ont_mod = import_module(".legal-ontology-generator", "vn_legal_rag.offline")
+            LegalOntology = _ont_mod.LegalOntology
+
+            if path.endswith(".ttl"):
+                return LegalOntology.from_ttl_file(path)
+            elif path.endswith(".json"):
+                return LegalOntology.from_json_file(path)
+            else:
+                # Try JSON first, then TTL
+                try:
+                    return LegalOntology.from_json_file(path)
+                except Exception:
+                    return LegalOntology.from_ttl_file(path)
+        except Exception as e:
+            import logging
+            logging.getLogger(__name__).warning(f"Failed to load ontology from {path}: {e}")
+            return None
+
+    # =========================================================================
+    # Ontology Expansion methods (ported from semantica)
+    # =========================================================================
+
+    def _get_expansion_mode(self, query_type: LegalQueryType) -> str:
+        """
+        Get ontology expansion mode based on query type.
+
+        Args:
+            query_type: Analyzed query type
+
+        Returns:
+            Expansion mode: "children", "parents", "siblings", or "all"
+        """
+        # Map query types to expansion modes (from semantica)
+        mode_mapping = {
+            # GUIDANCE queries need broader coverage → all related terms
+            LegalQueryType.GUIDANCE: "all",
+            # SITUATION needs specific subtypes → children
+            LegalQueryType.SITUATION: "children",
+            # COMPARE needs sibling concepts at same level
+            LegalQueryType.COMPARE: "siblings",
+            # PENALTY needs specific terms → children
+            LegalQueryType.PENALTY: "children",
+            # DEFINITION needs broader context → parents
+            LegalQueryType.DEFINITION: "parents",
+            # PROCEDURE needs step details → children
+            LegalQueryType.PROCEDURE: "children",
+            # GENERAL uses balanced expansion
+            LegalQueryType.GENERAL: "children",
+        }
+        return mode_mapping.get(query_type, "children")
+
+    def _expand_query_with_ontology(
+        self,
+        query: str,
+        query_type: LegalQueryType,
+    ) -> tuple:
+        """
+        Expand query using ontology for better retrieval coverage.
+
+        Args:
+            query: Original query string
+            query_type: Analyzed query type
+
+        Returns:
+            Tuple of (expanded_query, expansion_results)
+        """
+        # Query types that benefit from ontology expansion
+        EXPANSION_QUERY_TYPES = {
+            LegalQueryType.GUIDANCE,
+            LegalQueryType.SITUATION,
+            LegalQueryType.COMPARE,
+            LegalQueryType.DEFINITION,
+        }
+
+        if query_type not in EXPANSION_QUERY_TYPES:
+            return query, []
+
+        expansion_mode = self._get_expansion_mode(query_type)
+        expanded_query, expansions = self.ontology_expander.expand_query(
+            query, mode=expansion_mode, max_terms=8
+        )
+
+        return expanded_query, expansions
 
     # =========================================================================
     # Cross-validation and expansion methods (ported from semantica)
