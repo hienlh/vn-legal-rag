@@ -1,0 +1,151 @@
+@prefix : <https://semantica.dev/legal/ontology#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+# Ontology declaration
+<https://semantica.dev/legal/ontology#> a owl:Ontology ;
+    rdfs:label "Vietnamese Legal Document Ontology"@vi ;
+    rdfs:comment "Ontology for Vietnamese legal documents"@vi .
+
+# Classes
+:Thing a owl:Class ;
+    rdfs:label "Sự vật"@vi ;
+    rdfs:comment "Lớp gốc của ontology"@vi .
+
+:LegalDocument a owl:Class ;
+    rdfs:label "Tài liệu pháp lý"@vi ;
+    rdfs:comment "Các tài liệu pháp lý như luật, nghị định, quy định."@vi .
+
+:Organization a owl:Class ;
+    rdfs:label "Tổ chức"@vi ;
+    rdfs:comment "Các tổ chức như doanh nghiệp, cơ quan nhà nước."@vi .
+
+:LegalTerm a owl:Class ;
+    rdfs:label "Thuật ngữ pháp lý"@vi ;
+    rdfs:comment "Các thuật ngữ liên quan đến pháp luật."@vi .
+
+:PersonRole a owl:Class ;
+    rdfs:label "Vai trò cá nhân"@vi ;
+    rdfs:comment "Các vai trò của cá nhân trong các tổ chức hoặc quy trình pháp lý."@vi .
+
+:LegalConcept a owl:Class ;
+    rdfs:label "Khái niệm pháp lý"@vi ;
+    rdfs:comment "Các khái niệm và điều kiện liên quan đến pháp luật."@vi .
+
+:Quantity a owl:Class ;
+    rdfs:label "Số lượng"@vi ;
+    rdfs:comment "Các loại số lượng như thời gian, tỷ lệ, và tiền tệ."@vi .
+
+:Duration a owl:Class ;
+    rdfs:label "Thời gian"@vi ;
+    rdfs:subClassOf :Quantity ;
+    rdfs:comment "Các khoảng thời gian liên quan đến quy trình pháp lý."@vi .
+
+:Percentage a owl:Class ;
+    rdfs:label "Tỷ lệ"@vi ;
+    rdfs:subClassOf :Quantity ;
+    rdfs:comment "Các tỷ lệ phần trăm liên quan đến vốn hoặc tài sản."@vi .
+
+:Monetary a owl:Class ;
+    rdfs:label "Tiền tệ"@vi ;
+    rdfs:subClassOf :Quantity ;
+    rdfs:comment "Các giá trị tiền tệ liên quan đến ngân sách hoặc tài chính."@vi .
+
+:Action a owl:Class ;
+    rdfs:label "Hành động"@vi ;
+    rdfs:subClassOf :LegalConcept ;
+    rdfs:comment "Các hành động pháp lý như đăng ký, góp vốn."@vi .
+
+:Condition a owl:Class ;
+    rdfs:label "Điều kiện"@vi ;
+    rdfs:subClassOf :LegalConcept ;
+    rdfs:comment "Các điều kiện cần thiết cho các hành động hoặc quy trình pháp lý."@vi .
+
+# Object Properties
+:relatedTo a owl:ObjectProperty ;
+    rdfs:label "Liên quan đến"@vi ;
+    rdfs:domain :LegalDocument ;
+    rdfs:range :LegalDocument .
+
+:requires a owl:ObjectProperty ;
+    rdfs:label "Yêu cầu"@vi ;
+    rdfs:domain :LegalDocument ;
+    rdfs:range :LegalTerm .
+
+:references a owl:ObjectProperty ;
+    rdfs:label "Tham chiếu"@vi ;
+    rdfs:domain :LegalDocument ;
+    rdfs:range :LegalReference .
+
+:authorizedBy a owl:ObjectProperty ;
+    rdfs:label "Được ủy quyền bởi"@vi ;
+    rdfs:domain :Action ;
+    rdfs:range :PersonRole .
+
+:partOf a owl:ObjectProperty ;
+    rdfs:label "Là một phần của"@vi ;
+    rdfs:domain :Organization ;
+    rdfs:range :LegalDocument .
+
+:hasAuthorityOver a owl:ObjectProperty ;
+    rdfs:label "Có quyền hạn đối với"@vi ;
+    rdfs:domain :PersonRole ;
+    rdfs:range :Organization .
+
+:includes a owl:ObjectProperty ;
+    rdfs:label "Bao gồm"@vi ;
+    rdfs:domain :LegalDocument ;
+    rdfs:range :LegalTerm .
+
+:conditionFor a owl:ObjectProperty ;
+    rdfs:label "Điều kiện cho"@vi ;
+    rdfs:domain :Action ;
+    rdfs:range :Condition .
+
+:appliesTo a owl:ObjectProperty ;
+    rdfs:label "Áp dụng cho"@vi ;
+    rdfs:domain :LegalDocument ;
+    rdfs:range :Organization .
+
+:responsibleFor a owl:ObjectProperty ;
+    rdfs:label "Chịu trách nhiệm cho"@vi ;
+    rdfs:domain :PersonRole ;
+    rdfs:range :Action .
+
+:hasPenalty a owl:ObjectProperty ;
+    rdfs:label "Có hình phạt"@vi ;
+    rdfs:domain :Action ;
+    rdfs:range :LegalTerm .
+
+:definedAs a owl:ObjectProperty ;
+    rdfs:label "Được định nghĩa là"@vi ;
+    rdfs:domain :LegalTerm ;
+    rdfs:range :LegalTerm .
+
+:supersedes a owl:ObjectProperty ;
+    rdfs:label "Thay thế"@vi ;
+    rdfs:domain :LegalDocument ;
+    rdfs:range :LegalDocument .
+
+:excludes a owl:ObjectProperty ;
+    rdfs:label "Loại trừ"@vi ;
+    rdfs:domain :LegalDocument ;
+    rdfs:range :LegalTerm .
+
+# Data Properties
+:hasConfidence a owl:DatatypeProperty ;
+    rdfs:label "Độ tin cậy"@vi ;
+    rdfs:domain :Thing ;
+    rdfs:range xsd:decimal .
+
+:hasText a owl:DatatypeProperty ;
+    rdfs:label "Nội dung"@vi ;
+    rdfs:domain :Thing ;
+    rdfs:range xsd:string .
+
+:hasSourceId a owl:DatatypeProperty ;
+    rdfs:label "ID nguồn"@vi ;
+    rdfs:domain :Thing ;
+    rdfs:range xsd:string .

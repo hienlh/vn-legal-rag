@@ -1,0 +1,313 @@
+{
+  "base_uri": "https://semantica.dev/legal/ontology#",
+  "classes": [
+    {
+      "name": "Thing",
+      "label": "Sự vật",
+      "parent": null,
+      "description": "Lớp gốc của ontology",
+      "uri": "https://semantica.dev/legal/ontology#Thing"
+    },
+    {
+      "name": "LegalDocument",
+      "label": "Tài liệu pháp lý",
+      "parent": null,
+      "description": "",
+      "uri": "https://semantica.dev/legal/ontology#LegalDocument"
+    },
+    {
+      "name": "Organization",
+      "label": "Tổ chức",
+      "parent": null,
+      "description": "",
+      "uri": "https://semantica.dev/legal/ontology#Organization"
+    },
+    {
+      "name": "LegalTerm",
+      "label": "Thuật ngữ pháp lý",
+      "parent": null,
+      "description": "",
+      "uri": "https://semantica.dev/legal/ontology#LegalTerm"
+    },
+    {
+      "name": "PersonRole",
+      "label": "Vai trò cá nhân",
+      "parent": null,
+      "description": "",
+      "uri": "https://semantica.dev/legal/ontology#PersonRole"
+    },
+    {
+      "name": "LegalConcept",
+      "label": "Khái niệm pháp lý",
+      "parent": null,
+      "description": "",
+      "uri": "https://semantica.dev/legal/ontology#LegalConcept"
+    },
+    {
+      "name": "Quantity",
+      "label": "Số lượng",
+      "parent": null,
+      "description": "",
+      "uri": "https://semantica.dev/legal/ontology#Quantity"
+    },
+    {
+      "name": "Duration",
+      "label": "Thời gian",
+      "parent": "Quantity",
+      "description": "",
+      "uri": "https://semantica.dev/legal/ontology#Duration"
+    },
+    {
+      "name": "Percentage",
+      "label": "Tỷ lệ",
+      "parent": "Quantity",
+      "description": "",
+      "uri": "https://semantica.dev/legal/ontology#Percentage"
+    },
+    {
+      "name": "Monetary",
+      "label": "Tiền tệ",
+      "parent": "Quantity",
+      "description": "",
+      "uri": "https://semantica.dev/legal/ontology#Monetary"
+    },
+    {
+      "name": "Action",
+      "label": "Hành động",
+      "parent": "LegalConcept",
+      "description": "",
+      "uri": "https://semantica.dev/legal/ontology#Action"
+    },
+    {
+      "name": "Condition",
+      "label": "Điều kiện",
+      "parent": "LegalConcept",
+      "description": "",
+      "uri": "https://semantica.dev/legal/ontology#Condition"
+    }
+  ],
+  "properties": [
+    {
+      "name": "relatedTo",
+      "label": "Liên quan đến",
+      "type": "object",
+      "domain": [
+        "LegalDocument"
+      ],
+      "range": [
+        "LegalDocument"
+      ],
+      "description": "",
+      "uri": "https://semantica.dev/legal/ontology#relatedTo"
+    },
+    {
+      "name": "requires",
+      "label": "Yêu cầu",
+      "type": "object",
+      "domain": [
+        "LegalDocument"
+      ],
+      "range": [
+        "LegalTerm"
+      ],
+      "description": "",
+      "uri": "https://semantica.dev/legal/ontology#requires"
+    },
+    {
+      "name": "references",
+      "label": "Tham chiếu",
+      "type": "object",
+      "domain": [
+        "LegalDocument"
+      ],
+      "range": [
+        "LegalReference"
+      ],
+      "description": "",
+      "uri": "https://semantica.dev/legal/ontology#references"
+    },
+    {
+      "name": "authorizedBy",
+      "label": "Được ủy quyền bởi",
+      "type": "object",
+      "domain": [
+        "Action"
+      ],
+      "range": [
+        "PersonRole"
+      ],
+      "description": "",
+      "uri": "https://semantica.dev/legal/ontology#authorizedBy"
+    },
+    {
+      "name": "partOf",
+      "label": "Là một phần của",
+      "type": "object",
+      "domain": [
+        "Organization"
+      ],
+      "range": [
+        "LegalDocument"
+      ],
+      "description": "",
+      "uri": "https://semantica.dev/legal/ontology#partOf"
+    },
+    {
+      "name": "hasAuthorityOver",
+      "label": "Có quyền hạn đối với",
+      "type": "object",
+      "domain": [
+        "PersonRole"
+      ],
+      "range": [
+        "Organization"
+      ],
+      "description": "",
+      "uri": "https://semantica.dev/legal/ontology#hasAuthorityOver"
+    },
+    {
+      "name": "includes",
+      "label": "Bao gồm",
+      "type": "object",
+      "domain": [
+        "LegalDocument"
+      ],
+      "range": [
+        "LegalTerm"
+      ],
+      "description": "",
+      "uri": "https://semantica.dev/legal/ontology#includes"
+    },
+    {
+      "name": "conditionFor",
+      "label": "Điều kiện cho",
+      "type": "object",
+      "domain": [
+        "Action"
+      ],
+      "range": [
+        "Condition"
+      ],
+      "description": "",
+      "uri": "https://semantica.dev/legal/ontology#conditionFor"
+    },
+    {
+      "name": "appliesTo",
+      "label": "Áp dụng cho",
+      "type": "object",
+      "domain": [
+        "LegalDocument"
+      ],
+      "range": [
+        "Organization"
+      ],
+      "description": "",
+      "uri": "https://semantica.dev/legal/ontology#appliesTo"
+    },
+    {
+      "name": "responsibleFor",
+      "label": "Chịu trách nhiệm cho",
+      "type": "object",
+      "domain": [
+        "PersonRole"
+      ],
+      "range": [
+        "Action"
+      ],
+      "description": "",
+      "uri": "https://semantica.dev/legal/ontology#responsibleFor"
+    },
+    {
+      "name": "hasPenalty",
+      "label": "Có hình phạt",
+      "type": "object",
+      "domain": [
+        "Action"
+      ],
+      "range": [
+        "LegalTerm"
+      ],
+      "description": "",
+      "uri": "https://semantica.dev/legal/ontology#hasPenalty"
+    },
+    {
+      "name": "definedAs",
+      "label": "Được định nghĩa là",
+      "type": "object",
+      "domain": [
+        "LegalTerm"
+      ],
+      "range": [
+        "LegalTerm"
+      ],
+      "description": "",
+      "uri": "https://semantica.dev/legal/ontology#definedAs"
+    },
+    {
+      "name": "supersedes",
+      "label": "Thay thế",
+      "type": "object",
+      "domain": [
+        "LegalDocument"
+      ],
+      "range": [
+        "LegalDocument"
+      ],
+      "description": "",
+      "uri": "https://semantica.dev/legal/ontology#supersedes"
+    },
+    {
+      "name": "excludes",
+      "label": "Loại trừ",
+      "type": "object",
+      "domain": [
+        "LegalDocument"
+      ],
+      "range": [
+        "LegalTerm"
+      ],
+      "description": "",
+      "uri": "https://semantica.dev/legal/ontology#excludes"
+    },
+    {
+      "name": "hasConfidence",
+      "label": "Độ tin cậy",
+      "type": "data",
+      "domain": [
+        "Thing"
+      ],
+      "range": [
+        "xsd:decimal"
+      ],
+      "description": "",
+      "uri": "https://semantica.dev/legal/ontology#hasConfidence"
+    },
+    {
+      "name": "hasText",
+      "label": "Nội dung",
+      "type": "data",
+      "domain": [
+        "Thing"
+      ],
+      "range": [
+        "xsd:string"
+      ],
+      "description": "",
+      "uri": "https://semantica.dev/legal/ontology#hasText"
+    },
+    {
+      "name": "hasSourceId",
+      "label": "ID nguồn",
+      "type": "data",
+      "domain": [
+        "Thing"
+      ],
+      "range": [
+        "xsd:string"
+      ],
+      "description": "",
+      "uri": "https://semantica.dev/legal/ontology#hasSourceId"
+    }
+  ],
+  "metadata": {}
+}

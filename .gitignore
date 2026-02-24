@@ -1,7 +1,9 @@
 # Data files (user must provide or generate)
 data/legal_docs.db
 data/llm_cache.db
-data/kg_enhanced/
+data/kg_enhanced/*
+!data/kg_enhanced/ontology.ttl
+!data/kg_enhanced/ontology.json
 data/benchmark/
 data/baseline-results/
 data/article_to_document_mapping.json
