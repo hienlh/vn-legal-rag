@@ -1,3 +1,6 @@
+# Plans and reports (local only)
+plans/
+
 # Data files (user must provide or generate)
 data/legal_docs.db
 data/llm_cache.db
