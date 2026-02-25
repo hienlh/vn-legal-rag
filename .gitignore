@@ -81,5 +81,12 @@ repomix-output.xml
 
 # Keep only final results (results_3.json is tracked)
 
+# LaTeX build artifacts
+paper/*.aux
+paper/*.fdb_latexmk
+paper/*.fls
+paper/*.log
+paper/*.out
+
 # Claude
 .claude/
