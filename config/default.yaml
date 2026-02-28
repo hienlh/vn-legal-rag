@@ -1,8 +1,8 @@
 # LLM Provider Settings
 llm:
-  provider: "openai"  # openai, anthropic, gemini
-  model: "gpt-4o-mini"
-  base_url: null  # Optional custom base URL
+  provider: "anthropic"  # openai, anthropic, gemini
+  model: "claude-3-5-haiku-20241022"
+  base_url: "http://127.0.0.1:3456"  # Claude Max Proxy
   use_cache: true
   cache_db: "data/llm_cache.db"
 

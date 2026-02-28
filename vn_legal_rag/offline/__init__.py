@@ -64,6 +64,27 @@ LegalOntology = _ontology_gen.LegalOntology
 OntologyClass = _ontology_gen.OntologyClass
 OntologyProperty = _ontology_gen.OntologyProperty
 
+# Class hierarchy builder (for ontology generation)
+_hierarchy_builder = import_module(
+    ".ontology-class-hierarchy-builder", "vn_legal_rag.offline"
+)
+ClassHierarchyBuilder = _hierarchy_builder.ClassHierarchyBuilder
+HierarchyMapping = _hierarchy_builder.HierarchyMapping
+
+# Pellet reasoner integration (for OWL2 reasoning)
+_pellet_reasoner = import_module(
+    ".ontology-pellet-reasoner-integration", "vn_legal_rag.offline"
+)
+PelletReasonerIntegration = _pellet_reasoner.PelletReasonerIntegration
+ReasoningResult = _pellet_reasoner.ReasoningResult
+
+# Ontology version manager (for multi-domain versioning)
+_version_manager = import_module(
+    ".ontology-version-manager", "vn_legal_rag.offline"
+)
+OntologyVersionManager = _version_manager.OntologyVersionManager
+OntologyVersion = _version_manager.OntologyVersion
+
 # Ontology validation (kebab-case filename)
 _ontology_validator = import_module(
     ".ontology-validator-for-kg-consistency", "vn_legal_rag.offline"
@@ -274,6 +295,15 @@ __all__ = [
     "LegalOntology",
     "OntologyClass",
     "OntologyProperty",
+    # Class hierarchy builder
+    "ClassHierarchyBuilder",
+    "HierarchyMapping",
+    # Pellet reasoner integration
+    "PelletReasonerIntegration",
+    "ReasoningResult",
+    # Ontology version manager
+    "OntologyVersionManager",
+    "OntologyVersion",
     # Ontology validation
     "OntologyValidator",
     "OntologyValidationResult",

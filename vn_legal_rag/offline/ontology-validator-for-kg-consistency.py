@@ -18,9 +18,23 @@ Example:
 
 import logging
 from dataclasses import dataclass, field
+from importlib import import_module
 from typing import Any, Dict, List, Optional, Set, Union
 
 logger = logging.getLogger(__name__)
+
+# Lazy import for PelletReasonerIntegration
+_pellet_module = None
+
+
+def _get_pellet_reasoner():
+    """Lazy import PelletReasonerIntegration to avoid circular imports."""
+    global _pellet_module
+    if _pellet_module is None:
+        _pellet_module = import_module(
+            ".ontology-pellet-reasoner-integration", "vn_legal_rag.offline"
+        )
+    return _pellet_module.PelletReasonerIntegration
 
 
 @dataclass
@@ -69,6 +83,7 @@ class OntologyValidator:
         check_hierarchy: bool = True,
         check_domain_range: bool = True,
         strict_mode: bool = False,
+        use_pellet: bool = True,
         **kwargs,
     ):
         """
@@ -79,13 +94,25 @@ class OntologyValidator:
             check_hierarchy: Whether to check class hierarchy
             check_domain_range: Whether to check property domain/range
             strict_mode: If True, warnings become errors
+            use_pellet: Whether to use Pellet reasoner for OWL2 validation
             **kwargs: Additional configuration
         """
         self.check_consistency = check_consistency
         self.check_hierarchy = check_hierarchy
         self.check_domain_range = check_domain_range
         self.strict_mode = strict_mode
+        self.use_pellet = use_pellet
         self.config = kwargs
+
+        # Initialize Pellet reasoner if enabled
+        self._pellet = None
+        if use_pellet:
+            try:
+                PelletReasonerIntegration = _get_pellet_reasoner()
+                self._pellet = PelletReasonerIntegration()
+                logger.info("Pellet reasoner initialized for validation")
+            except Exception as e:
+                logger.warning(f"Failed to init Pellet reasoner: {e}")
 
     def validate(
         self,
@@ -148,6 +175,14 @@ class OntologyValidator:
             # 4. Consistency checks
             if self.check_consistency:
                 self._validate_consistency(ontology_dict, result)
+
+            # 5. Pellet reasoning (OWL2 symbolic validation)
+            if self.use_pellet and self._pellet:
+                pellet_result = self._validate_with_pellet(ontology_dict)
+                result.consistent = pellet_result.consistent
+                result.satisfiable = pellet_result.satisfiable
+                result.errors.extend(pellet_result.errors)
+                result.warnings.extend(pellet_result.warnings)
 
             # Calculate metrics
             result.metrics = self._calculate_metrics(ontology_dict)
@@ -343,6 +378,36 @@ class OntologyValidator:
                 result.errors.append(f"Duplicate property name: '{name}'")
                 result.consistent = False
             seen.add(name)
+
+    def _validate_with_pellet(
+        self,
+        ontology_dict: Dict[str, Any],
+    ) -> "ReasoningResult":
+        """
+        Run Pellet reasoning validation.
+
+        Args:
+            ontology_dict: Ontology in dictionary format
+
+        Returns:
+            ReasoningResult from Pellet reasoner
+        """
+        if not self._pellet:
+            # Return default result if Pellet not available
+            from vn_legal_rag.offline import PelletReasonerIntegration
+            return PelletReasonerIntegration.ReasoningResult()
+
+        try:
+            return self._pellet.reason_from_dict(ontology_dict)
+        except Exception as e:
+            logger.warning(f"Pellet validation failed: {e}")
+            # Import ReasoningResult for fallback
+            _pellet_mod = import_module(
+                ".ontology-pellet-reasoner-integration", "vn_legal_rag.offline"
+            )
+            return _pellet_mod.ReasoningResult(
+                errors=[f"Pellet validation failed: {str(e)}"]
+            )
 
     def _calculate_metrics(self, ontology: Dict[str, Any]) -> Dict[str, Any]:
         """Calculate ontology metrics."""

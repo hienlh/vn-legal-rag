@@ -10,11 +10,25 @@ Designed for Vietnamese legal domain.
 """
 
 from dataclasses import dataclass, field
+from importlib import import_module
 from typing import Any, Dict, List, Optional
 import json
 import logging
 
 logger = logging.getLogger(__name__)
+
+# Lazy import for ClassHierarchyBuilder
+_hierarchy_builder_module = None
+
+
+def _get_hierarchy_builder():
+    """Lazy import ClassHierarchyBuilder to avoid circular imports."""
+    global _hierarchy_builder_module
+    if _hierarchy_builder_module is None:
+        _hierarchy_builder_module = import_module(
+            ".ontology-class-hierarchy-builder", "vn_legal_rag.offline"
+        )
+    return _hierarchy_builder_module.ClassHierarchyBuilder
 
 
 # Vietnamese legal domain prompt for LLM
@@ -78,7 +92,7 @@ class LegalOntology:
     """Legal domain ontology container."""
     classes: Dict[str, OntologyClass] = field(default_factory=dict)
     properties: Dict[str, OntologyProperty] = field(default_factory=dict)
-    base_uri: str = "https://semantica.dev/legal/ontology#"
+    base_uri: str = "https://hienle.tech/legal/ontology#"
     metadata: Dict[str, Any] = field(default_factory=dict)
 
     def add_class(self, cls: OntologyClass) -> None:
@@ -194,7 +208,7 @@ class LegalOntology:
     @classmethod
     def from_dict(cls, data: Dict[str, Any]) -> "LegalOntology":
         """Load ontology from dictionary."""
-        ontology = cls(base_uri=data.get("base_uri", "https://semantica.dev/legal/ontology#"))
+        ontology = cls(base_uri=data.get("base_uri", "https://hienle.tech/legal/ontology#"))
         ontology.metadata = data.get("metadata", {})
 
         for cls_data in data.get("classes", []):
@@ -356,27 +370,43 @@ class LegalOntologyGenerator:
 
     def __init__(
         self,
-        base_uri: str = "https://semantica.dev/legal/ontology#",
+        base_uri: str = "https://hienle.tech/legal/ontology#",
         llm_provider: Optional[Any] = None,
         llm_model: str = "gpt-4o-mini",
         use_llm: bool = True,
         min_occurrences: int = 1,
+        base_ontology_path: Optional[str] = None,
+        use_hierarchy_builder: bool = True,
     ):
         """
         Initialize the Ontology Generator.
 
         Args:
             base_uri: Base URI for the ontology
-            llm_provider: LLM provider instance (must have generate_structured method)
+            llm_provider: LLM provider instance (must have generate_json method)
             llm_model: LLM model name
             use_llm: Whether to use LLM for label generation
             min_occurrences: Minimum entity occurrences to create class
+            base_ontology_path: Path to base ontology TTL for hierarchy mapping
+            use_hierarchy_builder: Whether to use ClassHierarchyBuilder for hierarchy
         """
         self.base_uri = base_uri
         self.llm_provider = llm_provider
         self.llm_model = llm_model
         self.use_llm = use_llm and llm_provider is not None
         self.min_occurrences = min_occurrences
+        self.base_ontology_path = base_ontology_path
+        self.use_hierarchy_builder = use_hierarchy_builder
+
+        # Initialize hierarchy builder if enabled
+        self._hierarchy_builder = None
+        if use_hierarchy_builder:
+            try:
+                ClassHierarchyBuilder = _get_hierarchy_builder()
+                self._hierarchy_builder = ClassHierarchyBuilder(base_ontology_path)
+                logger.info("ClassHierarchyBuilder initialized")
+            except Exception as e:
+                logger.warning(f"Failed to init ClassHierarchyBuilder: {e}")
 
     def generate_from_kg(
         self,
@@ -420,7 +450,7 @@ Hãy tạo ontology phù hợp cho dữ liệu trên."""
         prompt = LEGAL_ONTOLOGY_PROMPT_VI + "\n\n" + text
 
         try:
-            result = self.llm_provider.generate_structured(
+            result = self.llm_provider.generate_json(
                 prompt,
                 model=self.llm_model,
                 temperature=0.2,
@@ -435,7 +465,7 @@ Hãy tạo ontology phù hợp cho dữ liệu trên."""
         kg: Dict[str, Any],
         name: str,
     ) -> LegalOntology:
-        """Generate ontology using rule-based inference."""
+        """Generate ontology using rule-based inference with hierarchy builder."""
         logger.info("Generating ontology with rule-based inference")
 
         ontology = LegalOntology(base_uri=self.base_uri)
@@ -448,20 +478,60 @@ Hãy tạo ontology phù hợp cho dữ liệu trên."""
             description="Lớp gốc của ontology",
         ))
 
-        # Infer classes from entity types
-        entity_types: Dict[str, int] = {}
-        for ent in kg.get("entities", []):
-            ent_type = ent.get("entity_type") or ent.get("type") or "Entity"
-            entity_types[ent_type] = entity_types.get(ent_type, 0) + 1
+        entities = kg.get("entities", [])
 
-        for ent_type, count in entity_types.items():
-            if count >= self.min_occurrences and ent_type not in ontology.classes:
-                ontology.add_class(OntologyClass(
-                    name=ent_type,
-                    label=ent_type,  # No Vietnamese label in rule-based
-                    parent="Thing",
-                    description=f"Entity type: {ent_type}",
-                ))
+        # Use hierarchy builder if available
+        if self._hierarchy_builder and entities:
+            mappings = self._hierarchy_builder.build_hierarchy(entities)
+
+            # Add classes with proper hierarchy and Vietnamese labels
+            added_classes: set = {"Thing"}
+            for mapping in mappings.values():
+                # Add parent class first if not exists
+                if mapping.parent_class not in added_classes:
+                    parent_label = self._hierarchy_builder.VIETNAMESE_LABELS.get(
+                        mapping.parent_class, mapping.parent_class
+                    )
+                    # Find grandparent
+                    grandparent = None
+                    for m in mappings.values():
+                        if m.class_name == mapping.parent_class:
+                            grandparent = m.parent_class
+                            break
+                    ontology.add_class(OntologyClass(
+                        name=mapping.parent_class,
+                        label=parent_label,
+                        parent=grandparent or "Thing",
+                        description=f"Lớp {parent_label}",
+                    ))
+                    added_classes.add(mapping.parent_class)
+
+                # Add the class itself
+                if mapping.class_name not in added_classes:
+                    ontology.add_class(OntologyClass(
+                        name=mapping.class_name,
+                        label=mapping.vietnamese_label,
+                        parent=mapping.parent_class,
+                        description=f"Lớp {mapping.vietnamese_label}",
+                    ))
+                    added_classes.add(mapping.class_name)
+
+            logger.info(f"Built hierarchy with {len(added_classes)} classes")
+        else:
+            # Fallback: flat hierarchy without builder
+            entity_types: Dict[str, int] = {}
+            for ent in entities:
+                ent_type = ent.get("entity_type") or ent.get("type") or "Entity"
+                entity_types[ent_type] = entity_types.get(ent_type, 0) + 1
+
+            for ent_type, count in entity_types.items():
+                if count >= self.min_occurrences and ent_type not in ontology.classes:
+                    ontology.add_class(OntologyClass(
+                        name=ent_type,
+                        label=ent_type,
+                        parent="Thing",
+                        description=f"Entity type: {ent_type}",
+                    ))
 
         # Infer properties from relation types
         relation_types: Dict[str, int] = {}

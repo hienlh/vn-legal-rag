@@ -1,0 +1,358 @@
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix legal: <http://vn-legal-rag.example.org/ontology#> .
+
+<http://vn-legal-rag.example.org/ontology> rdf:type owl:Ontology ;
+    rdfs:label "Vietnamese Legal Core Ontology"@en ;
+    rdfs:label "Ontology cốt lõi pháp luật Việt Nam"@vi ;
+    rdfs:comment "Base ontology for Vietnamese legal domain with class hierarchy"@en ;
+    owl:versionInfo "1.0.0" .
+
+#################################################################
+# LEVEL 1: Top-level classes (direct subclass of owl:Thing)
+#################################################################
+
+legal:Organization rdf:type owl:Class ;
+    rdfs:label "Organization"@en ;
+    rdfs:label "Tổ chức"@vi ;
+    rdfs:comment "Tổ chức có tư cách pháp nhân hoặc đơn vị hành chính"@vi .
+
+legal:LegalDocument rdf:type owl:Class ;
+    rdfs:label "Legal Document"@en ;
+    rdfs:label "Văn bản pháp luật"@vi ;
+    rdfs:comment "Văn bản quy phạm pháp luật do cơ quan nhà nước ban hành"@vi .
+
+legal:LegalConcept rdf:type owl:Class ;
+    rdfs:label "Legal Concept"@en ;
+    rdfs:label "Khái niệm pháp lý"@vi ;
+    rdfs:comment "Khái niệm trừu tượng trong lĩnh vực pháp luật"@vi .
+
+legal:PersonRole rdf:type owl:Class ;
+    rdfs:label "Person Role"@en ;
+    rdfs:label "Vai trò cá nhân"@vi ;
+    rdfs:comment "Vai trò hoặc chức danh của cá nhân trong tổ chức"@vi .
+
+legal:Quantity rdf:type owl:Class ;
+    rdfs:label "Quantity"@en ;
+    rdfs:label "Số lượng"@vi ;
+    rdfs:comment "Giá trị định lượng trong văn bản pháp luật"@vi .
+
+#################################################################
+# LEVEL 2: Organization subtypes
+#################################################################
+
+legal:Government rdf:type owl:Class ;
+    rdfs:subClassOf legal:Organization ;
+    rdfs:label "Government"@en ;
+    rdfs:label "Cơ quan nhà nước"@vi ;
+    rdfs:comment "Cơ quan quản lý nhà nước các cấp"@vi .
+
+legal:Enterprise rdf:type owl:Class ;
+    rdfs:subClassOf legal:Organization ;
+    rdfs:label "Enterprise"@en ;
+    rdfs:label "Doanh nghiệp"@vi ;
+    rdfs:comment "Tổ chức kinh tế có tư cách pháp nhân thực hiện hoạt động kinh doanh"@vi .
+
+#################################################################
+# LEVEL 3: Government subtypes
+#################################################################
+
+legal:Ministry rdf:type owl:Class ;
+    rdfs:subClassOf legal:Government ;
+    rdfs:label "Ministry"@en ;
+    rdfs:label "Bộ"@vi ;
+    rdfs:comment "Cơ quan của Chính phủ thực hiện chức năng quản lý nhà nước"@vi .
+
+legal:Agency rdf:type owl:Class ;
+    rdfs:subClassOf legal:Government ;
+    rdfs:label "Agency"@en ;
+    rdfs:label "Cơ quan"@vi ;
+    rdfs:comment "Cơ quan nhà nước thực hiện chức năng quản lý chuyên ngành"@vi .
+
+legal:Court rdf:type owl:Class ;
+    rdfs:subClassOf legal:Government ;
+    rdfs:label "Court"@en ;
+    rdfs:label "Tòa án"@vi ;
+    rdfs:comment "Cơ quan xét xử của nhà nước"@vi .
+
+#################################################################
+# LEVEL 3: Enterprise subtypes
+#################################################################
+
+legal:JointStockCompany rdf:type owl:Class ;
+    rdfs:subClassOf legal:Enterprise ;
+    rdfs:label "Joint Stock Company"@en ;
+    rdfs:label "Công ty cổ phần"@vi ;
+    rdfs:comment "Doanh nghiệp có vốn điều lệ chia thành nhiều phần bằng nhau gọi là cổ phần"@vi .
+
+legal:LimitedLiabilityCompany rdf:type owl:Class ;
+    rdfs:subClassOf legal:Enterprise ;
+    rdfs:label "Limited Liability Company"@en ;
+    rdfs:label "Công ty TNHH"@vi ;
+    rdfs:comment "Doanh nghiệp mà thành viên chịu trách nhiệm trong phạm vi vốn góp"@vi .
+
+legal:PrivateEnterprise rdf:type owl:Class ;
+    rdfs:subClassOf legal:Enterprise ;
+    rdfs:label "Private Enterprise"@en ;
+    rdfs:label "Doanh nghiệp tư nhân"@vi ;
+    rdfs:comment "Doanh nghiệp do một cá nhân làm chủ và tự chịu trách nhiệm bằng toàn bộ tài sản"@vi .
+
+legal:Partnership rdf:type owl:Class ;
+    rdfs:subClassOf legal:Enterprise ;
+    rdfs:label "Partnership"@en ;
+    rdfs:label "Công ty hợp danh"@vi ;
+    rdfs:comment "Doanh nghiệp có ít nhất 2 thành viên hợp danh cùng kinh doanh"@vi .
+
+legal:HouseholdBusiness rdf:type owl:Class ;
+    rdfs:subClassOf legal:Enterprise ;
+    rdfs:label "Household Business"@en ;
+    rdfs:label "Hộ kinh doanh"@vi ;
+    rdfs:comment "Hình thức kinh doanh do cá nhân hoặc hộ gia đình đăng ký"@vi .
+
+#################################################################
+# LEVEL 4: LLC subtypes
+#################################################################
+
+legal:SingleMemberLLC rdf:type owl:Class ;
+    rdfs:subClassOf legal:LimitedLiabilityCompany ;
+    rdfs:label "Single Member LLC"@en ;
+    rdfs:label "Công ty TNHH một thành viên"@vi ;
+    rdfs:comment "Công ty TNHH do một cá nhân hoặc tổ chức làm chủ sở hữu"@vi .
+
+legal:MultiMemberLLC rdf:type owl:Class ;
+    rdfs:subClassOf legal:LimitedLiabilityCompany ;
+    rdfs:label "Multi Member LLC"@en ;
+    rdfs:label "Công ty TNHH hai thành viên trở lên"@vi ;
+    rdfs:comment "Công ty TNHH có từ 2 đến 50 thành viên góp vốn"@vi .
+
+#################################################################
+# LEVEL 2: Legal Document subtypes
+#################################################################
+
+legal:Law rdf:type owl:Class ;
+    rdfs:subClassOf legal:LegalDocument ;
+    rdfs:label "Law"@en ;
+    rdfs:label "Luật"@vi ;
+    rdfs:comment "Văn bản quy phạm pháp luật do Quốc hội ban hành"@vi .
+
+legal:Decree rdf:type owl:Class ;
+    rdfs:subClassOf legal:LegalDocument ;
+    rdfs:label "Decree"@en ;
+    rdfs:label "Nghị định"@vi ;
+    rdfs:comment "Văn bản quy phạm pháp luật do Chính phủ ban hành"@vi .
+
+legal:Circular rdf:type owl:Class ;
+    rdfs:subClassOf legal:LegalDocument ;
+    rdfs:label "Circular"@en ;
+    rdfs:label "Thông tư"@vi ;
+    rdfs:comment "Văn bản quy phạm pháp luật do Bộ trưởng ban hành"@vi .
+
+legal:Decision rdf:type owl:Class ;
+    rdfs:subClassOf legal:LegalDocument ;
+    rdfs:label "Decision"@en ;
+    rdfs:label "Quyết định"@vi ;
+    rdfs:comment "Văn bản áp dụng pháp luật của cơ quan có thẩm quyền"@vi .
+
+legal:Resolution rdf:type owl:Class ;
+    rdfs:subClassOf legal:LegalDocument ;
+    rdfs:label "Resolution"@en ;
+    rdfs:label "Nghị quyết"@vi ;
+    rdfs:comment "Văn bản do cơ quan nhà nước có thẩm quyền ban hành"@vi .
+
+#################################################################
+# LEVEL 2: Legal Concept subtypes
+#################################################################
+
+legal:Right rdf:type owl:Class ;
+    rdfs:subClassOf legal:LegalConcept ;
+    rdfs:label "Right"@en ;
+    rdfs:label "Quyền"@vi ;
+    rdfs:comment "Quyền lợi được pháp luật bảo hộ"@vi .
+
+legal:Obligation rdf:type owl:Class ;
+    rdfs:subClassOf legal:LegalConcept ;
+    rdfs:label "Obligation"@en ;
+    rdfs:label "Nghĩa vụ"@vi ;
+    rdfs:comment "Trách nhiệm phải thực hiện theo quy định pháp luật"@vi .
+
+legal:Penalty rdf:type owl:Class ;
+    rdfs:subClassOf legal:LegalConcept ;
+    rdfs:label "Penalty"@en ;
+    rdfs:label "Hình phạt"@vi ;
+    rdfs:comment "Biện pháp xử lý vi phạm pháp luật"@vi .
+
+legal:Condition rdf:type owl:Class ;
+    rdfs:subClassOf legal:LegalConcept ;
+    rdfs:label "Condition"@en ;
+    rdfs:label "Điều kiện"@vi ;
+    rdfs:comment "Yêu cầu cần đáp ứng theo quy định pháp luật"@vi .
+
+legal:Action rdf:type owl:Class ;
+    rdfs:subClassOf legal:LegalConcept ;
+    rdfs:label "Action"@en ;
+    rdfs:label "Hành động"@vi ;
+    rdfs:comment "Hành vi pháp lý của chủ thể"@vi .
+
+legal:Procedure rdf:type owl:Class ;
+    rdfs:subClassOf legal:LegalConcept ;
+    rdfs:label "Procedure"@en ;
+    rdfs:label "Thủ tục"@vi ;
+    rdfs:comment "Quy trình thực hiện theo quy định pháp luật"@vi .
+
+#################################################################
+# LEVEL 2: Person Role subtypes
+#################################################################
+
+legal:LegalRepresentative rdf:type owl:Class ;
+    rdfs:subClassOf legal:PersonRole ;
+    rdfs:label "Legal Representative"@en ;
+    rdfs:label "Người đại diện theo pháp luật"@vi ;
+    rdfs:comment "Người được ủy quyền đại diện cho tổ chức trong các giao dịch pháp lý"@vi .
+
+legal:Shareholder rdf:type owl:Class ;
+    rdfs:subClassOf legal:PersonRole ;
+    rdfs:label "Shareholder"@en ;
+    rdfs:label "Cổ đông"@vi ;
+    rdfs:comment "Cá nhân hoặc tổ chức sở hữu cổ phần của công ty cổ phần"@vi .
+
+legal:Member rdf:type owl:Class ;
+    rdfs:subClassOf legal:PersonRole ;
+    rdfs:label "Member"@en ;
+    rdfs:label "Thành viên"@vi ;
+    rdfs:comment "Cá nhân hoặc tổ chức góp vốn vào công ty"@vi .
+
+legal:Director rdf:type owl:Class ;
+    rdfs:subClassOf legal:PersonRole ;
+    rdfs:label "Director"@en ;
+    rdfs:label "Giám đốc"@vi ;
+    rdfs:comment "Người điều hành hoạt động kinh doanh hàng ngày của công ty"@vi .
+
+legal:BoardMember rdf:type owl:Class ;
+    rdfs:subClassOf legal:PersonRole ;
+    rdfs:label "Board Member"@en ;
+    rdfs:label "Thành viên HĐQT"@vi ;
+    rdfs:comment "Thành viên Hội đồng quản trị của công ty cổ phần"@vi .
+
+legal:Founder rdf:type owl:Class ;
+    rdfs:subClassOf legal:PersonRole ;
+    rdfs:label "Founder"@en ;
+    rdfs:label "Người sáng lập"@vi ;
+    rdfs:comment "Cá nhân hoặc tổ chức thành lập doanh nghiệp"@vi .
+
+#################################################################
+# LEVEL 2: Quantity subtypes
+#################################################################
+
+legal:Monetary rdf:type owl:Class ;
+    rdfs:subClassOf legal:Quantity ;
+    rdfs:label "Monetary"@en ;
+    rdfs:label "Tiền tệ"@vi ;
+    rdfs:comment "Giá trị tiền tệ (VND, USD, v.v.)"@vi .
+
+legal:Percentage rdf:type owl:Class ;
+    rdfs:subClassOf legal:Quantity ;
+    rdfs:label "Percentage"@en ;
+    rdfs:label "Tỷ lệ phần trăm"@vi ;
+    rdfs:comment "Giá trị tỷ lệ phần trăm"@vi .
+
+legal:Duration rdf:type owl:Class ;
+    rdfs:subClassOf legal:Quantity ;
+    rdfs:label "Duration"@en ;
+    rdfs:label "Thời hạn"@vi ;
+    rdfs:comment "Khoảng thời gian (ngày, tháng, năm)"@vi .
+
+#################################################################
+# Object Properties
+#################################################################
+
+legal:governedBy rdf:type owl:ObjectProperty ;
+    rdfs:label "governed by"@en ;
+    rdfs:label "chịu sự điều chỉnh của"@vi ;
+    rdfs:domain legal:Organization ;
+    rdfs:range legal:LegalDocument ;
+    rdfs:comment "Tổ chức chịu sự điều chỉnh của văn bản pháp luật"@vi .
+
+legal:hasRole rdf:type owl:ObjectProperty ;
+    rdfs:label "has role"@en ;
+    rdfs:label "có vai trò"@vi ;
+    rdfs:domain legal:Organization ;
+    rdfs:range legal:PersonRole ;
+    rdfs:comment "Tổ chức có các vai trò/chức danh"@vi .
+
+legal:hasRight rdf:type owl:ObjectProperty ;
+    rdfs:label "has right"@en ;
+    rdfs:label "có quyền"@vi ;
+    rdfs:domain [ rdf:type owl:Class ;
+                  owl:unionOf ( legal:Organization legal:PersonRole ) ] ;
+    rdfs:range legal:Right ;
+    rdfs:comment "Tổ chức hoặc cá nhân có quyền"@vi .
+
+legal:hasObligation rdf:type owl:ObjectProperty ;
+    rdfs:label "has obligation"@en ;
+    rdfs:label "có nghĩa vụ"@vi ;
+    rdfs:domain [ rdf:type owl:Class ;
+                  owl:unionOf ( legal:Organization legal:PersonRole ) ] ;
+    rdfs:range legal:Obligation ;
+    rdfs:comment "Tổ chức hoặc cá nhân có nghĩa vụ"@vi .
+
+legal:requires rdf:type owl:ObjectProperty ;
+    rdfs:label "requires"@en ;
+    rdfs:label "yêu cầu"@vi ;
+    rdfs:domain legal:Action ;
+    rdfs:range legal:Condition ;
+    rdfs:comment "Hành động yêu cầu điều kiện"@vi .
+
+legal:violates rdf:type owl:ObjectProperty ;
+    rdfs:label "violates"@en ;
+    rdfs:label "vi phạm"@vi ;
+    rdfs:domain legal:Action ;
+    rdfs:range legal:LegalDocument ;
+    rdfs:comment "Hành động vi phạm quy định"@vi .
+
+legal:resultsIn rdf:type owl:ObjectProperty ;
+    rdfs:label "results in"@en ;
+    rdfs:label "dẫn đến"@vi ;
+    rdfs:domain legal:Action ;
+    rdfs:range legal:Penalty ;
+    rdfs:comment "Hành động dẫn đến hình phạt"@vi .
+
+#################################################################
+# Data Properties
+#################################################################
+
+legal:charterCapital rdf:type owl:DatatypeProperty ;
+    rdfs:label "charter capital"@en ;
+    rdfs:label "vốn điều lệ"@vi ;
+    rdfs:domain legal:Enterprise ;
+    rdfs:range xsd:decimal ;
+    rdfs:comment "Số vốn điều lệ đăng ký của doanh nghiệp"@vi .
+
+legal:effectiveDate rdf:type owl:DatatypeProperty ;
+    rdfs:label "effective date"@en ;
+    rdfs:label "ngày có hiệu lực"@vi ;
+    rdfs:domain legal:LegalDocument ;
+    rdfs:range xsd:date ;
+    rdfs:comment "Ngày văn bản bắt đầu có hiệu lực"@vi .
+
+legal:documentNumber rdf:type owl:DatatypeProperty ;
+    rdfs:label "document number"@en ;
+    rdfs:label "số hiệu"@vi ;
+    rdfs:domain legal:LegalDocument ;
+    rdfs:range xsd:string ;
+    rdfs:comment "Số hiệu văn bản pháp luật"@vi .
+
+legal:percentageValue rdf:type owl:DatatypeProperty ;
+    rdfs:label "percentage value"@en ;
+    rdfs:label "giá trị phần trăm"@vi ;
+    rdfs:domain legal:Percentage ;
+    rdfs:range xsd:decimal ;
+    rdfs:comment "Giá trị tỷ lệ phần trăm"@vi .
+
+legal:duration rdf:type owl:DatatypeProperty ;
+    rdfs:label "duration value"@en ;
+    rdfs:label "giá trị thời hạn"@vi ;
+    rdfs:domain legal:Duration ;
+    rdfs:range xsd:string ;
+    rdfs:comment "Giá trị khoảng thời gian"@vi .

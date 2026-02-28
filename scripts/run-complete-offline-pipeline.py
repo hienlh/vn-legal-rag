@@ -63,7 +63,7 @@ from vn_legal_rag.offline import (
     # Types
     LEGAL_RELATION_TYPES,
 )
-from vn_legal_rag.utils import load_config, setup_logging
+from vn_legal_rag.utils import load_config, setup_logging, create_llm_provider
 
 logger = logging.getLogger(__name__)
 
@@ -361,8 +361,9 @@ def run_kg_linking(
 def run_ontology_generation(
     kg_path: Path,
     output_dir: Path,
-    llm_provider: str,
+    llm_provider_name: str,
     llm_model: str,
+    llm_base_url: Optional[str] = None,
 ) -> dict:
     """Step 10: Generate ontology from KG."""
     logger.info("=" * 60)
@@ -377,12 +378,21 @@ def run_ontology_generation(
     with open(kg_path, "r", encoding="utf-8") as f:
         kg_data = json.load(f)
 
+    # Create LLM provider instance
+    llm_provider = create_llm_provider(
+        provider=llm_provider_name,
+        model=llm_model,
+        base_url=llm_base_url,
+    )
+    logger.info(f"  LLM provider: {llm_provider_name}/{llm_model}")
+
     # Initialize generator
     generator = LegalOntologyGenerator(
-        base_uri="https://semantica.dev/legal/ontology#",
-        provider=llm_provider,
-        model=llm_model,
+        base_uri="https://hienle.tech/legal/ontology#",
+        llm_provider=llm_provider,
+        llm_model=llm_model,
         use_llm=True,  # Use LLM for Vietnamese labels
+        use_hierarchy_builder=True,  # Use class hierarchy builder
     )
 
     # Generate ontology
@@ -448,6 +458,7 @@ def main():
     config = load_config(args.config)
     llm_provider = config.get("llm", {}).get("provider", "anthropic")
     llm_model = config.get("llm", {}).get("model", "claude-3-5-haiku-20241022")
+    llm_base_url = config.get("llm", {}).get("base_url")
 
     output_dir = Path(args.output)
     output_dir.mkdir(parents=True, exist_ok=True)
@@ -521,7 +532,7 @@ def main():
     # Step 10: Ontology Generation
     if "ontology" in steps:
         kg_path = output_dir / "legal_kg.json"
-        run_ontology_generation(kg_path, output_dir, llm_provider, llm_model)
+        run_ontology_generation(kg_path, output_dir, llm_provider, llm_model, llm_base_url)
 
     logger.info("=" * 60)
     logger.info("PIPELINE COMPLETE")

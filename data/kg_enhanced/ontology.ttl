@@ -1,11 +1,11 @@
-@prefix : <https://semantica.dev/legal/ontology#> .
+@prefix : <https://hienle.tech/legal/ontology#> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
 # Ontology declaration
-<https://semantica.dev/legal/ontology#> a owl:Ontology ;
+<https://hienle.tech/legal/ontology#> a owl:Ontology ;
     rdfs:label "Vietnamese Legal Document Ontology"@vi ;
     rdfs:comment "Ontology for Vietnamese legal documents"@vi .
 
@@ -14,233 +14,333 @@
     rdfs:label "Sự vật"@vi ;
     rdfs:comment "Lớp gốc của ontology"@vi .
 
-:ORGANIZATION a owl:Class ;
-    rdfs:label "ORGANIZATION"@vi ;
+:LegalEntity a owl:Class ;
+    rdfs:label "Chủ thể pháp luật"@vi ;
     rdfs:subClassOf :Thing ;
-    rdfs:comment "Entity type: ORGANIZATION"@vi .
+    rdfs:comment "Các chủ thể tham gia các quan hệ pháp luật"@vi .
 
-:LEGAL_TERM a owl:Class ;
-    rdfs:label "LEGAL_TERM"@vi ;
-    rdfs:subClassOf :Thing ;
-    rdfs:comment "Entity type: LEGAL_TERM"@vi .
+:Organization a owl:Class ;
+    rdfs:label "Tổ chức"@vi ;
+    rdfs:subClassOf :LegalEntity ;
+    rdfs:comment "Các tổ chức, cơ quan, doanh nghiệp"@vi .
 
-:LEGAL_REFERENCE a owl:Class ;
-    rdfs:label "LEGAL_REFERENCE"@vi ;
-    rdfs:subClassOf :Thing ;
-    rdfs:comment "Entity type: LEGAL_REFERENCE"@vi .
+:LegalOrganization a owl:Class ;
+    rdfs:label "Tổ chức pháp lý"@vi ;
+    rdfs:subClassOf :Organization ;
+    rdfs:comment "Các tổ chức có tư cách pháp nhân"@vi .
 
-:PERSON_ROLE a owl:Class ;
-    rdfs:label "PERSON_ROLE"@vi ;
-    rdfs:subClassOf :Thing ;
-    rdfs:comment "Entity type: PERSON_ROLE"@vi .
+:Enterprise a owl:Class ;
+    rdfs:label "Doanh nghiệp"@vi ;
+    rdfs:subClassOf :LegalOrganization ;
+    rdfs:comment "Doanh nghiệp, hộ kinh doanh, công ty, chi nhánh"@vi .
 
-:PERCENTAGE a owl:Class ;
-    rdfs:label "PERCENTAGE"@vi ;
-    rdfs:subClassOf :Thing ;
-    rdfs:comment "Entity type: PERCENTAGE"@vi .
+:StateOwnedEnterprise a owl:Class ;
+    rdfs:label "Doanh nghiệp nhà nước"@vi ;
+    rdfs:subClassOf :Enterprise ;
+    rdfs:comment "Doanh nghiệp do nhà nước sở hữu toàn bộ hoặc một phần vốn"@vi .
 
-:MONETARY a owl:Class ;
-    rdfs:label "MONETARY"@vi ;
-    rdfs:subClassOf :Thing ;
-    rdfs:comment "Entity type: MONETARY"@vi .
+:GovernmentAgency a owl:Class ;
+    rdfs:label "Cơ quan nhà nước"@vi ;
+    rdfs:subClassOf :LegalOrganization ;
+    rdfs:comment "Các cơ quan hành chính, cơ quan đăng ký, kiểm soát"@vi .
 
-:DURATION a owl:Class ;
-    rdfs:label "DURATION"@vi ;
-    rdfs:subClassOf :Thing ;
-    rdfs:comment "Entity type: DURATION"@vi .
+:RegistrationAuthority a owl:Class ;
+    rdfs:label "Cơ quan đăng ký"@vi ;
+    rdfs:subClassOf :GovernmentAgency ;
+    rdfs:comment "Cơ quan đăng ký kinh doanh, đơn vị đăng ký"@vi .
 
-:ACTION a owl:Class ;
-    rdfs:label "ACTION"@vi ;
-    rdfs:subClassOf :Thing ;
-    rdfs:comment "Entity type: ACTION"@vi .
+:CompanyGovernanceBody a owl:Class ;
+    rdfs:label "Cơ quan quản trị công ty"@vi ;
+    rdfs:subClassOf :Organization ;
+    rdfs:comment "Đại hội cổ đông, hội đồng quản trị, ban kiểm soát"@vi .
 
-:CONDITION a owl:Class ;
-    rdfs:label "CONDITION"@vi ;
+:Individual a owl:Class ;
+    rdfs:label "Cá nhân"@vi ;
+    rdfs:subClassOf :LegalEntity ;
+    rdfs:comment "Người tự nhiên tham gia các quan hệ pháp luật"@vi .
+
+:Person a owl:Class ;
+    rdfs:label "Người tham gia"@vi ;
+    rdfs:subClassOf :Individual ;
+    rdfs:comment "Người tham gia hoạt động kinh doanh, cổ đông, chủ sở hữu"@vi .
+
+:LegalConcept a owl:Class ;
+    rdfs:label "Khái niệm pháp luật"@vi ;
     rdfs:subClassOf :Thing ;
-    rdfs:comment "Entity type: CONDITION"@vi .
+    rdfs:comment "Các khái niệm, định nghĩa được sử dụng trong văn bản pháp luật"@vi .
+
+:Term a owl:Class ;
+    rdfs:label "Thuật ngữ pháp luật"@vi ;
+    rdfs:subClassOf :LegalConcept ;
+    rdfs:comment "Các thuật ngữ, khái niệm chuyên ngành như doanh nghiệp, góp vốn"@vi .
+
+:Role a owl:Class ;
+    rdfs:label "Vai trò pháp luật"@vi ;
+    rdfs:subClassOf :LegalConcept ;
+    rdfs:comment "Các vai trò, chức vụ như Chủ tịch, Kiểm soát viên, người đại diện"@vi .
+
+:Action a owl:Class ;
+    rdfs:label "Hành vi pháp luật"@vi ;
+    rdfs:subClassOf :LegalConcept ;
+    rdfs:comment "Các hành vi, hoạt động, công việc: đăng ký doanh nghiệp, góp vốn, kinh doanh"@vi .
+
+:Condition a owl:Class ;
+    rdfs:label "Điều kiện"@vi ;
+    rdfs:subClassOf :LegalConcept ;
+    rdfs:comment "Các điều kiện, trường hợp phải đáp ứng: mất khả năng thanh toán, điều kiện bảo đảm"@vi .
+
+:Right a owl:Class ;
+    rdfs:label "Quyền hạn"@vi ;
+    rdfs:subClassOf :Thing ;
+    rdfs:comment "Các quyền mà chủ thể pháp luật được hưởng"@vi .
+
+:Obligation a owl:Class ;
+    rdfs:label "Nghĩa vụ"@vi ;
+    rdfs:subClassOf :Thing ;
+    rdfs:comment "Các nghĩa vụ, trách nhiệm mà chủ thể pháp luật phải tuân thủ"@vi .
+
+:LegalDocument a owl:Class ;
+    rdfs:label "Tài liệu pháp luật"@vi ;
+    rdfs:subClassOf :Thing ;
+    rdfs:comment "Các văn bản, tài liệu pháp luật"@vi .
+
+:Legislation a owl:Class ;
+    rdfs:label "Văn bản pháp luật"@vi ;
+    rdfs:subClassOf :LegalDocument ;
+    rdfs:comment "Luật, Nghị định, Sắc lệnh và các văn bản quản lý nhà nước khác"@vi .
+
+:Law a owl:Class ;
+    rdfs:label "Luật"@vi ;
+    rdfs:subClassOf :Legislation ;
+    rdfs:comment "Văn bản pháp luật cơ bản: Luật Doanh nghiệp, Luật Quản lý sử dụng vốn nhà nước"@vi .
+
+:Regulation a owl:Class ;
+    rdfs:label "Nghị định"@vi ;
+    rdfs:subClassOf :Legislation ;
+    rdfs:comment "Nghị định của Chính phủ quy định chi tiết thực hiện luật"@vi .
+
+:Decree a owl:Class ;
+    rdfs:label "Sắc lệnh"@vi ;
+    rdfs:subClassOf :Legislation ;
+    rdfs:comment "Sắc lệnh của Chính phủ"@vi .
+
+:LegalRecord a owl:Class ;
+    rdfs:label "Tài liệu hành chính"@vi ;
+    rdfs:subClassOf :LegalDocument ;
+    rdfs:comment "Điều lệ công ty, giấy tờ pháp lý, hợp đồng, tài liệu doanh nghiệp"@vi .
+
+:Charter a owl:Class ;
+    rdfs:label "Điều lệ"@vi ;
+    rdfs:subClassOf :LegalRecord ;
+    rdfs:comment "Điều lệ của công ty trách nhiệm hữu hạn, công ty cổ phần"@vi .
+
+:QuantitativeEntity a owl:Class ;
+    rdfs:label "Đơn vị định lượng"@vi ;
+    rdfs:subClassOf :Thing ;
+    rdfs:comment "Các đơn vị dùng để định lượng trong pháp luật"@vi .
+
+:Percentage a owl:Class ;
+    rdfs:label "Tỷ lệ phần trăm"@vi ;
+    rdfs:subClassOf :QuantitativeEntity ;
+    rdfs:comment "Tỷ lệ, phần trăm: 50% vốn điều lệ, 20%"@vi .
+
+:Duration a owl:Class ;
+    rdfs:label "Thời hạn"@vi ;
+    rdfs:subClassOf :QuantitativeEntity ;
+    rdfs:comment "Khoảng thời gian: 10 ngày làm việc, 30 tháng, 6 năm sau liền kề"@vi .
+
+:MonetaryValue a owl:Class ;
+    rdfs:label "Giá trị tiền tệ"@vi ;
+    rdfs:subClassOf :QuantitativeEntity ;
+    rdfs:comment "Số tiền, ngân sách: 100 tỷ đồng, ngân sách nhà nước"@vi .
+
+:Asset a owl:Class ;
+    rdfs:label "Tài sản"@vi ;
+    rdfs:subClassOf :QuantitativeEntity ;
+    rdfs:comment "Các loại tài sản: vàng, công nghệ, bí quyết kỹ thuật"@vi .
 
 # Object Properties
-:QUẢN_LÝ a owl:ObjectProperty ;
-    rdfs:label "QUẢN_LÝ"@vi ;
-    rdfs:domain :Thing ;
-    rdfs:range :Thing .
+:hasRight a owl:ObjectProperty ;
+    rdfs:label "có quyền"@vi ;
+    rdfs:domain :LegalEntity ;
+    rdfs:range :Right .
 
-:THAM_CHIẾU a owl:ObjectProperty ;
-    rdfs:label "THAM_CHIẾU"@vi ;
-    rdfs:domain :Thing ;
-    rdfs:range :Thing .
+:hasObligation a owl:ObjectProperty ;
+    rdfs:label "có nghĩa vụ"@vi ;
+    rdfs:domain :LegalEntity ;
+    rdfs:range :Obligation .
 
-:LÀ_LOẠI a owl:ObjectProperty ;
-    rdfs:label "LÀ_LOẠI"@vi ;
-    rdfs:domain :Thing ;
-    rdfs:range :Thing .
+:hasAuthority a owl:ObjectProperty ;
+    rdfs:label "có thẩm quyền"@vi ;
+    rdfs:domain :Organization ;
+    rdfs:range :Organization .
 
-:YÊU_CẦU a owl:ObjectProperty ;
-    rdfs:label "YÊU_CẦU"@vi ;
-    rdfs:domain :Thing ;
-    rdfs:range :Thing .
+:references a owl:ObjectProperty ;
+    rdfs:label "tham chiếu"@vi ;
+    rdfs:domain :LegalDocument ;
+    rdfs:range :LegalDocument .
 
-:CÓ_THẨM_QUYỀN a owl:ObjectProperty ;
-    rdfs:label "CÓ_THẨM_QUYỀN"@vi ;
-    rdfs:domain :Thing ;
-    rdfs:range :Thing .
+:manages a owl:ObjectProperty ;
+    rdfs:label "quản lý"@vi ;
+    rdfs:domain :Organization ;
+    rdfs:range :LegalEntity .
 
-:CÓ_QUYỀN a owl:ObjectProperty ;
-    rdfs:label "CÓ_QUYỀN"@vi ;
-    rdfs:domain :Thing ;
-    rdfs:range :Thing .
+:contains a owl:ObjectProperty ;
+    rdfs:label "bao gồm"@vi ;
+    rdfs:domain :LegalEntity ;
+    rdfs:range :LegalEntity .
 
-:ÁP_DỤNG a owl:ObjectProperty ;
-    rdfs:label "ÁP_DỤNG"@vi ;
-    rdfs:domain :Thing ;
-    rdfs:range :Thing .
+:requires a owl:ObjectProperty ;
+    rdfs:label "yêu cầu"@vi ;
+    rdfs:domain :LegalConcept ;
+    rdfs:range :Condition .
 
-:BAO_GỒM a owl:ObjectProperty ;
-    rdfs:label "BAO_GỒM"@vi ;
-    rdfs:domain :Thing ;
-    rdfs:range :Thing .
+:hasRole a owl:ObjectProperty ;
+    rdfs:label "có vai trò"@vi ;
+    rdfs:domain :Person ;
+    rdfs:range :Role .
 
-:THUỘC_VỀ a owl:ObjectProperty ;
-    rdfs:label "THUỘC_VỀ"@vi ;
-    rdfs:domain :Thing ;
-    rdfs:range :Thing .
+:prohibits a owl:ObjectProperty ;
+    rdfs:label "cấm"@vi ;
+    rdfs:domain :LegalDocument ;
+    rdfs:range :Action .
 
-:LIÊN_QUAN a owl:ObjectProperty ;
-    rdfs:label "LIÊN_QUAN"@vi ;
-    rdfs:domain :Thing ;
-    rdfs:range :Thing .
+:permits a owl:ObjectProperty ;
+    rdfs:label "cho phép"@vi ;
+    rdfs:domain :LegalDocument ;
+    rdfs:range :Action .
 
-:CÔNG_NHẬN a owl:ObjectProperty ;
-    rdfs:label "CÔNG_NHẬN"@vi ;
-    rdfs:domain :Thing ;
-    rdfs:range :Thing .
+:appliesTo a owl:ObjectProperty ;
+    rdfs:label "áp dụng cho"@vi ;
+    rdfs:domain :LegalDocument ;
+    rdfs:range :LegalEntity .
 
-:NGHĨA_VỤ a owl:ObjectProperty ;
-    rdfs:label "NGHĨA_VỤ"@vi ;
-    rdfs:domain :Thing ;
-    rdfs:range :Thing .
+:relatedTo a owl:ObjectProperty ;
+    rdfs:label "liên quan đến"@vi ;
+    rdfs:domain :LegalConcept ;
+    rdfs:range :LegalConcept .
 
-:ỦY_QUYỀN a owl:ObjectProperty ;
-    rdfs:label "ỦY_QUYỀN"@vi ;
-    rdfs:domain :Thing ;
-    rdfs:range :Thing .
+:isTypeOf a owl:ObjectProperty ;
+    rdfs:label "là loại của"@vi ;
+    rdfs:domain :LegalEntity ;
+    rdfs:range :LegalEntity .
 
-:ĐỊNH_NGHĨA a owl:ObjectProperty ;
-    rdfs:label "ĐỊNH_NGHĨA"@vi ;
-    rdfs:domain :Thing ;
-    rdfs:range :Thing .
+:defines a owl:ObjectProperty ;
+    rdfs:label "định nghĩa"@vi ;
+    rdfs:domain :LegalDocument ;
+    rdfs:range :Term .
 
-:THỜI_HẠN a owl:ObjectProperty ;
-    rdfs:label "THỜI_HẠN"@vi ;
-    rdfs:domain :Thing ;
-    rdfs:range :Thing .
+:guarantees a owl:ObjectProperty ;
+    rdfs:label "bảo đảm"@vi ;
+    rdfs:domain :LegalConcept ;
+    rdfs:range :LegalConcept .
 
-:BẢO_ĐẢM a owl:ObjectProperty ;
-    rdfs:label "BẢO_ĐẢM"@vi ;
-    rdfs:domain :Thing ;
-    rdfs:range :Thing .
+:issues a owl:ObjectProperty ;
+    rdfs:label "cấp phát"@vi ;
+    rdfs:domain :Organization ;
+    rdfs:range :LegalRecord .
 
-:CẤM a owl:ObjectProperty ;
-    rdfs:label "CẤM"@vi ;
-    rdfs:domain :Thing ;
-    rdfs:range :Thing .
+:punishes a owl:ObjectProperty ;
+    rdfs:label "xử phạt"@vi ;
+    rdfs:domain :LegalDocument ;
+    rdfs:range :LegalEntity .
 
-:CÓ_NGHĨA_VỤ a owl:ObjectProperty ;
-    rdfs:label "CÓ_NGHĨA_VỤ"@vi ;
-    rdfs:domain :Thing ;
-    rdfs:range :Thing .
+:acknowledges a owl:ObjectProperty ;
+    rdfs:label "công nhận"@vi ;
+    rdfs:domain :Organization ;
+    rdfs:range :LegalEntity .
 
-:ĐIỀU_KIỆN a owl:ObjectProperty ;
-    rdfs:label "ĐIỀU_KIỆN"@vi ;
-    rdfs:domain :Thing ;
-    rdfs:range :Thing .
+:delegates a owl:ObjectProperty ;
+    rdfs:label "ủy quyền"@vi ;
+    rdfs:domain :Organization ;
+    rdfs:range :Organization .
 
-:CHO_PHÉP a owl:ObjectProperty ;
-    rdfs:label "CHO_PHÉP"@vi ;
-    rdfs:domain :Thing ;
-    rdfs:range :Thing .
+:belongsTo a owl:ObjectProperty ;
+    rdfs:label "thuộc về"@vi ;
+    rdfs:domain :LegalEntity ;
+    rdfs:range :Organization .
 
-:HÀNH_VI a owl:ObjectProperty ;
-    rdfs:label "HÀNH_VI"@vi ;
-    rdfs:domain :Thing ;
-    rdfs:range :Thing .
+:hasCondition a owl:ObjectProperty ;
+    rdfs:label "có điều kiện"@vi ;
+    rdfs:domain :Action ;
+    rdfs:range :Condition .
 
-:KẾ_THỪA a owl:ObjectProperty ;
-    rdfs:label "KẾ_THỪA"@vi ;
-    rdfs:domain :Thing ;
-    rdfs:range :Thing .
+:excludes a owl:ObjectProperty ;
+    rdfs:label "ngoài trừ"@vi ;
+    rdfs:domain :LegalDocument ;
+    rdfs:range :LegalEntity .
 
-:BÁO_CÁO a owl:ObjectProperty ;
-    rdfs:label "BÁO_CÁO"@vi ;
-    rdfs:domain :Thing ;
-    rdfs:range :Thing .
+:revokes a owl:ObjectProperty ;
+    rdfs:label "thu hồi"@vi ;
+    rdfs:domain :Organization ;
+    rdfs:range :LegalRecord .
 
-:GỬI a owl:ObjectProperty ;
-    rdfs:label "GỬI"@vi ;
-    rdfs:domain :Thing ;
-    rdfs:range :Thing .
+:notifies a owl:ObjectProperty ;
+    rdfs:label "thông báo"@vi ;
+    rdfs:domain :Organization ;
+    rdfs:range :LegalEntity .
 
-:CẤM_HOẠT_ĐỘNG a owl:ObjectProperty ;
-    rdfs:label "CẤM_HOẠT_ĐỘNG"@vi ;
-    rdfs:domain :Thing ;
-    rdfs:range :Thing .
+:reports a owl:ObjectProperty ;
+    rdfs:label "báo cáo"@vi ;
+    rdfs:domain :Organization ;
+    rdfs:range :Organization .
 
-:XỬ_PHẠT a owl:ObjectProperty ;
-    rdfs:label "XỬ_PHẠT"@vi ;
-    rdfs:domain :Thing ;
-    rdfs:range :Thing .
+:uses a owl:ObjectProperty ;
+    rdfs:label "sử dụng"@vi ;
+    rdfs:domain :LegalEntity ;
+    rdfs:range :Asset .
 
-:TỶ_LỆ a owl:ObjectProperty ;
-    rdfs:label "TỶ_LỆ"@vi ;
-    rdfs:domain :Thing ;
-    rdfs:range :Thing .
+:replaces a owl:ObjectProperty ;
+    rdfs:label "thay thế"@vi ;
+    rdfs:domain :LegalDocument ;
+    rdfs:range :LegalDocument .
 
-:THU_HỒI a owl:ObjectProperty ;
-    rdfs:label "THU_HỒI"@vi ;
-    rdfs:domain :Thing ;
-    rdfs:range :Thing .
-
-:CẤP a owl:ObjectProperty ;
-    rdfs:label "CẤP"@vi ;
-    rdfs:domain :Thing ;
-    rdfs:range :Thing .
-
-:QUYỀN_HẠN a owl:ObjectProperty ;
-    rdfs:label "QUYỀN_HẠN"@vi ;
-    rdfs:domain :Thing ;
-    rdfs:range :Thing .
-
-:THÔNG_BÁO a owl:ObjectProperty ;
-    rdfs:label "THÔNG_BÁO"@vi ;
-    rdfs:domain :Thing ;
-    rdfs:range :Thing .
-
-:THAY_THẾ a owl:ObjectProperty ;
-    rdfs:label "THAY_THẾ"@vi ;
-    rdfs:domain :Thing ;
-    rdfs:range :Thing .
-
-:TRUYỀN a owl:ObjectProperty ;
-    rdfs:label "TRUYỀN"@vi ;
-    rdfs:domain :Thing ;
-    rdfs:range :Thing .
-
-:NGOẠI_TRỪ a owl:ObjectProperty ;
-    rdfs:label "NGOẠI_TRỪ"@vi ;
-    rdfs:domain :Thing ;
-    rdfs:range :Thing .
-
-:SỬ_DỤNG a owl:ObjectProperty ;
-    rdfs:label "SỬ_DỤNG"@vi ;
-    rdfs:domain :Thing ;
-    rdfs:range :Thing .
-
-:REFERENCES a owl:ObjectProperty ;
-    rdfs:label "REFERENCES"@vi ;
-    rdfs:domain :Thing ;
-    rdfs:range :Thing .
+:inherits a owl:ObjectProperty ;
+    rdfs:label "kế thừa"@vi ;
+    rdfs:domain :LegalEntity ;
+    rdfs:range :LegalEntity .
 
 # Data Properties
+:hasDuration a owl:DatatypeProperty ;
+    rdfs:label "có thời hạn"@vi ;
+    rdfs:domain :Action ;
+    rdfs:range xsd:string .
+
+:hasPercentage a owl:DatatypeProperty ;
+    rdfs:label "có tỷ lệ"@vi ;
+    rdfs:domain :MonetaryValue ;
+    rdfs:range xsd:float .
+
+:hasName a owl:DatatypeProperty ;
+    rdfs:label "có tên"@vi ;
+    rdfs:domain :LegalEntity ;
+    rdfs:range xsd:string .
+
+:hasValue a owl:DatatypeProperty ;
+    rdfs:label "có giá trị"@vi ;
+    rdfs:domain :MonetaryValue ;
+    rdfs:range xsd:string .
+
+:hasDescription a owl:DatatypeProperty ;
+    rdfs:label "có mô tả"@vi ;
+    rdfs:domain :LegalConcept ;
+    rdfs:range xsd:string .
+
+:hasNumber a owl:DatatypeProperty ;
+    rdfs:label "có số hiệu"@vi ;
+    rdfs:domain :Legislation ;
+    rdfs:range xsd:string .
+
+:effectiveDate a owl:DatatypeProperty ;
+    rdfs:label "ngày có hiệu lực"@vi ;
+    rdfs:domain :LegalDocument ;
+    rdfs:range xsd:date .
+
+:expiryDate a owl:DatatypeProperty ;
+    rdfs:label "ngày hết hiệu lực"@vi ;
+    rdfs:domain :LegalDocument ;
+    rdfs:range xsd:date .
+
 :hasConfidence a owl:DatatypeProperty ;
     rdfs:label "Độ tin cậy"@vi ;
     rdfs:domain :Thing ;

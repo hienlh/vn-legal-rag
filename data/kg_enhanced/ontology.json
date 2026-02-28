@@ -1,545 +1,685 @@
 {
-  "base_uri": "https://semantica.dev/legal/ontology#",
+  "base_uri": "https://hienle.tech/legal/ontology#",
   "classes": [
     {
       "name": "Thing",
       "label": "Sự vật",
       "parent": null,
       "description": "Lớp gốc của ontology",
-      "uri": "https://semantica.dev/legal/ontology#Thing"
+      "uri": "https://hienle.tech/legal/ontology#Thing"
     },
     {
-      "name": "ORGANIZATION",
-      "label": "ORGANIZATION",
+      "name": "LegalEntity",
+      "label": "Chủ thể pháp luật",
       "parent": "Thing",
-      "description": "Entity type: ORGANIZATION",
-      "uri": "https://semantica.dev/legal/ontology#ORGANIZATION"
+      "description": "Các chủ thể tham gia các quan hệ pháp luật",
+      "uri": "https://hienle.tech/legal/ontology#LegalEntity"
     },
     {
-      "name": "LEGAL_TERM",
-      "label": "LEGAL_TERM",
-      "parent": "Thing",
-      "description": "Entity type: LEGAL_TERM",
-      "uri": "https://semantica.dev/legal/ontology#LEGAL_TERM"
+      "name": "Organization",
+      "label": "Tổ chức",
+      "parent": "LegalEntity",
+      "description": "Các tổ chức, cơ quan, doanh nghiệp",
+      "uri": "https://hienle.tech/legal/ontology#Organization"
     },
     {
-      "name": "LEGAL_REFERENCE",
-      "label": "LEGAL_REFERENCE",
-      "parent": "Thing",
-      "description": "Entity type: LEGAL_REFERENCE",
-      "uri": "https://semantica.dev/legal/ontology#LEGAL_REFERENCE"
+      "name": "LegalOrganization",
+      "label": "Tổ chức pháp lý",
+      "parent": "Organization",
+      "description": "Các tổ chức có tư cách pháp nhân",
+      "uri": "https://hienle.tech/legal/ontology#LegalOrganization"
     },
     {
-      "name": "PERSON_ROLE",
-      "label": "PERSON_ROLE",
-      "parent": "Thing",
-      "description": "Entity type: PERSON_ROLE",
-      "uri": "https://semantica.dev/legal/ontology#PERSON_ROLE"
+      "name": "Enterprise",
+      "label": "Doanh nghiệp",
+      "parent": "LegalOrganization",
+      "description": "Doanh nghiệp, hộ kinh doanh, công ty, chi nhánh",
+      "uri": "https://hienle.tech/legal/ontology#Enterprise"
     },
     {
-      "name": "PERCENTAGE",
-      "label": "PERCENTAGE",
-      "parent": "Thing",
-      "description": "Entity type: PERCENTAGE",
-      "uri": "https://semantica.dev/legal/ontology#PERCENTAGE"
+      "name": "StateOwnedEnterprise",
+      "label": "Doanh nghiệp nhà nước",
+      "parent": "Enterprise",
+      "description": "Doanh nghiệp do nhà nước sở hữu toàn bộ hoặc một phần vốn",
+      "uri": "https://hienle.tech/legal/ontology#StateOwnedEnterprise"
     },
     {
-      "name": "MONETARY",
-      "label": "MONETARY",
-      "parent": "Thing",
-      "description": "Entity type: MONETARY",
-      "uri": "https://semantica.dev/legal/ontology#MONETARY"
+      "name": "GovernmentAgency",
+      "label": "Cơ quan nhà nước",
+      "parent": "LegalOrganization",
+      "description": "Các cơ quan hành chính, cơ quan đăng ký, kiểm soát",
+      "uri": "https://hienle.tech/legal/ontology#GovernmentAgency"
     },
     {
-      "name": "DURATION",
-      "label": "DURATION",
-      "parent": "Thing",
-      "description": "Entity type: DURATION",
-      "uri": "https://semantica.dev/legal/ontology#DURATION"
+      "name": "RegistrationAuthority",
+      "label": "Cơ quan đăng ký",
+      "parent": "GovernmentAgency",
+      "description": "Cơ quan đăng ký kinh doanh, đơn vị đăng ký",
+      "uri": "https://hienle.tech/legal/ontology#RegistrationAuthority"
     },
     {
-      "name": "ACTION",
-      "label": "ACTION",
-      "parent": "Thing",
-      "description": "Entity type: ACTION",
-      "uri": "https://semantica.dev/legal/ontology#ACTION"
+      "name": "CompanyGovernanceBody",
+      "label": "Cơ quan quản trị công ty",
+      "parent": "Organization",
+      "description": "Đại hội cổ đông, hội đồng quản trị, ban kiểm soát",
+      "uri": "https://hienle.tech/legal/ontology#CompanyGovernanceBody"
     },
     {
-      "name": "CONDITION",
-      "label": "CONDITION",
+      "name": "Individual",
+      "label": "Cá nhân",
+      "parent": "LegalEntity",
+      "description": "Người tự nhiên tham gia các quan hệ pháp luật",
+      "uri": "https://hienle.tech/legal/ontology#Individual"
+    },
+    {
+      "name": "Person",
+      "label": "Người tham gia",
+      "parent": "Individual",
+      "description": "Người tham gia hoạt động kinh doanh, cổ đông, chủ sở hữu",
+      "uri": "https://hienle.tech/legal/ontology#Person"
+    },
+    {
+      "name": "LegalConcept",
+      "label": "Khái niệm pháp luật",
       "parent": "Thing",
-      "description": "Entity type: CONDITION",
-      "uri": "https://semantica.dev/legal/ontology#CONDITION"
+      "description": "Các khái niệm, định nghĩa được sử dụng trong văn bản pháp luật",
+      "uri": "https://hienle.tech/legal/ontology#LegalConcept"
+    },
+    {
+      "name": "Term",
+      "label": "Thuật ngữ pháp luật",
+      "parent": "LegalConcept",
+      "description": "Các thuật ngữ, khái niệm chuyên ngành như doanh nghiệp, góp vốn",
+      "uri": "https://hienle.tech/legal/ontology#Term"
+    },
+    {
+      "name": "Role",
+      "label": "Vai trò pháp luật",
+      "parent": "LegalConcept",
+      "description": "Các vai trò, chức vụ như Chủ tịch, Kiểm soát viên, người đại diện",
+      "uri": "https://hienle.tech/legal/ontology#Role"
+    },
+    {
+      "name": "Action",
+      "label": "Hành vi pháp luật",
+      "parent": "LegalConcept",
+      "description": "Các hành vi, hoạt động, công việc: đăng ký doanh nghiệp, góp vốn, kinh doanh",
+      "uri": "https://hienle.tech/legal/ontology#Action"
+    },
+    {
+      "name": "Condition",
+      "label": "Điều kiện",
+      "parent": "LegalConcept",
+      "description": "Các điều kiện, trường hợp phải đáp ứng: mất khả năng thanh toán, điều kiện bảo đảm",
+      "uri": "https://hienle.tech/legal/ontology#Condition"
+    },
+    {
+      "name": "Right",
+      "label": "Quyền hạn",
+      "parent": "Thing",
+      "description": "Các quyền mà chủ thể pháp luật được hưởng",
+      "uri": "https://hienle.tech/legal/ontology#Right"
+    },
+    {
+      "name": "Obligation",
+      "label": "Nghĩa vụ",
+      "parent": "Thing",
+      "description": "Các nghĩa vụ, trách nhiệm mà chủ thể pháp luật phải tuân thủ",
+      "uri": "https://hienle.tech/legal/ontology#Obligation"
+    },
+    {
+      "name": "LegalDocument",
+      "label": "Tài liệu pháp luật",
+      "parent": "Thing",
+      "description": "Các văn bản, tài liệu pháp luật",
+      "uri": "https://hienle.tech/legal/ontology#LegalDocument"
+    },
+    {
+      "name": "Legislation",
+      "label": "Văn bản pháp luật",
+      "parent": "LegalDocument",
+      "description": "Luật, Nghị định, Sắc lệnh và các văn bản quản lý nhà nước khác",
+      "uri": "https://hienle.tech/legal/ontology#Legislation"
+    },
+    {
+      "name": "Law",
+      "label": "Luật",
+      "parent": "Legislation",
+      "description": "Văn bản pháp luật cơ bản: Luật Doanh nghiệp, Luật Quản lý sử dụng vốn nhà nước",
+      "uri": "https://hienle.tech/legal/ontology#Law"
+    },
+    {
+      "name": "Regulation",
+      "label": "Nghị định",
+      "parent": "Legislation",
+      "description": "Nghị định của Chính phủ quy định chi tiết thực hiện luật",
+      "uri": "https://hienle.tech/legal/ontology#Regulation"
+    },
+    {
+      "name": "Decree",
+      "label": "Sắc lệnh",
+      "parent": "Legislation",
+      "description": "Sắc lệnh của Chính phủ",
+      "uri": "https://hienle.tech/legal/ontology#Decree"
+    },
+    {
+      "name": "LegalRecord",
+      "label": "Tài liệu hành chính",
+      "parent": "LegalDocument",
+      "description": "Điều lệ công ty, giấy tờ pháp lý, hợp đồng, tài liệu doanh nghiệp",
+      "uri": "https://hienle.tech/legal/ontology#LegalRecord"
+    },
+    {
+      "name": "Charter",
+      "label": "Điều lệ",
+      "parent": "LegalRecord",
+      "description": "Điều lệ của công ty trách nhiệm hữu hạn, công ty cổ phần",
+      "uri": "https://hienle.tech/legal/ontology#Charter"
+    },
+    {
+      "name": "QuantitativeEntity",
+      "label": "Đơn vị định lượng",
+      "parent": "Thing",
+      "description": "Các đơn vị dùng để định lượng trong pháp luật",
+      "uri": "https://hienle.tech/legal/ontology#QuantitativeEntity"
+    },
+    {
+      "name": "Percentage",
+      "label": "Tỷ lệ phần trăm",
+      "parent": "QuantitativeEntity",
+      "description": "Tỷ lệ, phần trăm: 50% vốn điều lệ, 20%",
+      "uri": "https://hienle.tech/legal/ontology#Percentage"
+    },
+    {
+      "name": "Duration",
+      "label": "Thời hạn",
+      "parent": "QuantitativeEntity",
+      "description": "Khoảng thời gian: 10 ngày làm việc, 30 tháng, 6 năm sau liền kề",
+      "uri": "https://hienle.tech/legal/ontology#Duration"
+    },
+    {
+      "name": "MonetaryValue",
+      "label": "Giá trị tiền tệ",
+      "parent": "QuantitativeEntity",
+      "description": "Số tiền, ngân sách: 100 tỷ đồng, ngân sách nhà nước",
+      "uri": "https://hienle.tech/legal/ontology#MonetaryValue"
+    },
+    {
+      "name": "Asset",
+      "label": "Tài sản",
+      "parent": "QuantitativeEntity",
+      "description": "Các loại tài sản: vàng, công nghệ, bí quyết kỹ thuật",
+      "uri": "https://hienle.tech/legal/ontology#Asset"
     }
   ],
   "properties": [
     {
-      "name": "QUẢN_LÝ",
-      "label": "QUẢN_LÝ",
+      "name": "hasRight",
+      "label": "có quyền",
       "type": "object",
       "domain": [
-        "Thing"
+        "LegalEntity"
       ],
       "range": [
-        "Thing"
+        "Right"
       ],
       "description": "",
-      "uri": "https://semantica.dev/legal/ontology#QUẢN_LÝ"
+      "uri": "https://hienle.tech/legal/ontology#hasRight"
     },
     {
-      "name": "THAM_CHIẾU",
-      "label": "THAM_CHIẾU",
+      "name": "hasObligation",
+      "label": "có nghĩa vụ",
       "type": "object",
       "domain": [
-        "Thing"
+        "LegalEntity"
       ],
       "range": [
-        "Thing"
+        "Obligation"
       ],
       "description": "",
-      "uri": "https://semantica.dev/legal/ontology#THAM_CHIẾU"
+      "uri": "https://hienle.tech/legal/ontology#hasObligation"
     },
     {
-      "name": "LÀ_LOẠI",
-      "label": "LÀ_LOẠI",
+      "name": "hasAuthority",
+      "label": "có thẩm quyền",
       "type": "object",
       "domain": [
-        "Thing"
+        "Organization"
       ],
       "range": [
-        "Thing"
+        "Organization"
       ],
       "description": "",
-      "uri": "https://semantica.dev/legal/ontology#LÀ_LOẠI"
+      "uri": "https://hienle.tech/legal/ontology#hasAuthority"
     },
     {
-      "name": "YÊU_CẦU",
-      "label": "YÊU_CẦU",
+      "name": "references",
+      "label": "tham chiếu",
       "type": "object",
       "domain": [
-        "Thing"
+        "LegalDocument"
       ],
       "range": [
-        "Thing"
+        "LegalDocument"
       ],
       "description": "",
-      "uri": "https://semantica.dev/legal/ontology#YÊU_CẦU"
+      "uri": "https://hienle.tech/legal/ontology#references"
     },
     {
-      "name": "CÓ_THẨM_QUYỀN",
-      "label": "CÓ_THẨM_QUYỀN",
+      "name": "manages",
+      "label": "quản lý",
       "type": "object",
       "domain": [
-        "Thing"
+        "Organization"
       ],
       "range": [
-        "Thing"
+        "LegalEntity"
       ],
       "description": "",
-      "uri": "https://semantica.dev/legal/ontology#CÓ_THẨM_QUYỀN"
+      "uri": "https://hienle.tech/legal/ontology#manages"
     },
     {
-      "name": "CÓ_QUYỀN",
-      "label": "CÓ_QUYỀN",
+      "name": "contains",
+      "label": "bao gồm",
       "type": "object",
       "domain": [
-        "Thing"
+        "LegalEntity"
       ],
       "range": [
-        "Thing"
+        "LegalEntity"
       ],
       "description": "",
-      "uri": "https://semantica.dev/legal/ontology#CÓ_QUYỀN"
+      "uri": "https://hienle.tech/legal/ontology#contains"
     },
     {
-      "name": "ÁP_DỤNG",
-      "label": "ÁP_DỤNG",
+      "name": "requires",
+      "label": "yêu cầu",
       "type": "object",
       "domain": [
-        "Thing"
+        "LegalConcept"
       ],
       "range": [
-        "Thing"
+        "Condition"
       ],
       "description": "",
-      "uri": "https://semantica.dev/legal/ontology#ÁP_DỤNG"
+      "uri": "https://hienle.tech/legal/ontology#requires"
     },
     {
-      "name": "BAO_GỒM",
-      "label": "BAO_GỒM",
+      "name": "hasRole",
+      "label": "có vai trò",
       "type": "object",
       "domain": [
-        "Thing"
+        "Person"
       ],
       "range": [
-        "Thing"
+        "Role"
       ],
       "description": "",
-      "uri": "https://semantica.dev/legal/ontology#BAO_GỒM"
+      "uri": "https://hienle.tech/legal/ontology#hasRole"
     },
     {
-      "name": "THUỘC_VỀ",
-      "label": "THUỘC_VỀ",
+      "name": "prohibits",
+      "label": "cấm",
       "type": "object",
       "domain": [
-        "Thing"
+        "LegalDocument"
       ],
       "range": [
-        "Thing"
+        "Action"
       ],
       "description": "",
-      "uri": "https://semantica.dev/legal/ontology#THUỘC_VỀ"
+      "uri": "https://hienle.tech/legal/ontology#prohibits"
     },
     {
-      "name": "LIÊN_QUAN",
-      "label": "LIÊN_QUAN",
+      "name": "permits",
+      "label": "cho phép",
       "type": "object",
       "domain": [
-        "Thing"
+        "LegalDocument"
       ],
       "range": [
-        "Thing"
+        "Action"
       ],
       "description": "",
-      "uri": "https://semantica.dev/legal/ontology#LIÊN_QUAN"
+      "uri": "https://hienle.tech/legal/ontology#permits"
     },
     {
-      "name": "CÔNG_NHẬN",
-      "label": "CÔNG_NHẬN",
+      "name": "appliesTo",
+      "label": "áp dụng cho",
       "type": "object",
       "domain": [
-        "Thing"
+        "LegalDocument"
       ],
       "range": [
-        "Thing"
+        "LegalEntity"
       ],
       "description": "",
-      "uri": "https://semantica.dev/legal/ontology#CÔNG_NHẬN"
+      "uri": "https://hienle.tech/legal/ontology#appliesTo"
     },
     {
-      "name": "NGHĨA_VỤ",
-      "label": "NGHĨA_VỤ",
+      "name": "relatedTo",
+      "label": "liên quan đến",
       "type": "object",
       "domain": [
-        "Thing"
+        "LegalConcept"
       ],
       "range": [
-        "Thing"
+        "LegalConcept"
       ],
       "description": "",
-      "uri": "https://semantica.dev/legal/ontology#NGHĨA_VỤ"
+      "uri": "https://hienle.tech/legal/ontology#relatedTo"
     },
     {
-      "name": "ỦY_QUYỀN",
-      "label": "ỦY_QUYỀN",
+      "name": "isTypeOf",
+      "label": "là loại của",
       "type": "object",
       "domain": [
-        "Thing"
+        "LegalEntity"
       ],
       "range": [
-        "Thing"
+        "LegalEntity"
       ],
       "description": "",
-      "uri": "https://semantica.dev/legal/ontology#ỦY_QUYỀN"
+      "uri": "https://hienle.tech/legal/ontology#isTypeOf"
     },
     {
-      "name": "ĐỊNH_NGHĨA",
-      "label": "ĐỊNH_NGHĨA",
+      "name": "defines",
+      "label": "định nghĩa",
       "type": "object",
       "domain": [
-        "Thing"
+        "LegalDocument"
       ],
       "range": [
-        "Thing"
+        "Term"
       ],
       "description": "",
-      "uri": "https://semantica.dev/legal/ontology#ĐỊNH_NGHĨA"
+      "uri": "https://hienle.tech/legal/ontology#defines"
     },
     {
-      "name": "THỜI_HẠN",
-      "label": "THỜI_HẠN",
+      "name": "guarantees",
+      "label": "bảo đảm",
       "type": "object",
       "domain": [
-        "Thing"
+        "LegalConcept"
       ],
       "range": [
-        "Thing"
+        "LegalConcept"
       ],
       "description": "",
-      "uri": "https://semantica.dev/legal/ontology#THỜI_HẠN"
+      "uri": "https://hienle.tech/legal/ontology#guarantees"
     },
     {
-      "name": "BẢO_ĐẢM",
-      "label": "BẢO_ĐẢM",
+      "name": "issues",
+      "label": "cấp phát",
       "type": "object",
       "domain": [
-        "Thing"
+        "Organization"
       ],
       "range": [
-        "Thing"
+        "LegalRecord"
       ],
       "description": "",
-      "uri": "https://semantica.dev/legal/ontology#BẢO_ĐẢM"
+      "uri": "https://hienle.tech/legal/ontology#issues"
     },
     {
-      "name": "CẤM",
-      "label": "CẤM",
+      "name": "punishes",
+      "label": "xử phạt",
       "type": "object",
       "domain": [
-        "Thing"
+        "LegalDocument"
       ],
       "range": [
-        "Thing"
+        "LegalEntity"
       ],
       "description": "",
-      "uri": "https://semantica.dev/legal/ontology#CẤM"
+      "uri": "https://hienle.tech/legal/ontology#punishes"
     },
     {
-      "name": "CÓ_NGHĨA_VỤ",
-      "label": "CÓ_NGHĨA_VỤ",
+      "name": "acknowledges",
+      "label": "công nhận",
       "type": "object",
       "domain": [
-        "Thing"
+        "Organization"
       ],
       "range": [
-        "Thing"
+        "LegalEntity"
       ],
       "description": "",
-      "uri": "https://semantica.dev/legal/ontology#CÓ_NGHĨA_VỤ"
+      "uri": "https://hienle.tech/legal/ontology#acknowledges"
     },
     {
-      "name": "ĐIỀU_KIỆN",
-      "label": "ĐIỀU_KIỆN",
+      "name": "delegates",
+      "label": "ủy quyền",
       "type": "object",
       "domain": [
-        "Thing"
+        "Organization"
       ],
       "range": [
-        "Thing"
+        "Organization"
       ],
       "description": "",
-      "uri": "https://semantica.dev/legal/ontology#ĐIỀU_KIỆN"
+      "uri": "https://hienle.tech/legal/ontology#delegates"
     },
     {
-      "name": "CHO_PHÉP",
-      "label": "CHO_PHÉP",
+      "name": "belongsTo",
+      "label": "thuộc về",
       "type": "object",
       "domain": [
-        "Thing"
+        "LegalEntity"
       ],
       "range": [
-        "Thing"
+        "Organization"
       ],
       "description": "",
-      "uri": "https://semantica.dev/legal/ontology#CHO_PHÉP"
+      "uri": "https://hienle.tech/legal/ontology#belongsTo"
     },
     {
-      "name": "HÀNH_VI",
-      "label": "HÀNH_VI",
+      "name": "hasCondition",
+      "label": "có điều kiện",
       "type": "object",
       "domain": [
-        "Thing"
+        "Action"
       ],
       "range": [
-        "Thing"
+        "Condition"
       ],
       "description": "",
-      "uri": "https://semantica.dev/legal/ontology#HÀNH_VI"
+      "uri": "https://hienle.tech/legal/ontology#hasCondition"
     },
     {
-      "name": "KẾ_THỪA",
-      "label": "KẾ_THỪA",
+      "name": "excludes",
+      "label": "ngoài trừ",
       "type": "object",
       "domain": [
-        "Thing"
+        "LegalDocument"
       ],
       "range": [
-        "Thing"
+        "LegalEntity"
       ],
       "description": "",
-      "uri": "https://semantica.dev/legal/ontology#KẾ_THỪA"
+      "uri": "https://hienle.tech/legal/ontology#excludes"
     },
     {
-      "name": "BÁO_CÁO",
-      "label": "BÁO_CÁO",
+      "name": "revokes",
+      "label": "thu hồi",
       "type": "object",
       "domain": [
-        "Thing"
+        "Organization"
       ],
       "range": [
-        "Thing"
+        "LegalRecord"
       ],
       "description": "",
-      "uri": "https://semantica.dev/legal/ontology#BÁO_CÁO"
+      "uri": "https://hienle.tech/legal/ontology#revokes"
     },
     {
-      "name": "GỬI",
-      "label": "GỬI",
+      "name": "notifies",
+      "label": "thông báo",
       "type": "object",
       "domain": [
-        "Thing"
+        "Organization"
       ],
       "range": [
-        "Thing"
+        "LegalEntity"
       ],
       "description": "",
-      "uri": "https://semantica.dev/legal/ontology#GỬI"
+      "uri": "https://hienle.tech/legal/ontology#notifies"
     },
     {
-      "name": "CẤM_HOẠT_ĐỘNG",
-      "label": "CẤM_HOẠT_ĐỘNG",
+      "name": "reports",
+      "label": "báo cáo",
       "type": "object",
       "domain": [
-        "Thing"
+        "Organization"
       ],
       "range": [
-        "Thing"
+        "Organization"
       ],
       "description": "",
-      "uri": "https://semantica.dev/legal/ontology#CẤM_HOẠT_ĐỘNG"
+      "uri": "https://hienle.tech/legal/ontology#reports"
     },
     {
-      "name": "XỬ_PHẠT",
-      "label": "XỬ_PHẠT",
+      "name": "uses",
+      "label": "sử dụng",
       "type": "object",
       "domain": [
-        "Thing"
+        "LegalEntity"
       ],
       "range": [
-        "Thing"
+        "Asset"
       ],
       "description": "",
-      "uri": "https://semantica.dev/legal/ontology#XỬ_PHẠT"
+      "uri": "https://hienle.tech/legal/ontology#uses"
     },
     {
-      "name": "TỶ_LỆ",
-      "label": "TỶ_LỆ",
+      "name": "replaces",
+      "label": "thay thế",
       "type": "object",
       "domain": [
-        "Thing"
+        "LegalDocument"
       ],
       "range": [
-        "Thing"
+        "LegalDocument"
       ],
       "description": "",
-      "uri": "https://semantica.dev/legal/ontology#TỶ_LỆ"
+      "uri": "https://hienle.tech/legal/ontology#replaces"
     },
     {
-      "name": "THU_HỒI",
-      "label": "THU_HỒI",
+      "name": "inherits",
+      "label": "kế thừa",
       "type": "object",
       "domain": [
-        "Thing"
+        "LegalEntity"
       ],
       "range": [
-        "Thing"
+        "LegalEntity"
       ],
       "description": "",
-      "uri": "https://semantica.dev/legal/ontology#THU_HỒI"
+      "uri": "https://hienle.tech/legal/ontology#inherits"
     },
     {
-      "name": "CẤP",
-      "label": "CẤP",
-      "type": "object",
+      "name": "hasDuration",
+      "label": "có thời hạn",
+      "type": "data",
       "domain": [
-        "Thing"
+        "Action"
       ],
       "range": [
-        "Thing"
+        "xsd:string"
       ],
       "description": "",
-      "uri": "https://semantica.dev/legal/ontology#CẤP"
+      "uri": "https://hienle.tech/legal/ontology#hasDuration"
     },
     {
-      "name": "QUYỀN_HẠN",
-      "label": "QUYỀN_HẠN",
-      "type": "object",
+      "name": "hasPercentage",
+      "label": "có tỷ lệ",
+      "type": "data",
       "domain": [
-        "Thing"
+        "MonetaryValue"
       ],
       "range": [
-        "Thing"
+        "xsd:float"
       ],
       "description": "",
-      "uri": "https://semantica.dev/legal/ontology#QUYỀN_HẠN"
+      "uri": "https://hienle.tech/legal/ontology#hasPercentage"
     },
     {
-      "name": "THÔNG_BÁO",
-      "label": "THÔNG_BÁO",
-      "type": "object",
+      "name": "hasName",
+      "label": "có tên",
+      "type": "data",
       "domain": [
-        "Thing"
+        "LegalEntity"
       ],
       "range": [
-        "Thing"
+        "xsd:string"
       ],
       "description": "",
-      "uri": "https://semantica.dev/legal/ontology#THÔNG_BÁO"
+      "uri": "https://hienle.tech/legal/ontology#hasName"
     },
     {
-      "name": "THAY_THẾ",
-      "label": "THAY_THẾ",
-      "type": "object",
+      "name": "hasValue",
+      "label": "có giá trị",
+      "type": "data",
       "domain": [
-        "Thing"
+        "MonetaryValue"
       ],
       "range": [
-        "Thing"
+        "xsd:string"
       ],
       "description": "",
-      "uri": "https://semantica.dev/legal/ontology#THAY_THẾ"
+      "uri": "https://hienle.tech/legal/ontology#hasValue"
     },
     {
-      "name": "TRUYỀN",
-      "label": "TRUYỀN",
-      "type": "object",
+      "name": "hasDescription",
+      "label": "có mô tả",
+      "type": "data",
       "domain": [
-        "Thing"
+        "LegalConcept"
       ],
       "range": [
-        "Thing"
+        "xsd:string"
       ],
       "description": "",
-      "uri": "https://semantica.dev/legal/ontology#TRUYỀN"
+      "uri": "https://hienle.tech/legal/ontology#hasDescription"
     },
     {
-      "name": "NGOẠI_TRỪ",
-      "label": "NGOẠI_TRỪ",
-      "type": "object",
+      "name": "hasNumber",
+      "label": "có số hiệu",
+      "type": "data",
       "domain": [
-        "Thing"
+        "Legislation"
       ],
       "range": [
-        "Thing"
+        "xsd:string"
       ],
       "description": "",
-      "uri": "https://semantica.dev/legal/ontology#NGOẠI_TRỪ"
+      "uri": "https://hienle.tech/legal/ontology#hasNumber"
     },
     {
-      "name": "SỬ_DỤNG",
-      "label": "SỬ_DỤNG",
-      "type": "object",
+      "name": "effectiveDate",
+      "label": "ngày có hiệu lực",
+      "type": "data",
       "domain": [
-        "Thing"
+        "LegalDocument"
       ],
       "range": [
-        "Thing"
+        "xsd:date"
       ],
       "description": "",
-      "uri": "https://semantica.dev/legal/ontology#SỬ_DỤNG"
+      "uri": "https://hienle.tech/legal/ontology#effectiveDate"
     },
     {
-      "name": "REFERENCES",
-      "label": "REFERENCES",
-      "type": "object",
+      "name": "expiryDate",
+      "label": "ngày hết hiệu lực",
+      "type": "data",
       "domain": [
-        "Thing"
+        "LegalDocument"
       ],
       "range": [
-        "Thing"
+        "xsd:date"
       ],
       "description": "",
-      "uri": "https://semantica.dev/legal/ontology#REFERENCES"
+      "uri": "https://hienle.tech/legal/ontology#expiryDate"
     },
     {
       "name": "hasConfidence",
@@ -552,7 +692,7 @@
         "xsd:decimal"
       ],
       "description": "",
-      "uri": "https://semantica.dev/legal/ontology#hasConfidence"
+      "uri": "https://hienle.tech/legal/ontology#hasConfidence"
     },
     {
       "name": "hasText",
@@ -565,7 +705,7 @@
         "xsd:string"
       ],
       "description": "",
-      "uri": "https://semantica.dev/legal/ontology#hasText"
+      "uri": "https://hienle.tech/legal/ontology#hasText"
     },
     {
       "name": "hasSourceId",
@@ -578,13 +718,13 @@
         "xsd:string"
       ],
       "description": "",
-      "uri": "https://semantica.dev/legal/ontology#hasSourceId"
+      "uri": "https://hienle.tech/legal/ontology#hasSourceId"
     }
   ],
   "metadata": {
     "name": "VietnameseLegalOntology",
-    "generated_with": "rule_based",
-    "num_classes": 10,
+    "generated_with": "llm",
+    "num_classes": 30,
     "num_properties": 39
   }
 }

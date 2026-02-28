@@ -64,6 +64,10 @@ _ontology = import_module(".ontology-based-query-expander", "vn_legal_rag.online
 OntologyExpander = _ontology.OntologyExpander
 ExpansionResult = _ontology.ExpansionResult
 
+# Vietnamese NLP Term Matcher
+_nlp_matcher = import_module(".vietnamese-nlp-term-matcher", "vn_legal_rag.online")
+VietnameseNLPMatcher = _nlp_matcher.VietnameseNLPMatcher
+
 # Document Filter (Result Filtering)
 _doc_filter = import_module(".document-aware-result-filter", "vn_legal_rag.online")
 DocumentFilter = _doc_filter.DocumentFilter
@@ -116,6 +120,8 @@ __all__ = [
     # Ontology Expander
     "OntologyExpander",
     "ExpansionResult",
+    # Vietnamese NLP Matcher
+    "VietnameseNLPMatcher",
 
     # Document Filter
     "DocumentFilter",

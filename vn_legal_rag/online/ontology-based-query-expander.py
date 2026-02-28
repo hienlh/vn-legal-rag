@@ -13,10 +13,24 @@ Supports:
 """
 
 from dataclasses import dataclass, field
+from importlib import import_module
 from typing import Any, Dict, List, Optional, Set, Tuple
 import logging
 
 logger = logging.getLogger(__name__)
+
+# Lazy import for VietnameseNLPMatcher
+_nlp_matcher_module = None
+
+
+def _get_nlp_matcher():
+    """Lazy import VietnameseNLPMatcher to avoid circular imports."""
+    global _nlp_matcher_module
+    if _nlp_matcher_module is None:
+        _nlp_matcher_module = import_module(
+            ".vietnamese-nlp-term-matcher", "vn_legal_rag.online"
+        )
+    return _nlp_matcher_module.VietnameseNLPMatcher
 
 
 # ============================================================================
@@ -146,7 +160,12 @@ class OntologyExpander:
         ['công ty cổ phần', 'công ty trách nhiệm hữu hạn', ...]
     """
 
-    def __init__(self, ontology: Optional[Any] = None, merge_defaults: bool = True):
+    def __init__(
+        self,
+        ontology: Optional[Any] = None,
+        merge_defaults: bool = True,
+        use_nlp_matcher: bool = True,
+    ):
         """
         Initialize OntologyExpander.
 
@@ -155,6 +174,7 @@ class OntologyExpander:
                       If None, uses default hardcoded Vietnamese legal hierarchy.
             merge_defaults: If True, always include default hierarchy to ensure
                            full coverage even when loading from file. Default True.
+            use_nlp_matcher: If True, use VietnameseNLPMatcher for better matching.
         """
         # Initialize with defaults first (ensures full coverage)
         self._hierarchy: Dict[str, Optional[str]] = {}
@@ -178,6 +198,16 @@ class OntologyExpander:
 
         # Add common abbreviations
         self._add_abbreviations()
+
+        # Initialize Vietnamese NLP matcher for better query matching
+        self._nlp_matcher = None
+        if use_nlp_matcher:
+            try:
+                VietnameseNLPMatcher = _get_nlp_matcher()
+                self._nlp_matcher = VietnameseNLPMatcher(self._labels_vi)
+                logger.info("VietnameseNLPMatcher initialized for query expansion")
+            except Exception as e:
+                logger.warning(f"Failed to init VietnameseNLPMatcher: {e}")
 
     def _use_default_hierarchy(self):
         """Use default hardcoded Vietnamese legal hierarchy."""
@@ -297,10 +327,21 @@ class OntologyExpander:
                             self._children[parent].append(name)
 
     def find_class(self, term: str) -> Optional[str]:
-        """Find ontology class for Vietnamese term."""
+        """
+        Find ontology class for Vietnamese term.
+
+        Uses NLP matcher (if available) for better Vietnamese text matching,
+        with fallback to direct lookup.
+        """
         term_lower = term.lower().strip()
 
-        # Direct lookup
+        # Try NLP matcher first (better Vietnamese handling)
+        if self._nlp_matcher:
+            matches = self._nlp_matcher.find_matches(term)
+            if matches:
+                return matches[0]
+
+        # Direct lookup fallback
         if term_lower in self._vi_to_class:
             return self._vi_to_class[term_lower]
 
