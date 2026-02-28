@@ -226,7 +226,7 @@ def build_forest_from_db(
         UnifiedForest instance
     """
     import sqlite3
-    from vn_legal_rag.types import TreeNode, TreeIndex, UnifiedForest, NodeType
+    from vn_legal_rag.types import TreeNode, TreeIndex, UnifiedForest, NodeType, CrossRefEdge
 
     if chapter_summaries is None:
         chapter_summaries = {}
@@ -344,6 +344,33 @@ def build_forest_from_db(
             )
             tree = TreeIndex(root=root, doc_id=doc["id"])
             forest.add_tree(tree)
+
+    # Load cross-references from database
+    try:
+        cross_refs = conn.execute("""
+            SELECT source_article_id, target_article_id, reference_text, confidence
+            FROM legal_cross_references
+            WHERE target_article_id IS NOT NULL
+            AND target_article_id NOT LIKE 'ext%'
+        """).fetchall()
+
+        for ref in cross_refs:
+            # Filter by doc_ids if specified
+            source_doc = ref["source_article_id"].split(":")[0] if ":" in ref["source_article_id"] else ""
+            if doc_ids and source_doc not in doc_ids:
+                continue
+
+            edge = CrossRefEdge(
+                source_node_id=ref["source_article_id"],
+                target_node_id=ref["target_article_id"],
+                reference_text=ref["reference_text"] or "",
+                confidence=ref["confidence"] or 1.0,
+            )
+            forest.add_cross_ref(edge)
+
+        logger.info(f"Loaded {len(forest.cross_refs)} cross-references")
+    except Exception as e:
+        logger.warning(f"Could not load cross-references: {e}")
 
     conn.close()
 

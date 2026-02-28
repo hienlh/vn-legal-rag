@@ -229,6 +229,10 @@ class UnifiedForest:
                     related.append(target)
         return related
 
+    def traverse_reference(self, edge: "CrossRefEdge") -> Optional[TreeNode]:
+        """Follow cross-reference edge to target node."""
+        return self.find_node(edge.target_node_id)
+
     def get_path_to_root(self, node_id: str) -> List[TreeNode]:
         """
         Get path from root to node (alias for compatibility).

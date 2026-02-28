@@ -49,6 +49,10 @@ save_json = _data_loaders.save_json
 load_json = _data_loaders.load_json
 build_forest_from_db = _data_loaders.build_forest_from_db
 
+# Tree index builder
+_tree_builder = import_module(".tree-index-builder-from-db", "vn_legal_rag.utils")
+TreeIndexBuilder = _tree_builder.TreeIndexBuilder
+
 from .simple_logger import get_logger, setup_logging
 
 # Progress tracker (import from kebab-case filename)
@@ -94,6 +98,9 @@ __all__ = [
     "save_json",
     "load_json",
     "build_forest_from_db",
+
+    # Tree index builder
+    "TreeIndexBuilder",
 
     # Logging
     "setup_logging",
