@@ -332,6 +332,11 @@ class LegalOntology:
         with open(path, "w", encoding="utf-8") as f:
             json.dump(self.to_dict(), f, ensure_ascii=False, indent=2)
 
+    def to_ttl_file(self, path: str) -> None:
+        """Save ontology to Turtle (.ttl) file."""
+        with open(path, "w", encoding="utf-8") as f:
+            f.write(self.to_turtle())
+
 
 class LegalOntologyGenerator:
     """

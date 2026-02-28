@@ -9,265 +9,537 @@
       "uri": "https://semantica.dev/legal/ontology#Thing"
     },
     {
-      "name": "LegalDocument",
-      "label": "Tài liệu pháp lý",
-      "parent": null,
-      "description": "",
-      "uri": "https://semantica.dev/legal/ontology#LegalDocument"
+      "name": "ORGANIZATION",
+      "label": "ORGANIZATION",
+      "parent": "Thing",
+      "description": "Entity type: ORGANIZATION",
+      "uri": "https://semantica.dev/legal/ontology#ORGANIZATION"
     },
     {
-      "name": "Organization",
-      "label": "Tổ chức",
-      "parent": null,
-      "description": "",
-      "uri": "https://semantica.dev/legal/ontology#Organization"
+      "name": "LEGAL_TERM",
+      "label": "LEGAL_TERM",
+      "parent": "Thing",
+      "description": "Entity type: LEGAL_TERM",
+      "uri": "https://semantica.dev/legal/ontology#LEGAL_TERM"
     },
     {
-      "name": "LegalTerm",
-      "label": "Thuật ngữ pháp lý",
-      "parent": null,
-      "description": "",
-      "uri": "https://semantica.dev/legal/ontology#LegalTerm"
+      "name": "LEGAL_REFERENCE",
+      "label": "LEGAL_REFERENCE",
+      "parent": "Thing",
+      "description": "Entity type: LEGAL_REFERENCE",
+      "uri": "https://semantica.dev/legal/ontology#LEGAL_REFERENCE"
     },
     {
-      "name": "PersonRole",
-      "label": "Vai trò cá nhân",
-      "parent": null,
-      "description": "",
-      "uri": "https://semantica.dev/legal/ontology#PersonRole"
+      "name": "PERSON_ROLE",
+      "label": "PERSON_ROLE",
+      "parent": "Thing",
+      "description": "Entity type: PERSON_ROLE",
+      "uri": "https://semantica.dev/legal/ontology#PERSON_ROLE"
     },
     {
-      "name": "LegalConcept",
-      "label": "Khái niệm pháp lý",
-      "parent": null,
-      "description": "",
-      "uri": "https://semantica.dev/legal/ontology#LegalConcept"
+      "name": "PERCENTAGE",
+      "label": "PERCENTAGE",
+      "parent": "Thing",
+      "description": "Entity type: PERCENTAGE",
+      "uri": "https://semantica.dev/legal/ontology#PERCENTAGE"
     },
     {
-      "name": "Quantity",
-      "label": "Số lượng",
-      "parent": null,
-      "description": "",
-      "uri": "https://semantica.dev/legal/ontology#Quantity"
+      "name": "MONETARY",
+      "label": "MONETARY",
+      "parent": "Thing",
+      "description": "Entity type: MONETARY",
+      "uri": "https://semantica.dev/legal/ontology#MONETARY"
     },
     {
-      "name": "Duration",
-      "label": "Thời gian",
-      "parent": "Quantity",
-      "description": "",
-      "uri": "https://semantica.dev/legal/ontology#Duration"
+      "name": "DURATION",
+      "label": "DURATION",
+      "parent": "Thing",
+      "description": "Entity type: DURATION",
+      "uri": "https://semantica.dev/legal/ontology#DURATION"
     },
     {
-      "name": "Percentage",
-      "label": "Tỷ lệ",
-      "parent": "Quantity",
-      "description": "",
-      "uri": "https://semantica.dev/legal/ontology#Percentage"
+      "name": "ACTION",
+      "label": "ACTION",
+      "parent": "Thing",
+      "description": "Entity type: ACTION",
+      "uri": "https://semantica.dev/legal/ontology#ACTION"
     },
     {
-      "name": "Monetary",
-      "label": "Tiền tệ",
-      "parent": "Quantity",
-      "description": "",
-      "uri": "https://semantica.dev/legal/ontology#Monetary"
-    },
-    {
-      "name": "Action",
-      "label": "Hành động",
-      "parent": "LegalConcept",
-      "description": "",
-      "uri": "https://semantica.dev/legal/ontology#Action"
-    },
-    {
-      "name": "Condition",
-      "label": "Điều kiện",
-      "parent": "LegalConcept",
-      "description": "",
-      "uri": "https://semantica.dev/legal/ontology#Condition"
+      "name": "CONDITION",
+      "label": "CONDITION",
+      "parent": "Thing",
+      "description": "Entity type: CONDITION",
+      "uri": "https://semantica.dev/legal/ontology#CONDITION"
     }
   ],
   "properties": [
     {
-      "name": "relatedTo",
-      "label": "Liên quan đến",
+      "name": "QUẢN_LÝ",
+      "label": "QUẢN_LÝ",
       "type": "object",
       "domain": [
-        "LegalDocument"
+        "Thing"
       ],
       "range": [
-        "LegalDocument"
+        "Thing"
       ],
       "description": "",
-      "uri": "https://semantica.dev/legal/ontology#relatedTo"
+      "uri": "https://semantica.dev/legal/ontology#QUẢN_LÝ"
     },
     {
-      "name": "requires",
-      "label": "Yêu cầu",
+      "name": "THAM_CHIẾU",
+      "label": "THAM_CHIẾU",
       "type": "object",
       "domain": [
-        "LegalDocument"
+        "Thing"
       ],
       "range": [
-        "LegalTerm"
+        "Thing"
       ],
       "description": "",
-      "uri": "https://semantica.dev/legal/ontology#requires"
+      "uri": "https://semantica.dev/legal/ontology#THAM_CHIẾU"
     },
     {
-      "name": "references",
-      "label": "Tham chiếu",
+      "name": "LÀ_LOẠI",
+      "label": "LÀ_LOẠI",
       "type": "object",
       "domain": [
-        "LegalDocument"
+        "Thing"
       ],
       "range": [
-        "LegalReference"
+        "Thing"
       ],
       "description": "",
-      "uri": "https://semantica.dev/legal/ontology#references"
+      "uri": "https://semantica.dev/legal/ontology#LÀ_LOẠI"
     },
     {
-      "name": "authorizedBy",
-      "label": "Được ủy quyền bởi",
+      "name": "YÊU_CẦU",
+      "label": "YÊU_CẦU",
       "type": "object",
       "domain": [
-        "Action"
+        "Thing"
       ],
       "range": [
-        "PersonRole"
+        "Thing"
       ],
       "description": "",
-      "uri": "https://semantica.dev/legal/ontology#authorizedBy"
+      "uri": "https://semantica.dev/legal/ontology#YÊU_CẦU"
     },
     {
-      "name": "partOf",
-      "label": "Là một phần của",
+      "name": "CÓ_THẨM_QUYỀN",
+      "label": "CÓ_THẨM_QUYỀN",
       "type": "object",
       "domain": [
-        "Organization"
+        "Thing"
       ],
       "range": [
-        "LegalDocument"
+        "Thing"
       ],
       "description": "",
-      "uri": "https://semantica.dev/legal/ontology#partOf"
+      "uri": "https://semantica.dev/legal/ontology#CÓ_THẨM_QUYỀN"
     },
     {
-      "name": "hasAuthorityOver",
-      "label": "Có quyền hạn đối với",
+      "name": "CÓ_QUYỀN",
+      "label": "CÓ_QUYỀN",
       "type": "object",
       "domain": [
-        "PersonRole"
+        "Thing"
       ],
       "range": [
-        "Organization"
+        "Thing"
       ],
       "description": "",
-      "uri": "https://semantica.dev/legal/ontology#hasAuthorityOver"
+      "uri": "https://semantica.dev/legal/ontology#CÓ_QUYỀN"
     },
     {
-      "name": "includes",
-      "label": "Bao gồm",
+      "name": "ÁP_DỤNG",
+      "label": "ÁP_DỤNG",
       "type": "object",
       "domain": [
-        "LegalDocument"
+        "Thing"
       ],
       "range": [
-        "LegalTerm"
+        "Thing"
       ],
       "description": "",
-      "uri": "https://semantica.dev/legal/ontology#includes"
+      "uri": "https://semantica.dev/legal/ontology#ÁP_DỤNG"
     },
     {
-      "name": "conditionFor",
-      "label": "Điều kiện cho",
+      "name": "BAO_GỒM",
+      "label": "BAO_GỒM",
       "type": "object",
       "domain": [
-        "Action"
+        "Thing"
       ],
       "range": [
-        "Condition"
+        "Thing"
       ],
       "description": "",
-      "uri": "https://semantica.dev/legal/ontology#conditionFor"
+      "uri": "https://semantica.dev/legal/ontology#BAO_GỒM"
     },
     {
-      "name": "appliesTo",
-      "label": "Áp dụng cho",
+      "name": "THUỘC_VỀ",
+      "label": "THUỘC_VỀ",
       "type": "object",
       "domain": [
-        "LegalDocument"
+        "Thing"
       ],
       "range": [
-        "Organization"
+        "Thing"
       ],
       "description": "",
-      "uri": "https://semantica.dev/legal/ontology#appliesTo"
+      "uri": "https://semantica.dev/legal/ontology#THUỘC_VỀ"
     },
     {
-      "name": "responsibleFor",
-      "label": "Chịu trách nhiệm cho",
+      "name": "LIÊN_QUAN",
+      "label": "LIÊN_QUAN",
       "type": "object",
       "domain": [
-        "PersonRole"
+        "Thing"
       ],
       "range": [
-        "Action"
+        "Thing"
       ],
       "description": "",
-      "uri": "https://semantica.dev/legal/ontology#responsibleFor"
+      "uri": "https://semantica.dev/legal/ontology#LIÊN_QUAN"
     },
     {
-      "name": "hasPenalty",
-      "label": "Có hình phạt",
+      "name": "CÔNG_NHẬN",
+      "label": "CÔNG_NHẬN",
       "type": "object",
       "domain": [
-        "Action"
+        "Thing"
       ],
       "range": [
-        "LegalTerm"
+        "Thing"
       ],
       "description": "",
-      "uri": "https://semantica.dev/legal/ontology#hasPenalty"
+      "uri": "https://semantica.dev/legal/ontology#CÔNG_NHẬN"
     },
     {
-      "name": "definedAs",
-      "label": "Được định nghĩa là",
+      "name": "NGHĨA_VỤ",
+      "label": "NGHĨA_VỤ",
       "type": "object",
       "domain": [
-        "LegalTerm"
+        "Thing"
       ],
       "range": [
-        "LegalTerm"
+        "Thing"
       ],
       "description": "",
-      "uri": "https://semantica.dev/legal/ontology#definedAs"
+      "uri": "https://semantica.dev/legal/ontology#NGHĨA_VỤ"
     },
     {
-      "name": "supersedes",
-      "label": "Thay thế",
+      "name": "ỦY_QUYỀN",
+      "label": "ỦY_QUYỀN",
       "type": "object",
       "domain": [
-        "LegalDocument"
+        "Thing"
       ],
       "range": [
-        "LegalDocument"
+        "Thing"
       ],
       "description": "",
-      "uri": "https://semantica.dev/legal/ontology#supersedes"
+      "uri": "https://semantica.dev/legal/ontology#ỦY_QUYỀN"
     },
     {
-      "name": "excludes",
-      "label": "Loại trừ",
+      "name": "ĐỊNH_NGHĨA",
+      "label": "ĐỊNH_NGHĨA",
       "type": "object",
       "domain": [
-        "LegalDocument"
+        "Thing"
       ],
       "range": [
-        "LegalTerm"
+        "Thing"
       ],
       "description": "",
-      "uri": "https://semantica.dev/legal/ontology#excludes"
+      "uri": "https://semantica.dev/legal/ontology#ĐỊNH_NGHĨA"
+    },
+    {
+      "name": "THỜI_HẠN",
+      "label": "THỜI_HẠN",
+      "type": "object",
+      "domain": [
+        "Thing"
+      ],
+      "range": [
+        "Thing"
+      ],
+      "description": "",
+      "uri": "https://semantica.dev/legal/ontology#THỜI_HẠN"
+    },
+    {
+      "name": "BẢO_ĐẢM",
+      "label": "BẢO_ĐẢM",
+      "type": "object",
+      "domain": [
+        "Thing"
+      ],
+      "range": [
+        "Thing"
+      ],
+      "description": "",
+      "uri": "https://semantica.dev/legal/ontology#BẢO_ĐẢM"
+    },
+    {
+      "name": "CẤM",
+      "label": "CẤM",
+      "type": "object",
+      "domain": [
+        "Thing"
+      ],
+      "range": [
+        "Thing"
+      ],
+      "description": "",
+      "uri": "https://semantica.dev/legal/ontology#CẤM"
+    },
+    {
+      "name": "CÓ_NGHĨA_VỤ",
+      "label": "CÓ_NGHĨA_VỤ",
+      "type": "object",
+      "domain": [
+        "Thing"
+      ],
+      "range": [
+        "Thing"
+      ],
+      "description": "",
+      "uri": "https://semantica.dev/legal/ontology#CÓ_NGHĨA_VỤ"
+    },
+    {
+      "name": "ĐIỀU_KIỆN",
+      "label": "ĐIỀU_KIỆN",
+      "type": "object",
+      "domain": [
+        "Thing"
+      ],
+      "range": [
+        "Thing"
+      ],
+      "description": "",
+      "uri": "https://semantica.dev/legal/ontology#ĐIỀU_KIỆN"
+    },
+    {
+      "name": "CHO_PHÉP",
+      "label": "CHO_PHÉP",
+      "type": "object",
+      "domain": [
+        "Thing"
+      ],
+      "range": [
+        "Thing"
+      ],
+      "description": "",
+      "uri": "https://semantica.dev/legal/ontology#CHO_PHÉP"
+    },
+    {
+      "name": "HÀNH_VI",
+      "label": "HÀNH_VI",
+      "type": "object",
+      "domain": [
+        "Thing"
+      ],
+      "range": [
+        "Thing"
+      ],
+      "description": "",
+      "uri": "https://semantica.dev/legal/ontology#HÀNH_VI"
+    },
+    {
+      "name": "KẾ_THỪA",
+      "label": "KẾ_THỪA",
+      "type": "object",
+      "domain": [
+        "Thing"
+      ],
+      "range": [
+        "Thing"
+      ],
+      "description": "",
+      "uri": "https://semantica.dev/legal/ontology#KẾ_THỪA"
+    },
+    {
+      "name": "BÁO_CÁO",
+      "label": "BÁO_CÁO",
+      "type": "object",
+      "domain": [
+        "Thing"
+      ],
+      "range": [
+        "Thing"
+      ],
+      "description": "",
+      "uri": "https://semantica.dev/legal/ontology#BÁO_CÁO"
+    },
+    {
+      "name": "GỬI",
+      "label": "GỬI",
+      "type": "object",
+      "domain": [
+        "Thing"
+      ],
+      "range": [
+        "Thing"
+      ],
+      "description": "",
+      "uri": "https://semantica.dev/legal/ontology#GỬI"
+    },
+    {
+      "name": "CẤM_HOẠT_ĐỘNG",
+      "label": "CẤM_HOẠT_ĐỘNG",
+      "type": "object",
+      "domain": [
+        "Thing"
+      ],
+      "range": [
+        "Thing"
+      ],
+      "description": "",
+      "uri": "https://semantica.dev/legal/ontology#CẤM_HOẠT_ĐỘNG"
+    },
+    {
+      "name": "XỬ_PHẠT",
+      "label": "XỬ_PHẠT",
+      "type": "object",
+      "domain": [
+        "Thing"
+      ],
+      "range": [
+        "Thing"
+      ],
+      "description": "",
+      "uri": "https://semantica.dev/legal/ontology#XỬ_PHẠT"
+    },
+    {
+      "name": "TỶ_LỆ",
+      "label": "TỶ_LỆ",
+      "type": "object",
+      "domain": [
+        "Thing"
+      ],
+      "range": [
+        "Thing"
+      ],
+      "description": "",
+      "uri": "https://semantica.dev/legal/ontology#TỶ_LỆ"
+    },
+    {
+      "name": "THU_HỒI",
+      "label": "THU_HỒI",
+      "type": "object",
+      "domain": [
+        "Thing"
+      ],
+      "range": [
+        "Thing"
+      ],
+      "description": "",
+      "uri": "https://semantica.dev/legal/ontology#THU_HỒI"
+    },
+    {
+      "name": "CẤP",
+      "label": "CẤP",
+      "type": "object",
+      "domain": [
+        "Thing"
+      ],
+      "range": [
+        "Thing"
+      ],
+      "description": "",
+      "uri": "https://semantica.dev/legal/ontology#CẤP"
+    },
+    {
+      "name": "QUYỀN_HẠN",
+      "label": "QUYỀN_HẠN",
+      "type": "object",
+      "domain": [
+        "Thing"
+      ],
+      "range": [
+        "Thing"
+      ],
+      "description": "",
+      "uri": "https://semantica.dev/legal/ontology#QUYỀN_HẠN"
+    },
+    {
+      "name": "THÔNG_BÁO",
+      "label": "THÔNG_BÁO",
+      "type": "object",
+      "domain": [
+        "Thing"
+      ],
+      "range": [
+        "Thing"
+      ],
+      "description": "",
+      "uri": "https://semantica.dev/legal/ontology#THÔNG_BÁO"
+    },
+    {
+      "name": "THAY_THẾ",
+      "label": "THAY_THẾ",
+      "type": "object",
+      "domain": [
+        "Thing"
+      ],
+      "range": [
+        "Thing"
+      ],
+      "description": "",
+      "uri": "https://semantica.dev/legal/ontology#THAY_THẾ"
+    },
+    {
+      "name": "TRUYỀN",
+      "label": "TRUYỀN",
+      "type": "object",
+      "domain": [
+        "Thing"
+      ],
+      "range": [
+        "Thing"
+      ],
+      "description": "",
+      "uri": "https://semantica.dev/legal/ontology#TRUYỀN"
+    },
+    {
+      "name": "NGOẠI_TRỪ",
+      "label": "NGOẠI_TRỪ",
+      "type": "object",
+      "domain": [
+        "Thing"
+      ],
+      "range": [
+        "Thing"
+      ],
+      "description": "",
+      "uri": "https://semantica.dev/legal/ontology#NGOẠI_TRỪ"
+    },
+    {
+      "name": "SỬ_DỤNG",
+      "label": "SỬ_DỤNG",
+      "type": "object",
+      "domain": [
+        "Thing"
+      ],
+      "range": [
+        "Thing"
+      ],
+      "description": "",
+      "uri": "https://semantica.dev/legal/ontology#SỬ_DỤNG"
+    },
+    {
+      "name": "REFERENCES",
+      "label": "REFERENCES",
+      "type": "object",
+      "domain": [
+        "Thing"
+      ],
+      "range": [
+        "Thing"
+      ],
+      "description": "",
+      "uri": "https://semantica.dev/legal/ontology#REFERENCES"
     },
     {
       "name": "hasConfidence",
@@ -309,5 +581,10 @@
       "uri": "https://semantica.dev/legal/ontology#hasSourceId"
     }
   ],
-  "metadata": {}
+  "metadata": {
+    "name": "VietnameseLegalOntology",
+    "generated_with": "rule_based",
+    "num_classes": 10,
+    "num_properties": 39
+  }
 }

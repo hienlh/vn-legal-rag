@@ -146,27 +146,34 @@ class OntologyExpander:
         ['công ty cổ phần', 'công ty trách nhiệm hữu hạn', ...]
     """
 
-    def __init__(self, ontology: Optional[Any] = None):
+    def __init__(self, ontology: Optional[Any] = None, merge_defaults: bool = True):
         """
         Initialize OntologyExpander.
 
         Args:
             ontology: Optional LegalOntology instance for dynamic hierarchy.
                       If None, uses default hardcoded Vietnamese legal hierarchy.
+            merge_defaults: If True, always include default hierarchy to ensure
+                           full coverage even when loading from file. Default True.
         """
-        # Initialize with defaults
+        # Initialize with defaults first (ensures full coverage)
         self._hierarchy: Dict[str, Optional[str]] = {}
         self._labels_vi: Dict[str, str] = {}
         self._vi_to_class: Dict[str, str] = {}
         self._children: Dict[str, List[str]] = {}
 
-        if ontology is not None:
-            # Build from provided ontology
-            self._build_from_ontology(ontology)
-            logger.info(f"OntologyExpander initialized from ontology with {len(self._hierarchy)} classes")
-        else:
-            # Use default hardcoded hierarchy
+        # Always start with defaults if merge_defaults=True
+        if merge_defaults or ontology is None:
             self._use_default_hierarchy()
+
+        if ontology is not None:
+            # Extend/override with provided ontology
+            self._build_from_ontology(ontology, extend=merge_defaults)
+            logger.info(
+                f"OntologyExpander initialized with {len(self._hierarchy)} classes "
+                f"(merged={merge_defaults})"
+            )
+        else:
             logger.info("OntologyExpander initialized with default Vietnamese legal hierarchy")
 
         # Add common abbreviations
@@ -179,12 +186,27 @@ class OntologyExpander:
         self._vi_to_class = {v.lower(): k for k, v in self._labels_vi.items()}
         self._children = self._build_children_map()
 
-    def _build_from_ontology(self, ontology: Any):
-        """Build hierarchy from LegalOntology instance."""
+    def _build_from_ontology(self, ontology: Any, extend: bool = False):
+        """
+        Build hierarchy from LegalOntology instance.
+
+        Args:
+            ontology: LegalOntology object or dict from JSON
+            extend: If True, extend existing hierarchy (don't clear first).
+                   If False, replace existing hierarchy.
+        """
+        if not extend:
+            # Clear existing data
+            self._hierarchy = {}
+            self._labels_vi = {}
+            self._vi_to_class = {}
+            self._children = {}
+
         # Support both LegalOntology object and dict format
         if hasattr(ontology, "classes"):
             # LegalOntology object
             for cls in ontology.classes.values():
+                # When extending, loaded ontology takes precedence
                 self._hierarchy[cls.name] = cls.parent
                 self._labels_vi[cls.name] = cls.label
                 self._vi_to_class[cls.label.lower()] = cls.name
@@ -202,6 +224,7 @@ class OntologyExpander:
                 parent = cls_data.get("parent")
                 label = cls_data.get("label", name)
 
+                # When extending, loaded ontology takes precedence
                 self._hierarchy[name] = parent
                 self._labels_vi[name] = label
                 self._vi_to_class[label.lower()] = name
@@ -213,12 +236,12 @@ class OntologyExpander:
                         self._children[parent].append(name)
         else:
             logger.warning(f"Unknown ontology format: {type(ontology)}, using defaults")
-            self._use_default_hierarchy()
+            if not extend:
+                self._use_default_hierarchy()
             return
 
-        # Rebuild children map if not built during iteration
-        if not self._children:
-            self._children = self._build_children_map()
+        # Rebuild children map to ensure consistency
+        self._children = self._build_children_map()
 
     def _add_abbreviations(self):
         """Add common Vietnamese abbreviations to lookup."""

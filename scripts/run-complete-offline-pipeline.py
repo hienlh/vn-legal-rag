@@ -58,6 +58,8 @@ from vn_legal_rag.offline import (
     # Linking
     KGSQLiteLinker,
     create_linker,
+    # Ontology
+    LegalOntologyGenerator,
     # Types
     LEGAL_RELATION_TYPES,
 )
@@ -76,6 +78,7 @@ AVAILABLE_STEPS = [
     "kg",           # Step 7: Build KG
     "linking",      # Step 8: Link KG ↔ SQLite
     "summaries",    # Step 9: Generate summaries
+    "ontology",     # Step 10: Generate ontology from KG
 ]
 
 
@@ -355,6 +358,62 @@ def run_kg_linking(
     return stats
 
 
+def run_ontology_generation(
+    kg_path: Path,
+    output_dir: Path,
+    llm_provider: str,
+    llm_model: str,
+) -> dict:
+    """Step 10: Generate ontology from KG."""
+    logger.info("=" * 60)
+    logger.info("Step 10: Ontology Generation from KG")
+    logger.info("=" * 60)
+
+    # Load KG
+    if not kg_path.exists():
+        logger.warning(f"  KG not found: {kg_path}, skipping ontology generation")
+        return {"status": "skipped", "reason": "KG not found"}
+
+    with open(kg_path, "r", encoding="utf-8") as f:
+        kg_data = json.load(f)
+
+    # Initialize generator
+    generator = LegalOntologyGenerator(
+        base_uri="https://semantica.dev/legal/ontology#",
+        provider=llm_provider,
+        model=llm_model,
+        use_llm=True,  # Use LLM for Vietnamese labels
+    )
+
+    # Generate ontology
+    ontology = generator.generate_from_kg(
+        kg_data,
+        name="VietnameseLegalOntology",
+    )
+
+    # Save ontology files
+    ontology_json_path = output_dir / "ontology.json"
+    ontology_ttl_path = output_dir / "ontology.ttl"
+
+    # Save JSON
+    ontology.to_json_file(str(ontology_json_path))
+    logger.info(f"  Saved: {ontology_json_path}")
+
+    # Save Turtle
+    ontology.to_ttl_file(str(ontology_ttl_path))
+    logger.info(f"  Saved: {ontology_ttl_path}")
+
+    stats = {
+        "classes": len(ontology.classes),
+        "properties": len(ontology.properties),
+        "json_path": str(ontology_json_path),
+        "ttl_path": str(ontology_ttl_path),
+    }
+
+    logger.info(f"  Generated ontology: {stats['classes']} classes, {stats['properties']} properties")
+    return stats
+
+
 def main():
     parser = argparse.ArgumentParser(
         description="Run complete offline pipeline",
@@ -458,6 +517,11 @@ def main():
         kg_path = output_dir / "legal_kg.json"
         if kg_path.exists():
             run_kg_linking(kg_path, args.db)
+
+    # Step 10: Ontology Generation
+    if "ontology" in steps:
+        kg_path = output_dir / "legal_kg.json"
+        run_ontology_generation(kg_path, output_dir, llm_provider, llm_model)
 
     logger.info("=" * 60)
     logger.info("PIPELINE COMPLETE")
