@@ -90,5 +90,9 @@ paper/*.out
 paper/*.synctex.gz
 paper/texput.*
 
+# Education PDF extractor — generated artifacts (regenerable)
+data/education/images/
+data/education/api_call_log.csv
+
 # Claude
 .claude/
