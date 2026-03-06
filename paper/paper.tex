@@ -69,7 +69,7 @@ $^b$\textit{School of Computer Science, University College Dublin, Ireland}\\[1e
 }
 \end{center}
 
-\noindent\textbf{Abstract.} Legal question answering (QA) systems face unique challenges due to complex hierarchical structures, cross-references between articles, and multi-hop reasoning requirements inherent in legal documents. Traditional Retrieval Augmented Generation (RAG) systems rely on vector similarity, which often fails to capture semantic relationships in legal texts. This paper proposes a Three-Tier Ontology-Enhanced RAG architecture that addresses these limitations through: (1) LLM-guided tree traversal for hierarchical document navigation, (2) dual-level semantic retrieval with Multi-Intent Personalized PageRank for graph-based reasoning, and (3) Reciprocal Rank Fusion for cross-tier result merging with knowledge graph expansion. We evaluate our approach on Vietnam Enterprise Law 2020 and related decrees, demonstrating substantial improvements over baseline methods. Our experimental results on 375 real legal questions show that the proposed three-tier method achieves 75.2\% Hit@10, significantly outperforming traditional BM25 (26.7\%), TF-IDF (28.8\%), semantic search (15.8\%), LightRAG (33.9\%), and single-tier PageIndex (35.2\%). Ablation studies confirm that each tier contributes meaningfully, with Tier~3 fusion providing an additional 5.3 percentage point improvement over Tier~1+2 alone. These results demonstrate the effectiveness of combining structural, semantic, and graph-based retrieval for legal domain applications.\\[0.5em]
+\noindent\textbf{Abstract.} Legal question answering (QA) systems face unique challenges due to complex hierarchical structures, cross-references between articles, and multi-hop reasoning requirements inherent in legal documents. Traditional Retrieval Augmented Generation (RAG) systems rely on vector similarity, which often fails to capture semantic relationships in legal texts. This paper proposes a Three-Tier Ontology-Enhanced RAG architecture that addresses these limitations through: (1) LLM-guided tree traversal for hierarchical document navigation, (2) dual-level semantic retrieval with Multi-Intent Personalized PageRank for graph-based reasoning, and (3) Reciprocal Rank Fusion for cross-tier result merging with knowledge graph expansion. We evaluate our approach on Vietnam Enterprise Law 2020 and related decrees, demonstrating substantial improvements over baseline methods. Our experimental results on 375 real legal questions show that the proposed three-tier method achieves 75.2\% Hit@10, significantly outperforming traditional BM25 (26.7\%), TF-IDF (28.8\%), semantic search (15.8\%), LightRAG (33.9\%), and single-tier PageIndex (35.2\%). Ablation studies confirm that each tier contributes meaningfully, with Tier~3 fusion providing an additional 4.0 percentage point improvement over Tier~1+2 alone. These results demonstrate the effectiveness of combining structural, semantic, and graph-based retrieval for legal domain applications.\\[0.5em]
 
 \noindent\textbf{Keywords.} Ontology, Legal Question Answering, Retrieval Augmented Generation, Knowledge Graph, Vietnamese NLP, Multi-Tier Retrieval
 
@@ -589,14 +589,14 @@ Table~\ref{tab:ablation} isolates the contribution of each tier.
 Tier 1 only (Tree Traversal) & 56.2 \\
 Tier 2 only (DualLevel + PPR) & 61.7 \\
 Tier 1 + Tier 2 (no RRF fusion) & 71.2 \\
-Full 3-Tier (with Tier 3 RRF) & \textbf{76.5} \\
+Full 3-Tier (with Tier 3 RRF) & \textbf{75.2} \\
 \bottomrule
 \end{tabular}
 \normalsize
 \justifying
 \vspace{0.3em}
 
-Each tier provides additive improvement: Tier~1 alone achieves 56.2\%, adding Tier~2 brings 71.2\% (+15.0pp), and Tier~3 fusion adds another 5.3pp to reach 76.5\%.
+Each tier provides additive improvement: Tier~1 alone achieves 56.2\%, adding Tier~2 brings 71.2\% (+15.0pp), and Tier~3 fusion adds another 4.0pp to reach 75.2\%.
 
 \textbf{Component breakdown analysis} from the evaluation shows that among successful retrievals, 70\% of hits come from Tier~1 (tree traversal), while Tier~2 (KG/semantic) contributes an additional 14\% of unique hits not found by Tier~1. This confirms the complementary nature of the two tiers.
 
@@ -710,7 +710,7 @@ Future work includes: (1) extending the knowledge graph to cover related laws (I
 \section{Conclusion}
 \label{sec:conclusion}
 
-We presented a Three-Tier Ontology-Enhanced RAG system for Vietnamese legal QA that combines LLM-guided structural navigation, dual-level semantic retrieval with intent-aware PPR, and Reciprocal Rank Fusion. Experiments on 375 real legal questions demonstrate 75.2\% Hit@10 (MRR 0.545), substantially outperforming BM25 (26.7\%), TF-IDF (28.8\%), LightRAG (33.9\%), and PageIndex (35.2\%). Ablation studies confirm each tier's contribution: Tier~1 alone 56.2\%, +Tier~2 yields 71.2\%, +Tier~3 fusion reaches 76.5\%. Our results demonstrate that combining domain ontology with LLM-guided navigation and graph reasoning yields substantial improvements over both traditional and graph-based RAG approaches for legal domain applications.
+We presented a Three-Tier Ontology-Enhanced RAG system for Vietnamese legal QA that combines LLM-guided structural navigation, dual-level semantic retrieval with intent-aware PPR, and Reciprocal Rank Fusion. Experiments on 375 real legal questions demonstrate 75.2\% Hit@10 (MRR 0.545), substantially outperforming BM25 (26.7\%), TF-IDF (28.8\%), LightRAG (33.9\%), and PageIndex (35.2\%). Ablation studies confirm each tier's contribution: Tier~1 alone 56.2\%, +Tier~2 yields 71.2\%, +Tier~3 fusion reaches 75.2\%. Our results demonstrate that combining domain ontology with LLM-guided navigation and graph reasoning yields substantial improvements over both traditional and graph-based RAG approaches for legal domain applications.
 
 \section*{Acknowledgments}
 
