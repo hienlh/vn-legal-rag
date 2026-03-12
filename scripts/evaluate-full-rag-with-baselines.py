@@ -69,8 +69,8 @@ except ImportError:
 
 logger = logging.getLogger(__name__)
 
-# Default ablation baselines to run alongside full RAG
-DEFAULT_ABLATIONS = ["tree_only", "dual_only"]
+# Default: no ablation baselines (components are interdependent, ablation misleading)
+DEFAULT_ABLATIONS = []
 
 # Traditional baselines to run real-time
 TRADITIONAL_BASELINES = ["bm25", "tfidf", "semantic", "keyword"]
@@ -307,11 +307,66 @@ def create_rag_with_ablation(shared_resources: dict, config: dict, ablation_conf
 # Query execution with retry
 # ---------------------------------------------------------------------------
 
-def run_query_with_retry(rag, question: str, max_retries=5, base_delay=5):
+def generate_answer_from_articles(question: str, article_ids: list, db, llm_provider):
+    """Generate LLM answer from retrieved article IDs using same prompt as RAG."""
+    if not article_ids or not llm_provider:
+        return ""
+
+    # Fetch article texts and build contexts
+    context_parts = []
+    for aid in article_ids[:10]:  # limit to top 10 for prompt
+        text = ""
+        if db and ":" in aid:
+            try:
+                article = db.get_article_by_id(aid)
+                if article:
+                    text = article.content or article.raw_text or ""
+            except Exception:
+                pass
+        if not text:
+            continue
+        # Build reference label
+        try:
+            doc_id, article_ref = aid.rsplit(":", 1)
+            article_num = article_ref[1:] if article_ref.startswith("d") else article_ref
+            so_hieu = doc_id.replace("-", "/", 2)
+            label = f"Điều {article_num} {so_hieu}"
+        except Exception:
+            label = aid
+        context_parts.append(f"[{len(context_parts)+1}] ({label}) {text}")
+
+    if not context_parts:
+        return ""
+
+    context_text = "\n\n".join(context_parts)
+    prompt = f"""Bạn là luật sư tư vấn pháp luật Việt Nam.
+
+CÂU HỎI: {question}
+
+TÀI LIỆU THAM KHẢO:
+{context_text}
+
+HƯỚNG DẪN:
+1. Đọc kỹ tất cả tài liệu trên. Chọn ra những điều luật LIÊN QUAN đến câu hỏi, bỏ qua những điều không liên quan.
+2. Dùng những điều luật liên quan để trả lời. Chỉ cần MỘT điều luật liên quan là đủ để trả lời.
+3. Trả lời tự nhiên như luật sư, KHÔNG nhắc đến "tài liệu tham khảo" hay "tài liệu được cung cấp".
+4. Trích dẫn: "Căn cứ vào Điều X [Tên văn bản]" (VD: "Căn cứ vào Điều 206 Luật Doanh nghiệp 2020").
+5. Cuối câu trả lời ghi "Căn cứ pháp lý:" liệt kê các điều đã dùng.
+6. CHỈ nói "Xin lỗi, tôi không tìm thấy quy định pháp luật liên quan" khi KHÔNG CÓ BẤT KỲ điều luật nào liên quan.
+
+Trả lời:"""
+
+    try:
+        return llm_provider.generate(prompt)
+    except Exception:
+        return ""
+
+
+def run_query_with_retry(rag, question: str, max_retries=5, base_delay=5, max_results=30):
     """Run RAG query with rate-limit retry. Returns (result, error)."""
     for attempt in range(max_retries):
         try:
-            result = rag.query(question, adaptive_retrieval=True)
+            result = rag.query(question, max_results=max_results, adaptive_retrieval=True)
             return result, None
         except Exception as e:
             error_str = str(e).lower()
@@ -333,6 +388,9 @@ def process_question(
     rag_full,
     rag_baselines: dict,
     traditional_baselines: dict,
+    max_articles: int = 30,
+    db=None,
+    llm_provider=None,
 ):
     """Process one question: full RAG + ablation baselines + traditional baselines.
 
@@ -363,7 +421,7 @@ def process_question(
     record["skipped"] = False
 
     # --- Full RAG (with LLM answer) ---
-    result, error = run_query_with_retry(rag_full, question)
+    result, error = run_query_with_retry(rag_full, question, max_results=max_articles)
     if error:
         record["full_error"] = error
         record["full_answer"] = ""
@@ -387,7 +445,7 @@ def process_question(
 
     # --- Ablation baselines (retrieval only, no LLM answer) ---
     for bname, rag_b in rag_baselines.items():
-        result_b, error_b = run_query_with_retry(rag_b, question)
+        result_b, error_b = run_query_with_retry(rag_b, question, max_results=max_articles)
         if error_b:
             record[f"{bname}_error"] = error_b
             record[f"{bname}_hit@10"] = 0
@@ -407,7 +465,7 @@ def process_question(
     # --- Traditional baselines (BM25, TF-IDF, Semantic, Keyword) ---
     for tname, retriever in traditional_baselines.items():
         try:
-            ranked_t = retriever.search(question, top_k=30)
+            ranked_t = retriever.search(question, top_k=max_articles)
             ir_t = calc_ir_metrics(expected, ranked_t)
 
             record[f"{tname}_retrieved"] = ranked_t[:10]  # store top 10 only
@@ -418,6 +476,21 @@ def process_question(
         except Exception as e:
             record[f"{tname}_error"] = str(e)
             record[f"{tname}_hit@10"] = 0
+
+    # --- Generate LLM answer for best traditional baseline ---
+    if traditional_baselines and llm_provider and db:
+        best_name, best_mrr = None, -1
+        for tname in traditional_baselines:
+            mrr = record.get(f"{tname}_mrr", 0)
+            if mrr > best_mrr:
+                best_mrr = mrr
+                best_name = tname
+        if best_name:
+            best_retrieved = record.get(f"{best_name}_retrieved", [])
+            if best_retrieved:
+                answer = generate_answer_from_articles(question, best_retrieved, db, llm_provider)
+                record["best_baseline_name"] = best_name
+                record["best_baseline_answer"] = answer
 
     return record
 
@@ -443,6 +516,8 @@ def main():
     parser.add_argument("--no-ablations", action="store_true", help="Skip ablation baselines")
     parser.add_argument("--no-traditional", action="store_true",
                         help="Skip traditional baselines (BM25, TF-IDF, Semantic, Keyword)")
+    parser.add_argument("--max-articles", type=int, default=30,
+                        help="Max articles retrieved for all methods (default: 30)")
     parser.add_argument("--to-csv", metavar="JSON_FILE", help="Convert existing JSON results to CSV and exit")
     parser.add_argument("--verbose", action="store_true")
 
@@ -483,9 +558,12 @@ def main():
     if not args.no_traditional:
         print(f"\n[3/5] Initializing traditional baselines (real-time on full DB)...")
         db_path = config.get("database", {}).get("path", "data/legal_docs.db")
+        # Use a separate embedding provider for semantic baseline
+        # to avoid sharing corrupted CUDA state with RAG's embedding model
+        baseline_embedding_gen = create_embedding_provider()
         traditional = init_traditional_baselines(
             db_path=db_path,
-            embedding_gen=shared["embedding_gen"],
+            embedding_gen=baseline_embedding_gen,
         )
         for method in traditional:
             print(f"      ✓ {method}")
@@ -508,6 +586,7 @@ def main():
 
     all_baselines = list(rag_baselines.keys()) + list(traditional.keys())
     print(f"      Questions: {len(tasks)} (start={args.start}, limit={args.limit})")
+    print(f"      Max articles per method: {args.max_articles}")
     print(f"      Configs: full + {all_baselines}")
 
     # --- Run evaluation ---
@@ -528,7 +607,8 @@ def main():
 
     def process_and_report(row):
         nonlocal completed
-        record = process_question(row, rag_full, rag_baselines, traditional)
+        record = process_question(row, rag_full, rag_baselines, traditional,
+                                  max_articles=args.max_articles, db=shared["db"], llm_provider=shared["llm_provider"])
 
         with stats_lock:
             completed += 1
@@ -563,11 +643,34 @@ def main():
 
         return record
 
+    # Incremental save: write partial results after each query
+    output_path = args.output if args.output.endswith(".json") else f"{args.output}.json"
+    os.makedirs(os.path.dirname(output_path) or ".", exist_ok=True)
+
+    def _save_incremental():
+        """Save current results to disk for progress monitoring."""
+        sorted_results = sorted(all_results, key=lambda r: int(r.get("stt", 0)))
+        inc_data = {
+            "metadata": {
+                "timestamp": time.strftime("%Y-%m-%d %H:%M:%S"),
+                "test_file": args.test_file,
+                "config": args.config,
+                "total_questions": len(tasks),
+                "completed": len(all_results),
+                "status": "in_progress",
+                "max_articles": args.max_articles,
+            },
+            "results": sorted_results,
+        }
+        with open(output_path, "w", encoding="utf-8") as f:
+            json.dump(inc_data, f, ensure_ascii=False, indent=2)
+
     try:
         if args.workers == 1:
             for row in tasks:
                 record = process_and_report(row)
                 all_results.append(record)
+                _save_incremental()
         else:
             with ThreadPoolExecutor(max_workers=args.workers) as executor:
                 futures = {executor.submit(process_and_report, row): row for row in tasks}
@@ -575,11 +678,14 @@ def main():
                     try:
                         record = future.result()
                         all_results.append(record)
+                        _save_incremental()
                     except Exception as e:
                         row = futures[future]
                         print(f"[ERR] STT {row.get('STT', '?')} - {e}")
     except KeyboardInterrupt:
         print("\n\n*** INTERRUPTED ***")
+        _save_incremental()
+        print(f"  Partial results ({len(all_results)} queries) saved to: {output_path}")
 
     # Sort results by STT
     all_results.sort(key=lambda r: int(r.get("stt", 0)))
@@ -641,6 +747,7 @@ def main():
             "total_tested": tested,
             "ablation_baselines": list(rag_baselines.keys()),
             "traditional_baselines": list(traditional.keys()),
+            "max_articles": args.max_articles,
         },
         "results": all_results,
     }

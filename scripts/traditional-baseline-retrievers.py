@@ -213,6 +213,21 @@ class SemanticRetriever:
         self.docs: List[ArticleDoc] = []
         self.embeddings: Optional[np.ndarray] = None
         self.embedding_gen = None
+        self._on_cpu = False
+
+    def _move_to_cpu(self):
+        """Move embedding model to CPU permanently after CUDA error."""
+        if self._on_cpu:
+            return
+        try:
+            import torch
+            torch.cuda.empty_cache()
+            if hasattr(self.embedding_gen, '_model') and self.embedding_gen._model is not None:
+                self.embedding_gen._model = self.embedding_gen._model.to("cpu")
+            self._on_cpu = True
+            print("        [WARN] CUDA error — switched to CPU permanently")
+        except Exception:
+            pass
 
     def index(self, docs: List[ArticleDoc], embedding_gen):
         self.docs = docs
@@ -221,20 +236,36 @@ class SemanticRetriever:
         # Generate embeddings for all articles (title + first 500 chars)
         texts = [f"{doc.article_name}: {doc.content[:500]}" for doc in docs]
 
-        # Batch embed
+        # Use GPU first, fallback to CPU on CUDA error
         all_embeddings = []
         batch_size = 64
         for i in range(0, len(texts), batch_size):
             batch = texts[i:i + batch_size]
-            batch_embs = embedding_gen.embed(batch)
-            all_embeddings.extend(batch_embs)
+            try:
+                all_embeddings.extend(embedding_gen.embed(batch))
+            except RuntimeError as e:
+                if "CUDA" in str(e):
+                    self._move_to_cpu()
+                    all_embeddings.extend(embedding_gen.embed(batch))
+                else:
+                    raise
         self.embeddings = np.array(all_embeddings)
 
     def search(self, query: str, top_k: int = 30) -> List[str]:
         if self.embedding_gen is None or self.embeddings is None:
             return []
 
-        query_emb = np.array(self.embedding_gen.embed([query])[0])
+        try:
+            query_emb = np.array(self.embedding_gen.embed([query])[0])
+        except RuntimeError as e:
+            if "CUDA" in str(e):
+                self._move_to_cpu()
+                try:
+                    query_emb = np.array(self.embedding_gen.embed([query])[0])
+                except RuntimeError:
+                    return []
+            else:
+                return []
 
         norms = np.linalg.norm(self.embeddings, axis=1)
         query_norm = np.linalg.norm(query_emb)
