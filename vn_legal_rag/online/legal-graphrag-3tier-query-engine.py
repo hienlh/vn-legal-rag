@@ -231,18 +231,21 @@ class LegalGraphRAG:
         )
 
         # Step 3: Generate response with LLM
+        # Use tree results (most accurate) for LLM, not RRF-merged list
+        # which can rank noise articles higher than correct ones
+        llm_contexts = self._build_llm_contexts(contexts, tree_result, max_llm=10)
         if self.llm_provider:
             response, confidence = self._generate_response(
                 query=query,
-                contexts=contexts,
+                contexts=llm_contexts,
                 analyzed=analyzed,
             )
         else:
             # Fallback without LLM
-            response = self._format_contexts(contexts)
-            confidence = 0.8 if contexts else 0.0
+            response = self._format_contexts(llm_contexts)
+            confidence = 0.8 if llm_contexts else 0.0
 
-        # Step 4: Build response
+        # Step 4: Build response (citations use ALL contexts for eval metrics)
         return GraphRAGResponse(
             response=response,
             citations=self._extract_citations(contexts),
@@ -437,6 +440,65 @@ class LegalGraphRAG:
 
         return contexts, tree_result
 
+    def _build_llm_contexts(
+        self,
+        merged_contexts: List[Dict[str, Any]],
+        tree_result,
+        max_llm: int = 10,
+    ) -> List[Dict[str, Any]]:
+        """Build contexts for LLM: prioritize tree results over RRF-merged list.
+
+        The RRF merger can rank noise articles high. Tree retriever is more
+        accurate, so we use tree articles first, then fill with merged results.
+        """
+        llm_contexts = []
+        seen_ids = set()
+
+        # First: add tree target nodes (most accurate retrieval)
+        if tree_result and tree_result.target_nodes:
+            for node in tree_result.target_nodes:
+                if len(llm_contexts) >= max_llm:
+                    break
+                node_id = node.node_id
+                if node_id in seen_ids:
+                    continue
+                seen_ids.add(node_id)
+                llm_contexts.append({
+                    "id": node_id,
+                    "text": node.content,
+                    "metadata": {
+                        "source": "tree",
+                        "source_id": node_id,
+                        "article_id": node_id,
+                    },
+                    "score": tree_result.confidence,
+                })
+
+        # Then: fill remaining slots from merged results (may include dual/KG)
+        for ctx in merged_contexts:
+            if len(llm_contexts) >= max_llm:
+                break
+            ctx_id = ctx.get("metadata", {}).get("source_id", ctx.get("id", ""))
+            if ctx_id in seen_ids:
+                continue
+            seen_ids.add(ctx_id)
+            llm_contexts.append(ctx)
+
+        return llm_contexts
+
+    def _build_reference_label(self, source_id: str) -> str:
+        """Build human-readable reference from source_id (e.g. '59-2020-QH14:d206')."""
+        if not source_id or ":" not in source_id:
+            return ""
+        try:
+            doc_id, article_ref = source_id.rsplit(":", 1)
+            article_num = article_ref[1:] if article_ref.startswith("d") else article_ref
+            # Convert doc_id to legal citation format (e.g. 59-2020-QH14 → 59/2020/QH14)
+            so_hieu = doc_id.replace("-", "/", 2)
+            return f"Điều {article_num} {so_hieu}"
+        except Exception:
+            return source_id
+
     def _generate_response(
         self,
         query: str,
@@ -449,20 +511,33 @@ class LegalGraphRAG:
         Returns:
             Tuple of (response_text, confidence)
         """
-        # Build prompt with contexts
-        context_text = "\n\n".join([
-            f"[{i+1}] {ctx['text']}"
-            for i, ctx in enumerate(contexts)
-        ])
+        # Build context text with legal reference labels
+        context_parts = []
+        ref_labels = []
+        for i, ctx in enumerate(contexts):
+            source_id = ctx.get("metadata", {}).get("source_id", "")
+            label = self._build_reference_label(source_id)
+            ref_labels.append(label or f"Nguồn {i+1}")
+            context_parts.append(f"[{i+1}] ({label}) {ctx['text']}" if label else f"[{i+1}] {ctx['text']}")
+        context_text = "\n\n".join(context_parts)
 
-        prompt = f"""Bạn là trợ lý pháp lý chuyên về luật Việt Nam.
-Trả lời câu hỏi dựa trên các điều khoản pháp luật được cung cấp.
-Luôn trích dẫn nguồn bằng số trong ngoặc vuông [1], [2], v.v.
+        # Build reference list for prompt
+        ref_list = "\n".join(f"[{i+1}] {lbl}" for i, lbl in enumerate(ref_labels))
 
-Câu hỏi: {query}
+        prompt = f"""Bạn là luật sư tư vấn pháp luật Việt Nam.
 
-Điều khoản pháp luật:
+CÂU HỎI: {query}
+
+TÀI LIỆU THAM KHẢO:
 {context_text}
+
+HƯỚNG DẪN:
+1. Đọc kỹ tất cả tài liệu trên. Chọn ra những điều luật LIÊN QUAN đến câu hỏi, bỏ qua những điều không liên quan.
+2. Dùng những điều luật liên quan để trả lời. Chỉ cần MỘT điều luật liên quan là đủ để trả lời.
+3. Trả lời tự nhiên như luật sư, KHÔNG nhắc đến "tài liệu tham khảo" hay "tài liệu được cung cấp".
+4. Trích dẫn: "Căn cứ vào Điều X [Tên văn bản]" (VD: "Căn cứ vào Điều 206 Luật Doanh nghiệp 2020").
+5. Cuối câu trả lời ghi "Căn cứ pháp lý:" liệt kê các điều đã dùng.
+6. CHỈ nói "Xin lỗi, tôi không tìm thấy quy định pháp luật liên quan" khi KHÔNG CÓ BẤT KỲ điều luật nào liên quan.
 
 Trả lời:"""
 
