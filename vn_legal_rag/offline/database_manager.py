@@ -148,6 +148,44 @@ class LegalDocumentDB:
                 session.expunge(r)
             return list(results)
 
+    def get_all_documents(self) -> List[LegalDocumentModel]:
+        """Get all documents with chapters loaded."""
+        with self.SessionLocal() as session:
+            stmt = (
+                select(LegalDocumentModel)
+                .options(joinedload(LegalDocumentModel.chapters))
+            )
+            results = session.scalars(stmt).unique().all()
+            for r in results:
+                session.expunge(r)
+            return list(results)
+
+    def get_all_articles(
+        self, document_id: Optional[str] = None, limit: Optional[int] = None
+    ) -> List[LegalArticleModel]:
+        """Get all articles, optionally filtered by document_id."""
+        with self.SessionLocal() as session:
+            stmt = (
+                select(LegalArticleModel)
+                .options(
+                    joinedload(LegalArticleModel.clauses)
+                    .joinedload(LegalClauseModel.points)
+                )
+                .order_by(LegalArticleModel.document_id, LegalArticleModel.position)
+            )
+            if document_id:
+                stmt = stmt.where(LegalArticleModel.document_id == document_id)
+            if limit:
+                stmt = stmt.limit(limit)
+            results = session.scalars(stmt).unique().all()
+            for r in results:
+                session.expunge(r)
+            return list(results)
+
+    def get_articles_for_document(self, document_id: str) -> List[LegalArticleModel]:
+        """Get all articles for a specific document."""
+        return self.get_all_articles(document_id=document_id)
+
     def count_stats(self) -> Dict[str, int]:
         """Get database statistics."""
         with self.SessionLocal() as session:

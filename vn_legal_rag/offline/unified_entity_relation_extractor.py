@@ -8,9 +8,9 @@ Optimized for Vietnamese legal domain with evidence tracking.
 import json
 import re
 from dataclasses import dataclass
-from typing import Any, Dict, List, Tuple
+from typing import Any, Dict, List, Optional, Tuple
 
-from ..utils.basic_llm_provider import create_llm_provider
+from ..utils import create_llm_provider
 from ..utils.simple_logger import get_logger
 
 # Entity types for prompt
@@ -92,6 +92,7 @@ class UnifiedLegalExtractor:
         max_retries: int = 2,
         use_cache: bool = True,
         cache_db_path: str = "data/llm_cache.db",
+        base_url: Optional[str] = None,
     ):
         self.provider_name = provider
         self.model = model
@@ -99,11 +100,15 @@ class UnifiedLegalExtractor:
         self.max_retries = max_retries
         self.logger = get_logger("unified_extractor")
 
+        cache_db = cache_db_path if use_cache else None
+        llm_kwargs = {}
+        if base_url:
+            llm_kwargs["base_url"] = base_url
         self._provider = create_llm_provider(
             provider,
             model=model,
-            use_cache=use_cache,
-            cache_db_path=cache_db_path,
+            cache_db=cache_db,
+            **llm_kwargs,
         )
 
     def extract(

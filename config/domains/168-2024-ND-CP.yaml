@@ -1,0 +1,40 @@
+# Domain Configuration for 168-2024-ND-CP
+# Nghị định 168/2024/NĐ-CP xử phạt vi phạm hành chính về trật tự ATGT đường bộ
+
+abbreviations:
+  ATGT: An toàn giao thông
+  CSGT: Cảnh sát giao thông
+  GPLX: Giấy phép lái xe
+  GTĐB: Giao thông đường bộ
+  PTGT: Phương tiện giao thông
+  VPHC: Vi phạm hành chính
+  UBND: Ủy ban nhân dân
+
+chapter_hints:
+  "xử phạt,phạt tiền,mức phạt,lỗi": "Hành vi vi phạm và mức xử phạt"
+  "tước bằng,tước GPLX,trừ điểm": "Tước GPLX và trừ điểm"
+  "thẩm quyền,ai xử phạt": "Thẩm quyền xử phạt"
+  "xe máy,mô tô,xe gắn máy": "Vi phạm đối với xe mô tô, xe gắn máy"
+  "ô tô,xe tải,xe khách": "Vi phạm đối với ô tô và xe tương tự"
+  "đèn đỏ,vượt đèn,tín hiệu": "Vi phạm quy tắc giao thông"
+  "nồng độ cồn,ma túy": "Vi phạm về nồng độ cồn và chất kích thích"
+
+general_provision_trigger_patterns:
+  - "quy định chung"
+  - "phạm vi"
+  - "đối tượng"
+
+synonyms:
+  xe cơ giới: "phương tiện giao thông cơ giới đường bộ"
+  bằng lái: "giấy phép lái xe"
+  phạt nguội: "xử phạt qua thiết bị ghi hình"
+
+article_penalties: {}
+
+article_selection_examples: []
+chapter_selection_examples: []
+system_prompt_suffix: ''
+topic_hints:
+  penalty: "xử phạt vi phạm hành chính giao thông"
+  license_points: "trừ điểm giấy phép lái xe"
+  alcohol: "nồng độ cồn"

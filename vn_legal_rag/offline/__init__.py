@@ -221,6 +221,10 @@ from .summary import (
     DocumentSummaryGenerator,
 )
 
+# Domain group generator (kebab-case filename)
+_domain_gen = import_module(".domain-group-generator", "vn_legal_rag.offline")
+DomainGroupGenerator = _domain_gen
+
 # Scraper (for web scraping new legal documents)
 from .scraper import (
     BaseLegalScraper,

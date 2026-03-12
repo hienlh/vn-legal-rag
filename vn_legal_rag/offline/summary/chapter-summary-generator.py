@@ -132,20 +132,23 @@ class ChapterSummaryGenerator:
         self,
         db: LegalDocumentDB,
         output_dir: Path,
-        llm_provider: str = "openai",
-        llm_model: str = "gpt-4o-mini",
+        llm_provider: str = "anthropic",
+        llm_model: str = "claude-3-5-haiku-20241022",
+        llm_base_url: Optional[str] = None,
         resume: bool = True,
         use_cache: bool = True,
         cache_db_path: str = "data/llm_cache.db",
     ):
         self.db = db
         self.output_dir = Path(output_dir)
-        self.llm_provider = create_llm_provider(
-            llm_provider,
-            model=llm_model,
-            use_cache=use_cache,
-            cache_db_path=cache_db_path,
-        )
+        provider_kwargs = {
+            "model": llm_model,
+            "use_cache": use_cache,
+            "cache_db_path": cache_db_path,
+        }
+        if llm_base_url:
+            provider_kwargs["base_url"] = llm_base_url
+        self.llm_provider = create_llm_provider(llm_provider, **provider_kwargs)
         self.logger = get_logger("chapter_summary_generator")
         self.resume = resume
         self.checkpoint = ChapterSummaryCheckpoint(self.output_dir)

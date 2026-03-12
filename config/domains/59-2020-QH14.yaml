@@ -76,3 +76,13 @@ name: 59-2020-QH14
 synonyms: {}
 system_prompt_suffix: ''
 topic_hints: {}
+
+# Article-level penalties for RRF score adjustment
+# Multiplier < 1.0 reduces article's RRF score (push down in ranking)
+article_penalties:
+  generic:
+    multiplier: 0.15
+    articles: [1, 2, 3]
+  procedural:
+    multiplier: 0.35
+    articles: [14, 15, 18, 19, 20, 23, 33, 40, 48, 61, 71, 83, 85, 184, 197, 204, 216]

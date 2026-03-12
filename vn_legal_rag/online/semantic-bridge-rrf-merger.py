@@ -14,7 +14,10 @@ Features:
 """
 
 from typing import Any, Dict, List, Optional, Set
+import logging
 import re
+
+logger = logging.getLogger(__name__)
 
 
 class SemanticBridge:
@@ -25,16 +28,25 @@ class SemanticBridge:
     instead of raw scores for fusion.
     """
 
-    def __init__(self, kg: Dict[str, Any], db: Optional[Any] = None):
+    def __init__(
+        self,
+        kg: Dict[str, Any],
+        db: Optional[Any] = None,
+        penalty_config: Optional[Dict[str, Dict[int, float]]] = None,
+    ):
         """
         Initialize semantic bridge.
 
         Args:
             kg: Knowledge graph dict
             db: Optional database for article text retrieval
+            penalty_config: Per-document article penalties.
+                Format: {doc_id: {article_num: multiplier}}
+                e.g., {"59-2020-QH14": {1: 0.15, 14: 0.35}}
         """
         self.kg = kg
         self.db = db
+        self._penalty_config = penalty_config or {}
 
         # Build entity-article mapping for KG expansion
         self._entity_to_article: Dict[str, str] = {}
@@ -164,7 +176,10 @@ class SemanticBridge:
                     },
                 }
 
-        # 4. Build merged list sorted by RRF score
+        # 4. Apply article penalties
+        self._apply_penalties(rrf_scores)
+
+        # 5. Build merged list sorted by RRF score
         merged = []
         for article_id, rrf_score in sorted(rrf_scores.items(), key=lambda x: x[1], reverse=True):
             if article_id in article_data:
@@ -177,7 +192,7 @@ class SemanticBridge:
                         "score": rrf_score,
                     })
 
-        # 5. ADJACENT ARTICLE EXPANSION (from semantica)
+        # 6. ADJACENT ARTICLE EXPANSION (from semantica)
         # Close-miss pattern: failures have tree within ±3 of correct answer
         # Union all source IDs for expansion seeds
         adjacent_results = []
@@ -199,13 +214,13 @@ class SemanticBridge:
                 )
                 merged.extend(adjacent_results)
 
-        # 6. Sort by score descending
+        # 7. Sort by score descending
         merged.sort(key=lambda x: x.get("score", 0), reverse=True)
 
-        # 7. Deduplication (after sort to keep higher-scored version)
+        # 8. Deduplication (after sort to keep higher-scored version)
         merged = self._deduplicate_results(merged)
 
-        # 8. RRF threshold filtering (from semantica)
+        # 9. RRF threshold filtering
         # Filter out results with very low RRF scores
         MIN_RRF_THRESHOLD = 0.005
         before_filter = len(merged)
@@ -337,6 +352,46 @@ class SemanticBridge:
 
         return list(expanded_ids)
 
+    def _get_article_penalty(self, article_id: str) -> float:
+        """Return penalty multiplier for article (1.0 = no penalty).
+
+        Extracts doc_id and article_number from article_id and looks up
+        in penalty_config. Returns 1.0 if no penalty configured.
+
+        Args:
+            article_id: Full article ID (e.g., "59-2020-QH14:d206")
+                        or any ID with ":dN" suffix
+        """
+        if not self._penalty_config:
+            return 1.0
+
+        # Extract doc_id and article_number from ID
+        # Handle formats: "59-2020-QH14:d5", "adjacent-5", "kg-1", "tree-1"
+        if ":d" not in article_id:
+            return 1.0
+
+        parts = article_id.rsplit(":d", 1)
+        if len(parts) != 2:
+            return 1.0
+
+        doc_id = parts[0]
+        try:
+            article_num = int(parts[1].split(":")[0])  # strip :k1 etc.
+        except ValueError:
+            return 1.0
+
+        doc_penalties = self._penalty_config.get(doc_id, {})
+        return doc_penalties.get(article_num, 1.0)
+
+    def _apply_penalties(self, rrf_scores: Dict[str, float]) -> None:
+        """Apply article penalties to RRF scores in-place."""
+        if not self._penalty_config:
+            return
+        for article_id in rrf_scores:
+            penalty = self._get_article_penalty(article_id)
+            if penalty != 1.0:
+                rrf_scores[article_id] *= penalty
+
     def compute_rrf_score(self, rank: int, k: int = 60) -> float:
         """
         Compute Reciprocal Rank Fusion score.
@@ -405,6 +460,9 @@ class SemanticBridge:
                         **kg_ctx.get("metadata", {}),
                     },
                 }
+
+        # Apply article penalties
+        self._apply_penalties(rrf_scores)
 
         # Build merged list sorted by RRF score
         merged = []
@@ -510,8 +568,65 @@ class SemanticBridge:
         return ""
 
 
+def load_penalty_config_from_domains(
+    domains_dir: str = "config/domains",
+) -> Dict[str, Dict[int, float]]:
+    """Load article penalty configs from all domain YAML files.
+
+    Reads each domain YAML's `article_penalties` section and builds
+    a flat {doc_id: {article_num: multiplier}} lookup dict.
+
+    Args:
+        domains_dir: Path to directory containing domain YAML files
+
+    Returns:
+        Penalty config dict for SemanticBridge
+    """
+    import yaml
+    from pathlib import Path
+
+    penalty_config: Dict[str, Dict[int, float]] = {}
+    domains_path = Path(domains_dir)
+
+    if not domains_path.exists():
+        return penalty_config
+
+    for yaml_file in domains_path.glob("*.yaml"):
+        try:
+            with open(yaml_file, "r", encoding="utf-8") as f:
+                domain = yaml.safe_load(f) or {}
+        except Exception:
+            continue
+
+        article_penalties = domain.get("article_penalties", {})
+        if not article_penalties:
+            continue
+
+        # doc_id from filename (e.g., "59-2020-QH14.yaml" -> "59-2020-QH14")
+        doc_id = yaml_file.stem
+
+        doc_penalties: Dict[int, float] = {}
+        for category_name, category_data in article_penalties.items():
+            if not isinstance(category_data, dict):
+                continue
+            multiplier = category_data.get("multiplier", 1.0)
+            articles = category_data.get("articles", [])
+            for article_num in articles:
+                doc_penalties[int(article_num)] = multiplier
+
+        if doc_penalties:
+            penalty_config[doc_id] = doc_penalties
+            logger.info(
+                f"Loaded {len(doc_penalties)} article penalties for {doc_id}"
+            )
+
+    return penalty_config
+
+
 def create_semantic_bridge(
-    kg: Dict[str, Any], db: Optional[Any] = None
+    kg: Dict[str, Any],
+    db: Optional[Any] = None,
+    penalty_config: Optional[Dict[str, Dict[int, float]]] = None,
 ) -> SemanticBridge:
     """Factory function to create SemanticBridge."""
-    return SemanticBridge(kg=kg, db=db)
+    return SemanticBridge(kg=kg, db=db, penalty_config=penalty_config)

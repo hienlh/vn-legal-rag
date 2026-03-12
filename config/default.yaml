@@ -15,11 +15,13 @@ kg:
   path: "data/kg_enhanced/legal_kg.json"
   chapter_summaries: "data/kg_enhanced/chapter_summaries.json"
   article_summaries: "data/kg_enhanced/article_summaries.json"
+  document_summaries: "data/kg_enhanced/document_summaries.json"
+  domain_groups: "data/kg_enhanced/domain_groups.json"
 
 # Retrieval Settings
 retrieval:
-  max_documents: 3
-  max_chapters: 6
+  max_documents: 5
+  max_chapters: 8
   max_articles: 7
   confidence_threshold: 0.7
 

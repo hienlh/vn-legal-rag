@@ -1,0 +1,29 @@
+# Domain Configuration for 100-2019-ND-CP
+# Nghị định 100/2019/NĐ-CP xử phạt vi phạm hành chính giao thông đường bộ và đường sắt
+
+abbreviations:
+  ATGT: An toàn giao thông
+  CSGT: Cảnh sát giao thông
+  GPLX: Giấy phép lái xe
+  GTĐB: Giao thông đường bộ
+  VPHC: Vi phạm hành chính
+
+chapter_hints:
+  "xử phạt,phạt tiền,mức phạt": "Hành vi vi phạm và mức xử phạt"
+  "thẩm quyền,ai xử phạt": "Thẩm quyền xử phạt"
+  "đường sắt": "Vi phạm trong lĩnh vực đường sắt"
+
+general_provision_trigger_patterns:
+  - "quy định chung"
+  - "phạm vi"
+
+synonyms: {}
+
+article_penalties: {}
+
+article_selection_examples: []
+chapter_selection_examples: []
+system_prompt_suffix: ''
+topic_hints:
+  penalty: "xử phạt vi phạm hành chính giao thông"
+  railway: "vi phạm đường sắt"

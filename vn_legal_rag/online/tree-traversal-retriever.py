@@ -49,6 +49,7 @@ class TreeTraversalRetriever:
         llm_provider: Any,
         article_summaries: Optional[Dict[str, Any]] = None,
         document_summaries: Optional[List[Dict[str, Any]]] = None,
+        domain_groups: Optional[Dict[str, Any]] = None,
         max_documents: int = 3,
         max_chapters: int = 6,
         max_articles: int = 7,
@@ -78,6 +79,7 @@ class TreeTraversalRetriever:
         # Convert article_summaries to dict by article_id if needed
         self.article_summaries = self._normalize_article_summaries(article_summaries)
         self.document_summaries = document_summaries or []
+        self.domain_groups = domain_groups or {}
         self.max_documents = max_documents
         self.max_chapters = max_chapters
         self.max_articles = max_articles
@@ -211,121 +213,185 @@ class TreeTraversalRetriever:
     def _loop0_select_documents(
         self, query: str, all_documents: List[TreeNode]
     ) -> Tuple[List[TreeNode], float, str]:
-        """Loop 0: Select relevant documents from forest using LLM."""
-        # Build document overview
-        doc_overview = []
-        doc_id_to_node = {}
-        primary_indices = []  # Indices of primary law documents (Luật)
+        """Loop 0: Select relevant documents by choosing a domain group.
 
+        Uses pre-computed domain groups (from offline phase) to select ALL
+        documents in the matching domain. Falls back to LLM individual
+        selection if domain groups are unavailable.
+        """
+        # Build doc_id → TreeNode mapping
+        doc_id_map = {}  # maps both so_hieu and node_id to index
         for i, doc in enumerate(all_documents):
-            doc_id = doc.metadata.get("so_hieu", doc.node_id)
-            doc_id_to_node[doc_id] = doc
+            so_hieu = doc.metadata.get("so_hieu", "")
+            doc_id_map[so_hieu] = i
+            doc_id_map[doc.node_id] = i
 
-            # Find matching summary
-            summary = None
-            for s in self.document_summaries:
-                if s.get("doc_id") == doc_id or s.get("so_hieu") == doc_id:
-                    summary = s
-                    break
+        # === Domain group selection (preferred) ===
+        groups = self.domain_groups.get("domain_groups", {})
+        if groups and len(groups) > 1:
+            return self._select_by_domain_group(
+                query, all_documents, groups, doc_id_map
+            )
 
-            if summary:
-                doc_info = {
-                    "index": i,
-                    "doc_id": summary.get("doc_id", doc_id),
-                    "name": summary.get("name", doc.name),
-                    "domain": summary.get("domain", ""),
-                    "scope_preview": summary.get("scope_preview", ""),
-                }
-            else:
-                doc_info = {
-                    "index": i,
-                    "doc_id": doc_id,
-                    "name": doc.name,
-                    "domain": "",
-                    "scope_preview": doc.content[:200] if doc.content else "",
-                }
+        # === Fallback: single domain or no groups → return all docs ===
+        return all_documents, 0.7, f"All {len(all_documents)} docs (single domain)"
 
-            doc_overview.append(doc_info)
+    def _select_by_domain_group(
+        self, query: str, all_documents: List[TreeNode],
+        groups: Dict[str, Any], doc_id_map: Dict[str, int],
+    ) -> Tuple[List[TreeNode], float, str]:
+        """Select documents by matching query to domain group."""
+        # Build domain overview for LLM
+        domain_overview = []
+        group_keys = list(groups.keys())
+        for i, (gid, group) in enumerate(groups.items()):
+            domain_overview.append({
+                "index": i,
+                "label": group.get("label", gid),
+                "keywords": ", ".join(group.get("domain_keywords", [])[:10]),
+                "doc_count": group.get("doc_count", len(group.get("documents", []))),
+            })
 
-            # Detect primary law documents (Luật) vs supporting decrees (Nghị định)
-            doc_name = doc_info["name"].lower()
-            if "luật" in doc_name and "nghị định" not in doc_name:
-                primary_indices.append(i)
+        # Use LLM to select domain
+        if self.llm_provider and len(group_keys) > 1:
+            prompt = f"""<task>Chọn lĩnh vực pháp luật phù hợp với câu hỏi. CHỈ JSON.</task>
 
-        if not doc_overview:
-            return all_documents, 0.5, "No document summaries available"
-
-        # STRATEGY: Always include primary laws
-        selected_indices = set(primary_indices)
-
-        if len(selected_indices) >= self.max_documents:
-            selected = [all_documents[i] for i in list(selected_indices)[:self.max_documents]]
-            return selected, 0.85, f"Primary laws: {len(selected)}/{len(all_documents)} docs"
-
-        # Filter remaining documents for LLM selection
-        remaining_docs = [
-            doc_info for doc_info in doc_overview
-            if doc_info["index"] not in selected_indices
-        ]
-
-        if not remaining_docs or not self.llm_provider:
-            selected = [all_documents[i] for i in selected_indices] if selected_indices else all_documents[:self.max_documents]
-            return selected, 0.85, f"Primary laws only: {len(selected)} docs"
-
-        slots_remaining = self.max_documents - len(selected_indices)
-
-        # LLM prompt for selecting supporting documents
-        prompt = f"""<task>Đánh giá xem câu hỏi có cần văn bản hỗ trợ không. KHÔNG giải thích, CHỈ JSON.</task>
-
-<primary_documents_included>
-Đã chọn văn bản chính (Luật). Xem xét có cần thêm văn bản hướng dẫn không.
-</primary_documents_included>
-
-<supporting_documents>
-{json.dumps(remaining_docs, ensure_ascii=False, indent=2)}
-</supporting_documents>
+<domains>
+{json.dumps(domain_overview, ensure_ascii=False, indent=2)}
+</domains>
 
 <question>{query}</question>
 
 <rules>
-- Nếu câu hỏi hỏi về QUY ĐỊNH CHUNG (quyền, nghĩa vụ, điều kiện, khái niệm): KHÔNG cần văn bản hỗ trợ
-- Nếu câu hỏi hỏi về THỦ TỤC CHI TIẾT (hồ sơ cụ thể, biểu mẫu, quy trình đăng ký): CÓ THỂ cần văn bản hướng dẫn
-- Chỉ chọn văn bản hỗ trợ nếu THỰC SỰ cần thiết để trả lời câu hỏi
-- Tối đa {slots_remaining} văn bản hỗ trợ
+- Chọn 1 lĩnh vực phù hợp nhất
+- Nếu câu hỏi liên quan nhiều lĩnh vực, chọn lĩnh vực chính
 </rules>
 
 <output_format>
-{{"selected_indices": [], "confidence": 0.9}}
-hoặc nếu cần văn bản hỗ trợ:
-{{"selected_indices": [0], "confidence": 0.8}}
+{{"selected_index": 0, "confidence": 0.9}}
 </output_format>
 
 JSON:"""
+            try:
+                response = self.llm_provider.generate(prompt)
+                data = self._parse_json_response(response)
+                selected_idx = data.get("selected_index")
+                # Handle both "selected_index" and "selected_indices" formats
+                if selected_idx is None:
+                    indices = data.get("selected_indices", [])
+                    selected_idx = indices[0] if indices else None
+                if selected_idx is not None and 0 <= selected_idx < len(group_keys):
+                    group_id = group_keys[selected_idx]
+                    group = groups[group_id]
+                    confidence = float(data.get("confidence", 0.8))
+                    return self._resolve_group_docs(
+                        query, group, all_documents, doc_id_map, confidence
+                    )
+            except Exception:
+                pass  # Fall through to keyword matching
 
+        # Fallback: keyword matching (no LLM needed)
+        return self._select_domain_by_keywords(
+            query, groups, group_keys, all_documents, doc_id_map
+        )
+
+    def _select_domain_by_keywords(
+        self, query: str, groups: Dict[str, Any],
+        group_keys: List[str], all_documents: List[TreeNode],
+        doc_id_map: Dict[str, int],
+    ) -> Tuple[List[TreeNode], float, str]:
+        """Fallback domain selection using keyword overlap with query."""
+        query_lower = query.lower()
+        query_syllables = set(query_lower.split())
+        best_group_id = None
+        best_score = 0.0
+        for gid, group in groups.items():
+            keywords = group.get("domain_keywords", [])
+            score = 0
+            for kw in keywords:
+                kw_syllables = set(kw.lower().split())
+                overlap = len(query_syllables & kw_syllables)
+                if overlap > 0:
+                    score += overlap
+            if score > best_score:
+                best_score = score
+                best_group_id = gid
+        if best_group_id:
+            group = groups[best_group_id]
+            return self._resolve_group_docs(
+                query, group, all_documents, doc_id_map, 0.6
+            )
+        # No match — return all documents
+        return all_documents, 0.4, f"No domain match, all {len(all_documents)} docs"
+
+    def _resolve_group_docs(
+        self, query: str, group: Dict[str, Any], all_documents: List[TreeNode],
+        doc_id_map: Dict[str, int], confidence: float,
+    ) -> Tuple[List[TreeNode], float, str]:
+        """Resolve a domain group's doc IDs to TreeNode list.
+
+        If group has more docs than max_documents, use LLM to narrow down
+        to the most relevant ones for the current query.
+        """
+        group_doc_ids = group.get("documents", [])
+        label = group.get("label", "?")[:40]
+        selected = []
+        for doc_id in group_doc_ids:
+            idx = doc_id_map.get(doc_id)
+            if idx is not None:
+                selected.append(all_documents[idx])
+            else:
+                # Try matching with normalized so_hieu (slash format)
+                normalized = doc_id.replace("-", "/")
+                idx = doc_id_map.get(normalized)
+                if idx is not None:
+                    selected.append(all_documents[idx])
+        if not selected:
+            return all_documents, 0.4, f"Domain '{label}' no docs found, using all"
+        # If group has more docs than max_documents, narrow down with LLM
+        if len(selected) > self.max_documents and self.llm_provider:
+            narrowed = self._narrow_docs_within_domain(query, selected)
+            if narrowed:
+                return narrowed, confidence, f"Domain '{label}': {len(selected)} docs → {len(narrowed)} selected"
+        return selected, confidence, f"Domain '{label}': {len(selected)} docs"
+
+    def _narrow_docs_within_domain(
+        self, query: str, documents: List[TreeNode]
+    ) -> Optional[List[TreeNode]]:
+        """Narrow documents within a domain group using LLM."""
+        doc_list = []
+        for i, doc in enumerate(documents):
+            so_hieu = doc.metadata.get("so_hieu", doc.name)
+            title = doc.metadata.get("title", doc.name)[:80]
+            summary_text = ""
+            for s in self.document_summaries:
+                if s.get("doc_id") == doc.node_id or s.get("so_hieu") == so_hieu:
+                    summary_text = s.get("scope_preview", "")[:150]
+                    break
+            doc_list.append({"index": i, "so_hieu": so_hieu, "title": title, "scope": summary_text})
+
+        prompt = f"""<task>Chọn tối đa {self.max_documents} văn bản phù hợp nhất. CHỈ JSON.</task>
+
+<documents>
+{json.dumps(doc_list, ensure_ascii=False, indent=1)}
+</documents>
+
+<question>{query}</question>
+
+<output_format>{{"selected_indices": [0, 2, 3]}}</output_format>
+
+JSON:"""
         try:
             response = self.llm_provider.generate(prompt)
             data = self._parse_json_response(response)
-
-            llm_indices = data.get("selected_indices", [])
-            for idx in llm_indices:
-                if 0 <= idx < len(remaining_docs):
-                    original_idx = remaining_docs[idx]["index"]
-                    selected_indices.add(original_idx)
-                    if len(selected_indices) >= self.max_documents:
-                        break
-
-            selected = [all_documents[i] for i in selected_indices]
-            confidence = float(data.get("confidence", 0.7))
-
-            primary_count = len(primary_indices)
-            supporting_count = len(selected) - primary_count
-            reasoning = f"Primary: {primary_count}, Supporting: {supporting_count}"
-
-            return selected, confidence, reasoning
-
-        except Exception as e:
-            selected = [all_documents[i] for i in primary_indices] if primary_indices else all_documents[:self.max_documents]
-            return selected, 0.5, f"Fallback (primary only): {e}"
+            indices = data.get("selected_indices", [])
+            if indices:
+                selected = [documents[i] for i in indices if 0 <= i < len(documents)]
+                if selected:
+                    return selected
+        except Exception:
+            pass
+        return None
 
     def _loop1_select_chapters(
         self, query: str, documents: List[TreeNode], topic_hints: List[str] = None
@@ -693,17 +759,36 @@ JSON:"""
         return selected, confidence, reasoning
 
     def _parse_json_response(self, response: str) -> Dict[str, Any]:
-        """Parse JSON from LLM response."""
+        """Parse JSON from LLM response, handling nested objects."""
         import re
-        # Try to extract JSON from response
-        # Handle markdown code blocks
         response = response.strip()
+        # Remove markdown code block markers
         if response.startswith("```"):
-            # Remove markdown code block markers
             lines = response.split("\n")
             response = "\n".join(lines[1:-1] if lines[-1].strip() == "```" else lines[1:])
 
-        # Try to find JSON object
+        # Try direct parse first (handles nested JSON correctly)
+        try:
+            return json.loads(response)
+        except json.JSONDecodeError:
+            pass
+
+        # Find the outermost JSON object using brace counting
+        start = response.find("{")
+        if start >= 0:
+            depth = 0
+            for i in range(start, len(response)):
+                if response[i] == "{":
+                    depth += 1
+                elif response[i] == "}":
+                    depth -= 1
+                    if depth == 0:
+                        try:
+                            return json.loads(response[start:i + 1])
+                        except json.JSONDecodeError:
+                            break
+
+        # Fallback: simple non-nested match
         json_match = re.search(r'\{[^{}]*\}', response, re.DOTALL)
         if json_match:
             try:
@@ -711,11 +796,7 @@ JSON:"""
             except json.JSONDecodeError:
                 pass
 
-        # Try direct parse
-        try:
-            return json.loads(response)
-        except json.JSONDecodeError:
-            return {}
+        return {}
 
     def _include_general_provisions_if_needed(
         self, query: str, selected: List[TreeNode], all_chapters: List[TreeNode]

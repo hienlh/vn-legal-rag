@@ -35,6 +35,7 @@ DualLevelConfig = _dual_retriever.DualLevelConfig
 
 _semantic_bridge = import_module(".semantic-bridge-rrf-merger", "vn_legal_rag.online")
 SemanticBridge = _semantic_bridge.SemanticBridge
+load_penalty_config_from_domains = _semantic_bridge.load_penalty_config_from_domains
 
 _query_analyzer = import_module(".vietnamese-legal-query-analyzer", "vn_legal_rag.online")
 VietnameseLegalQueryAnalyzer = _query_analyzer.VietnameseLegalQueryAnalyzer
@@ -96,6 +97,7 @@ class LegalGraphRAG:
         embedding_gen: Optional[Any] = None,
         article_summaries: Optional[Dict[str, Any]] = None,
         document_summaries: Optional[List[Dict[str, Any]]] = None,
+        domain_groups: Optional[Dict[str, Any]] = None,
         config: Optional[Dict[str, Any]] = None,
         ablation_config: Optional[AblationConfig] = None,  # semantica-style
     ):
@@ -168,17 +170,24 @@ class LegalGraphRAG:
         )
 
         # Initialize Tree retriever
+        retrieval_config = self.config.get("retrieval", {})
         self.tree_retriever = TreeTraversalRetriever(
             forest=forest,
-            llm_provider=self.llm_provider,  # Use the created object, not the string
+            llm_provider=self.llm_provider,
             article_summaries=article_summaries,
             document_summaries=document_summaries,
+            domain_groups=domain_groups,
             embedding_gen=embedding_gen,
             dual_retriever=self.dual_retriever,
+            max_documents=retrieval_config.get("max_documents", 3),
+            max_chapters=retrieval_config.get("max_chapters", 6),
         )
 
-        # Initialize Semantic Bridge (use self.db which may come from db_path)
-        self.semantic_bridge = SemanticBridge(kg=kg, db=self.db)
+        # Initialize Semantic Bridge with per-document penalties
+        penalty_config = load_penalty_config_from_domains()
+        self.semantic_bridge = SemanticBridge(
+            kg=kg, db=self.db, penalty_config=penalty_config
+        )
 
         # Initialize Cross-Encoder Reranker (Stage 2 reranking)
         self._reranker = None

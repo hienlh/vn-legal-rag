@@ -117,17 +117,24 @@ class GeminiProvider(BaseLLMProvider):
 class OpenAIProvider(BaseLLMProvider):
     """OpenAI provider with timeout and retry."""
 
-    def __init__(self, model: str = "gpt-4o-mini", timeout: int = DEFAULT_TIMEOUT, **kwargs):
+    def __init__(self, model: str = "gpt-4o-mini", timeout: int = DEFAULT_TIMEOUT, base_url: Optional[str] = None, **kwargs):
         super().__init__(model, timeout, **kwargs)
-        api_key = os.getenv("OPENAI_API_KEY")
-        if not api_key:
-            raise ValueError(
-                "OPENAI_API_KEY environment variable not set. "
-                "Set it with: export OPENAI_API_KEY='your-key'"
-            )
         try:
             from openai import OpenAI
-            self.client = OpenAI(timeout=timeout)
+            client_kwargs = {"timeout": timeout}
+            if base_url:
+                client_kwargs["base_url"] = base_url
+                # Proxy doesn't need real API key
+                client_kwargs["api_key"] = os.getenv("OPENAI_API_KEY", "proxy-key")
+            else:
+                api_key = os.getenv("OPENAI_API_KEY")
+                if not api_key:
+                    raise ValueError(
+                        "OPENAI_API_KEY environment variable not set. "
+                        "Set it with: export OPENAI_API_KEY='your-key'"
+                    )
+                client_kwargs["api_key"] = api_key
+            self.client = OpenAI(**client_kwargs)
         except ImportError:
             raise ImportError("openai not installed. Run: pip install openai")
 
@@ -188,6 +195,7 @@ def create_llm_provider(
     providers = {
         "gemini": GeminiProvider,
         "openai": OpenAIProvider,
+        "anthropic": OpenAIProvider,  # Uses OpenAI-compatible proxy via base_url
     }
 
     provider_class = providers.get(provider.lower())

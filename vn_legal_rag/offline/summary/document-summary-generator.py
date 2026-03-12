@@ -167,27 +167,14 @@ class DocumentSummaryGenerator:
         db: LegalDocumentDB,
         output_dir: Path,
         chapter_summaries: Optional[Dict[str, Any]] = None,
-        llm_provider: str = "openai",
-        llm_model: str = "gpt-4o-mini",
+        llm_provider: str = "anthropic",
+        llm_model: str = "claude-3-5-haiku-20241022",
+        llm_base_url: Optional[str] = None,
         use_llm: bool = False,  # Only enable for key documents
         resume: bool = True,
         use_cache: bool = True,
         cache_db_path: str = "data/llm_cache.db",
     ):
-        """
-        Initialize document summary generator.
-
-        Args:
-            db: LegalDocumentDB instance
-            output_dir: Output directory for summaries
-            chapter_summaries: Optional pre-loaded chapter summaries dict
-            llm_provider: LLM provider name
-            llm_model: LLM model name
-            use_llm: Whether to use LLM for domain keyword extraction
-            resume: Whether to resume from checkpoint
-            use_cache: Whether to cache LLM responses
-            cache_db_path: Path to LLM cache database
-        """
         self.db = db
         self.output_dir = Path(output_dir)
         self.chapter_summaries = chapter_summaries or {}
@@ -197,12 +184,14 @@ class DocumentSummaryGenerator:
         self.checkpoint = DocumentSummaryCheckpoint(self.output_dir)
 
         if use_llm:
-            self.llm_provider = create_llm_provider(
-                llm_provider,
-                model=llm_model,
-                use_cache=use_cache,
-                cache_db_path=cache_db_path,
-            )
+            provider_kwargs = {
+                "model": llm_model,
+                "use_cache": use_cache,
+                "cache_db_path": cache_db_path,
+            }
+            if llm_base_url:
+                provider_kwargs["base_url"] = llm_base_url
+            self.llm_provider = create_llm_provider(llm_provider, **provider_kwargs)
         else:
             self.llm_provider = None
 

@@ -1,0 +1,47 @@
+# Domain Configuration for 36-2024-QH15
+# Luật Trật tự, an toàn giao thông đường bộ 2024
+
+abbreviations:
+  ATGT: An toàn giao thông
+  CSGT: Cảnh sát giao thông
+  GPLX: Giấy phép lái xe
+  GTĐB: Giao thông đường bộ
+  PTGT: Phương tiện giao thông
+  TTATGT: Trật tự an toàn giao thông
+  TNGT: Tai nạn giao thông
+  ĐKPT: Đăng ký phương tiện
+
+chapter_hints:
+  "quy tắc,quy định chung,nguyên tắc": "Quy định chung về trật tự ATGT"
+  "phương tiện,xe cơ giới,xe máy,ô tô": "Phương tiện giao thông đường bộ"
+  "người lái xe,giấy phép,bằng lái,GPLX,tuổi lái xe": "Người điều khiển phương tiện và GPLX"
+  "tốc độ,khoảng cách,vượt,chuyển hướng": "Quy tắc giao thông đường bộ"
+  "tai nạn,va chạm,sự cố": "Giải quyết tai nạn giao thông"
+  "xử phạt,phạt,vi phạm,tước bằng": "Xử phạt vi phạm hành chính"
+  "biển báo,tín hiệu,đèn giao thông": "Hệ thống báo hiệu đường bộ"
+  "trẻ em,ghế an toàn,mũ bảo hiểm": "Bảo vệ trẻ em khi tham gia giao thông"
+  "nồng độ cồn,ma túy,chất kích thích": "Điều kiện sức khỏe người lái xe"
+
+general_provision_trigger_patterns:
+  - "quy định"
+  - "giải thích từ ngữ"
+  - "phạm vi"
+  - "nguyên tắc"
+
+synonyms:
+  xe cơ giới: "phương tiện giao thông cơ giới đường bộ"
+  xe máy: "xe mô tô"
+  bằng lái: "giấy phép lái xe"
+  nồng độ cồn: "nồng độ cồn trong máu hoặc hơi thở"
+
+article_penalties: {}
+
+article_selection_examples: []
+chapter_selection_examples: []
+system_prompt_suffix: ''
+topic_hints:
+  traffic_rules: "quy tắc giao thông đường bộ"
+  license: "giấy phép lái xe"
+  penalty: "xử phạt vi phạm"
+  vehicle: "phương tiện giao thông"
+  accident: "tai nạn giao thông"

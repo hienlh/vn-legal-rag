@@ -58,6 +58,10 @@ from vn_legal_rag.offline import (
     # Linking
     KGSQLiteLinker,
     create_linker,
+    # Summary generators
+    ArticleSummaryGenerator,
+    ChapterSummaryGenerator,
+    DocumentSummaryGenerator,
     # Types
     LEGAL_RELATION_TYPES,
 )
@@ -75,7 +79,8 @@ AVAILABLE_STEPS = [
     "crossref",     # Step 6: Post-process cross-references
     "kg",           # Step 7: Build KG
     "linking",      # Step 8: Link KG ↔ SQLite
-    "summaries",    # Step 9: Generate summaries
+    "summaries",      # Step 9: Generate summaries
+    "domain_groups",  # Step 10: Cluster docs into domain groups
 ]
 
 
@@ -143,6 +148,7 @@ def run_extraction(
     document_id: Optional[str] = None,
     limit: Optional[int] = None,
     resume: bool = True,
+    base_url: Optional[str] = None,
 ) -> List[ExtractionResult]:
     """Step 3: Extract entities and relations using LLM."""
     logger.info("=" * 60)
@@ -161,7 +167,7 @@ def run_extraction(
     processed_ids = set(checkpoint["processed_ids"])
 
     # Initialize extractor
-    extractor = UnifiedLegalExtractor(provider=llm_provider, model=llm_model)
+    extractor = UnifiedLegalExtractor(provider=llm_provider, model=llm_model, base_url=base_url)
 
     # Get articles
     articles = db.get_all_articles(document_id=document_id, limit=limit)
@@ -169,21 +175,27 @@ def run_extraction(
 
     results = []
     for i, article in enumerate(articles, 1):
-        if article.article_id in processed_ids:
+        if article.id in processed_ids:
             continue
 
-        logger.info(f"  [{i}/{len(articles)}] {article.article_id}")
+        logger.info(f"  [{i}/{len(articles)}] {article.id}")
 
         try:
             result = extractor.extract(
                 text=article.content,
-                source_id=article.article_id,
+                source_id=article.id,
                 document_id=article.document_id,
             )
+
+            # Skip empty results (LLM errors return empty entities/relations)
+            if not result.entities and not result.relations:
+                logger.warning(f"    Empty result for {article.id}, skipping")
+                continue
+
             results.append(result)
 
             # Save checkpoint
-            checkpoint["processed_ids"].append(article.article_id)
+            checkpoint["processed_ids"].append(article.id)
             checkpoint["results"].append({
                 "entities": result.entities,
                 "relations": result.relations,
@@ -355,6 +367,87 @@ def run_kg_linking(
     return stats
 
 
+def run_summaries(
+    db: LegalDocumentDB,
+    output_dir: Path,
+    llm_provider: str,
+    llm_model: str,
+    llm_base_url: Optional[str] = None,
+    document_id: Optional[str] = None,
+    resume: bool = True,
+    use_cache: bool = True,
+    cache_db_path: str = "data/llm_cache.db",
+) -> dict:
+    """Step 9: Generate chapter, article, and document summaries."""
+    logger.info("=" * 60)
+    logger.info("Step 9: Summary Generation (LLM-based)")
+    logger.info("=" * 60)
+
+    stats = {}
+
+    # 9a: Article summaries
+    logger.info("--- Step 9a: Article Summaries ---")
+    article_gen = ArticleSummaryGenerator(
+        db=db,
+        output_dir=output_dir,
+        llm_provider=llm_provider,
+        llm_model=llm_model,
+        llm_base_url=llm_base_url,
+        resume=resume,
+        use_cache=use_cache,
+        cache_db_path=cache_db_path,
+    )
+    article_summaries = article_gen.generate_all(doc_id=document_id)
+    article_path = article_gen.export_summaries()
+    stats["article_summaries"] = len(article_summaries)
+    logger.info(f"  Article summaries: {len(article_summaries)} → {article_path}")
+
+    # 9b: Chapter summaries
+    logger.info("--- Step 9b: Chapter Summaries ---")
+    chapter_gen = ChapterSummaryGenerator(
+        db=db,
+        output_dir=output_dir,
+        llm_provider=llm_provider,
+        llm_model=llm_model,
+        llm_base_url=llm_base_url,
+        resume=resume,
+        use_cache=use_cache,
+        cache_db_path=cache_db_path,
+    )
+    chapter_summaries = chapter_gen.generate_all(doc_id=document_id)
+    chapter_path = chapter_gen.export_summaries()
+    stats["chapter_summaries"] = len(chapter_summaries)
+    logger.info(f"  Chapter summaries: {len(chapter_summaries)} → {chapter_path}")
+
+    # 9c: Document summaries (uses chapter summaries, no LLM needed)
+    logger.info("--- Step 9c: Document Summaries ---")
+    # Load chapter summaries as dict for aggregation
+    chapter_summaries_dict = {}
+    if chapter_path.exists():
+        with open(chapter_path, "r", encoding="utf-8") as f:
+            chapter_summaries_dict = json.load(f)
+
+    doc_ids = [document_id] if document_id else None
+    doc_gen = DocumentSummaryGenerator(
+        db=db,
+        output_dir=output_dir,
+        chapter_summaries=chapter_summaries_dict,
+        llm_provider=llm_provider,
+        llm_model=llm_model,
+        llm_base_url=llm_base_url,
+        use_llm=False,  # Structure-based + chapter aggregation only
+        resume=resume,
+        use_cache=use_cache,
+        cache_db_path=cache_db_path,
+    )
+    doc_summaries = doc_gen.generate_all(doc_ids=doc_ids)
+    doc_path = doc_gen.export_summaries()
+    stats["document_summaries"] = len(doc_summaries)
+    logger.info(f"  Document summaries: {len(doc_summaries)} → {doc_path}")
+
+    return stats
+
+
 def main():
     parser = argparse.ArgumentParser(
         description="Run complete offline pipeline",
@@ -416,18 +509,19 @@ def main():
         run_synonym_mining(args.qa_csv, doc_id)
 
     # Step 3: Extraction
+    llm_base_url = config.get("llm", {}).get("base_url")
     if "extraction" in steps:
         extraction_results = run_extraction(
             db, output_dir, llm_provider, llm_model,
             args.document, args.limit, not args.no_resume,
+            base_url=llm_base_url,
         )
 
-    # Load from checkpoint if skipping extraction
-    if not extraction_results:
-        checkpoint_path = output_dir / "extraction_checkpoint.json"
-        if checkpoint_path.exists():
-            with open(checkpoint_path, "r", encoding="utf-8") as f:
-                checkpoint = json.load(f)
+    # Always load full results from checkpoint (extraction only returns NEW results)
+    checkpoint_path = output_dir / "extraction_checkpoint.json"
+    if checkpoint_path.exists():
+        with open(checkpoint_path, "r", encoding="utf-8") as f:
+            checkpoint = json.load(f)
             extraction_results = [
                 ExtractionResult(**r) for r in checkpoint.get("results", [])
             ]
@@ -458,6 +552,39 @@ def main():
         kg_path = output_dir / "legal_kg.json"
         if kg_path.exists():
             run_kg_linking(kg_path, args.db)
+
+    # Step 9: Summaries
+    if "summaries" in steps:
+        use_cache = config.get("llm", {}).get("use_cache", True)
+        cache_db = config.get("llm", {}).get("cache_db", "data/llm_cache.db")
+        run_summaries(
+            db=db,
+            output_dir=output_dir,
+            llm_provider=llm_provider,
+            llm_model=llm_model,
+            llm_base_url=llm_base_url,
+            document_id=args.document,
+            resume=not args.no_resume,
+            use_cache=use_cache,
+            cache_db_path=cache_db,
+        )
+
+    # Step 10: Domain Groups
+    if "domain_groups" in steps:
+        from vn_legal_rag.offline import DomainGroupGenerator
+        doc_summaries_path = output_dir / "document_summaries.json"
+        domain_groups_path = output_dir / "domain_groups.json"
+        if doc_summaries_path.exists():
+            logger.info("--- Step 10: Domain Groups ---")
+            result = DomainGroupGenerator.generate_domain_groups(
+                str(doc_summaries_path), str(domain_groups_path)
+            )
+            groups = result.get("domain_groups", {})
+            for gid, g in groups.items():
+                logger.info(f"  {g['label'][:50]}: {g['doc_count']} docs")
+            logger.info(f"  Total: {len(groups)} domain groups → {domain_groups_path}")
+        else:
+            logger.warning("  Skipping domain groups: document_summaries.json not found")
 
     logger.info("=" * 60)
     logger.info("PIPELINE COMPLETE")
