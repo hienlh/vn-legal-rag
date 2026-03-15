@@ -519,6 +519,8 @@ def main():
     parser.add_argument("--max-articles", type=int, default=30,
                         help="Max articles retrieved for all methods (default: 30)")
     parser.add_argument("--to-csv", metavar="JSON_FILE", help="Convert existing JSON results to CSV and exit")
+    parser.add_argument("--only-stt", type=str, default=None,
+                        help="Only run specific STTs (comma-separated, e.g. '24,31,43' or 'miss:results/eval.json')")
     parser.add_argument("--verbose", action="store_true")
 
     args = parser.parse_args()
@@ -575,10 +577,29 @@ def main():
     with open(args.test_file, "r", encoding="utf-8-sig") as f:
         rows = list(csv.DictReader(f))
 
-    # Apply start/limit
+    # Parse --only-stt filter
+    only_stt_set = None
+    if args.only_stt:
+        if args.only_stt.startswith("miss:"):
+            # Extract MISS STTs from a previous result file
+            miss_file = args.only_stt[5:]
+            with open(miss_file, "r", encoding="utf-8") as mf:
+                prev_data = json.load(mf)
+            only_stt_set = set()
+            for r in prev_data.get("results", []):
+                if r.get("full_hit@10", 0) == 0 and not r.get("skipped"):
+                    only_stt_set.add(str(r["stt"]))
+            print(f"      Filter: {len(only_stt_set)} MISS STTs from {miss_file}")
+        else:
+            only_stt_set = set(s.strip() for s in args.only_stt.split(","))
+            print(f"      Filter: {len(only_stt_set)} specific STTs")
+
+    # Apply start/limit/only-stt
     tasks = []
     for i, row in enumerate(rows):
         if (i + 1) < args.start:
+            continue
+        if only_stt_set and str(row.get("STT", "")) not in only_stt_set:
             continue
         if args.limit and len(tasks) >= args.limit:
             break
