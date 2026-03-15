@@ -353,19 +353,28 @@ class LegalGraphRAG:
                             tree_result.contexts.append(article_text)
 
         # Step 4: KG relation expansion (cross-chapter coverage)
+        # Produces kg_results for RRF scoring in the merger
+        kg_results = []
         if cfg.enable_kg_expansion and tree_result and tree_result.target_nodes:
             tree_article_ids = [node.node_id for node in tree_result.target_nodes]
             expanded_ids = self._expand_via_kg_relations(tree_article_ids, query)
 
-            # Add expanded articles
+            # Build scored kg_results for RRF merger (not just context text)
             new_article_ids = set(expanded_ids) - set(tree_article_ids)
-            for article_id in list(new_article_ids)[:3]:
+            for article_id in list(new_article_ids)[:5]:
                 article_text = self._get_article_text_by_source_id(article_id)
                 if article_text:
-                    tree_result.contexts.append(article_text)
+                    kg_results.append({
+                        "id": article_id,
+                        "text": article_text,
+                        "metadata": {
+                            "source": "kg_expansion",
+                            "source_id": article_id,
+                            "article_id": article_id,
+                        },
+                    })
 
         # Step 5: Merge results using Semantic Bridge
-        kg_results = []
 
         # Case 1: Tree result available - merge tree + dual + KG
         if tree_result and (tree_result.target_nodes or tree_result.contexts):
@@ -759,7 +768,10 @@ Trả lời:"""
                     continue
 
                 rel_chapters = self._get_chapters_from_article_ids([rel_article])
-                is_cross_chapter = bool(rel_chapters - selected_chapters)
+                # Cross-document articles return empty chapters — treat as cross-chapter
+                is_cross_doc = ":" in rel_article and ":" in article_id and \
+                    rel_article.split(":")[0] != article_id.split(":")[0]
+                is_cross_chapter = is_cross_doc or bool(rel_chapters - selected_chapters)
 
                 if rel_type in STRONG_REL_TYPES and is_cross_chapter:
                     if self._is_semantically_relevant(rel_article, query):
@@ -771,8 +783,8 @@ Trả lời:"""
                         else:
                             same_chapter_additions.append(rel_article)
 
-        # Prioritize cross-chapter (limit 3), then same-chapter (limit 2)
-        for aid in cross_chapter_additions[:3]:
+        # Prioritize cross-chapter (limit 5), then same-chapter (limit 2)
+        for aid in cross_chapter_additions[:5]:
             expanded.add(aid)
         for aid in same_chapter_additions[:2]:
             expanded.add(aid)

@@ -68,7 +68,7 @@ class SemanticBridge:
 
         # Build KG adjacency for relation expansion
         self._adjacency: Dict[str, List[Dict]] = {}
-        for rel in kg.get("relationships", []):
+        for rel in kg.get("relations", kg.get("relationships", [])):
             source = rel.get("source_id", rel.get("source", ""))
             if source not in self._adjacency:
                 self._adjacency[source] = []
@@ -97,11 +97,11 @@ class SemanticBridge:
         if not dual_result or not dual_result.articles:
             return self._merge_tree_and_kg(tree_result, kg_results)
 
-        # RRF weights (static, domain-agnostic)
+        # RRF weights: tree is primary signal, KG expansion supplements
         source_weights = {
-            "tree": 0.8,
-            "dual": 1.0,
-            "kg": 1.2,
+            "tree": 1.4,
+            "dual": 0.7,
+            "kg": 1.0,
         }
 
         rrf_scores: Dict[str, float] = {}
@@ -280,9 +280,10 @@ class SemanticBridge:
             # Calculate minimum distance to any original article
             min_distance = min(abs(adj_num - orig_num) for orig_num in article_nums)
 
-            # Score: 0.35 for distance 1, 0.30 for distance 2, etc.
-            # Lower than typical tree/dual scores to avoid displacing correct results
-            adj_score = max(0.20, 0.40 - (min_distance * 0.05))
+            # Score must be BELOW RRF scores (~0.008-0.016) to avoid
+            # displacing actual retrieval results. Adjacent articles are
+            # fallback candidates, not primary results.
+            adj_score = max(0.003, 0.008 - (min_distance * 0.002))
 
             adj_id = f"{doc_id}:d{adj_num}"
             article_text = self._get_article_text(adj_id)
