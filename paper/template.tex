@@ -1,0 +1,105 @@
+
+\documentclass{IOS-Book-Article}
+\usepackage{fontspec}  
+\usepackage{float}
+% \usepackage{mathptmx} : // bản cũ + pdfLatext
+\IfFontExistsTF{Times New Roman}
+  {\setmainfont{Times New Roman}}
+  {\setmainfont{TeX Gyre Termes}}   % bản mới + xeLatext
+\usepackage{soul}\setuldepth{article}
+%\usepackage{times}
+%\normalfont
+%\usepackage[T1]{fontenc}
+%\usepackage[mtplusscr,mtbold]{mathtime}
+%
+\def\hb{\hbox to 11.5 cm{}}
+\usepackage{graphicx}
+\usepackage{amsfonts}
+%\usepackage[utf8]{vietnam}  
+%\usepackage[T1]{fontenc}
+%\usepackage[vietnamese]{babel} 
+\begin{document}
+
+\pagestyle{headings}
+\def\thepage{}
+\begin{frontmatter}        % The preamble begins here.
+
+
+%\pretitle{Pretitle}
+\title{Knowledge Graph RAG}
+
+%\title{A query pre-processing procedure for legal query systems}
+
+\markboth{}{May 2025\hb}
+%\subtitle{Subtitle}
+
+\author[A,C]{\fnms{A} \snm{B}%
+},
+\author[B,C,D]{\fnms{C} \snm{D}\thanks{Corresponding Author: Vuong T. Pham  (vuong.pham@sgu.edu.vn).\\Equal contribution by Dung V. Dang and Vuong T. Pham}}
+,
+\author[A,C]{\fnms{A} \snm{C}}
+,
+
+
+\runningauthor{Dang et al.}
+\address[A]{University of Information Technology, Ho Chi Minh city, Vietnam}
+\address[B]{University of Science, Ho Chi Minh city, Vietnam}
+\address[C]{Vietnam National University, Ho Chi Minh city, Vietnam}
+\address[D]{Sai Gon University, Ho Chi Minh city, Vietnam}
+\address[E]{Computer Science Department, New Mexico State University, USA}
+
+\begin{abstract}
+Legal queries are often expressed in unstructured, ambiguous, or noisy natural language, which poses significant challenges for accurate information retrieval. This paper presents a comprehensive framework for legal question answering that integrates semantic technologies—including an ontology platform, knowledge graph, and large language models (LLMs)—to improve question understanding and response accuracy. We propose a multi-step pre-processing pipeline that standardizes legal questions using spelling correction, abbreviation expansion, syntactic restructuring, and semantic summarization supported by LLMs. Besides, a query system is designed that maps pre-processed questions into graph-based representations and performs subgraph matching over a legal knowledge graph. The system is evaluated on real-world legal questions collected from online forums covering traffic law and social insurance. The results show that the proposed approach achieves a high semantic similarity score (avg. cosine similarity of 0.9078 after standardization) and outperforms baseline LLMs like ChatGPT and Gemini in query accuracy (up to 82.25\% in certain question categories). These findings highlight the effectiveness of combining LLMs and semantic structures for robust legal information retrieval.
+
+\end{abstract}
+
+\begin{keyword}
+Legal Information\sep Legal Query System\sep Large Language Models\sep Information retrieval \sep Information Denoising
+\end{keyword}
+\end{frontmatter}
+\markboth{May 2025\hb}{May 2025\hb}
+%\thispagestyle{empty}
+%\pagestyle{empty}
+
+\section{Introduction}
+\label{sec:Intro}
+
+In the current context, systems such as chatbots, virtual assistants and Question-Answering (QA) platforms have become popular and are being applied to meet many fields such as medicine, education and especially in the legal field \cite{r11,r12}, a field that is always very necessary for people and society \cite{r13,r14}. This leads to an increasing demand for human-computer interaction as well as the need for intelligent queries. However, a big problem is that the questions that users often ask the systems are often inconsistent, prone to spelling mistakes or incorrect grammatical structure, which can make it very difficult to query information, and very easy to give wrong answers \cite{r15}. The knowledge-based system can deduce to achieve the correct results by using the human reasoning described as the knowledge core of the system \cite{r28}.
+
+The next section will review related works in the field of intelligent query support and detailed studies on summarizing question content. Section \ref{sec:SummaryQ} presents the detailed process of building the query system with a focus on pre-processing to standardize the questions as well as the reduction and restructuring of the questions. Experiments are conducted to determine the accuracy of the presented method as well as the experimental results with real questions in the field of road traffic law and social insurance law in Section \ref{sec:Exp}. The last section concludes the main results of this paper and proposes the future research directions.
+
+\section{Related Work}
+\label{sec:RW}
+
+Nowadays, the research to support users in asking and answering legal information as well as improving the accuracy in the systems is always of interest and development to best serve users \cite{r16,r17}. The applications of NLP and deep learning in the field of legal search support have achieved many successes with many outstanding publications. The studies in \cite{r6,r7,r8} use advanced techniques in the field of NLP, such as BERT, GNN and CNN, to understand and process the content of legal documents as well as the content of questions to provide corresponding answers. However, these methods are difficult to implement as they require significant computational resources as well as large amounts of data. Moreover, the ability to handle complex relationships is always difficult with natural language processing techniques. 
+
+
+\section{Building a legal query system}
+\label{sec:SummaryQ}
+
+\subsection{Query system design process}
+
+The legal information query system of the research group is built based on two main components, the first component is the knowledge representation platform with the intellectual domain that the system can support searching and the second component is the information query support module based on the previously represented knowledge base simulated in the Figure \ref{figText_QA_system}.
+
+
+\subsection{Question pre-processing design}
+
+In this section, the study presents in detail the techniques for extracting information from questions. First, in section 3.2.1, the study presents the pre-processing method of standardization to help the questions eliminate special characters as well as spelling errors. Next, in section 3.2.2, the process of combining with LLMs to extract information from questions after being standardized is presented.
+
+In short, optimizing the pre-process helps improve the performance and reliability of the QA system and better meet the increasing expectations from users. This is an important prerequisite step in building systems that can understand user language more accurately, deeply, and consistently, especially in specialized fields.
+
+\section{Experimental results}
+\label{sec:Exp}
+
+
+
+\section{Conclusions}
+\label{sec:concl}
+
+
+\section*{Acknowledgments}
+.
+
+\input{references}
+
+\end{document}
