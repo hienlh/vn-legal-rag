@@ -205,6 +205,7 @@ class LegalGraphRAG:
         query: str,
         max_results: int = 50,
         adaptive_retrieval: bool = True,
+        retrieval_only: bool = False,
     ) -> GraphRAGResponse:
         """
         Query legal knowledge with natural language.
@@ -218,6 +219,7 @@ class LegalGraphRAG:
             query: Natural language question in Vietnamese
             max_results: Maximum contexts to retrieve
             adaptive_retrieval: Use query-type-based retrieval strategy
+            retrieval_only: Skip LLM answer generation (for ablation eval)
 
         Returns:
             GraphRAGResponse with answer and citations
@@ -230,11 +232,13 @@ class LegalGraphRAG:
             query, analyzed, max_results, adaptive_retrieval
         )
 
-        # Step 3: Generate response with LLM
-        # Use tree results (most accurate) for LLM, not RRF-merged list
-        # which can rank noise articles higher than correct ones
-        llm_contexts = self._build_llm_contexts(contexts, tree_result, max_llm=10)
-        if self.llm_provider:
+        # Step 3: Generate response with LLM (skip if retrieval_only)
+        if retrieval_only:
+            response = ""
+            confidence = tree_result.confidence if tree_result else 0.0
+        elif self.llm_provider:
+            # Use tree results (most accurate) for LLM, not RRF-merged list
+            llm_contexts = self._build_llm_contexts(contexts, tree_result, max_llm=10)
             response, confidence = self._generate_response(
                 query=query,
                 contexts=llm_contexts,
@@ -242,6 +246,7 @@ class LegalGraphRAG:
             )
         else:
             # Fallback without LLM
+            llm_contexts = self._build_llm_contexts(contexts, tree_result, max_llm=10)
             response = self._format_contexts(llm_contexts)
             confidence = 0.8 if llm_contexts else 0.0
 
@@ -388,21 +393,34 @@ class LegalGraphRAG:
             else:
                 # Simple concatenation without bridge
                 merged = []
+                seen_ids = set()
                 for node in tree_result.target_nodes:
                     merged.append({
                         "id": node.node_id,
                         "text": node.content,
-                        "metadata": {"source": "tree"},
+                        "metadata": {"source": "tree", "source_id": node.node_id, "article_id": node.node_id},
                         "score": tree_result.confidence,
                     })
-                if dual_result and hasattr(dual_result, 'results'):
-                    for item in dual_result.results:
-                        merged.append({
-                            "id": item.get("id", ""),
-                            "text": item.get("text", ""),
-                            "metadata": {"source": "dual_level"},
-                            "score": item.get("score", 0.5),
-                        })
+                    seen_ids.add(node.node_id)
+                if dual_result and dual_result.articles:
+                    for article in dual_result.articles:
+                        article_id = article.get("article_id", "")
+                        if article_id and article_id not in seen_ids:
+                            article_text = self._get_article_text_by_source_id(article_id)
+                            if article_text:
+                                score = dual_result.final_scores.get(article_id, 0.5)
+                                merged.append({
+                                    "id": article_id,
+                                    "text": article_text,
+                                    "metadata": {"source": "dual_level", "source_id": article_id, "article_id": article_id},
+                                    "score": score,
+                                })
+                                seen_ids.add(article_id)
+                for kg_item in kg_results:
+                    kg_id = kg_item.get("id", "")
+                    if kg_id and kg_id not in seen_ids:
+                        merged.append(kg_item)
+                        seen_ids.add(kg_id)
 
         # Case 2: No tree but DualLevel available - use DualLevel as primary
         # Handles ablation configs like no_tree, dual_only

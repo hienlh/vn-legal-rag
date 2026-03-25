@@ -255,4 +255,13 @@ def get_paper_ablation_configs() -> Dict[str, AblationConfig]:
             enable_ambiguity_calibration=False,
             name="no_calibration",
         ),
+
+        # ========== PAPER ABLATION: Tree + KG + KG Expand (no RRF) ==========
+        # Tree + DualLevel + KG expansion, but simple concat merge (no RRF/bridge/adjacent)
+        "tree_kg_expand_no_rrf": AblationConfig(
+            enable_intelligent_merge=False,
+            enable_semantic_bridge=False,
+            enable_adjacent_expansion=False,
+            name="tree_kg_expand_no_rrf",
+        ),
     }
