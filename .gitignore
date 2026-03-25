@@ -91,3 +91,6 @@ paper/texput.*
 # Claude
 .claude/
 .gitnexus
+
+data/baseline_lightrag_index/
+data/baseline_pageindex_index/
