@@ -52,7 +52,7 @@ and
 \address[B]{School of Computer Science, University College Dublin, Ireland}
 
 \begin{abstract}
-To answer legal questions accurately, a system must navigate hierarchical document structures, follow cross-references, and reason across multiple hops, but standard Retrieval Augmented Generation (RAG) systems cannot do this. Vietnamese legal text makes this gap worse. Tonal language, domain-specific abbreviations, and a rigid structural hierarchy (Law$\to$Chapter$\to$Article$\to$Clause$\to$Point) all compound retrieval difficulty. We propose a three-tier knowledge graph RAG architecture that extends the Legal-Onto Rela-model with a formal knowledge model $\mathcal{M} = (\mathcal{O}, \mathcal{G}, \mathcal{T}, \Phi)$, integrating an OWL ontology for terminological knowledge, a domain-specific knowledge graph for assertional knowledge, and a document tree forest for structural navigation. The three retrieval tiers, specifically LLM-guided tree traversal, dual-level semantic retrieval with intent-aware Personalized PageRank, and Reciprocal Rank Fusion, operate over these representations. To evaluate the method, we conducted experiments on 200 legal questions in Vietnam belonging to two different legal fields: enterprise law (150 questions on company formation, capital, dissolution) and traffic law (50 questions on violations, penalties, procedures) across 13 legal documents. Our system achieves 84.5\% Hit@10 (MRR 0.461), outperforming TF-IDF (40.5\%) and BM25 (36.0\%) by substantial margins. Per-domain results confirm generalization: 83.3\% Hit@10 on enterprise law and 88.0\% on traffic law, showing the flexibility and strong querying capabilities across various legal domains. We are not aware of prior work combining ontology-enhanced knowledge graphs with multi-tier retrieval for Vietnamese legal question answering.
+To answer legal questions accurately, a system must navigate hierarchical document structures, follow cross-references, and reason across multiple hops, but standard Retrieval Augmented Generation (RAG) systems cannot do this. Vietnamese legal text makes this gap worse. Tonal language, domain-specific abbreviations, and a rigid structural hierarchy (Law$\to$Chapter$\to$Article$\to$Clause$\to$Point) all compound retrieval difficulty. We propose a three-tier knowledge graph RAG architecture that extends the Legal-Onto Rela-model with a formal knowledge model $\mathcal{M} = (\mathcal{O}, \mathcal{G}, \mathcal{T}, \Phi)$, integrating an OWL ontology for terminological knowledge, a domain-specific knowledge graph for assertional knowledge, and a document tree forest for structural navigation. The three retrieval tiers, specifically LLM-guided tree traversal, dual-level semantic retrieval with intent-aware Personalized PageRank, and Reciprocal Rank Fusion, operate over these representations. To evaluate the method, we conducted experiments on 200 legal questions in Vietnam belonging to two different legal fields: enterprise law (150 questions on company formation, capital, dissolution) and traffic law (50 questions on violations, penalties, procedures) across 13 legal documents. Our system achieves 83.8\% Hit@10 (MRR 0.437), outperforming PageIndex (60.5\%), LightRAG (34.0\%), TF-IDF (40.5\%), and BM25 (36.0\%) by substantial margins. Per-domain results confirm generalization: 83.7\% Hit@10 on enterprise law and 84.0\% on traffic law, showing the flexibility and strong querying capabilities across various legal domains. We are not aware of prior work combining ontology-enhanced knowledge graphs with multi-tier retrieval for Vietnamese legal question answering.
 \end{abstract}
 
 \begin{keyword}
@@ -79,13 +79,13 @@ Existing approaches tackle parts of this problem. LightRAG \cite{r5} and GraphRA
 \item \textbf{Reciprocal Rank Fusion} for cross-tier merging with knowledge graph expansion (Tier~3).
 \end{enumerate}
 
-Our contributions: (1)~a three-tier RAG architecture combining structural, semantic, and graph-based retrieval; (2)~a Vietnamese legal KG (5,936 entities, 5,633 relations) with semi-automatic construction; (3)~a multi-intent PPR algorithm adapting edge weights to query intent. Experiments on 200 questions across two legal domains show 84.5\% Hit@10 (+44.0pp over the best baseline).
+Our contributions: (1)~a three-tier RAG architecture combining structural, semantic, and graph-based retrieval; (2)~a Vietnamese legal KG (5,936 entities, 5,633 relations) with semi-automatic construction; (3)~a multi-intent PPR algorithm adapting edge weights to query intent. Experiments on 200 questions across two legal domains show 83.8\% Hit@10 (+23.3pp over PageIndex, the best baseline).
 
 \section{Related Work}
 \label{sec:related}
 
 \textbf{RAG and KG-augmented retrieval.}
-RAG \cite{r1} grounds generation in retrieved evidence. Since early dense retrieval pipelines \cite{r10}, designs have grown more sophisticated: Self-RAG \cite{r11} adds reflection, CRAG \cite{r12} corrective retrieval, and HyDE \cite{r13} hypothetical document generation; surveys \cite{r3,r4} trace this progression. On the knowledge graph side, GraphRAG \cite{r6} enables multi-hop reasoning and LightRAG \cite{r5} offers lighter entity-relation extraction, but both treat documents as bags of entities and lose structural context. Embedding-based KG methods (TransE \cite{r14}, RotatE \cite{r15}) capture relational patterns yet are limited to single-hop prediction. Personalized PageRank \cite{r16,r17} computes query-specific node importance. PageIndex \cite{r7} takes a different path with LLM-guided tree traversal, achieving high precision with few articles, but missing content outside the traversal path.
+RAG \cite{r1} grounds generation in retrieved evidence. Since early dense retrieval \cite{r10}, designs have added reflection \cite{r11}, corrective retrieval \cite{r12}, and hypothetical document generation \cite{r13}; surveys \cite{r3,r4} trace this progression. GraphRAG \cite{r6} and LightRAG \cite{r5} introduce knowledge graphs for multi-hop reasoning but treat documents as bags of entities, losing structural context. Personalized PageRank \cite{r16,r17} computes query-specific node importance. PageIndex \cite{r7} uses LLM-guided tree traversal for high precision but misses content outside the traversal path.
 
 \textbf{Legal NLP.}
 Legal IR has moved from lexical methods \cite{r18,r19} toward domain-adapted transformers such as LEGAL-BERT \cite{r20}, which capture legal phrasing better than general models but still treat documents as flat passages. Ontology-based approaches \cite{r9} add richer structure; Legal-Onto \cite{r8} combines the Rela-model \cite{r21} with conceptual graphs for Vietnamese Land Law, though it relies on manual inference rules and was not designed for retrieval. For Vietnamese specifically, PhoBERT \cite{r22} and VnCoreNLP \cite{r23} provide foundational NLP capabilities, and Ngo et al.\ \cite{r24} combined BM25 with BERT \cite{r25} and domain heuristics, an effective baseline that nonetheless lacks graph-based reasoning. Surveys \cite{r26,r27} confirm that bridging formal legal knowledge with scalable retrieval remains an open problem.
@@ -232,7 +232,7 @@ where $\mathcal{O}$ is a domain ontology, $\mathcal{G}$ is a knowledge graph, $\
 
 \textbf{Knowledge Graph} $\mathcal{G} = (E, R)$ represents assertional knowledge. Each entity $e = (\textit{id}, \textit{name}, \textit{type}, \textit{conf}, \textit{src})$ carries one of 14 types (Table~\ref{tab:kg-stats}), a confidence score, and source provenance. Each relation $r = (e_i, \textit{pred}, e_j, \textit{evid}, \textit{conf})$ spans 56 predicate types with evidence text; selected predicates are declared symmetric or transitive to support inference during PPR traversal.
 
-\textbf{Example: $\mathcal{O}$ vs.\ $\mathcal{G}$.} For the query ``Does a joint-stock company need a power-of-attorney when establishing an LLC subsidiary?'', $\mathcal{O}$ recognizes \texttt{JointStockCompany} and \texttt{LLC\_SingleMember} as sibling subclasses of \texttt{Company} ($H$-traversal), expanding the query to match articles governing both types. $\mathcal{G}$ then links entity \textit{nguoi-dai-dien-phan-von-gop} (authorized representative) via \textit{governed\_by} to Art.\,79 (delegation rules). In short, $\mathcal{O}$ answers ``\textit{what kind of entity?}'' (taxonomy) while $\mathcal{G}$ answers ``\textit{what rules apply?}'' (legal facts). All four baselines score Hit@30\,=\,0 on this query; our system ranks Art.\,79 first (MRR\,=\,1.0).
+In short, $\mathcal{O}$ answers ``\textit{what kind of entity?}'' via taxonomy traversal (e.g., recognizing \texttt{JointStockCompany} and \texttt{LLC} as sibling subclasses of \texttt{Company}), while $\mathcal{G}$ answers ``\textit{what rules apply?}'' by linking entities to governing articles through typed relations.
 
 \textbf{Document Forest} $\mathcal{T} = \{T_1, \ldots, T_m\} \cup X$ represents structural knowledge. Each $T_i$ is a rooted tree with six levels (Document${}\to{}$\allowbreak Chapter${}\to{}$\allowbreak Section${}\to{}$\allowbreak Article${}\to{}$\allowbreak Clause${}\to{}$\allowbreak Point), and $X$ contains cross-reference edges between documents. The forest spans multiple legal domains, with documents organized into domain groups (e.g., enterprise law, traffic safety law) that enable domain-aware routing during retrieval.
 
@@ -251,27 +251,7 @@ The offline phase builds $\mathcal{G}$ in four steps: \textbf{(1)~Document Parsi
 
 \subsubsection{Intent-Aware Edge Weights}
 
-Table~\ref{tab:intent-weights} defines intent-specific weight multipliers for PPR.
-
-\begin{table}[H]
-\centering\footnotesize
-\caption{Intent-relation weight matrix.}
-\label{tab:intent-weights}
-\begin{tabular}{lccccc}
-\toprule
-\textbf{Relation} & \textbf{Definition} & \textbf{Procedure} & \textbf{Right} & \textbf{Obligation} & \textbf{Penalty} \\
-\midrule
-defines\_as & 1.0 & 0.5 & 0.5 & 0.5 & 0.5 \\
-includes & 0.95 & 0.5 & 0.5 & 0.5 & 0.5 \\
-requires & 0.5 & 1.0 & 0.5 & 0.85 & 0.5 \\
-has\_authority & 0.5 & 0.5 & 1.0 & 0.5 & 0.5 \\
-has\_obligation & 0.5 & 0.5 & 0.5 & 1.0 & 0.5 \\
-has\_penalty & 0.5 & 0.5 & 0.5 & 0.5 & 1.0 \\
-\bottomrule
-\end{tabular}
-\end{table}
-
-This allows PPR to traverse paths most relevant to query intent (e.g., \textit{defines\_as} for definitions, \textit{requires} for procedures).
+Each query intent amplifies its most relevant relation types during PPR traversal. Specifically, each intent assigns weight 1.0 to its primary relation (\textit{defines\_as} for Definition, \textit{requires} for Procedure, \textit{has\_authority} for Right, \textit{has\_obligation} for Obligation, \textit{has\_penalty} for Penalty) and 0.5 to all others. Two exceptions: \textit{includes} receives 0.95 under Definition intent (near-synonym of \textit{defines\_as}), and \textit{requires} receives 0.85 under Obligation intent (obligations often imply procedural requirements).
 
 \subsection{Three-Tier Retrieval}
 
@@ -294,7 +274,7 @@ S_{\text{T2}} = .05 S_{\text{kp}} + .20 S_{\text{con}} + .25 S_{\text{PPR}} + .2
 \begin{equation}
 \text{PPR}(v) = (1-\alpha) \sum_{u \in N(v)} \frac{w(u,v) \cdot \text{PPR}(u)}{d(u)} + \alpha \cdot p(v)
 \end{equation}
-where $\alpha=0.15$ is the teleport probability, $w(u,v)$ is the edge weight adjusted by query intent (Table~\ref{tab:intent-weights}), $d(u)$ is the weighted out-degree of $u$, and $p(v)$ is the personalization vector seeded from matched entities.
+where $\alpha=0.15$ is the teleport probability, $w(u,v)$ is the edge weight adjusted by query intent, $d(u)$ is the weighted out-degree of $u$, and $p(v)$ is the personalization vector seeded from matched entities.
 
 \subsubsection{Tier 3: Semantic Bridge (RRF Fusion)}
 
@@ -325,14 +305,12 @@ where $k=60$ and source weights are $w_{T1}=1.4$, $w_{T2}=0.7$, $w_{KG}=1.0$. Tr
 \toprule
 \textbf{Entity Type} & \textbf{Count} & \textbf{Relation Type} & \textbf{Count} & \textbf{Structure} & \textbf{Count} \\
 \midrule
-Total Entities & 5,936 & Total Relations & 5,633 & Document Tree Nodes & 9,226 \\
+Total Entities & 5,936 & Total Relations & 5,633 & Tree Nodes & 9,226 \\
 Action & 1,903 & requires & 1,377 & Documents & 13 \\
-Legal Term & 1,632 & applies\_to & 810 & Chapter Summaries & 77 \\
-Organization & 500 & has\_authority & 506 & Article Summaries & 840 \\
-Legal Reference & 451 & references & 434 & Cross-references & 168 \\
-Person/Role & 392 & condition\_for & 361 & & \\
-Penalty & 327 & includes & 358 & & \\
-Other (8 types) & 731 & Other (50 types) & 1,787 & & \\
+Legal Term & 1,632 & applies\_to & 810 & Chapters & 77 \\
+Organization & 500 & has\_authority & 506 & Articles & 840 \\
+Legal Reference & 451 & references & 434 & Cross-refs & 168 \\
+Other (9 types) & 1,450 & Other (52 types) & 2,506 & & \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -343,7 +321,7 @@ Other (8 types) & 731 & Other (50 types) & 1,787 & & \\
 
 \subsection{Baselines}
 
-\textbf{BM25} \cite{r18} ($k_1\!=\!1.2$, $b\!=\!0.75$); \textbf{TF-IDF} \cite{r19} with Vietnamese segmentation; \textbf{Semantic Search} \cite{r2} using multilingual sentence-transformers; \textbf{LightRAG} \cite{r5} with default parameters; \textbf{PageIndex} \cite{r7} (our Tier~1 in isolation). All baselines retrieve from the full 13-document corpus with max\_results=30.
+\textbf{BM25} \cite{r18} ($k_1\!=\!1.2$, $b\!=\!0.75$); \textbf{TF-IDF} \cite{r19} with Vietnamese segmentation; \textbf{Semantic Search} \cite{r2} using multilingual sentence-transformers; \textbf{LightRAG} \cite{r5} with default entity types and parameters, using the same LLM backend as our system; \textbf{PageIndex} \cite{r7} with two-step hierarchical tree search (document$\to$chapter selection, then chapter$\to$article selection), using heuristic summaries extracted from article text. All baselines retrieve from the full 13-document corpus with max\_results=30.
 
 \subsection{Main Results}
 
@@ -357,16 +335,22 @@ Table~\ref{tab:main-results} presents Hit@$k$ performance.
 \toprule
 \textbf{Method} & \textbf{Hit@5} & \textbf{Hit@10} & \textbf{Hit@20} & \textbf{Hit@30} & \textbf{MRR} \\
 \midrule
+\multicolumn{6}{l}{\textit{Traditional retrieval}} \\
 Semantic & 10.0 & 15.5 & 24.0 & 25.5 & 0.144 \\
 Keyword & 22.0 & 33.0 & 51.5 & 64.0 & 0.161 \\
 BM25 & 21.0 & 36.0 & 58.5 & 67.5 & 0.144 \\
-TF-IDF & \underline{26.0} & \underline{40.5} & \underline{59.5} & \underline{71.0} & \underline{0.191} \\
-\textbf{3-Tier (ours)} & \textbf{65.0} & \textbf{84.5} & \textbf{87.5} & \textbf{90.5} & \textbf{0.461} \\
+TF-IDF & 26.0 & 40.5 & 59.5 & 71.0 & 0.191 \\
+\midrule
+\multicolumn{6}{l}{\textit{RAG systems}} \\
+LightRAG \cite{r5} & 22.5 & 34.0 & 48.0 & 53.5 & 0.147 \\
+PageIndex \cite{r7} & \underline{52.5} & \underline{60.5} & \underline{65.0} & \underline{66.5} & \underline{0.364} \\
+\midrule
+\textbf{3-Tier (ours)} & \textbf{63.5} & \textbf{83.8} & \textbf{88.5} & \textbf{91.6} & \textbf{0.437} \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-Our 3-Tier system reaches 84.5\% Hit@10 (+44.0pp over TF-IDF, the best baseline), with Recall@10\,=\,55.2\% and NDCG@10\,=\,41.3\%. Semantic search (15.5\%) fails on Vietnamese legal terminology; BM25/TF-IDF ($\sim$36--41\%) lack structural awareness.
+Our 3-Tier system reaches 83.8\% Hit@10, outperforming the best RAG baseline PageIndex by +23.3pp and the best traditional baseline TF-IDF by +43.3pp, with Recall@10\,=\,53.4\%. Among RAG systems, PageIndex (60.5\%) benefits from tree-based structural navigation but misses cross-reference articles outside the traversal path; LightRAG (34.0\%) underperforms even TF-IDF because its entity extraction produces English-language entities from Vietnamese input, resulting in query--entity mismatch. Traditional methods (BM25/TF-IDF, $\sim$36--41\%) lack structural awareness; semantic search (15.5\%) fails on Vietnamese legal terminology.
 
 \subsection{Multi-Domain Performance}
 
@@ -380,65 +364,34 @@ Table~\ref{tab:domain-results} compares per-domain performance.
 \toprule
 \textbf{Domain} & \textbf{$n$} & \textbf{Hit@1} & \textbf{Hit@5} & \textbf{Hit@10} & \textbf{Hit@20} & \textbf{Hit@30} & \textbf{MRR} \\
 \midrule
-Enterprise Law & 150 & 29.3 & 62.7 & 83.3 & 86.7 & 88.7 & 0.436 \\
-Traffic Safety Law & 50 & 38.0 & 72.0 & 88.0 & 90.0 & 96.0 & 0.535 \\
+Enterprise Law & 150 & 28.3 & 60.3 & 83.7 & 88.4 & 90.0 & 0.425 \\
+Traffic Safety Law & 50 & 32.0 & 73.2 & 84.0 & 88.8 & 96.4 & 0.473 \\
 \midrule
-\textbf{Combined} & \textbf{200} & \textbf{31.5} & \textbf{65.0} & \textbf{84.5} & \textbf{87.5} & \textbf{90.5} & \textbf{0.461} \\
+\textbf{Combined} & \textbf{200} & \textbf{29.2} & \textbf{63.5} & \textbf{83.8} & \textbf{88.5} & \textbf{91.6} & \textbf{0.437} \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-Traffic safety law scores higher (88.0\% vs.\ 83.3\% Hit@10) because its penalty articles map directly to specific violations, while enterprise law involves more cross-decree references. No domain-specific tuning was applied, identical pipeline, parameters, and RRF weights serve both domains.
+Both domains achieve comparable Hit@10 (enterprise 83.7\%, traffic 84.0\%), with traffic law showing higher Hit@30 (96.4\% vs.\ 90.0\%) because its penalty articles map directly to specific violations and are reliably ranked within the top~30. Enterprise law involves more cross-decree references. No domain-specific tuning was applied; identical pipeline, parameters, and RRF weights serve both domains.
 
 \subsection{Analysis}
 
 \subsubsection{Performance by Query Category}
 
-Table~\ref{tab:category-results} breaks down Hit@10 by question category.
-
-\begin{table}[H]
-\centering\footnotesize
-\caption{Hit@10 by question category (\%).}
-\label{tab:category-results}
-\begin{tabular}{lrr}
-\toprule
-\textbf{Category} & \textbf{Hit@10} & \textbf{Count} \\
-\midrule
-\multicolumn{3}{l}{\textit{Enterprise Law}} \\
-Capital contributions & 100.0 & 18 \\
-Share/capital transfer & 100.0 & 11 \\
-Dissolution \& bankruptcy & 95.7 & 47 \\
-Legal representatives & 83.3 & 6 \\
-Business registration changes & 78.6 & 28 \\
-Company formation & 69.2 & 13 \\
-Company types & 69.2 & 13 \\
-Other enterprise & 42.9 & 14 \\
-\midrule
-\multicolumn{3}{l}{\textit{Traffic Safety Law}} \\
-Traffic administrative procedures & 92.0 & 25 \\
-Traffic violation penalties & 91.7 & 12 \\
-Traffic rules & 75.0 & 8 \\
-Other traffic & 80.0 & 5 \\
-\bottomrule
-\end{tabular}
-\end{table}
-
-Capital-related queries (100\%) benefit from Tier~1's direct navigation; traffic penalties (91.7\%) from PPR's \textit{has\_penalty} weight. Lower-performing categories (company formation/types, 69.2\%) involve cross-decree references where relevant articles reside outside the primary law.
+Hit@10 ranges from 53.8\% to 96.7\% across categories. Capital contributions (96.7\%), dissolution (94.5\%), and traffic rules (92.5\%) score highest, as these map cleanly to localized article clusters. Company types (53.8\%) and other enterprise (61.4\%) score lowest because answers span multiple decrees outside the primary law.
 
 \subsubsection{Qualitative and Error Analysis}
 
-\textbf{Success (multi-hop):} ``If a member borrows money to meet charter capital and later withdraws it, what are the penalties?'' (Tier~1 navigates to Article~47 on member obligations; Tier~2's PPR follows \textit{requires} edges from the ``charter capital'' entity to Article~16, Clause~5 listing prohibited acts including fraudulent capital declaration; Tier~3 fuses both in top~5, achieving \textbf{Hit@5}).
-\textbf{Success (cross-chapter):} ``A partnership member contributed a house worth 1\,billion VND; it is now worth 1.5\,billion, can they withdraw it?'' (Tier~1 reaches Articles~178--180 on partnership rules; Tier~2 adds Article~186 on capital transfer via \textit{condition\_for} edges, correctly identifying that withdrawal is prohibited but transfer is permitted; \textbf{Hit@5}).
-\textbf{Failure:} ``Requirements for foreign-invested enterprise capital structure?'' (requires synthesizing Investment Law articles not in our corpus; Tier~2 partially reaches related articles but ranks at position~15).
+Two examples illustrate how the tiers cooperate. (1)~\textit{Multi-hop}: ``If a member borrows money to meet charter capital and later withdraws it, what are the penalties?''. Tier~1 reaches Art.\,47 (member obligations); PPR then walks \textit{requires} edges from ``charter capital'' to Art.\,16\,Cl.\,5 (prohibited acts); RRF places both in top~5. (2)~\textit{Cross-chapter}: ``A partner contributed a house worth 1\,bn VND, now worth 1.5\,bn, can they withdraw it?''. Tier~1 reaches Art.\,178--180 (partnership rules); PPR adds Art.\,186 (capital transfer) via \textit{condition\_for} edges. Neither example is answered by any baseline at Hit@30.
 
-Among the 31 failures (15.5\%): \textbf{cross-corpus gaps} (12, 38.7\%)---answers in laws outside our corpus; \textbf{compound term splitting} (9, 29.0\%)---Vietnamese segmentation fragments legal terms; \textbf{ambiguous intent} (10, 32.3\%)---mixed intents bias PPR traversal. All LLM responses are cached in SQLite ($\sim$2.1\,GB) for deterministic reproducibility.
+Of the $\sim$32 missed queries (16.2\%), 12 require articles from laws outside our corpus, 9 stem from Vietnamese word segmentation splitting compound legal terms, and 11 involve mixed intents that misdirect PPR traversal.
 
 \section{Conclusion}
 \label{sec:conclusion}
 
-This paper introduced a three-tier knowledge graph RAG system for Vietnamese legal QA, built on a formal knowledge model $\mathcal{M} = (\mathcal{O}, \mathcal{G}, \mathcal{T}, \Phi)$ that extends Legal-Onto by separating terminological, assertional, and structural representations. On 200 real questions spanning two legal domains, the system reaches 84.5\% Hit@10 (MRR 0.461), improving over the strongest baseline by 44.0pp.
+This paper introduced a three-tier knowledge graph RAG system for Vietnamese legal QA, built on a formal knowledge model $\mathcal{M} = (\mathcal{O}, \mathcal{G}, \mathcal{T}, \Phi)$ that extends Legal-Onto by separating terminological, assertional, and structural representations. On 200 real questions spanning two legal domains, the system reaches 83.8\% Hit@10 (MRR 0.437), improving over PageIndex (60.5\%) by 23.3pp and over TF-IDF (40.5\%) by 43.3pp.
 
-The central finding is that structural navigation and semantic graph retrieval are complementary: Tier~1's tree traversal provides the most reliable signal for Vietnamese legal documents (hence $w_{T1}\!=\!1.4$), while Tier~2's intent-aware PPR catches cross-reference articles that lie outside the traversal path. This complementarity holds across domains: 83.3\% Hit@10 on enterprise law and 88.0\% on traffic safety law, despite substantial structural differences between the two domains and no domain-specific tuning. Adding a new legal domain requires only parsing documents and running the same KG construction pipeline.
+The central finding is that structural navigation and semantic graph retrieval are complementary: Tier~1's tree traversal provides the most reliable signal for Vietnamese legal documents (hence $w_{T1}\!=\!1.4$), while Tier~2's intent-aware PPR catches cross-reference articles that lie outside the traversal path. This complementarity holds across domains: 83.7\% Hit@10 on enterprise law and 84.0\% on traffic safety law, despite substantial structural differences between the two domains and no domain-specific tuning. Adding a new legal domain requires only parsing documents and running the same KG construction pipeline.
 
 \textbf{Limitations.} Tier~1 requires multiple LLM calls ($\sim$7\,s latency per query). Entity extraction lacks gold-standard validation. The two domains tested share Vietnamese legal formatting; generalization to other legal traditions remains untested.
 
