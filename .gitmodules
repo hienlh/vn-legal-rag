@@ -1,0 +1,6 @@
+[submodule "baselines/LightRAG"]
+	path = baselines/LightRAG
+	url = https://github.com/HKUDS/LightRAG.git
+[submodule "baselines/PageIndex"]
+	path = baselines/PageIndex
+	url = https://github.com/VectifyAI/PageIndex.git
