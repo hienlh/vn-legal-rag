@@ -201940,6 +201940,1398 @@
       "description": "reverse: giải thể liên quan tạm ngừng",
       "confidence": 0.9,
       "weight": 0.8
+    },
+    {
+      "source": "59-2020-QH14:d204",
+      "target": "59-2020-QH14:d203",
+      "type": "REFERENCES",
+      "description": "Chuyển đổi DN tư nhân → Chuyển đổi CP sang TNHH",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "59-2020-QH14:d203",
+      "target": "59-2020-QH14:d204",
+      "type": "REFERENCES",
+      "description": "(reverse) Chuyển đổi DN tư nhân → Chuyển đổi CP sang TNHH",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "59-2020-QH14:d202",
+      "target": "59-2020-QH14:d203",
+      "type": "REFERENCES",
+      "description": "Chuyển đổi TNHH→CP ↔ Chuyển đổi CP→TNHH",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "59-2020-QH14:d203",
+      "target": "59-2020-QH14:d202",
+      "type": "REFERENCES",
+      "description": "(reverse) Chuyển đổi TNHH→CP ↔ Chuyển đổi CP→TNHH",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "59-2020-QH14:d202",
+      "target": "59-2020-QH14:d204",
+      "type": "REFERENCES",
+      "description": "Chuyển đổi TNHH→CP ↔ Chuyển đổi DNTN→CT",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "59-2020-QH14:d204",
+      "target": "59-2020-QH14:d202",
+      "type": "REFERENCES",
+      "description": "(reverse) Chuyển đổi TNHH→CP ↔ Chuyển đổi DNTN→CT",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "59-2020-QH14:d46",
+      "target": "59-2020-QH14:d203",
+      "type": "REFERENCES",
+      "description": "Thành lập CTCP → Chuyển đổi CP sang TNHH (chuyển đổi loại hình)",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "59-2020-QH14:d203",
+      "target": "59-2020-QH14:d46",
+      "type": "REFERENCES",
+      "description": "(reverse) Thành lập CTCP → Chuyển đổi CP sang TNHH (chuyển đổi loại hình)",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "59-2020-QH14:d47",
+      "target": "59-2020-QH14:d203",
+      "type": "REFERENCES",
+      "description": "Cổ đông sáng lập → Chuyển đổi CP→TNHH (chuyển đổi loại hình)",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "59-2020-QH14:d203",
+      "target": "59-2020-QH14:d47",
+      "type": "REFERENCES",
+      "description": "(reverse) Cổ đông sáng lập → Chuyển đổi CP→TNHH (chuyển đổi loại hình)",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "59-2020-QH14:d48",
+      "target": "59-2020-QH14:d203",
+      "type": "REFERENCES",
+      "description": "Mua CP CTCP → Chuyển đổi CP→TNHH (chuyển đổi loại hình)",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "59-2020-QH14:d203",
+      "target": "59-2020-QH14:d48",
+      "type": "REFERENCES",
+      "description": "(reverse) Mua CP CTCP → Chuyển đổi CP→TNHH (chuyển đổi loại hình)",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "59-2020-QH14:d46",
+      "target": "59-2020-QH14:d202",
+      "type": "REFERENCES",
+      "description": "Thành lập CTCP → Chuyển đổi TNHH sang CP",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "59-2020-QH14:d202",
+      "target": "59-2020-QH14:d46",
+      "type": "REFERENCES",
+      "description": "(reverse) Thành lập CTCP → Chuyển đổi TNHH sang CP",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "59-2020-QH14:d47",
+      "target": "59-2020-QH14:d202",
+      "type": "REFERENCES",
+      "description": "Cổ đông sáng lập → Chuyển đổi TNHH→CP",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "59-2020-QH14:d202",
+      "target": "59-2020-QH14:d47",
+      "type": "REFERENCES",
+      "description": "(reverse) Cổ đông sáng lập → Chuyển đổi TNHH→CP",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "59-2020-QH14:d23",
+      "target": "59-2020-QH14:d7",
+      "type": "REFERENCES",
+      "description": "Nghĩa vụ công bố → Quyền DN (ngành nghề KD)",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "59-2020-QH14:d7",
+      "target": "59-2020-QH14:d23",
+      "type": "REFERENCES",
+      "description": "(reverse) Nghĩa vụ công bố → Quyền DN (ngành nghề KD)",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "59-2020-QH14:d26",
+      "target": "59-2020-QH14:d7",
+      "type": "REFERENCES",
+      "description": "Tên DN → Quyền DN (ngành nghề KD)",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "59-2020-QH14:d7",
+      "target": "59-2020-QH14:d26",
+      "type": "REFERENCES",
+      "description": "(reverse) Tên DN → Quyền DN (ngành nghề KD)",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "59-2020-QH14:d28",
+      "target": "59-2020-QH14:d7",
+      "type": "REFERENCES",
+      "description": "Nội dung GCNĐKDN → Quyền DN (ngành nghề)",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "59-2020-QH14:d7",
+      "target": "59-2020-QH14:d28",
+      "type": "REFERENCES",
+      "description": "(reverse) Nội dung GCNĐKDN → Quyền DN (ngành nghề)",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "59-2020-QH14:d31",
+      "target": "59-2020-QH14:d7",
+      "type": "REFERENCES",
+      "description": "Thông báo thay đổi → Quyền DN (ngành nghề)",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "59-2020-QH14:d7",
+      "target": "59-2020-QH14:d31",
+      "type": "REFERENCES",
+      "description": "(reverse) Thông báo thay đổi → Quyền DN (ngành nghề)",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "59-2020-QH14:d31",
+      "target": "59-2020-QH14:d29",
+      "type": "REFERENCES",
+      "description": "Thông báo thay đổi ↔ Mã ngành/ngành nghề KD",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "59-2020-QH14:d29",
+      "target": "59-2020-QH14:d31",
+      "type": "REFERENCES",
+      "description": "(reverse) Thông báo thay đổi ↔ Mã ngành/ngành nghề KD",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "59-2020-QH14:d217",
+      "target": "59-2020-QH14:d8",
+      "type": "REFERENCES",
+      "description": "HKD → Nghĩa vụ DN (khi chuyển đổi lên DN)",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "59-2020-QH14:d8",
+      "target": "59-2020-QH14:d217",
+      "type": "REFERENCES",
+      "description": "(reverse) HKD → Nghĩa vụ DN (khi chuyển đổi lên DN)",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "59-2020-QH14:d217",
+      "target": "59-2020-QH14:d21",
+      "type": "REFERENCES",
+      "description": "HKD → CTTNHH 2TV (chuyển đổi HKD lên TNHH)",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "59-2020-QH14:d21",
+      "target": "59-2020-QH14:d217",
+      "type": "REFERENCES",
+      "description": "(reverse) HKD → CTTNHH 2TV (chuyển đổi HKD lên TNHH)",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "59-2020-QH14:d217",
+      "target": "59-2020-QH14:d24",
+      "type": "REFERENCES",
+      "description": "HKD → Góp vốn thành lập (chuyển HKD lên DN)",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "59-2020-QH14:d24",
+      "target": "59-2020-QH14:d217",
+      "type": "REFERENCES",
+      "description": "(reverse) HKD → Góp vốn thành lập (chuyển HKD lên DN)",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "59-2020-QH14:d217",
+      "target": "59-2020-QH14:d25",
+      "type": "REFERENCES",
+      "description": "HKD → Cấp GCNĐK CTTNHH 2TV (chuyển HKD)",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "59-2020-QH14:d25",
+      "target": "59-2020-QH14:d217",
+      "type": "REFERENCES",
+      "description": "(reverse) HKD → Cấp GCNĐK CTTNHH 2TV (chuyển HKD)",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "59-2020-QH14:d205",
+      "target": "59-2020-QH14:d217",
+      "type": "REFERENCES",
+      "description": "Tạm ngừng/chấm dứt HKD → HKD",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "59-2020-QH14:d217",
+      "target": "59-2020-QH14:d205",
+      "type": "REFERENCES",
+      "description": "(reverse) Tạm ngừng/chấm dứt HKD → HKD",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "59-2020-QH14:d205",
+      "target": "59-2020-QH14:d8",
+      "type": "REFERENCES",
+      "description": "Tạm ngừng HKD → Nghĩa vụ DN",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "59-2020-QH14:d8",
+      "target": "59-2020-QH14:d205",
+      "type": "REFERENCES",
+      "description": "(reverse) Tạm ngừng HKD → Nghĩa vụ DN",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "59-2020-QH14:d17",
+      "target": "59-2020-QH14:d21",
+      "type": "REFERENCES",
+      "description": "Quyền thành lập DN → CTTNHH 2TV (FDI)",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "59-2020-QH14:d21",
+      "target": "59-2020-QH14:d17",
+      "type": "REFERENCES",
+      "description": "(reverse) Quyền thành lập DN → CTTNHH 2TV (FDI)",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "59-2020-QH14:d17",
+      "target": "59-2020-QH14:d22",
+      "type": "REFERENCES",
+      "description": "Quyền thành lập DN → CTTNHH 1TV (FDI)",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "59-2020-QH14:d22",
+      "target": "59-2020-QH14:d17",
+      "type": "REFERENCES",
+      "description": "(reverse) Quyền thành lập DN → CTTNHH 1TV (FDI)",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "59-2020-QH14:d17",
+      "target": "59-2020-QH14:d8",
+      "type": "REFERENCES",
+      "description": "Quyền thành lập → Nghĩa vụ DN",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "59-2020-QH14:d8",
+      "target": "59-2020-QH14:d17",
+      "type": "REFERENCES",
+      "description": "(reverse) Quyền thành lập → Nghĩa vụ DN",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "59-2020-QH14:d22",
+      "target": "59-2020-QH14:d8",
+      "type": "REFERENCES",
+      "description": "CTTNHH 1TV → Nghĩa vụ DN (FDI)",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "59-2020-QH14:d8",
+      "target": "59-2020-QH14:d22",
+      "type": "REFERENCES",
+      "description": "(reverse) CTTNHH 1TV → Nghĩa vụ DN (FDI)",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "59-2020-QH14:d17",
+      "target": "59-2020-QH14:d28",
+      "type": "REFERENCES",
+      "description": "Quyền thành lập → Nội dung GCNĐKDN",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "59-2020-QH14:d28",
+      "target": "59-2020-QH14:d17",
+      "type": "REFERENCES",
+      "description": "(reverse) Quyền thành lập → Nội dung GCNĐKDN",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "59-2020-QH14:d17",
+      "target": "59-2020-QH14:d30",
+      "type": "REFERENCES",
+      "description": "Quyền thành lập → ĐK thay đổi GCNĐKDN",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "59-2020-QH14:d30",
+      "target": "59-2020-QH14:d17",
+      "type": "REFERENCES",
+      "description": "(reverse) Quyền thành lập → ĐK thay đổi GCNĐKDN",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "168-2025-ND:d24",
+      "target": "59-2020-QH14:d17",
+      "type": "REFERENCES",
+      "description": "NĐ168-2025 thủ tục → LDN quyền thành lập DN",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "59-2020-QH14:d17",
+      "target": "168-2025-ND:d24",
+      "type": "REFERENCES",
+      "description": "(reverse) NĐ168-2025 thủ tục → LDN quyền thành lập DN",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "168-2025-ND:d33",
+      "target": "59-2020-QH14:d17",
+      "type": "REFERENCES",
+      "description": "NĐ168-2025 đăng ký → LDN quyền thành lập DN",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "59-2020-QH14:d17",
+      "target": "168-2025-ND:d33",
+      "type": "REFERENCES",
+      "description": "(reverse) NĐ168-2025 đăng ký → LDN quyền thành lập DN",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "59-2020-QH14:d27",
+      "target": "59-2020-QH14:d42",
+      "type": "REFERENCES",
+      "description": "Hồ sơ ĐKDN → ĐK hoạt động chi nhánh",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "59-2020-QH14:d42",
+      "target": "59-2020-QH14:d27",
+      "type": "REFERENCES",
+      "description": "(reverse) Hồ sơ ĐKDN → ĐK hoạt động chi nhánh",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "59-2020-QH14:d28",
+      "target": "59-2020-QH14:d42",
+      "type": "REFERENCES",
+      "description": "Nội dung GCNĐKDN → ĐK chi nhánh",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "59-2020-QH14:d42",
+      "target": "59-2020-QH14:d28",
+      "type": "REFERENCES",
+      "description": "(reverse) Nội dung GCNĐKDN → ĐK chi nhánh",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "59-2020-QH14:d27",
+      "target": "59-2020-QH14:d4",
+      "type": "REFERENCES",
+      "description": "Hồ sơ ĐKDN → Quản lý nhà nước về ĐKDN",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "59-2020-QH14:d4",
+      "target": "59-2020-QH14:d27",
+      "type": "REFERENCES",
+      "description": "(reverse) Hồ sơ ĐKDN → Quản lý nhà nước về ĐKDN",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "01-2021-ND:d21",
+      "target": "59-2020-QH14:d27",
+      "type": "REFERENCES",
+      "description": "NĐ01 hồ sơ → LDN hồ sơ ĐKDN",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "59-2020-QH14:d27",
+      "target": "01-2021-ND:d21",
+      "type": "REFERENCES",
+      "description": "(reverse) NĐ01 hồ sơ → LDN hồ sơ ĐKDN",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "01-2021-ND:d22",
+      "target": "59-2020-QH14:d27",
+      "type": "REFERENCES",
+      "description": "NĐ01 hồ sơ → LDN hồ sơ ĐKDN",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "59-2020-QH14:d27",
+      "target": "01-2021-ND:d22",
+      "type": "REFERENCES",
+      "description": "(reverse) NĐ01 hồ sơ → LDN hồ sơ ĐKDN",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "01-2021-ND:d23",
+      "target": "59-2020-QH14:d27",
+      "type": "REFERENCES",
+      "description": "NĐ01 hồ sơ → LDN hồ sơ ĐKDN",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "59-2020-QH14:d27",
+      "target": "01-2021-ND:d23",
+      "type": "REFERENCES",
+      "description": "(reverse) NĐ01 hồ sơ → LDN hồ sơ ĐKDN",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "01-2021-ND:d24",
+      "target": "59-2020-QH14:d27",
+      "type": "REFERENCES",
+      "description": "NĐ01 hồ sơ → LDN hồ sơ ĐKDN",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "59-2020-QH14:d27",
+      "target": "01-2021-ND:d24",
+      "type": "REFERENCES",
+      "description": "(reverse) NĐ01 hồ sơ → LDN hồ sơ ĐKDN",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "168-2025-ND:d33",
+      "target": "59-2020-QH14:d27",
+      "type": "REFERENCES",
+      "description": "NĐ168-2025 đăng ký → LDN hồ sơ ĐKDN",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "59-2020-QH14:d27",
+      "target": "168-2025-ND:d33",
+      "type": "REFERENCES",
+      "description": "(reverse) NĐ168-2025 đăng ký → LDN hồ sơ ĐKDN",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "168-2025-ND:d39",
+      "target": "59-2020-QH14:d27",
+      "type": "REFERENCES",
+      "description": "NĐ168-2025 cấp GCNĐKDN → LDN hồ sơ ĐKDN",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "59-2020-QH14:d27",
+      "target": "168-2025-ND:d39",
+      "type": "REFERENCES",
+      "description": "(reverse) NĐ168-2025 cấp GCNĐKDN → LDN hồ sơ ĐKDN",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "59-2020-QH14:d74",
+      "target": "59-2020-QH14:d30",
+      "type": "REFERENCES",
+      "description": "Chuyển nhượng PVG → ĐK thay đổi GCNĐKDN",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "59-2020-QH14:d30",
+      "target": "59-2020-QH14:d74",
+      "type": "REFERENCES",
+      "description": "(reverse) Chuyển nhượng PVG → ĐK thay đổi GCNĐKDN",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "59-2020-QH14:d74",
+      "target": "59-2020-QH14:d31",
+      "type": "REFERENCES",
+      "description": "Chuyển nhượng PVG → Thông báo thay đổi ĐKDN",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "59-2020-QH14:d31",
+      "target": "59-2020-QH14:d74",
+      "type": "REFERENCES",
+      "description": "(reverse) Chuyển nhượng PVG → Thông báo thay đổi ĐKDN",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "59-2020-QH14:d87",
+      "target": "59-2020-QH14:d30",
+      "type": "REFERENCES",
+      "description": "Cơ cấu CTTNHH 2TV → ĐK thay đổi GCNĐKDN",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "59-2020-QH14:d30",
+      "target": "59-2020-QH14:d87",
+      "type": "REFERENCES",
+      "description": "(reverse) Cơ cấu CTTNHH 2TV → ĐK thay đổi GCNĐKDN",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "59-2020-QH14:d87",
+      "target": "59-2020-QH14:d31",
+      "type": "REFERENCES",
+      "description": "Cơ cấu CTTNHH 2TV → Thông báo thay đổi ĐKDN",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "59-2020-QH14:d31",
+      "target": "59-2020-QH14:d87",
+      "type": "REFERENCES",
+      "description": "(reverse) Cơ cấu CTTNHH 2TV → Thông báo thay đổi ĐKDN",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "59-2020-QH14:d78",
+      "target": "59-2020-QH14:d30",
+      "type": "REFERENCES",
+      "description": "Cơ cấu CTTNHH 1TV → ĐK thay đổi GCNĐKDN",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "59-2020-QH14:d30",
+      "target": "59-2020-QH14:d78",
+      "type": "REFERENCES",
+      "description": "(reverse) Cơ cấu CTTNHH 1TV → ĐK thay đổi GCNĐKDN",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "59-2020-QH14:d78",
+      "target": "59-2020-QH14:d31",
+      "type": "REFERENCES",
+      "description": "Cơ cấu CTTNHH 1TV → Thông báo thay đổi ĐKDN",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "59-2020-QH14:d31",
+      "target": "59-2020-QH14:d78",
+      "type": "REFERENCES",
+      "description": "(reverse) Cơ cấu CTTNHH 1TV → Thông báo thay đổi ĐKDN",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "59-2020-QH14:d76",
+      "target": "59-2020-QH14:d30",
+      "type": "REFERENCES",
+      "description": "Quyền chủ sở hữu → ĐK thay đổi GCNĐKDN",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "59-2020-QH14:d30",
+      "target": "59-2020-QH14:d76",
+      "type": "REFERENCES",
+      "description": "(reverse) Quyền chủ sở hữu → ĐK thay đổi GCNĐKDN",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "59-2020-QH14:d85",
+      "target": "59-2020-QH14:d30",
+      "type": "REFERENCES",
+      "description": "Thanh lý tài sản → ĐK thay đổi GCNĐKDN",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "59-2020-QH14:d30",
+      "target": "59-2020-QH14:d85",
+      "type": "REFERENCES",
+      "description": "(reverse) Thanh lý tài sản → ĐK thay đổi GCNĐKDN",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "59-2020-QH14:d68",
+      "target": "59-2020-QH14:d31",
+      "type": "REFERENCES",
+      "description": "Tăng vốn CTTNHH 2TV → Thông báo thay đổi",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "59-2020-QH14:d31",
+      "target": "59-2020-QH14:d68",
+      "type": "REFERENCES",
+      "description": "(reverse) Tăng vốn CTTNHH 2TV → Thông báo thay đổi",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "59-2020-QH14:d52",
+      "target": "59-2020-QH14:d31",
+      "type": "REFERENCES",
+      "description": "Cổ đông sáng lập → Thông báo thay đổi",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "59-2020-QH14:d31",
+      "target": "59-2020-QH14:d52",
+      "type": "REFERENCES",
+      "description": "(reverse) Cổ đông sáng lập → Thông báo thay đổi",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "59-2020-QH14:d52",
+      "target": "59-2020-QH14:d30",
+      "type": "REFERENCES",
+      "description": "Cổ đông sáng lập → ĐK thay đổi GCNĐKDN",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "59-2020-QH14:d30",
+      "target": "59-2020-QH14:d52",
+      "type": "REFERENCES",
+      "description": "(reverse) Cổ đông sáng lập → ĐK thay đổi GCNĐKDN",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "59-2020-QH14:d79",
+      "target": "59-2020-QH14:d45",
+      "type": "REFERENCES",
+      "description": "CT mẹ-con → ĐK chi nhánh/VPĐD",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "59-2020-QH14:d45",
+      "target": "59-2020-QH14:d79",
+      "type": "REFERENCES",
+      "description": "(reverse) CT mẹ-con → ĐK chi nhánh/VPĐD",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "59-2020-QH14:d79",
+      "target": "59-2020-QH14:d46",
+      "type": "REFERENCES",
+      "description": "CT mẹ-con → Thành lập CTCP (CT con)",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "59-2020-QH14:d46",
+      "target": "59-2020-QH14:d79",
+      "type": "REFERENCES",
+      "description": "(reverse) CT mẹ-con → Thành lập CTCP (CT con)",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "59-2020-QH14:d26",
+      "target": "59-2020-QH14:d45",
+      "type": "REFERENCES",
+      "description": "Tên DN → ĐK chi nhánh/VPĐD",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "59-2020-QH14:d45",
+      "target": "59-2020-QH14:d26",
+      "type": "REFERENCES",
+      "description": "(reverse) Tên DN → ĐK chi nhánh/VPĐD",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "59-2020-QH14:d18",
+      "target": "59-2020-QH14:d79",
+      "type": "REFERENCES",
+      "description": "Vốn → CT mẹ-con",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "59-2020-QH14:d79",
+      "target": "59-2020-QH14:d18",
+      "type": "REFERENCES",
+      "description": "(reverse) Vốn → CT mẹ-con",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "59-2020-QH14:d24",
+      "target": "59-2020-QH14:d79",
+      "type": "REFERENCES",
+      "description": "Góp vốn thành lập → CT mẹ-con",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "59-2020-QH14:d79",
+      "target": "59-2020-QH14:d24",
+      "type": "REFERENCES",
+      "description": "(reverse) Góp vốn thành lập → CT mẹ-con",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "59-2020-QH14:d12",
+      "target": "59-2020-QH14:d30",
+      "type": "REFERENCES",
+      "description": "Người đại diện PL → ĐK thay đổi GCNĐKDN",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "59-2020-QH14:d30",
+      "target": "59-2020-QH14:d12",
+      "type": "REFERENCES",
+      "description": "(reverse) Người đại diện PL → ĐK thay đổi GCNĐKDN",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "59-2020-QH14:d55",
+      "target": "59-2020-QH14:d12",
+      "type": "REFERENCES",
+      "description": "Nghĩa vụ thành viên → Người đại diện PL",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "59-2020-QH14:d12",
+      "target": "59-2020-QH14:d55",
+      "type": "REFERENCES",
+      "description": "(reverse) Nghĩa vụ thành viên → Người đại diện PL",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "59-2020-QH14:d64",
+      "target": "59-2020-QH14:d12",
+      "type": "REFERENCES",
+      "description": "Chủ tịch HĐTV → Người đại diện PL",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "59-2020-QH14:d12",
+      "target": "59-2020-QH14:d64",
+      "type": "REFERENCES",
+      "description": "(reverse) Chủ tịch HĐTV → Người đại diện PL",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "59-2020-QH14:d10",
+      "target": "59-2020-QH14:d30",
+      "type": "REFERENCES",
+      "description": "DN xã hội → ĐK thay đổi GCNĐKDN",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "59-2020-QH14:d30",
+      "target": "59-2020-QH14:d10",
+      "type": "REFERENCES",
+      "description": "(reverse) DN xã hội → ĐK thay đổi GCNĐKDN",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "59-2020-QH14:d10",
+      "target": "59-2020-QH14:d37",
+      "type": "REFERENCES",
+      "description": "DN xã hội → Chuyển đổi loại hình",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "59-2020-QH14:d37",
+      "target": "59-2020-QH14:d10",
+      "type": "REFERENCES",
+      "description": "(reverse) DN xã hội → Chuyển đổi loại hình",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "59-2020-QH14:d37",
+      "target": "59-2020-QH14:d30",
+      "type": "REFERENCES",
+      "description": "Chuyển đổi loại hình → ĐK thay đổi GCNĐKDN",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "59-2020-QH14:d30",
+      "target": "59-2020-QH14:d37",
+      "type": "REFERENCES",
+      "description": "(reverse) Chuyển đổi loại hình → ĐK thay đổi GCNĐKDN",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "59-2020-QH14:d37",
+      "target": "59-2020-QH14:d31",
+      "type": "REFERENCES",
+      "description": "Chuyển đổi loại hình → Thông báo thay đổi",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "59-2020-QH14:d31",
+      "target": "59-2020-QH14:d37",
+      "type": "REFERENCES",
+      "description": "(reverse) Chuyển đổi loại hình → Thông báo thay đổi",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "168-2024-ND-CP:d7",
+      "target": "168-2024-ND-CP:d6",
+      "type": "REFERENCES",
+      "description": "Vi phạm tốc độ → Quy tắc tốc độ",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "168-2024-ND-CP:d6",
+      "target": "168-2024-ND-CP:d7",
+      "type": "REFERENCES",
+      "description": "(reverse) Vi phạm tốc độ → Quy tắc tốc độ",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "168-2024-ND-CP:d7",
+      "target": "36-2024-QH15:d12",
+      "type": "REFERENCES",
+      "description": "Vi phạm tốc độ → Luật ATGT tốc độ xe",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "36-2024-QH15:d12",
+      "target": "168-2024-ND-CP:d7",
+      "type": "REFERENCES",
+      "description": "(reverse) Vi phạm tốc độ → Luật ATGT tốc độ xe",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "168-2024-ND-CP:d7",
+      "target": "36-2024-QH15:d66",
+      "type": "REFERENCES",
+      "description": "Vi phạm tốc độ → Luật ATGT xử lý vi phạm",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "36-2024-QH15:d66",
+      "target": "168-2024-ND-CP:d7",
+      "type": "REFERENCES",
+      "description": "(reverse) Vi phạm tốc độ → Luật ATGT xử lý vi phạm",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "168-2024-ND-CP:d13",
+      "target": "168-2024-ND-CP:d14",
+      "type": "REFERENCES",
+      "description": "Vi phạm đăng ký xe → Vi phạm giấy tờ xe",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "168-2024-ND-CP:d14",
+      "target": "168-2024-ND-CP:d13",
+      "type": "REFERENCES",
+      "description": "(reverse) Vi phạm đăng ký xe → Vi phạm giấy tờ xe",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "168-2024-ND-CP:d13",
+      "target": "168-2024-ND-CP:d32",
+      "type": "REFERENCES",
+      "description": "Vi phạm đăng ký → Tạm giữ phương tiện",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "168-2024-ND-CP:d32",
+      "target": "168-2024-ND-CP:d13",
+      "type": "REFERENCES",
+      "description": "(reverse) Vi phạm đăng ký → Tạm giữ phương tiện",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "168-2024-ND-CP:d16",
+      "target": "168-2024-ND-CP:d14",
+      "type": "REFERENCES",
+      "description": "Vi phạm biển số → Vi phạm giấy tờ",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "168-2024-ND-CP:d14",
+      "target": "168-2024-ND-CP:d16",
+      "type": "REFERENCES",
+      "description": "(reverse) Vi phạm biển số → Vi phạm giấy tờ",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "168-2024-ND-CP:d16",
+      "target": "168-2024-ND-CP:d47",
+      "type": "REFERENCES",
+      "description": "Vi phạm biển số → Xử lý bổ sung",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "168-2024-ND-CP:d47",
+      "target": "168-2024-ND-CP:d16",
+      "type": "REFERENCES",
+      "description": "(reverse) Vi phạm biển số → Xử lý bổ sung",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "168-2024-ND-CP:d16",
+      "target": "168-2024-ND-CP:d48",
+      "type": "REFERENCES",
+      "description": "Vi phạm biển số → Thi hành quyết định",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "168-2024-ND-CP:d48",
+      "target": "168-2024-ND-CP:d16",
+      "type": "REFERENCES",
+      "description": "(reverse) Vi phạm biển số → Thi hành quyết định",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "168-2024-ND-CP:d34",
+      "target": "168-2024-ND-CP:d32",
+      "type": "REFERENCES",
+      "description": "Xử phạt bổ sung → Tạm giữ phương tiện",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "168-2024-ND-CP:d32",
+      "target": "168-2024-ND-CP:d34",
+      "type": "REFERENCES",
+      "description": "(reverse) Xử phạt bổ sung → Tạm giữ phương tiện",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "168-2024-ND-CP:d46",
+      "target": "168-2024-ND-CP:d47",
+      "type": "REFERENCES",
+      "description": "Thẩm quyền xử phạt → Xử lý bổ sung",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "168-2024-ND-CP:d47",
+      "target": "168-2024-ND-CP:d46",
+      "type": "REFERENCES",
+      "description": "(reverse) Thẩm quyền xử phạt → Xử lý bổ sung",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "168-2024-ND-CP:d41",
+      "target": "168-2024-ND-CP:d43",
+      "type": "REFERENCES",
+      "description": "Lực lượng tuần tra → Trụ sở cơ quan",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "168-2024-ND-CP:d43",
+      "target": "168-2024-ND-CP:d41",
+      "type": "REFERENCES",
+      "description": "(reverse) Lực lượng tuần tra → Trụ sở cơ quan",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "168-2024-ND-CP:d27",
+      "target": "168-2024-ND-CP:d41",
+      "type": "REFERENCES",
+      "description": "Thủ tục xử phạt → Lực lượng tuần tra",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "168-2024-ND-CP:d41",
+      "target": "168-2024-ND-CP:d27",
+      "type": "REFERENCES",
+      "description": "(reverse) Thủ tục xử phạt → Lực lượng tuần tra",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "168-2024-ND-CP:d27",
+      "target": "168-2024-ND-CP:d43",
+      "type": "REFERENCES",
+      "description": "Thủ tục xử phạt → Trụ sở cơ quan",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "168-2024-ND-CP:d43",
+      "target": "168-2024-ND-CP:d27",
+      "type": "REFERENCES",
+      "description": "(reverse) Thủ tục xử phạt → Trụ sở cơ quan",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "59-2020-QH14:d202",
+      "target": "59-2020-QH14:d34",
+      "type": "REFERENCES",
+      "description": "Chuyển đổi TNHH→CP → Công ty hợp danh",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "59-2020-QH14:d34",
+      "target": "59-2020-QH14:d202",
+      "type": "REFERENCES",
+      "description": "(reverse) Chuyển đổi TNHH→CP → Công ty hợp danh",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "59-2020-QH14:d202",
+      "target": "59-2020-QH14:d35",
+      "type": "REFERENCES",
+      "description": "Chuyển đổi TNHH→CP → Quyền HD viên",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "59-2020-QH14:d35",
+      "target": "59-2020-QH14:d202",
+      "type": "REFERENCES",
+      "description": "(reverse) Chuyển đổi TNHH→CP → Quyền HD viên",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "59-2020-QH14:d206",
+      "target": "59-2020-QH14:d209",
+      "type": "REFERENCES",
+      "description": "Tạm ngừng KD → Giải thể DN (trình tự)",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "59-2020-QH14:d209",
+      "target": "59-2020-QH14:d206",
+      "type": "REFERENCES",
+      "description": "(reverse) Tạm ngừng KD → Giải thể DN (trình tự)",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "59-2020-QH14:d42",
+      "target": "59-2020-QH14:d43",
+      "type": "REFERENCES",
+      "description": "ĐK chi nhánh → ĐK ĐDKD",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "59-2020-QH14:d43",
+      "target": "59-2020-QH14:d42",
+      "type": "REFERENCES",
+      "description": "(reverse) ĐK chi nhánh → ĐK ĐDKD",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "59-2020-QH14:d42",
+      "target": "59-2020-QH14:d31",
+      "type": "REFERENCES",
+      "description": "ĐK chi nhánh → Thông báo thay đổi ĐKDN",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "59-2020-QH14:d31",
+      "target": "59-2020-QH14:d42",
+      "type": "REFERENCES",
+      "description": "(reverse) ĐK chi nhánh → Thông báo thay đổi ĐKDN",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "59-2020-QH14:d43",
+      "target": "59-2020-QH14:d31",
+      "type": "REFERENCES",
+      "description": "ĐK ĐDKD → Thông báo thay đổi ĐKDN",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "59-2020-QH14:d31",
+      "target": "59-2020-QH14:d43",
+      "type": "REFERENCES",
+      "description": "(reverse) ĐK ĐDKD → Thông báo thay đổi ĐKDN",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "59-2020-QH14:d21",
+      "target": "59-2020-QH14:d47",
+      "type": "REFERENCES",
+      "description": "CTTNHH 2TV → Cổ đông sáng lập CTCP",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "59-2020-QH14:d47",
+      "target": "59-2020-QH14:d21",
+      "type": "REFERENCES",
+      "description": "(reverse) CTTNHH 2TV → Cổ đông sáng lập CTCP",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "59-2020-QH14:d21",
+      "target": "59-2020-QH14:d87",
+      "type": "REFERENCES",
+      "description": "CTTNHH 2TV → Cơ cấu tổ chức CTTNHH 2TV",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "59-2020-QH14:d87",
+      "target": "59-2020-QH14:d21",
+      "type": "REFERENCES",
+      "description": "(reverse) CTTNHH 2TV → Cơ cấu tổ chức CTTNHH 2TV",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "168-2025-ND:d17",
+      "target": "59-2020-QH14:d17",
+      "type": "REFERENCES",
+      "description": "NĐ168-2025 chủ sở hữu → LDN quyền thành lập",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "59-2020-QH14:d17",
+      "target": "168-2025-ND:d17",
+      "type": "REFERENCES",
+      "description": "(reverse) NĐ168-2025 chủ sở hữu → LDN quyền thành lập",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "168-2025-ND:d18",
+      "target": "59-2020-QH14:d17",
+      "type": "REFERENCES",
+      "description": "NĐ168-2025 kê khai → LDN quyền thành lập",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "59-2020-QH14:d17",
+      "target": "168-2025-ND:d18",
+      "type": "REFERENCES",
+      "description": "(reverse) NĐ168-2025 kê khai → LDN quyền thành lập",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "168-2025-ND:d28",
+      "target": "59-2020-QH14:d30",
+      "type": "REFERENCES",
+      "description": "NĐ168-2025 → LDN ĐK thay đổi GCNĐKDN",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "59-2020-QH14:d30",
+      "target": "168-2025-ND:d28",
+      "type": "REFERENCES",
+      "description": "(reverse) NĐ168-2025 → LDN ĐK thay đổi GCNĐKDN",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "168-2025-ND:d29",
+      "target": "59-2020-QH14:d30",
+      "type": "REFERENCES",
+      "description": "NĐ168-2025 → LDN ĐK thay đổi GCNĐKDN",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "59-2020-QH14:d30",
+      "target": "168-2025-ND:d29",
+      "type": "REFERENCES",
+      "description": "(reverse) NĐ168-2025 → LDN ĐK thay đổi GCNĐKDN",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "59-2020-QH14:d188",
+      "target": "59-2020-QH14:d17",
+      "type": "REFERENCES",
+      "description": "Tách DN → Quyền thành lập DN",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "59-2020-QH14:d17",
+      "target": "59-2020-QH14:d188",
+      "type": "REFERENCES",
+      "description": "(reverse) Tách DN → Quyền thành lập DN",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "59-2020-QH14:d190",
+      "target": "59-2020-QH14:d17",
+      "type": "REFERENCES",
+      "description": "Chia DN → Quyền thành lập DN",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "59-2020-QH14:d17",
+      "target": "59-2020-QH14:d190",
+      "type": "REFERENCES",
+      "description": "(reverse) Chia DN → Quyền thành lập DN",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "59-2020-QH14:d193",
+      "target": "59-2020-QH14:d22",
+      "type": "REFERENCES",
+      "description": "Hợp nhất DN → CTTNHH 1TV",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "59-2020-QH14:d22",
+      "target": "59-2020-QH14:d193",
+      "type": "REFERENCES",
+      "description": "(reverse) Hợp nhất DN → CTTNHH 1TV",
+      "confidence": 0.95,
+      "weight": 1.0
     }
   ],
   "stats": {
