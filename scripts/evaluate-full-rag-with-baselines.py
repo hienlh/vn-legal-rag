@@ -362,11 +362,11 @@ Trả lời:"""
         return ""
 
 
-def run_query_with_retry(rag, question: str, max_retries=5, base_delay=5, max_results=30):
+def run_query_with_retry(rag, question: str, max_retries=5, base_delay=5, max_results=30, retrieval_only=False):
     """Run RAG query with rate-limit retry. Returns (result, error)."""
     for attempt in range(max_retries):
         try:
-            result = rag.query(question, max_results=max_results, adaptive_retrieval=True)
+            result = rag.query(question, max_results=max_results, adaptive_retrieval=True, retrieval_only=retrieval_only)
             return result, None
         except Exception as e:
             error_str = str(e).lower()
@@ -391,6 +391,7 @@ def process_question(
     max_articles: int = 30,
     db=None,
     llm_provider=None,
+    retrieval_only: bool = False,
 ):
     """Process one question: full RAG + ablation baselines + traditional baselines.
 
@@ -420,8 +421,8 @@ def process_question(
 
     record["skipped"] = False
 
-    # --- Full RAG (with LLM answer) ---
-    result, error = run_query_with_retry(rag_full, question, max_results=max_articles)
+    # --- Full RAG ---
+    result, error = run_query_with_retry(rag_full, question, max_results=max_articles, retrieval_only=retrieval_only)
     if error:
         record["full_error"] = error
         record["full_answer"] = ""
@@ -433,7 +434,7 @@ def process_question(
         ranked = merge_ranked_articles(tree_arts, kg_arts)
         ir = calc_ir_metrics(expected, ranked)
 
-        record["full_answer"] = result.response
+        record["full_answer"] = result.response if not retrieval_only else ""
         record["full_retrieved"] = ranked
         record["full_tree_articles"] = tree_arts
         record["full_kg_articles"] = kg_arts
@@ -443,9 +444,9 @@ def process_question(
             record[f"full_recall@{k}"] = round(ir[f"recall@{k}"], 4)
         record["full_mrr"] = round(ir["rr"], 4)
 
-    # --- Ablation baselines (retrieval only, no LLM answer) ---
+    # --- Ablation baselines (always retrieval only) ---
     for bname, rag_b in rag_baselines.items():
-        result_b, error_b = run_query_with_retry(rag_b, question, max_results=max_articles)
+        result_b, error_b = run_query_with_retry(rag_b, question, max_results=max_articles, retrieval_only=True)
         if error_b:
             record[f"{bname}_error"] = error_b
             record[f"{bname}_hit@10"] = 0
@@ -521,6 +522,8 @@ def main():
     parser.add_argument("--to-csv", metavar="JSON_FILE", help="Convert existing JSON results to CSV and exit")
     parser.add_argument("--only-stt", type=str, default=None,
                         help="Only run specific STTs (comma-separated, e.g. '24,31,43' or 'miss:results/eval.json')")
+    parser.add_argument("--retrieval-only", action="store_true",
+                        help="Skip LLM answer generation, only compute retrieval metrics (faster for ablation)")
     parser.add_argument("--verbose", action="store_true")
 
     args = parser.parse_args()
@@ -629,7 +632,8 @@ def main():
     def process_and_report(row):
         nonlocal completed
         record = process_question(row, rag_full, rag_baselines, traditional,
-                                  max_articles=args.max_articles, db=shared["db"], llm_provider=shared["llm_provider"])
+                                  max_articles=args.max_articles, db=shared["db"], llm_provider=shared["llm_provider"],
+                                  retrieval_only=args.retrieval_only)
 
         with stats_lock:
             completed += 1

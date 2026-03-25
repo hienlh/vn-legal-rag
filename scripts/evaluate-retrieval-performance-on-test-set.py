@@ -618,7 +618,9 @@ def main():
 
         for attempt in range(max_retries):
             try:
+                t0 = time.time()
                 result = rag.query(question, adaptive_retrieval=True)
+                result_data["time_seconds"] = round(time.time() - t0, 2)
                 result_data["tree_articles"] = extract_tree_articles(result)
                 result_data["kg_articles"] = extract_kg_articles(result)
                 result_data["ranked_retrieved"] = extract_retrieved_articles_ranked(result)
@@ -725,7 +727,8 @@ def main():
             kg_status = "K✓" if kg_hit else "K✗"
             hit_str = f"@5:{hit_rates_k[5]:4.0f}% @10:{hit_rates_k[10]:4.0f}% @20:{hit_rates_k[20]:4.0f}% @30:{hit_rates_k[30]:4.0f}% @40:{hit_rates_k[40]:4.0f}%"
 
-            print(f"[{local_processed:4d}] STT {stt:4s} | {status:4s} | {tree_status} {kg_status} | {hit_str}")
+            elapsed = result_data.get("time_seconds", 0)
+            print(f"[{local_processed:4d}] STT {stt:4s} | {status:4s} | {tree_status} {kg_status} | {elapsed:5.1f}s | {hit_str}")
 
             result_record = {
                 "stt": stt,
@@ -766,6 +769,7 @@ def main():
                 },
                 "contexts_count": ablation["contexts_count"],
                 "tree_reasoning": tree_reasoning,
+                "time_seconds": result_data.get("time_seconds", 0),
             }
             json_results.append(result_record)
             _save_incremental()
