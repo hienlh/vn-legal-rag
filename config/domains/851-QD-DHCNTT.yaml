@@ -1,0 +1,19 @@
+# Domain Configuration for 851/QĐ-ĐHCNTT
+# Quy định liêm chính học thuật UIT (2024)
+
+_extends: _education_common.yaml
+
+abbreviations:
+  # Document-specific
+  LCHT: Liêm chính học thuật
+  ĐVT: Đạo văn
+
+chapter_hints:
+  "quy định chung,phạm vi,mục đích": "Quy định chung"
+  "đạo văn,sao chép,trích dẫn": "Các hành vi vi phạm liêm chính học thuật"
+  "xử lý,kỷ luật,hình thức xử lý": "Xử lý vi phạm"
+  "trách nhiệm,quyền,nghĩa vụ": "Trách nhiệm các bên"
+  "phòng ngừa,kiểm tra,phát hiện": "Phòng ngừa vi phạm"
+
+article_selection_examples: []
+chapter_selection_examples: []

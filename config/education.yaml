@@ -1,0 +1,35 @@
+# Education Domain Configuration
+# For postgraduate education regulation documents (UIT/VNUHCM)
+
+llm:
+  provider: "anthropic"
+  model: "claude-sonnet-4-20250514"
+  base_url: "http://127.0.0.1:3456"  # Meridian - Claude Max Proxy
+  use_cache: true
+  cache_db: "data/education/llm_cache.db"
+
+# Database Settings
+database:
+  path: "data/education/edu_docs.db"
+
+# KG Settings
+kg:
+  path: "data/education/kg_enhanced/legal_kg.json"
+  chapter_summaries: "data/education/kg_enhanced/chapter_summaries.json"
+  article_summaries: "data/education/kg_enhanced/article_summaries.json"
+
+# Retrieval Settings
+retrieval:
+  max_documents: 3
+  max_chapters: 6
+  max_articles: 7
+  confidence_threshold: 0.7
+
+# DualLevel Weights (must sum to 1.0)
+dual_level:
+  keyphrase_weight: 0.05
+  semantic_weight: 0.20
+  ppr_weight: 0.25
+  concept_weight: 0.20
+  theme_weight: 0.15
+  hierarchy_weight: 0.15

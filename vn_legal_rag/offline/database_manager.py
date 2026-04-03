@@ -148,6 +148,51 @@ class LegalDocumentDB:
                 session.expunge(r)
             return list(results)
 
+    def get_all_documents(self) -> List[LegalDocumentModel]:
+        """Get all documents (alias for list_documents)."""
+        return self.list_documents()
+
+    def get_articles_for_document(self, doc_id: str) -> List[LegalArticleModel]:
+        """Get all articles belonging to a document."""
+        with self.SessionLocal() as session:
+            stmt = (
+                select(LegalArticleModel)
+                .options(
+                    joinedload(LegalArticleModel.clauses)
+                    .joinedload(LegalClauseModel.points)
+                )
+                .where(LegalArticleModel.document_id == doc_id)
+                .order_by(LegalArticleModel.position)
+            )
+            results = session.scalars(stmt).unique().all()
+            for r in results:
+                session.expunge(r)
+            return list(results)
+
+    def get_all_articles(
+        self,
+        document_id: Optional[str] = None,
+        limit: Optional[int] = None,
+    ) -> List[LegalArticleModel]:
+        """Get all articles, optionally filtered by document."""
+        with self.SessionLocal() as session:
+            stmt = (
+                select(LegalArticleModel)
+                .options(
+                    joinedload(LegalArticleModel.clauses)
+                    .joinedload(LegalClauseModel.points)
+                )
+                .order_by(LegalArticleModel.document_id, LegalArticleModel.position)
+            )
+            if document_id:
+                stmt = stmt.where(LegalArticleModel.document_id == document_id)
+            if limit:
+                stmt = stmt.limit(limit)
+            results = session.scalars(stmt).unique().all()
+            for r in results:
+                session.expunge(r)
+            return list(results)
+
     def count_stats(self) -> Dict[str, int]:
         """Get database statistics."""
         with self.SessionLocal() as session:

@@ -1,0 +1,18 @@
+# Domain Configuration for 160/QĐ-ĐHQG
+# Quy chế đào tạo trình độ thạc sĩ ĐHQG-HCM (khoá 2021)
+
+_extends: _education_common.yaml
+
+abbreviations:
+  CSĐT: Cơ sở đào tạo
+
+chapter_hints:
+  "quy định chung,phạm vi,đối tượng": "Quy định chung"
+  "chương trình đào tạo,CTĐT,tín chỉ": "Chương trình đào tạo"
+  "tuyển sinh,nhập học": "Tuyển sinh"
+  "tổ chức đào tạo,đăng ký,học kỳ": "Tổ chức đào tạo"
+  "luận văn,bảo vệ,GVHD": "Luận văn thạc sĩ"
+  "tốt nghiệp,cấp bằng": "Tốt nghiệp"
+
+article_selection_examples: []
+chapter_selection_examples: []

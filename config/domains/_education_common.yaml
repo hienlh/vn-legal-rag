@@ -1,0 +1,46 @@
+# Common abbreviations and synonyms for education regulations (UIT/VNUHCM)
+
+abbreviations:
+  CTĐT: Chương trình đào tạo
+  ĐHQG: Đại học Quốc gia
+  ĐHQG-HCM: Đại học Quốc gia Hồ Chí Minh
+  UIT: Trường Đại học Công nghệ Thông tin
+  ĐHCNTT: Đại học Công nghệ Thông tin
+  ĐH CNTT: Đại học Công nghệ Thông tin
+  PĐT: Phòng Đào tạo
+  GVHD: Giáo viên hướng dẫn
+  GV: Giảng viên
+  HV: Học viên
+  NCS: Nghiên cứu sinh
+  TC: Tín chỉ
+  LV: Luận văn
+  ĐATN: Đề án tốt nghiệp
+  ĐTThS: Đào tạo trình độ thạc sĩ
+  ThS: Thạc sĩ
+  TS: Tiến sĩ
+  PGS: Phó Giáo sư
+  GS: Giáo sư
+  ĐVĐT: Đơn vị đào tạo
+  HĐ: Hội đồng
+  HĐBV: Hội đồng bảo vệ
+  GD&ĐT: Giáo dục và Đào tạo
+  BGDĐT: Bộ Giáo dục và Đào tạo
+  VLVH: Vừa làm vừa học
+  CQ: Chính quy
+  HP: Học phần
+  KLTN: Khóa luận tốt nghiệp
+  ĐKLV: Đề cương luận văn
+  CĐR: Chuẩn đầu ra
+  QĐ: Quyết định
+  TT: Thông tư
+
+synonyms:
+  # Academic terms
+  luận văn: [LV, luận văn thạc sĩ, LVTN]
+  giáo viên hướng dẫn: [GVHD, người hướng dẫn, thầy hướng dẫn]
+  học viên: [HV, sinh viên cao học]
+  chương trình đào tạo: [CTĐT, chương trình, CT]
+  tín chỉ: [TC, đơn vị học trình]
+  phòng đào tạo: [PĐT, phòng đào tạo sau đại học]
+  hội đồng bảo vệ: [HĐBV, hội đồng chấm luận văn, hội đồng]
+  đề cương luận văn: [ĐKLV, đề cương nghiên cứu, đề cương]

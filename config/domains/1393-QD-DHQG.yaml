@@ -1,0 +1,20 @@
+# Domain Configuration for 1393/QĐ-ĐHQG
+# Quy chế đào tạo trình độ thạc sĩ ĐHQG-HCM (khoá 2022+)
+
+_extends: _education_common.yaml
+
+abbreviations:
+  # Document-specific
+  CSĐT: Cơ sở đào tạo
+
+chapter_hints:
+  "quy định chung,phạm vi,đối tượng": "Quy định chung"
+  "chương trình đào tạo,CTĐT,tín chỉ": "Chương trình đào tạo"
+  "tuyển sinh,nhập học,điều kiện": "Tuyển sinh"
+  "tổ chức đào tạo,đăng ký,học kỳ": "Tổ chức và quản lý đào tạo"
+  "luận văn,bảo vệ,GVHD,hội đồng,đề cương": "Luận văn, đề án tốt nghiệp"
+  "tốt nghiệp,cấp bằng,điều kiện tốt nghiệp": "Tốt nghiệp và cấp bằng"
+  "thanh tra,kiểm tra,khiếu nại": "Thanh tra, kiểm tra"
+
+article_selection_examples: []
+chapter_selection_examples: []
