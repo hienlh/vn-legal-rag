@@ -19,7 +19,13 @@ general_provision_trigger_patterns:
 
 synonyms: {}
 
-article_penalties: {}
+article_penalties:
+  generic:
+    multiplier: 0.2
+    articles: [1, 2]
+  noise:
+    multiplier: 0.35
+    articles: [8, 15, 63, 76]
 
 article_selection_examples: []
 chapter_selection_examples: []

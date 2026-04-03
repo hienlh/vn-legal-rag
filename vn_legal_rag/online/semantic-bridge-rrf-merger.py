@@ -97,23 +97,43 @@ class SemanticBridge:
         if not dual_result or not dual_result.articles:
             return self._merge_tree_and_kg(tree_result, kg_results)
 
-        # RRF weights: tree is primary signal, KG expansion supplements
+        # Pre-scan tree article IDs for dynamic weight adjustment
+        tree_article_ids: Set[str] = set()
+        for node in tree_result.target_nodes:
+            tree_article_ids.add(node.node_id)
+
+        # Dynamic tree weight: when tree returns mostly general provision
+        # articles (penalty <= 0.25), tree navigation likely failed.
+        # Reduce tree weight and boost KG to let relation-based results
+        # compete for top-10 slots.
         source_weights = {
             "tree": 1.4,
             "dual": 0.7,
             "kg": 1.0,
         }
+        if tree_article_ids and self._penalty_config:
+            generic_count = sum(
+                1 for aid in tree_article_ids
+                if self._get_article_penalty(aid) <= 0.25
+            )
+            generic_ratio = generic_count / len(tree_article_ids)
+            if generic_ratio >= 0.5:
+                source_weights["tree"] = 0.7
+                source_weights["kg"] = 1.3
+                logger.info(
+                    f"Dynamic weight: tree→0.7, kg→1.3 "
+                    f"(generic_ratio={generic_ratio:.2f}, "
+                    f"{generic_count}/{len(tree_article_ids)} generic)"
+                )
 
         rrf_scores: Dict[str, float] = {}
         article_data: Dict[str, Dict] = {}
-        tree_article_ids: Set[str] = set()
         dual_article_ids: Set[str] = set()
 
         # 1. Process Tree results
         tree_weight = source_weights["tree"]
         for rank, node in enumerate(tree_result.target_nodes, start=1):
             article_id = node.node_id
-            tree_article_ids.add(article_id)
 
             rrf_contrib = tree_weight * self.compute_rrf_score(rank)
             rrf_scores[article_id] = rrf_scores.get(article_id, 0) + rrf_contrib
@@ -156,12 +176,15 @@ class SemanticBridge:
         # 3. Process KG results
         kg_weight = source_weights["kg"]
         kg_article_ids: Set[str] = set()
+        kg_rrf_article_ids: Set[str] = set()
         for rank, kg_ctx in enumerate(kg_results, start=1):
             kg_id = kg_ctx.get("id", f"kg-{rank}")
             rrf_contrib = kg_weight * self.compute_rrf_score(rank)
             rrf_scores[kg_id] = rrf_scores.get(kg_id, 0) + rrf_contrib
 
-            # Track KG article IDs for adjacent expansion
+            # Track KG article IDs for adjacent expansion and agreement
+            if ":d" in kg_id:
+                kg_rrf_article_ids.add(kg_id)
             meta = kg_ctx.get("metadata", {})
             sid = meta.get("source_id", "") or ""
             if sid and ":" in sid and sid.split(":")[-1].startswith("d"):
@@ -176,10 +199,24 @@ class SemanticBridge:
                     },
                 }
 
-        # 4. Apply article penalties
+        # 4. Agreement bonus: articles found by multiple retrieval tiers
+        # get a score boost, reinforcing cross-tier consensus.
+        AGREEMENT_BONUS = 0.005
+        for article_id in rrf_scores:
+            n_sources = 0
+            if article_id in tree_article_ids:
+                n_sources += 1
+            if article_id in dual_article_ids:
+                n_sources += 1
+            if article_id in kg_rrf_article_ids:
+                n_sources += 1
+            if n_sources >= 2:
+                rrf_scores[article_id] += AGREEMENT_BONUS * (n_sources - 1)
+
+        # 5. Apply article penalties
         self._apply_penalties(rrf_scores)
 
-        # 5. Build merged list sorted by RRF score
+        # 6. Build merged list sorted by RRF score
         merged = []
         for article_id, rrf_score in sorted(rrf_scores.items(), key=lambda x: x[1], reverse=True):
             if article_id in article_data:
@@ -192,7 +229,7 @@ class SemanticBridge:
                         "score": rrf_score,
                     })
 
-        # 6. ADJACENT ARTICLE EXPANSION (from semantica)
+        # 7. ADJACENT ARTICLE EXPANSION (from semantica)
         # Close-miss pattern: failures have tree within ±3 of correct answer
         # Union all source IDs for expansion seeds
         adjacent_results = []
@@ -214,13 +251,13 @@ class SemanticBridge:
                 )
                 merged.extend(adjacent_results)
 
-        # 7. Sort by score descending
+        # 8. Sort by score descending
         merged.sort(key=lambda x: x.get("score", 0), reverse=True)
 
-        # 8. Deduplication (after sort to keep higher-scored version)
+        # 9. Deduplication (after sort to keep higher-scored version)
         merged = self._deduplicate_results(merged)
 
-        # 9. RRF threshold filtering
+        # 10. RRF threshold filtering
         # Filter out results with very low RRF scores
         MIN_RRF_THRESHOLD = 0.005
         before_filter = len(merged)

@@ -359,13 +359,28 @@ class LegalGraphRAG:
 
         # Step 4: KG relation expansion (cross-chapter coverage)
         # Produces kg_results for RRF scoring in the merger
+        # Seeds from BOTH tree articles AND top DualLevel articles
         kg_results = []
-        if cfg.enable_kg_expansion and tree_result and tree_result.target_nodes:
-            tree_article_ids = [node.node_id for node in tree_result.target_nodes]
-            expanded_ids = self._expand_via_kg_relations(tree_article_ids, query)
+        seed_article_ids = []
+        if tree_result and tree_result.target_nodes:
+            seed_article_ids = [node.node_id for node in tree_result.target_nodes]
+
+        # Add top DualLevel articles as additional KG seeds
+        if dual_result and dual_result.final_scores:
+            dual_sorted = sorted(
+                dual_result.final_scores.items(),
+                key=lambda x: x[1],
+                reverse=True,
+            )
+            for aid, score in dual_sorted[:5]:
+                if aid not in seed_article_ids:
+                    seed_article_ids.append(aid)
+
+        if cfg.enable_kg_expansion and seed_article_ids:
+            expanded_ids = self._expand_via_kg_relations(seed_article_ids, query)
 
             # Build scored kg_results for RRF merger (not just context text)
-            new_article_ids = set(expanded_ids) - set(tree_article_ids)
+            new_article_ids = set(expanded_ids) - set(seed_article_ids)
             for article_id in list(new_article_ids)[:5]:
                 article_text = self._get_article_text_by_source_id(article_id)
                 if article_text:
@@ -526,6 +541,34 @@ class LegalGraphRAG:
         except Exception:
             return source_id
 
+    # IRAC intent-specific hints for answer generation
+    _INTENT_SECTIONS = {
+        QueryIntent.PENALTY: (
+            "LƯU Ý: Đây là câu hỏi về MỨC PHẠT/CHẾ TÀI. "
+            "Phần căn cứ pháp luật cần nêu rõ mức phạt cụ thể (tiền, tước GPLX, tịch thu, etc.) "
+            "tại Điều/Khoản/Điểm nào. Phần phân tích cần chỉ rõ hành vi vi phạm thuộc mức phạt nào và tại sao."
+        ),
+        QueryIntent.DEFINITION: (
+            "LƯU Ý: Đây là câu hỏi về ĐỊNH NGHĨA/KHÁI NIỆM pháp lý. "
+            "Phần căn cứ pháp luật cần trích dẫn chính xác định nghĩa theo luật. "
+            "Phần phân tích cần giải thích rõ các yếu tố cấu thành của khái niệm."
+        ),
+        QueryIntent.PROCEDURE: (
+            "LƯU Ý: Đây là câu hỏi về THỦ TỤC/QUY TRÌNH. "
+            "Phần căn cứ pháp luật cần liệt kê các bước theo trình tự luật quy định. "
+            "Phần phân tích cần nêu rõ điều kiện, thời hạn, hồ sơ cần thiết cho từng bước."
+        ),
+        QueryIntent.REQUIREMENT: (
+            "LƯU Ý: Đây là câu hỏi về ĐIỀU KIỆN/YÊU CẦU pháp lý. "
+            "Phần căn cứ pháp luật cần liệt kê đầy đủ các điều kiện. "
+            "Phần phân tích cần chỉ rõ điều kiện nào áp dụng cho tình huống và tại sao."
+        ),
+        QueryIntent.REFERENCE: (
+            "LƯU Ý: Đây là câu hỏi TRA CỨU điều luật cụ thể. "
+            "Trích dẫn chính xác nội dung điều luật được hỏi, giải thích ý nghĩa và phạm vi áp dụng."
+        ),
+    }
+
     def _generate_response(
         self,
         query: str,
@@ -533,7 +576,10 @@ class LegalGraphRAG:
         analyzed: AnalyzedQuery,
     ) -> tuple:
         """
-        Generate response using LLM.
+        Generate IRAC-structured response using LLM.
+
+        Uses base IRAC prompt with intent-specific hints injected
+        based on QueryIntent (PENALTY, DEFINITION, PROCEDURE, etc.).
 
         Returns:
             Tuple of (response_text, confidence)
@@ -548,23 +594,29 @@ class LegalGraphRAG:
             context_parts.append(f"[{i+1}] ({label}) {ctx['text']}" if label else f"[{i+1}] {ctx['text']}")
         context_text = "\n\n".join(context_parts)
 
-        # Build reference list for prompt
-        ref_list = "\n".join(f"[{i+1}] {lbl}" for i, lbl in enumerate(ref_labels))
+        # Build intent-specific section
+        intent_section = self._INTENT_SECTIONS.get(analyzed.intent, "")
+        intent_block = f"\n{intent_section}\n" if intent_section else ""
 
-        prompt = f"""Bạn là luật sư tư vấn pháp luật Việt Nam.
+        prompt = f"""Bạn là luật sư tư vấn pháp luật Việt Nam. Trả lời câu hỏi theo phương pháp phân tích pháp lý IRAC.
 
 CÂU HỎI: {query}
 
 TÀI LIỆU THAM KHẢO:
 {context_text}
+{intent_block}
+HƯỚNG DẪN TRẢ LỜI:
+Viết câu trả lời tự nhiên như luật sư tư vấn, theo flow sau:
 
-HƯỚNG DẪN:
-1. Đọc kỹ tất cả tài liệu trên. Chọn ra những điều luật LIÊN QUAN đến câu hỏi, bỏ qua những điều không liên quan.
-2. Dùng những điều luật liên quan để trả lời. Chỉ cần MỘT điều luật liên quan là đủ để trả lời.
-3. Trả lời tự nhiên như luật sư, KHÔNG nhắc đến "tài liệu tham khảo" hay "tài liệu được cung cấp".
-4. Trích dẫn: "Căn cứ vào Điều X [Tên văn bản]" (VD: "Căn cứ vào Điều 206 Luật Doanh nghiệp 2020").
-5. Cuối câu trả lời ghi "Căn cứ pháp lý:" liệt kê các điều đã dùng.
-6. CHỈ nói "Xin lỗi, tôi không tìm thấy quy định pháp luật liên quan" khi KHÔNG CÓ BẤT KỲ điều luật nào liên quan.
+1. Xác định vấn đề pháp lý cần giải quyết trong câu hỏi.
+2. Nêu căn cứ pháp luật: trích dẫn chính xác Điều, Khoản, Điểm của văn bản pháp luật liên quan. Format: "Căn cứ Điều X Khoản Y [Tên văn bản]".
+3. Phân tích áp dụng: giải thích cụ thể điều luật áp dụng vào tình huống trong câu hỏi như thế nào, chỉ ra mối liên hệ giữa quy định và tình huống thực tế.
+4. Kết luận dứt khoát, trả lời trực tiếp câu hỏi. Không lập lờ "tùy trường hợp" trừ khi thật sự cần thiết.
+
+QUY TẮC:
+- KHÔNG nhắc "tài liệu tham khảo" hay "tài liệu được cung cấp".
+- Cuối câu trả lời ghi "Căn cứ pháp lý:" liệt kê các điều đã dùng.
+- CHỈ nói "Xin lỗi, tôi không tìm thấy quy định pháp luật liên quan" khi KHÔNG CÓ BẤT KỲ điều luật nào liên quan.
 
 Trả lời:"""
 

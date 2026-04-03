@@ -74,10 +74,15 @@ class LLMProvider:
         elif self.provider == "anthropic":
             try:
                 from anthropic import Anthropic
-                api_key = self.config.get("api_key") or os.getenv("ANTHROPIC_API_KEY")
-                # When using proxy, allow dummy API key (proxy handles auth)
-                if base_url and not api_key:
-                    api_key = "dummy"
+                api_key = self.config.get("api_key") or os.getenv("ANTHROPIC_API_KEY") or None
+                auth_token = os.getenv("ANTHROPIC_AUTH_TOKEN") or None
+                # When using proxy, set dummy keys to avoid empty-string header errors
+                if base_url:
+                    if not api_key:
+                        api_key = "proxy-key"
+                    if not auth_token:
+                        # Prevent SDK from sending "Authorization: Bearer " with empty token
+                        os.environ.pop("ANTHROPIC_AUTH_TOKEN", None)
                 client_kwargs = {"api_key": api_key}
                 if base_url:
                     client_kwargs["base_url"] = base_url

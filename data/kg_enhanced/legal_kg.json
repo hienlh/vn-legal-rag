@@ -203332,6 +203332,1158 @@
       "description": "(reverse) Hợp nhất DN → CTTNHH 1TV",
       "confidence": 0.95,
       "weight": 1.0
+    },
+    {
+      "source": "168-2024-ND-CP:d7",
+      "target": "168-2024-ND-CP:d47",
+      "type": "REFERENCES",
+      "description": "Phạt xe máy → tạm giữ phương tiện vi phạm",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "168-2024-ND-CP:d47",
+      "target": "168-2024-ND-CP:d7",
+      "type": "REFERENCES",
+      "description": "Phạt xe máy → tạm giữ phương tiện vi phạm",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "168-2024-ND-CP:d7",
+      "target": "168-2024-ND-CP:d5",
+      "type": "REFERENCES",
+      "description": "Phạt xe máy → phạt xe đạp/người đi bộ",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "168-2024-ND-CP:d5",
+      "target": "168-2024-ND-CP:d7",
+      "type": "REFERENCES",
+      "description": "Phạt xe máy → phạt xe đạp/người đi bộ",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "168-2024-ND-CP:d7",
+      "target": "168-2024-ND-CP:d48",
+      "type": "REFERENCES",
+      "description": "Phạt xe máy → trả lại GPLX/phương tiện",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "168-2024-ND-CP:d48",
+      "target": "168-2024-ND-CP:d7",
+      "type": "REFERENCES",
+      "description": "Phạt xe máy → trả lại GPLX/phương tiện",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "168-2024-ND-CP:d7",
+      "target": "168-2024-ND-CP:d32",
+      "type": "REFERENCES",
+      "description": "Phạt xe máy → phạt sang tên/đăng ký xe",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "168-2024-ND-CP:d32",
+      "target": "168-2024-ND-CP:d7",
+      "type": "REFERENCES",
+      "description": "Phạt xe máy → phạt sang tên/đăng ký xe",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "168-2024-ND-CP:d7",
+      "target": "168-2024-ND-CP:d14",
+      "type": "REFERENCES",
+      "description": "Phạt xe máy → phạt hành khách/người ngồi trên xe",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "168-2024-ND-CP:d14",
+      "target": "168-2024-ND-CP:d7",
+      "type": "REFERENCES",
+      "description": "Phạt xe máy → phạt hành khách/người ngồi trên xe",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "168-2024-ND-CP:d7",
+      "target": "168-2024-ND-CP:d18",
+      "type": "REFERENCES",
+      "description": "Phạt xe máy → phạt không có GPLX",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "168-2024-ND-CP:d18",
+      "target": "168-2024-ND-CP:d7",
+      "type": "REFERENCES",
+      "description": "Phạt xe máy → phạt không có GPLX",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "168-2024-ND-CP:d7",
+      "target": "36-2024-QH15:d11",
+      "type": "REFERENCES",
+      "description": "Phạt xe máy → tín hiệu đèn giao thông",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "36-2024-QH15:d11",
+      "target": "168-2024-ND-CP:d7",
+      "type": "REFERENCES",
+      "description": "Phạt xe máy → tín hiệu đèn giao thông",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "168-2024-ND-CP:d7",
+      "target": "36-2024-QH15:d9",
+      "type": "REFERENCES",
+      "description": "Phạt xe máy → điều kiện người lái xe",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "36-2024-QH15:d9",
+      "target": "168-2024-ND-CP:d7",
+      "type": "REFERENCES",
+      "description": "Phạt xe máy → điều kiện người lái xe",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "168-2024-ND-CP:d7",
+      "target": "36-2024-QH15:d67",
+      "type": "REFERENCES",
+      "description": "Phạt xe máy → đăng kiểm phương tiện",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "36-2024-QH15:d67",
+      "target": "168-2024-ND-CP:d7",
+      "type": "REFERENCES",
+      "description": "Phạt xe máy → đăng kiểm phương tiện",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "168-2024-ND-CP:d7",
+      "target": "36-2024-QH15:d42",
+      "type": "REFERENCES",
+      "description": "Phạt xe máy → quyền chủ phương tiện",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "36-2024-QH15:d42",
+      "target": "168-2024-ND-CP:d7",
+      "type": "REFERENCES",
+      "description": "Phạt xe máy → quyền chủ phương tiện",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "168-2024-ND-CP:d7",
+      "target": "36-2024-QH15:d18",
+      "type": "REFERENCES",
+      "description": "Phạt xe máy → quyền/nghĩa vụ người lái xe",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "36-2024-QH15:d18",
+      "target": "168-2024-ND-CP:d7",
+      "type": "REFERENCES",
+      "description": "Phạt xe máy → quyền/nghĩa vụ người lái xe",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "168-2024-ND-CP:d7",
+      "target": "36-2024-QH15:d13",
+      "type": "REFERENCES",
+      "description": "Phạt xe máy → quy tắc giao thông đường bộ",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "36-2024-QH15:d13",
+      "target": "168-2024-ND-CP:d7",
+      "type": "REFERENCES",
+      "description": "Phạt xe máy → quy tắc giao thông đường bộ",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "168-2024-ND-CP:d8",
+      "target": "168-2024-ND-CP:d47",
+      "type": "REFERENCES",
+      "description": "Phạt xe thô sơ → tạm giữ phương tiện",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "168-2024-ND-CP:d47",
+      "target": "168-2024-ND-CP:d8",
+      "type": "REFERENCES",
+      "description": "Phạt xe thô sơ → tạm giữ phương tiện",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "168-2024-ND-CP:d8",
+      "target": "168-2024-ND-CP:d6",
+      "type": "REFERENCES",
+      "description": "Phạt xe thô sơ → phạt xe ô tô",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "168-2024-ND-CP:d6",
+      "target": "168-2024-ND-CP:d8",
+      "type": "REFERENCES",
+      "description": "Phạt xe thô sơ → phạt xe ô tô",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "168-2024-ND-CP:d8",
+      "target": "168-2024-ND-CP:d5",
+      "type": "REFERENCES",
+      "description": "Phạt xe thô sơ → phạt xe đạp/người đi bộ",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "168-2024-ND-CP:d5",
+      "target": "168-2024-ND-CP:d8",
+      "type": "REFERENCES",
+      "description": "Phạt xe thô sơ → phạt xe đạp/người đi bộ",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "168-2024-ND-CP:d8",
+      "target": "36-2024-QH15:d11",
+      "type": "REFERENCES",
+      "description": "Phạt xe thô sơ → tín hiệu đèn giao thông",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "36-2024-QH15:d11",
+      "target": "168-2024-ND-CP:d8",
+      "type": "REFERENCES",
+      "description": "Phạt xe thô sơ → tín hiệu đèn giao thông",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "168-2024-ND-CP:d8",
+      "target": "36-2024-QH15:d9",
+      "type": "REFERENCES",
+      "description": "Phạt xe thô sơ → điều kiện lái xe",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "36-2024-QH15:d9",
+      "target": "168-2024-ND-CP:d8",
+      "type": "REFERENCES",
+      "description": "Phạt xe thô sơ → điều kiện lái xe",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "168-2024-ND-CP:d8",
+      "target": "36-2024-QH15:d67",
+      "type": "REFERENCES",
+      "description": "Phạt xe thô sơ → đăng kiểm phương tiện",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "36-2024-QH15:d67",
+      "target": "168-2024-ND-CP:d8",
+      "type": "REFERENCES",
+      "description": "Phạt xe thô sơ → đăng kiểm phương tiện",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "168-2024-ND-CP:d6",
+      "target": "168-2024-ND-CP:d47",
+      "type": "REFERENCES",
+      "description": "Phạt xe ô tô → tạm giữ phương tiện",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "168-2024-ND-CP:d47",
+      "target": "168-2024-ND-CP:d6",
+      "type": "REFERENCES",
+      "description": "Phạt xe ô tô → tạm giữ phương tiện",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "168-2024-ND-CP:d6",
+      "target": "168-2024-ND-CP:d48",
+      "type": "REFERENCES",
+      "description": "Phạt xe ô tô → trả lại GPLX/phương tiện",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "168-2024-ND-CP:d48",
+      "target": "168-2024-ND-CP:d6",
+      "type": "REFERENCES",
+      "description": "Phạt xe ô tô → trả lại GPLX/phương tiện",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "168-2024-ND-CP:d6",
+      "target": "168-2024-ND-CP:d5",
+      "type": "REFERENCES",
+      "description": "Phạt xe ô tô → phạt xe đạp/người đi bộ",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "168-2024-ND-CP:d5",
+      "target": "168-2024-ND-CP:d6",
+      "type": "REFERENCES",
+      "description": "Phạt xe ô tô → phạt xe đạp/người đi bộ",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "168-2024-ND-CP:d6",
+      "target": "36-2024-QH15:d11",
+      "type": "REFERENCES",
+      "description": "Phạt xe ô tô → tín hiệu đèn giao thông",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "36-2024-QH15:d11",
+      "target": "168-2024-ND-CP:d6",
+      "type": "REFERENCES",
+      "description": "Phạt xe ô tô → tín hiệu đèn giao thông",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "168-2024-ND-CP:d6",
+      "target": "36-2024-QH15:d9",
+      "type": "REFERENCES",
+      "description": "Phạt xe ô tô → điều kiện lái xe",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "36-2024-QH15:d9",
+      "target": "168-2024-ND-CP:d6",
+      "type": "REFERENCES",
+      "description": "Phạt xe ô tô → điều kiện lái xe",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "168-2024-ND-CP:d6",
+      "target": "36-2024-QH15:d67",
+      "type": "REFERENCES",
+      "description": "Phạt xe ô tô → đăng kiểm phương tiện",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "36-2024-QH15:d67",
+      "target": "168-2024-ND-CP:d6",
+      "type": "REFERENCES",
+      "description": "Phạt xe ô tô → đăng kiểm phương tiện",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "168-2024-ND-CP:d5",
+      "target": "168-2024-ND-CP:d47",
+      "type": "REFERENCES",
+      "description": "Phạt xe đạp/người đi bộ → tạm giữ phương tiện",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "168-2024-ND-CP:d47",
+      "target": "168-2024-ND-CP:d5",
+      "type": "REFERENCES",
+      "description": "Phạt xe đạp/người đi bộ → tạm giữ phương tiện",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "168-2024-ND-CP:d5",
+      "target": "168-2024-ND-CP:d48",
+      "type": "REFERENCES",
+      "description": "Phạt xe đạp/người đi bộ → trả lại GPLX/phương tiện",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "168-2024-ND-CP:d48",
+      "target": "168-2024-ND-CP:d5",
+      "type": "REFERENCES",
+      "description": "Phạt xe đạp/người đi bộ → trả lại GPLX/phương tiện",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "168-2024-ND-CP:d41",
+      "target": "168-2024-ND-CP:d47",
+      "type": "REFERENCES",
+      "description": "Thẩm quyền CSGT cấp huyện → tạm giữ phương tiện",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "168-2024-ND-CP:d47",
+      "target": "168-2024-ND-CP:d41",
+      "type": "REFERENCES",
+      "description": "Thẩm quyền CSGT cấp huyện → tạm giữ phương tiện",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "168-2024-ND-CP:d42",
+      "target": "168-2024-ND-CP:d47",
+      "type": "REFERENCES",
+      "description": "Thẩm quyền CSGT cấp tỉnh → tạm giữ phương tiện",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "168-2024-ND-CP:d47",
+      "target": "168-2024-ND-CP:d42",
+      "type": "REFERENCES",
+      "description": "Thẩm quyền CSGT cấp tỉnh → tạm giữ phương tiện",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "168-2024-ND-CP:d43",
+      "target": "168-2024-ND-CP:d47",
+      "type": "REFERENCES",
+      "description": "Thẩm quyền Chủ tịch UBND → tạm giữ phương tiện",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "168-2024-ND-CP:d47",
+      "target": "168-2024-ND-CP:d43",
+      "type": "REFERENCES",
+      "description": "Thẩm quyền Chủ tịch UBND → tạm giữ phương tiện",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "168-2024-ND-CP:d41",
+      "target": "168-2024-ND-CP:d48",
+      "type": "REFERENCES",
+      "description": "Thẩm quyền CSGT cấp huyện → trả lại GPLX",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "168-2024-ND-CP:d48",
+      "target": "168-2024-ND-CP:d41",
+      "type": "REFERENCES",
+      "description": "Thẩm quyền CSGT cấp huyện → trả lại GPLX",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "168-2024-ND-CP:d42",
+      "target": "168-2024-ND-CP:d48",
+      "type": "REFERENCES",
+      "description": "Thẩm quyền CSGT cấp tỉnh → trả lại GPLX",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "168-2024-ND-CP:d48",
+      "target": "168-2024-ND-CP:d42",
+      "type": "REFERENCES",
+      "description": "Thẩm quyền CSGT cấp tỉnh → trả lại GPLX",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "168-2024-ND-CP:d43",
+      "target": "168-2024-ND-CP:d48",
+      "type": "REFERENCES",
+      "description": "Thẩm quyền Chủ tịch UBND → trả lại GPLX",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "168-2024-ND-CP:d48",
+      "target": "168-2024-ND-CP:d43",
+      "type": "REFERENCES",
+      "description": "Thẩm quyền Chủ tịch UBND → trả lại GPLX",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "168-2024-ND-CP:d46",
+      "target": "168-2024-ND-CP:d48",
+      "type": "REFERENCES",
+      "description": "Biên bản vi phạm → trả lại GPLX/phương tiện",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "168-2024-ND-CP:d48",
+      "target": "168-2024-ND-CP:d46",
+      "type": "REFERENCES",
+      "description": "Biên bản vi phạm → trả lại GPLX/phương tiện",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "168-2024-ND-CP:d6",
+      "target": "36-2024-QH15:d36",
+      "type": "REFERENCES",
+      "description": "Phạt ô tô → đăng ký phương tiện",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "36-2024-QH15:d36",
+      "target": "168-2024-ND-CP:d6",
+      "type": "REFERENCES",
+      "description": "Phạt ô tô → đăng ký phương tiện",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "168-2024-ND-CP:d7",
+      "target": "36-2024-QH15:d36",
+      "type": "REFERENCES",
+      "description": "Phạt xe máy → đăng ký phương tiện",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "36-2024-QH15:d36",
+      "target": "168-2024-ND-CP:d7",
+      "type": "REFERENCES",
+      "description": "Phạt xe máy → đăng ký phương tiện",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "168-2024-ND-CP:d32",
+      "target": "36-2024-QH15:d36",
+      "type": "REFERENCES",
+      "description": "Phạt sang tên xe → đăng ký phương tiện",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "36-2024-QH15:d36",
+      "target": "168-2024-ND-CP:d32",
+      "type": "REFERENCES",
+      "description": "Phạt sang tên xe → đăng ký phương tiện",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "168-2024-ND-CP:d32",
+      "target": "36-2024-QH15:d42",
+      "type": "REFERENCES",
+      "description": "Phạt sang tên xe → quyền chủ phương tiện",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "36-2024-QH15:d42",
+      "target": "168-2024-ND-CP:d32",
+      "type": "REFERENCES",
+      "description": "Phạt sang tên xe → quyền chủ phương tiện",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "168-2024-ND-CP:d32",
+      "target": "36-2024-QH15:d43",
+      "type": "REFERENCES",
+      "description": "Phạt sang tên xe → nghĩa vụ chủ phương tiện",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "36-2024-QH15:d43",
+      "target": "168-2024-ND-CP:d32",
+      "type": "REFERENCES",
+      "description": "Phạt sang tên xe → nghĩa vụ chủ phương tiện",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "168-2024-ND-CP:d14",
+      "target": "36-2024-QH15:d18",
+      "type": "REFERENCES",
+      "description": "Phạt hành khách → quyền/nghĩa vụ hành khách",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "36-2024-QH15:d18",
+      "target": "168-2024-ND-CP:d14",
+      "type": "REFERENCES",
+      "description": "Phạt hành khách → quyền/nghĩa vụ hành khách",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "168-2024-ND-CP:d47",
+      "target": "36-2024-QH15:d62",
+      "type": "REFERENCES",
+      "description": "Tạm giữ phương tiện → tạm giữ (luật)",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "36-2024-QH15:d62",
+      "target": "168-2024-ND-CP:d47",
+      "type": "REFERENCES",
+      "description": "Tạm giữ phương tiện → tạm giữ (luật)",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "168-2024-ND-CP:d18",
+      "target": "36-2024-QH15:d9",
+      "type": "REFERENCES",
+      "description": "Phạt không GPLX → điều kiện lái xe",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "36-2024-QH15:d9",
+      "target": "168-2024-ND-CP:d18",
+      "type": "REFERENCES",
+      "description": "Phạt không GPLX → điều kiện lái xe",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "36-2024-QH15:d25",
+      "target": "36-2024-QH15:d11",
+      "type": "REFERENCES",
+      "description": "Quy tắc giao thông → tín hiệu đèn",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "36-2024-QH15:d11",
+      "target": "36-2024-QH15:d25",
+      "type": "REFERENCES",
+      "description": "Quy tắc giao thông → tín hiệu đèn",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "36-2024-QH15:d24",
+      "target": "36-2024-QH15:d11",
+      "type": "REFERENCES",
+      "description": "Quy tắc xe cơ giới → tín hiệu đèn",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "36-2024-QH15:d11",
+      "target": "36-2024-QH15:d24",
+      "type": "REFERENCES",
+      "description": "Quy tắc xe cơ giới → tín hiệu đèn",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "36-2024-QH15:d39",
+      "target": "36-2024-QH15:d36",
+      "type": "REFERENCES",
+      "description": "Đăng ký xe mô tô → đăng ký phương tiện chung",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "36-2024-QH15:d36",
+      "target": "36-2024-QH15:d39",
+      "type": "REFERENCES",
+      "description": "Đăng ký xe mô tô → đăng ký phương tiện chung",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "36-2024-QH15:d42",
+      "target": "36-2024-QH15:d43",
+      "type": "REFERENCES",
+      "description": "Quyền chủ PT → nghĩa vụ chủ PT",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "36-2024-QH15:d43",
+      "target": "36-2024-QH15:d42",
+      "type": "REFERENCES",
+      "description": "Quyền chủ PT → nghĩa vụ chủ PT",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "36-2024-QH15:d56",
+      "target": "36-2024-QH15:d67",
+      "type": "REFERENCES",
+      "description": "GPLX → đăng kiểm phương tiện",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "36-2024-QH15:d67",
+      "target": "36-2024-QH15:d56",
+      "type": "REFERENCES",
+      "description": "GPLX → đăng kiểm phương tiện",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "36-2024-QH15:d56",
+      "target": "36-2024-QH15:d9",
+      "type": "REFERENCES",
+      "description": "GPLX → điều kiện lái xe",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "36-2024-QH15:d9",
+      "target": "36-2024-QH15:d56",
+      "type": "REFERENCES",
+      "description": "GPLX → điều kiện lái xe",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "36-2024-QH15:d36",
+      "target": "36-2024-QH15:d67",
+      "type": "REFERENCES",
+      "description": "Đăng ký PT → đăng kiểm PT",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "36-2024-QH15:d67",
+      "target": "36-2024-QH15:d36",
+      "type": "REFERENCES",
+      "description": "Đăng ký PT → đăng kiểm PT",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "36-2024-QH15:d12",
+      "target": "36-2024-QH15:d11",
+      "type": "REFERENCES",
+      "description": "Biển báo → tín hiệu đèn",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "36-2024-QH15:d11",
+      "target": "36-2024-QH15:d12",
+      "type": "REFERENCES",
+      "description": "Biển báo → tín hiệu đèn",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "100-2019-ND-CP:d5",
+      "target": "168-2024-ND-CP:d5",
+      "type": "REFERENCES",
+      "description": "NĐ100-2019 phạt xe đạp cũ → NĐ168-2024 mới",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "168-2024-ND-CP:d5",
+      "target": "100-2019-ND-CP:d5",
+      "type": "REFERENCES",
+      "description": "NĐ100-2019 phạt xe đạp cũ → NĐ168-2024 mới",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "100-2019-ND-CP:d6",
+      "target": "168-2024-ND-CP:d6",
+      "type": "REFERENCES",
+      "description": "NĐ100-2019 phạt ô tô cũ → NĐ168-2024 mới",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "168-2024-ND-CP:d6",
+      "target": "100-2019-ND-CP:d6",
+      "type": "REFERENCES",
+      "description": "NĐ100-2019 phạt ô tô cũ → NĐ168-2024 mới",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "100-2019-ND-CP:d6",
+      "target": "168-2024-ND-CP:d7",
+      "type": "REFERENCES",
+      "description": "NĐ100-2019 phạt ô tô/xe máy cũ → NĐ168-2024 xe máy mới",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "168-2024-ND-CP:d7",
+      "target": "100-2019-ND-CP:d6",
+      "type": "REFERENCES",
+      "description": "NĐ100-2019 phạt ô tô/xe máy cũ → NĐ168-2024 xe máy mới",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "100-2019-ND-CP:d8",
+      "target": "168-2024-ND-CP:d8",
+      "type": "REFERENCES",
+      "description": "NĐ100-2019 phạt xe thô sơ cũ → NĐ168-2024 mới",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "168-2024-ND-CP:d8",
+      "target": "100-2019-ND-CP:d8",
+      "type": "REFERENCES",
+      "description": "NĐ100-2019 phạt xe thô sơ cũ → NĐ168-2024 mới",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "100-2019-ND-CP:d74",
+      "target": "168-2024-ND-CP:d41",
+      "type": "REFERENCES",
+      "description": "NĐ100-2019 thẩm quyền cũ → NĐ168-2024 mới",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "168-2024-ND-CP:d41",
+      "target": "100-2019-ND-CP:d74",
+      "type": "REFERENCES",
+      "description": "NĐ100-2019 thẩm quyền cũ → NĐ168-2024 mới",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "100-2019-ND-CP:d75",
+      "target": "168-2024-ND-CP:d42",
+      "type": "REFERENCES",
+      "description": "NĐ100-2019 thẩm quyền cũ → NĐ168-2024 mới",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "168-2024-ND-CP:d42",
+      "target": "100-2019-ND-CP:d75",
+      "type": "REFERENCES",
+      "description": "NĐ100-2019 thẩm quyền cũ → NĐ168-2024 mới",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "100-2019-ND-CP:d76",
+      "target": "168-2024-ND-CP:d43",
+      "type": "REFERENCES",
+      "description": "NĐ100-2019 thẩm quyền cũ → NĐ168-2024 mới",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "168-2024-ND-CP:d43",
+      "target": "100-2019-ND-CP:d76",
+      "type": "REFERENCES",
+      "description": "NĐ100-2019 thẩm quyền cũ → NĐ168-2024 mới",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "100-2019-ND-CP:d80",
+      "target": "168-2024-ND-CP:d47",
+      "type": "REFERENCES",
+      "description": "NĐ100-2019 tạm giữ cũ → NĐ168-2024 mới",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "168-2024-ND-CP:d47",
+      "target": "100-2019-ND-CP:d80",
+      "type": "REFERENCES",
+      "description": "NĐ100-2019 tạm giữ cũ → NĐ168-2024 mới",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "100-2019-ND-CP:d82",
+      "target": "168-2024-ND-CP:d48",
+      "type": "REFERENCES",
+      "description": "NĐ100-2019 trả GPLX cũ → NĐ168-2024 mới",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "168-2024-ND-CP:d48",
+      "target": "100-2019-ND-CP:d82",
+      "type": "REFERENCES",
+      "description": "NĐ100-2019 trả GPLX cũ → NĐ168-2024 mới",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "100-2019-ND-CP:d63",
+      "target": "168-2024-ND-CP:d32",
+      "type": "REFERENCES",
+      "description": "NĐ100-2019 sang tên xe cũ → NĐ168-2024 mới",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "168-2024-ND-CP:d32",
+      "target": "100-2019-ND-CP:d63",
+      "type": "REFERENCES",
+      "description": "NĐ100-2019 sang tên xe cũ → NĐ168-2024 mới",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "100-2019-ND-CP:d16",
+      "target": "168-2024-ND-CP:d14",
+      "type": "REFERENCES",
+      "description": "NĐ100-2019 phạt hành khách cũ → NĐ168-2024 mới",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "168-2024-ND-CP:d14",
+      "target": "100-2019-ND-CP:d16",
+      "type": "REFERENCES",
+      "description": "NĐ100-2019 phạt hành khách cũ → NĐ168-2024 mới",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "100-2019-ND-CP:d15",
+      "target": "168-2024-ND-CP:d13",
+      "type": "REFERENCES",
+      "description": "NĐ100-2019 phạt xe tải cũ → NĐ168-2024 mới",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "168-2024-ND-CP:d13",
+      "target": "100-2019-ND-CP:d15",
+      "type": "REFERENCES",
+      "description": "NĐ100-2019 phạt xe tải cũ → NĐ168-2024 mới",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "100-2019-ND-CP:d6",
+      "target": "36-2024-QH15:d11",
+      "type": "REFERENCES",
+      "description": "NĐ100-2019 phạt ô tô → tín hiệu đèn GT",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "36-2024-QH15:d11",
+      "target": "100-2019-ND-CP:d6",
+      "type": "REFERENCES",
+      "description": "NĐ100-2019 phạt ô tô → tín hiệu đèn GT",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "100-2019-ND-CP:d6",
+      "target": "36-2024-QH15:d9",
+      "type": "REFERENCES",
+      "description": "NĐ100-2019 phạt ô tô → điều kiện lái xe",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "36-2024-QH15:d9",
+      "target": "100-2019-ND-CP:d6",
+      "type": "REFERENCES",
+      "description": "NĐ100-2019 phạt ô tô → điều kiện lái xe",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "100-2019-ND-CP:d56",
+      "target": "36-2024-QH15:d13",
+      "type": "REFERENCES",
+      "description": "NĐ100-2019 quy tắc GT → quy tắc GT đường bộ",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "36-2024-QH15:d13",
+      "target": "100-2019-ND-CP:d56",
+      "type": "REFERENCES",
+      "description": "NĐ100-2019 quy tắc GT → quy tắc GT đường bộ",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "59-2020-QH14:d29",
+      "target": "59-2020-QH14:d30",
+      "type": "REFERENCES",
+      "description": "Nội dung GCNĐKDN → ĐKKD thành lập DN",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "59-2020-QH14:d30",
+      "target": "59-2020-QH14:d29",
+      "type": "REFERENCES",
+      "description": "Nội dung GCNĐKDN → ĐKKD thành lập DN",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "59-2020-QH14:d46",
+      "target": "59-2020-QH14:d45",
+      "type": "REFERENCES",
+      "description": "Cơ cấu tổ chức TNHH 2TV → chi nhánh/VPĐD",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "59-2020-QH14:d45",
+      "target": "59-2020-QH14:d46",
+      "type": "REFERENCES",
+      "description": "Cơ cấu tổ chức TNHH 2TV → chi nhánh/VPĐD",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "59-2020-QH14:d47",
+      "target": "59-2020-QH14:d45",
+      "type": "REFERENCES",
+      "description": "Hội đồng thành viên → chi nhánh/VPĐD",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "59-2020-QH14:d45",
+      "target": "59-2020-QH14:d47",
+      "type": "REFERENCES",
+      "description": "Hội đồng thành viên → chi nhánh/VPĐD",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "168-2025-ND:d24",
+      "target": "59-2020-QH14:d28",
+      "type": "REFERENCES",
+      "description": "NĐ168-2025 hồ sơ ĐKKD → cấp GCNĐKDN",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "59-2020-QH14:d28",
+      "target": "168-2025-ND:d24",
+      "type": "REFERENCES",
+      "description": "NĐ168-2025 hồ sơ ĐKKD → cấp GCNĐKDN",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "168-2025-ND:d33",
+      "target": "59-2020-QH14:d28",
+      "type": "REFERENCES",
+      "description": "NĐ168-2025 thay đổi ĐKKD → cấp GCNĐKDN",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "59-2020-QH14:d28",
+      "target": "168-2025-ND:d33",
+      "type": "REFERENCES",
+      "description": "NĐ168-2025 thay đổi ĐKKD → cấp GCNĐKDN",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "59-2020-QH14:d30",
+      "target": "168-2025-ND:d49",
+      "type": "REFERENCES",
+      "description": "NĐ168-2025 ĐKKD online → ĐKKD thành lập",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "59-2020-QH14:d30",
+      "target": "01-2021-ND:d56",
+      "type": "REFERENCES",
+      "description": "NĐ01-2021 hồ sơ TNHH → ĐKKD thành lập",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "59-2020-QH14:d31",
+      "target": "01-2021-ND:d56",
+      "type": "REFERENCES",
+      "description": "NĐ01-2021 hồ sơ TNHH → thay đổi ĐKKD",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "168-2025-ND:d60",
+      "target": "59-2020-QH14:d45",
+      "type": "REFERENCES",
+      "description": "NĐ168-2025 tạm ngừng → chi nhánh/VPĐD",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "59-2020-QH14:d45",
+      "target": "168-2025-ND:d60",
+      "type": "REFERENCES",
+      "description": "NĐ168-2025 tạm ngừng → chi nhánh/VPĐD",
+      "confidence": 0.95,
+      "weight": 1.0
+    },
+    {
+      "source": "59-2020-QH14:d206",
+      "target": "01-2021-ND:d66",
+      "type": "REFERENCES",
+      "description": "NĐ01-2021 tạm ngừng KD → tạm ngừng (LDN)",
+      "confidence": 0.95,
+      "weight": 1.0
     }
   ],
   "stats": {
@@ -203340,6 +204492,8 @@
     "entities_merged": 7764,
     "total_relations_added": 6492,
     "unique_relations": 5508,
-    "documents_processed": 840
+    "documents_processed": 840,
+    "total_relations": 5951,
+    "references_count": 393
   }
 }
