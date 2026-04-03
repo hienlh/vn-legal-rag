@@ -314,6 +314,72 @@ class KeywordRetriever:
 
 
 # ---------------------------------------------------------------------------
+# SimCSE-PhoBERT Retriever
+# ---------------------------------------------------------------------------
+
+class SimCSEPhoBERTRetriever:
+    """Semantic search using VoVanPhuc/sup-SimCSE-VietNamese-phobert-base.
+
+    PhoBERT-based sentence embedding model fine-tuned with SimCSE
+    contrastive learning for Vietnamese text.
+    """
+
+    MODEL_NAME = "VoVanPhuc/sup-SimCSE-VietNamese-phobert-base"
+
+    def __init__(self):
+        self.docs: List[ArticleDoc] = []
+        self.embeddings: Optional[np.ndarray] = None
+        self._model = None
+        self._tokenizer = None
+
+    def _init_model(self):
+        if self._model is not None:
+            return
+        from transformers import AutoModel, AutoTokenizer
+        import torch
+        self._tokenizer = AutoTokenizer.from_pretrained(self.MODEL_NAME)
+        self._model = AutoModel.from_pretrained(self.MODEL_NAME)
+        self._model.eval()
+        # Use GPU if available
+        self._device = "cuda" if torch.cuda.is_available() else "cpu"
+        self._model = self._model.to(self._device)
+
+    def _encode(self, texts: List[str], batch_size: int = 32) -> np.ndarray:
+        """Encode texts to embeddings using mean pooling."""
+        import torch
+        self._init_model()
+        all_embeddings = []
+        for i in range(0, len(texts), batch_size):
+            batch = texts[i:i + batch_size]
+            encoded = self._tokenizer(
+                batch, padding=True, truncation=True,
+                max_length=256, return_tensors="pt",
+            ).to(self._device)
+            with torch.no_grad():
+                outputs = self._model(**encoded)
+            # Mean pooling over non-padding tokens
+            mask = encoded["attention_mask"].unsqueeze(-1).float()
+            embeddings = (outputs.last_hidden_state * mask).sum(1) / mask.sum(1)
+            all_embeddings.append(embeddings.cpu().numpy())
+        return np.concatenate(all_embeddings, axis=0)
+
+    def index(self, docs: List[ArticleDoc]):
+        self.docs = docs
+        texts = [f"{doc.article_name}: {doc.content[:500]}" for doc in docs]
+        self.embeddings = self._encode(texts)
+
+    def search(self, query: str, top_k: int = 30) -> List[str]:
+        if self.embeddings is None:
+            return []
+        query_emb = self._encode([query])[0]
+        norms = np.linalg.norm(self.embeddings, axis=1)
+        query_norm = np.linalg.norm(query_emb)
+        similarities = np.dot(self.embeddings, query_emb) / (norms * query_norm + 1e-8)
+        top_indices = np.argsort(similarities)[::-1][:top_k]
+        return [self.docs[idx].article_id for idx in top_indices]
+
+
+# ---------------------------------------------------------------------------
 # Initialization helper
 # ---------------------------------------------------------------------------
 
@@ -350,5 +416,14 @@ def init_traditional_baselines(db_path: str, embedding_gen=None) -> Dict[str, ob
         retrievers["semantic"] = semantic
     else:
         print("      Skipping Semantic (no embedding provider)")
+
+    # PhoBERT-based SimCSE semantic retriever
+    print("      Indexing SimCSE-PhoBERT...")
+    simcse = SimCSEPhoBERTRetriever()
+    try:
+        simcse.index(docs)
+        retrievers["simcse_phobert"] = simcse
+    except Exception as e:
+        print(f"      ✗ SimCSE-PhoBERT failed: {e}")
 
     return retrievers

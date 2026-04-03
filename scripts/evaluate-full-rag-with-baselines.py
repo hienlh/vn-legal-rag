@@ -73,7 +73,7 @@ logger = logging.getLogger(__name__)
 DEFAULT_ABLATIONS = []
 
 # Traditional baselines to run real-time
-TRADITIONAL_BASELINES = ["bm25", "tfidf", "semantic", "keyword"]
+TRADITIONAL_BASELINES = ["bm25", "tfidf", "semantic", "simcse_phobert", "keyword"]
 
 K_VALUES = [1, 3, 5, 10, 20, 30]
 
@@ -497,6 +497,122 @@ def process_question(
 
 
 # ---------------------------------------------------------------------------
+# Regen-answers mode
+# ---------------------------------------------------------------------------
+
+def _regen_answers(args):
+    """Regenerate LLM answers from existing retrieval results using engine's prompt.
+
+    Supports resume: if output file exists, skips STTs already regenerated.
+    Saves incrementally after each question for crash safety.
+    """
+    print("=" * 70)
+    print("VN LEGAL RAG — Regenerate Answers (reuse retrieval)")
+    print("=" * 70)
+
+    output_path = args.output if args.output.endswith(".json") else f"{args.output}.json"
+    os.makedirs(os.path.dirname(output_path) or ".", exist_ok=True)
+
+    # Resume: load from output if exists, otherwise from source
+    if os.path.exists(output_path) and output_path != args.regen_answers:
+        print(f"\n  Resuming from: {output_path}")
+        with open(output_path, "r", encoding="utf-8") as f:
+            data = json.load(f)
+        done_stts = set(
+            str(r["stt"]) for r in data.get("results", [])
+            if r.get("_regen_done")
+        )
+        print(f"  Already done: {len(done_stts)} questions")
+    else:
+        with open(args.regen_answers, "r", encoding="utf-8") as f:
+            data = json.load(f)
+        done_stts = set()
+
+    results = data.get("results", [])
+    print(f"  Source: {args.regen_answers} ({len(results)} results)")
+
+    # Init RAG engine (for query analyzer + _generate_response with IRAC prompt)
+    print("  Initializing RAG engine...")
+    rag, config, shared = init_rag_system(args.config)
+    db = shared["db"]
+    print("  RAG engine ready")
+
+    # Filter by --only-stt if provided
+    only_stt_set = None
+    if args.only_stt:
+        only_stt_set = set(s.strip() for s in args.only_stt.split(","))
+
+    # Collect questions to regenerate (skip already done)
+    to_regen = []
+    for r in results:
+        if r.get("skipped"):
+            continue
+        if str(r["stt"]) in done_stts:
+            continue
+        if only_stt_set and str(r["stt"]) not in only_stt_set:
+            continue
+        retrieved = r.get("full_retrieved", [])
+        if not retrieved:
+            continue
+        to_regen.append(r)
+
+    total_done = len(done_stts)
+    total_all = total_done + len(to_regen)
+    print(f"  Regenerating {len(to_regen)} questions ({total_done} already done)...\n")
+
+    def _save():
+        data["metadata"]["regen_from"] = args.regen_answers
+        data["metadata"]["regen_timestamp"] = time.strftime("%Y-%m-%d %H:%M:%S")
+        with open(output_path, "w", encoding="utf-8") as f:
+            json.dump(data, f, ensure_ascii=False, indent=2)
+
+    try:
+        for i, r in enumerate(to_regen):
+            question = r.get("question", "")
+            retrieved = r.get("full_retrieved", [])
+
+            # Analyze query for intent detection (IRAC hint selection)
+            analyzed = rag.query_analyzer.analyze(question)
+
+            # Build contexts from saved article IDs
+            contexts = []
+            for aid in retrieved[:10]:
+                text = ""
+                if db and ":" in aid:
+                    try:
+                        article = db.get_article_by_id(aid)
+                        if article:
+                            text = article.content or article.raw_text or ""
+                    except Exception:
+                        pass
+                if text:
+                    contexts.append({"text": text, "metadata": {"source_id": aid}})
+
+            if contexts:
+                response, confidence = rag._generate_response(
+                    query=question, contexts=contexts, analyzed=analyzed,
+                )
+                r["full_answer"] = response
+            else:
+                r["full_answer"] = ""
+
+            r["_regen_done"] = True
+            n = total_done + i + 1
+            print(f"  [{n:4d}/{total_all}] STT {r['stt']:>5} — {len(r['full_answer'])} chars")
+
+            # Incremental save every 10 questions
+            if (i + 1) % 10 == 0:
+                _save()
+
+    except KeyboardInterrupt:
+        print("\n\n*** INTERRUPTED — saving progress ***")
+
+    _save()
+    done_now = sum(1 for r in results if r.get("_regen_done"))
+    print(f"\n  Saved to: {output_path} ({done_now}/{len(results)} regenerated)")
+
+
+# ---------------------------------------------------------------------------
 # Main
 # ---------------------------------------------------------------------------
 
@@ -524,6 +640,8 @@ def main():
                         help="Only run specific STTs (comma-separated, e.g. '24,31,43' or 'miss:results/eval.json')")
     parser.add_argument("--retrieval-only", action="store_true",
                         help="Skip LLM answer generation, only compute retrieval metrics (faster for ablation)")
+    parser.add_argument("--regen-answers", metavar="JSON_FILE",
+                        help="Regenerate LLM answers from existing retrieval results (skip retrieval, only call LLM)")
     parser.add_argument("--verbose", action="store_true")
 
     args = parser.parse_args()
@@ -531,6 +649,11 @@ def main():
     # CSV conversion mode
     if args.to_csv:
         convert_json_to_csv(args.to_csv)
+        return
+
+    # Regen-answers mode: reuse existing retrieval, only regenerate LLM answers
+    if args.regen_answers:
+        _regen_answers(args)
         return
 
     print("=" * 70)
@@ -565,6 +688,7 @@ def main():
         db_path = config.get("database", {}).get("path", "data/legal_docs.db")
         # Use a separate embedding provider for semantic baseline
         # to avoid sharing corrupted CUDA state with RAG's embedding model
+        from vn_legal_rag.utils import create_embedding_provider
         baseline_embedding_gen = create_embedding_provider()
         traditional = init_traditional_baselines(
             db_path=db_path,

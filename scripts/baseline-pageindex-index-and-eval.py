@@ -347,16 +347,46 @@ def build_node_to_article_mapping(tree: dict) -> dict:
 # ---------------------------------------------------------------------------
 
 def _call_llm(prompt: str, model: str, api_key: str, base_url: str = None) -> str:
-    """Call LLM via Anthropic proxy and return response text."""
-    import anthropic
-    client = anthropic.Anthropic(api_key=api_key, base_url=base_url)
+    """Call LLM via Anthropic API (raw httpx to avoid SDK Bearer header bug)."""
+    import httpx
 
-    with client.messages.stream(
-        model=model,
-        messages=[{"role": "user", "content": prompt}],
-        max_tokens=2000,
-    ) as stream:
-        return stream.get_final_text()
+    url = f"{base_url}/v1/messages" if base_url else "https://api.anthropic.com/v1/messages"
+    headers = {
+        "x-api-key": api_key,
+        "anthropic-version": "2023-06-01",
+        "content-type": "application/json",
+    }
+    body = {
+        "model": model,
+        "messages": [{"role": "user", "content": prompt}],
+        "max_tokens": 2000,
+        "stream": True,
+    }
+
+    max_retries = 3
+    for attempt in range(max_retries):
+        try:
+            response = httpx.post(url, json=body, headers=headers, timeout=120)
+            text_parts = []
+            for line in response.text.split("\n"):
+                if line.startswith("data: "):
+                    try:
+                        data = json.loads(line[6:])
+                        if data.get("type") == "content_block_delta":
+                            delta = data.get("delta", {})
+                            if delta.get("type") == "text_delta":
+                                text_parts.append(delta.get("text", ""))
+                    except json.JSONDecodeError:
+                        continue
+            result = "".join(text_parts)
+            if result:
+                return result
+        except Exception:
+            if attempt < max_retries - 1:
+                time.sleep(2 ** attempt)
+                continue
+            raise
+    return ""
 
 
 def tree_search_with_llm(question: str, trees: list, node_to_article: dict,
