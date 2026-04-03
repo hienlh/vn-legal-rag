@@ -1,0 +1,5365 @@
+{
+  "summary": {
+    "total_queries": 400,
+    "total_hits": 315,
+    "total_misses": 85,
+    "hit_at_10_rate": 78.8,
+    "loop0_accuracy": {
+      "total_with_tree": 399,
+      "correct_domain": 380,
+      "wrong_domain": 19,
+      "accuracy_pct": 95.2,
+      "wrong_but_hit": 10,
+      "wrong_and_miss": 9
+    },
+    "miss_error_types": {
+      "tree_traversal_error": 76,
+      "loop0_wrong_domain": 9
+    },
+    "near_miss_counts": {
+      "in_11_20": 27,
+      "in_21_30": 8,
+      "absent": 50
+    },
+    "misses_by_domain": {
+      "enterprise": {
+        "total": 200,
+        "misses": 42,
+        "hit_rate": 79.0
+      },
+      "traffic": {
+        "total": 200,
+        "misses": 43,
+        "hit_rate": 78.5
+      }
+    }
+  },
+  "loop0_wrong_domain_all": [
+    {
+      "stt": "595",
+      "question": "Mọi người cho em hỏi xe em mua được 4-5 tháng nay rồi nhưng em chưa sang tên đổi chủ liệu bị vẫy có sao không ạ?",
+      "category": "đăng ký xe",
+      "expected_articles": [
+        "168-2024-ND-CP:d32",
+        "36-2024-QH15:d36"
+      ],
+      "expected_domain": "traffic",
+      "tree_domain": "enterprise",
+      "tree_articles": [
+        "59-2020-QH14:d1",
+        "59-2020-QH14:d2",
+        "59-2020-QH14:d3"
+      ],
+      "is_hit": false
+    },
+    {
+      "stt": "603",
+      "question": "Mọi người cho e hỏi bữa e bị công an bắt nồng độ cồn 0.356 , không Có bằng lái cavet xe ( bị mất) mới tích hợp lại .đã k",
+      "category": "nồng độ cồn",
+      "expected_articles": [
+        "168-2024-ND-CP:d18",
+        "168-2024-ND-CP:d48",
+        "168-2024-ND-CP:d5",
+        "168-2024-ND-CP:d7"
+      ],
+      "expected_domain": "traffic",
+      "tree_domain": "enterprise",
+      "tree_articles": [
+        "59-2020-QH14:d1",
+        "59-2020-QH14:d2",
+        "59-2020-QH14:d3"
+      ],
+      "is_hit": false
+    },
+    {
+      "stt": "606",
+      "question": "Lúc trưa nay em chỉ đi 2b đoạn ngã tư Láng Hạ đi Giảng Võ. Đang đi thì bị 1 thằng nó rẽ phải ép em. Em đành phải rẽ phải",
+      "category": "thủ tục nộp phạt",
+      "expected_articles": [
+        "168-2024-ND-CP:d47",
+        "168-2024-ND-CP:d7",
+        "36-2024-QH15:d13"
+      ],
+      "expected_domain": "traffic",
+      "tree_domain": "enterprise",
+      "tree_articles": [
+        "59-2020-QH14:d1",
+        "59-2020-QH14:d2",
+        "59-2020-QH14:d3"
+      ],
+      "is_hit": false
+    },
+    {
+      "stt": "617",
+      "question": "Chào các Cụ! Nhà cháu đen quá cuối năm dính quả phạt nguội đi vào làn BRT. Bây giờ gần đến hạn Đăng kiểm nên phải đi xử ",
+      "category": "phạt nguội",
+      "expected_articles": [
+        "168-2024-ND-CP:d47",
+        "168-2024-ND-CP:d6"
+      ],
+      "expected_domain": "traffic",
+      "tree_domain": "enterprise",
+      "tree_articles": [
+        "59-2020-QH14:d1",
+        "59-2020-QH14:d2",
+        "59-2020-QH14:d3"
+      ],
+      "is_hit": true
+    },
+    {
+      "stt": "618",
+      "question": "Em xin trình bày ạ. Ra tết em lấy lại chiếc xe ford đã qua sử dụng, về em đã ra chi cục thuế nộp thuế luôn nhưng do bận ",
+      "category": "đăng ký xe",
+      "expected_articles": [
+        "168-2024-ND-CP:d32",
+        "36-2024-QH15:d36"
+      ],
+      "expected_domain": "traffic",
+      "tree_domain": "enterprise",
+      "tree_articles": [
+        "59-2020-QH14:d1",
+        "59-2020-QH14:d2",
+        "59-2020-QH14:d3"
+      ],
+      "is_hit": false
+    },
+    {
+      "stt": "619",
+      "question": "Em mạn phép các cụ hỏi câu này, em thấy có một số trường hợp người điều khiển xe mô tô đỗ xe vào bên đường bỏ mũ bảo hiể",
+      "category": "dừng đỗ xe",
+      "expected_articles": [
+        "168-2024-ND-CP:d7",
+        "36-2024-QH15:d18",
+        "36-2024-QH15:d9"
+      ],
+      "expected_domain": "traffic",
+      "tree_domain": "enterprise",
+      "tree_articles": [
+        "59-2020-QH14:d1",
+        "59-2020-QH14:d2",
+        "59-2020-QH14:d3"
+      ],
+      "is_hit": false
+    },
+    {
+      "stt": "620",
+      "question": "E vừa mua con xe cỏ để đi tết. Xe qua nhiều đời chủ rồi và e cũng chả có ý định sang tên đổi chủ làm gì, nhưng để đối ph",
+      "category": "đăng ký xe",
+      "expected_articles": [
+        "168-2024-ND-CP:d14",
+        "168-2024-ND-CP:d32",
+        "36-2024-QH15:d36"
+      ],
+      "expected_domain": "traffic",
+      "tree_domain": "enterprise",
+      "tree_articles": [
+        "59-2020-QH14:d1",
+        "59-2020-QH14:d2",
+        "59-2020-QH14:d3"
+      ],
+      "is_hit": false
+    },
+    {
+      "stt": "624",
+      "question": "Chào các cụ các mợ, Em có theo dõi mấy thớt về NĐ 100 và cũng có xem mấy video CSGT lập biên bản, trong đó có người 0.01",
+      "category": "thủ tục nộp phạt",
+      "expected_articles": [
+        "168-2024-ND-CP:d6",
+        "36-2024-QH15:d67"
+      ],
+      "expected_domain": "traffic",
+      "tree_domain": "enterprise",
+      "tree_articles": [
+        "59-2020-QH14:d1",
+        "59-2020-QH14:d2",
+        "59-2020-QH14:d3"
+      ],
+      "is_hit": false
+    },
+    {
+      "stt": "625",
+      "question": "Em hỏi nhờ các bác hôm nay em bị công an xích trên đường phố Huế vì đỗ xe bên phải đón nhóc F1 nhà em đi học về, em đưa ",
+      "category": "dừng đỗ xe",
+      "expected_articles": [
+        "168-2024-ND-CP:d47",
+        "168-2024-ND-CP:d6",
+        "36-2024-QH15:d18"
+      ],
+      "expected_domain": "traffic",
+      "tree_domain": "enterprise",
+      "tree_articles": [
+        "59-2020-QH14:d1",
+        "59-2020-QH14:d2",
+        "59-2020-QH14:d3"
+      ],
+      "is_hit": true
+    },
+    {
+      "stt": "628",
+      "question": "Chào các bác, Xe em đã bán tầm tháng 7/2024, xe đã công chứng mua bán và làm hồ sơ thu hồi biển số sang tên cho chủ xe m",
+      "category": "phạt nguội",
+      "expected_articles": [
+        "168-2024-ND-CP:d32",
+        "168-2024-ND-CP:d47"
+      ],
+      "expected_domain": "traffic",
+      "tree_domain": "enterprise",
+      "tree_articles": [
+        "59-2020-QH14:d1",
+        "59-2020-QH14:d2",
+        "59-2020-QH14:d3"
+      ],
+      "is_hit": false
+    },
+    {
+      "stt": "630",
+      "question": "Lâu lâu em bịnh đột xuất, em có thắc mắc là phạt nguội mà lỗi giam bằng thì đâu có biết ai lái, đưa bằng cha nội ất ơ nà",
+      "category": "giấy phép lái xe",
+      "expected_articles": [
+        "168-2024-ND-CP:d32",
+        "168-2024-ND-CP:d47",
+        "168-2024-ND-CP:d5"
+      ],
+      "expected_domain": "traffic",
+      "tree_domain": "enterprise",
+      "tree_articles": [
+        "59-2020-QH14:d1",
+        "59-2020-QH14:d2",
+        "59-2020-QH14:d3"
+      ],
+      "is_hit": true
+    },
+    {
+      "stt": "638",
+      "question": "Xin hỏi trường hợp ôtô đi đăng ký chưa có giấy tờ và biển số bị CSGT dừng xe có bị phạt không?",
+      "category": "dừng đỗ xe",
+      "expected_articles": [
+        "168-2024-ND-CP:d13",
+        "168-2024-ND-CP:d32",
+        "36-2024-QH15:d36"
+      ],
+      "expected_domain": "traffic",
+      "tree_domain": "enterprise",
+      "tree_articles": [
+        "59-2020-QH14:d1",
+        "59-2020-QH14:d2",
+        "59-2020-QH14:d3"
+      ],
+      "is_hit": true
+    },
+    {
+      "stt": "662",
+      "question": "Tốc độ tối đa của xe máy là bao nhiêu?",
+      "category": "vi phạm tốc độ",
+      "expected_articles": [
+        "168-2024-ND-CP:d7",
+        "36-2024-QH15:d12"
+      ],
+      "expected_domain": "traffic",
+      "tree_domain": "enterprise",
+      "tree_articles": [
+        "01-2021-ND:d1",
+        "01-2021-ND:d2",
+        "01-2021-ND:d3"
+      ],
+      "is_hit": true
+    },
+    {
+      "stt": "664",
+      "question": "Xe máy chạy quá tốc độ trên 20 km/h trừ bao nhiêu điểm bằng lái xe?",
+      "category": "vi phạm tốc độ",
+      "expected_articles": [
+        "168-2024-ND-CP:d50",
+        "168-2024-ND-CP:d7",
+        "36-2024-QH15:d58"
+      ],
+      "expected_domain": "traffic",
+      "tree_domain": "enterprise",
+      "tree_articles": [
+        "01-2021-ND:d1",
+        "01-2021-ND:d2",
+        "01-2021-ND:d3"
+      ],
+      "is_hit": true
+    },
+    {
+      "stt": "666",
+      "question": "Xe máy chạy quá tốc độ từ 10 km/h đến 20 km/h có bị trừ điểm bằng lái xe không?",
+      "category": "vi phạm tốc độ",
+      "expected_articles": [
+        "168-2024-ND-CP:d50",
+        "168-2024-ND-CP:d7",
+        "36-2024-QH15:d58"
+      ],
+      "expected_domain": "traffic",
+      "tree_domain": "enterprise",
+      "tree_articles": [
+        "01-2021-ND:d1",
+        "01-2021-ND:d2",
+        "01-2021-ND:d3"
+      ],
+      "is_hit": true
+    },
+    {
+      "stt": "673",
+      "question": "Đỗ xe trên vỉa hè thế nào cho đúng? Đỗ xe có giới hạn thời gian không?",
+      "category": "dừng đỗ xe",
+      "expected_articles": [
+        "168-2024-ND-CP:d6",
+        "36-2024-QH15:d18"
+      ],
+      "expected_domain": "traffic",
+      "tree_domain": "enterprise",
+      "tree_articles": [
+        "59-2020-QH14:d1",
+        "59-2020-QH14:d2",
+        "59-2020-QH14:d3"
+      ],
+      "is_hit": true
+    },
+    {
+      "stt": "676",
+      "question": "Đặt biển cảnh báo trên cao tốc như thế nào là đúng quy định?",
+      "category": "cao tốc",
+      "expected_articles": [
+        "168-2024-ND-CP:d6",
+        "36-2024-QH15:d25"
+      ],
+      "expected_domain": "traffic",
+      "tree_domain": "enterprise",
+      "tree_articles": [
+        "59-2020-QH14:d1",
+        "59-2020-QH14:d2",
+        "59-2020-QH14:d3"
+      ],
+      "is_hit": true
+    },
+    {
+      "stt": "682",
+      "question": "Đèn đỏ chữ thập có được đi không?",
+      "category": "vượt đèn đỏ",
+      "expected_articles": [
+        "168-2024-ND-CP:d6",
+        "36-2024-QH15:d11"
+      ],
+      "expected_domain": "traffic",
+      "tree_domain": "enterprise",
+      "tree_articles": [
+        "01-2021-ND:d1",
+        "01-2021-ND:d2",
+        "01-2021-ND:d3"
+      ],
+      "is_hit": true
+    },
+    {
+      "stt": "683",
+      "question": "Bị trừ hết điểm giấy phép lái xe máy có được lái xe không?",
+      "category": "giấy phép lái xe",
+      "expected_articles": [
+        "168-2024-ND-CP:d18",
+        "168-2024-ND-CP:d50",
+        "36-2024-QH15:d58"
+      ],
+      "expected_domain": "traffic",
+      "tree_domain": "enterprise",
+      "tree_articles": [
+        "01-2021-ND:d1",
+        "01-2021-ND:d2",
+        "01-2021-ND:d3"
+      ],
+      "is_hit": false
+    }
+  ],
+  "classified_misses": [
+    {
+      "stt": "6",
+      "question": "CTY CỔ PHẦN tăng vốn cũng phải nộp báo cáo tiến độ góp vốn à anh chị? Báo cáo tiến độ góp vốn này là sẽ ghi hết tất tần tật quá trình từ khi công ty t",
+      "category": "Loại 3: Vốn điều lệ - Góp vốn, tăng/giảm vốn, vốn pháp định",
+      "expected_articles": [
+        "59-2020-QH14:d123"
+      ],
+      "expected_domain": "enterprise",
+      "error_type": "tree_traversal_error",
+      "tree_domain": "enterprise",
+      "near_miss_status": "near_miss_11_20",
+      "top10_domain_dist": {
+        "enterprise": 10
+      },
+      "top10_retrieved": [
+        "59-2020-QH14:d30",
+        "59-2020-QH14:d17",
+        "59-2020-QH14:d24",
+        "59-2020-QH14:d31",
+        "59-2020-QH14:d22",
+        "59-2020-QH14:d34",
+        "59-2020-QH14:d36",
+        "01-2021-ND:d56",
+        "168-2025-ND:d57",
+        "168-2025-ND:d43"
+      ],
+      "tree_articles": [
+        "59-2020-QH14:d30",
+        "59-2020-QH14:d17",
+        "59-2020-QH14:d24",
+        "59-2020-QH14:d31",
+        "59-2020-QH14:d22",
+        "59-2020-QH14:d34",
+        "59-2020-QH14:d36"
+      ],
+      "kg_articles": [
+        "59-2020-QH14:d24",
+        "01-2021-ND:d56",
+        "59-2020-QH14:d30",
+        "59-2020-QH14:d17",
+        "59-2020-QH14:d31",
+        "59-2020-QH14:d22",
+        "59-2020-QH14:d34",
+        "59-2020-QH14:d36",
+        "168-2025-ND:d57",
+        "168-2025-ND:d43",
+        "01-2021-ND:d63",
+        "168-2025-ND:d49",
+        "168-2025-ND:d84",
+        "59-2020-QH14:d194",
+        "59-2020-QH14:d55"
+      ],
+      "near_miss_11_20": [
+        "59-2020-QH14:d123"
+      ],
+      "near_miss_21_30": [],
+      "completely_absent": []
+    },
+    {
+      "stt": "33",
+      "question": "Cty mình chuyển đổi từ công ty tnhh 1tv sang 2tv tiếp nhận thành viên mới và tăng vốn thì thành phần hồ sơ đầy đủ gồm những gì ạ. Mong mọi người hướng",
+      "category": "Loại 2: Loại hình doanh nghiệp - TNHH, Cổ phần, Hợp danh, DNTN",
+      "expected_articles": [
+        "59-2020-QH14:d21",
+        "59-2020-QH14:d47",
+        "59-2020-QH14:d87"
+      ],
+      "expected_domain": "enterprise",
+      "error_type": "tree_traversal_error",
+      "tree_domain": "enterprise",
+      "near_miss_status": "absent_from_top30",
+      "top10_domain_dist": {
+        "enterprise": 10
+      },
+      "top10_retrieved": [
+        "59-2020-QH14:d1",
+        "59-2020-QH14:d2",
+        "59-2020-QH14:d3",
+        "168-2025-ND:d52",
+        "59-2020-QH14:d203",
+        "168-2025-ND:d43",
+        "59-2020-QH14:d55",
+        "59-2020-QH14:d37",
+        "01-2021-ND:d52",
+        "59-2020-QH14:d211"
+      ],
+      "tree_articles": [
+        "59-2020-QH14:d1",
+        "59-2020-QH14:d2",
+        "59-2020-QH14:d3"
+      ],
+      "kg_articles": [
+        "168-2025-ND:d52",
+        "59-2020-QH14:d203",
+        "168-2025-ND:d43",
+        "59-2020-QH14:d55",
+        "59-2020-QH14:d37",
+        "01-2021-ND:d52",
+        "59-2020-QH14:d211",
+        "23-2022-ND:d13",
+        "01-2021-ND:d61",
+        "168-2025-ND:d47",
+        "168-2025-ND:d24",
+        "100-2019-ND-CP:d13",
+        "36-2024-QH15:d30",
+        "44-2025-ND:d2",
+        "168-2025-ND:d29"
+      ],
+      "near_miss_11_20": [],
+      "near_miss_21_30": [],
+      "completely_absent": [
+        "59-2020-QH14:d21",
+        "59-2020-QH14:d47",
+        "59-2020-QH14:d87"
+      ]
+    },
+    {
+      "stt": "45",
+      "question": "Anh/chị cho em hỏi xíu ạ.\nEm đang làm hồ sơ giảm vốn điều lệ cty TNHH 2TV (hoàn trả 100% phần vốn cho thành viên theo tỷ lệ góp vốn), và thay thế thàn",
+      "category": "Loại 3: Vốn điều lệ - Góp vốn, tăng/giảm vốn, vốn pháp định",
+      "expected_articles": [
+        "59-2020-QH14:d31",
+        "59-2020-QH14:d52",
+        "59-2020-QH14:d68"
+      ],
+      "expected_domain": "enterprise",
+      "error_type": "tree_traversal_error",
+      "tree_domain": "enterprise",
+      "near_miss_status": "absent_from_top30",
+      "top10_domain_dist": {
+        "enterprise": 9,
+        "traffic": 1
+      },
+      "top10_retrieved": [
+        "59-2020-QH14:d1",
+        "59-2020-QH14:d2",
+        "59-2020-QH14:d3",
+        "168-2025-ND:d52",
+        "59-2020-QH14:d203",
+        "168-2025-ND:d43",
+        "59-2020-QH14:d178",
+        "59-2020-QH14:d30",
+        "36-2024-QH15:d39",
+        "89-2024-ND:d7"
+      ],
+      "tree_articles": [
+        "59-2020-QH14:d1",
+        "59-2020-QH14:d2",
+        "59-2020-QH14:d3"
+      ],
+      "kg_articles": [
+        "168-2025-ND:d52",
+        "59-2020-QH14:d203",
+        "168-2025-ND:d43",
+        "59-2020-QH14:d178",
+        "59-2020-QH14:d30",
+        "36-2024-QH15:d39",
+        "89-2024-ND:d7",
+        "168-2025-ND:d84",
+        "59-2020-QH14:d181",
+        "168-2025-ND:d58",
+        "59-2020-QH14:d69",
+        "01-2021-ND:d99",
+        "01-2021-ND:d29",
+        "44-2025-ND:d1",
+        "01-2021-ND:d61"
+      ],
+      "near_miss_11_20": [],
+      "near_miss_21_30": [],
+      "completely_absent": [
+        "59-2020-QH14:d31",
+        "59-2020-QH14:d52",
+        "59-2020-QH14:d68"
+      ]
+    },
+    {
+      "stt": "56",
+      "question": "Anh chị có kinh nghiệm cho em hỏi: Hồ sơ tạm ngưng của em đã được chấp thuận từ 25/12 đến nay vô xem vẫn chưa đc trả kqua giấy xác nhận luôn (ko có bả",
+      "category": "Loại 6: Giải thể & Phá sản - Thủ tục, thanh toán nợ, tạm ngưng",
+      "expected_articles": [
+        "59-2020-QH14:d206"
+      ],
+      "expected_domain": "enterprise",
+      "error_type": "tree_traversal_error",
+      "tree_domain": "enterprise",
+      "near_miss_status": "absent_from_top30",
+      "top10_domain_dist": {
+        "enterprise": 8,
+        "traffic": 2
+      },
+      "top10_retrieved": [
+        "168-2025-ND:d71",
+        "168-2025-ND:d21",
+        "01-2021-ND:d68",
+        "01-2021-ND:d60",
+        "168-2025-ND:d47",
+        "100-2019-ND-CP:d42",
+        "01-2021-ND:d61",
+        "59-2020-QH14:d186",
+        "168-2024-ND-CP:d39",
+        "168-2025-ND:d24"
+      ],
+      "tree_articles": [
+        "168-2025-ND:d71",
+        "168-2025-ND:d21"
+      ],
+      "kg_articles": [
+        "168-2025-ND:d71",
+        "168-2025-ND:d21",
+        "01-2021-ND:d68",
+        "01-2021-ND:d60",
+        "168-2025-ND:d47",
+        "100-2019-ND-CP:d42",
+        "01-2021-ND:d61",
+        "59-2020-QH14:d186",
+        "168-2024-ND-CP:d39",
+        "168-2025-ND:d24",
+        "01-2021-ND:d45",
+        "168-2024-ND-CP:d54",
+        "01-2021-ND:d29",
+        "36-2024-QH15:d80",
+        "100-2019-ND-CP:d50"
+      ],
+      "near_miss_11_20": [],
+      "near_miss_21_30": [],
+      "completely_absent": [
+        "59-2020-QH14:d206"
+      ]
+    },
+    {
+      "stt": "59",
+      "question": "Mọi người ơi cho mình hỏi, cty mình muốn đổi địa chỉ mới nhưng địa chỉ đó không có số nhà, mình có xin giấy xác nhận của ủy ban thì họ có trả giấy xác",
+      "category": "Loại 7: Thay đổi ĐKKD - Địa chỉ, tên, ngành nghề",
+      "expected_articles": [
+        "59-2020-QH14:d31"
+      ],
+      "expected_domain": "enterprise",
+      "error_type": "tree_traversal_error",
+      "tree_domain": "enterprise",
+      "near_miss_status": "absent_from_top30",
+      "top10_domain_dist": {
+        "enterprise": 9,
+        "traffic": 1
+      },
+      "top10_retrieved": [
+        "59-2020-QH14:d30",
+        "59-2020-QH14:d42",
+        "168-2025-ND:d24",
+        "168-2025-ND:d40",
+        "168-2025-ND:d43",
+        "168-2025-ND:d57",
+        "01-2021-ND:d63",
+        "168-2025-ND:d49",
+        "01-2021-ND:d56",
+        "36-2024-QH15:d39"
+      ],
+      "tree_articles": [
+        "59-2020-QH14:d30",
+        "59-2020-QH14:d42",
+        "168-2025-ND:d24",
+        "168-2025-ND:d40"
+      ],
+      "kg_articles": [
+        "59-2020-QH14:d30",
+        "168-2025-ND:d24",
+        "168-2025-ND:d43",
+        "59-2020-QH14:d42",
+        "168-2025-ND:d40",
+        "168-2025-ND:d57",
+        "01-2021-ND:d63",
+        "168-2025-ND:d49",
+        "01-2021-ND:d56",
+        "36-2024-QH15:d39",
+        "100-2019-ND-CP:d42",
+        "100-2019-ND-CP:d23",
+        "168-2025-ND:d47",
+        "168-2025-ND:d71",
+        "59-2020-QH14:d137"
+      ],
+      "near_miss_11_20": [],
+      "near_miss_21_30": [],
+      "completely_absent": [
+        "59-2020-QH14:d31"
+      ]
+    },
+    {
+      "stt": "60",
+      "question": "Cho em hỏi chuyển đổi từ công ty CP sang cty TNHH 2 Tv thủ tục v đủ chưa anh chị, hic em cảm ơn ạ\n· 01. MẪU 03\n· 02. QUYẾT ĐỊNH ĐẠI HỘI ĐỒNG CỔ ĐÔNG\n·",
+      "category": "Loại 2: Loại hình doanh nghiệp - TNHH, Cổ phần, Hợp danh, DNTN",
+      "expected_articles": [
+        "59-2020-QH14:d203"
+      ],
+      "expected_domain": "enterprise",
+      "error_type": "tree_traversal_error",
+      "tree_domain": "enterprise",
+      "near_miss_status": "absent_from_top30",
+      "top10_domain_dist": {
+        "enterprise": 10
+      },
+      "top10_retrieved": [
+        "59-2020-QH14:d204",
+        "59-2020-QH14:d46",
+        "59-2020-QH14:d47",
+        "59-2020-QH14:d87",
+        "59-2020-QH14:d120",
+        "59-2020-QH14:d138",
+        "59-2020-QH14:d147",
+        "59-2020-QH14:d26",
+        "59-2020-QH14:d27",
+        "168-2025-ND:d37"
+      ],
+      "tree_articles": [
+        "59-2020-QH14:d204",
+        "59-2020-QH14:d46",
+        "59-2020-QH14:d47",
+        "59-2020-QH14:d87",
+        "59-2020-QH14:d120",
+        "59-2020-QH14:d138",
+        "59-2020-QH14:d147"
+      ],
+      "kg_articles": [
+        "59-2020-QH14:d46",
+        "59-2020-QH14:d47",
+        "59-2020-QH14:d87",
+        "59-2020-QH14:d120",
+        "59-2020-QH14:d138",
+        "59-2020-QH14:d147",
+        "59-2020-QH14:d26",
+        "59-2020-QH14:d27",
+        "168-2025-ND:d37",
+        "01-2021-ND:d44",
+        "59-2020-QH14:d55",
+        "59-2020-QH14:d37",
+        "59-2020-QH14:d12",
+        "01-2021-ND:d61",
+        "01-2021-ND:d53"
+      ],
+      "near_miss_11_20": [],
+      "near_miss_21_30": [],
+      "completely_absent": [
+        "59-2020-QH14:d203"
+      ]
+    },
+    {
+      "stt": "64",
+      "question": "Dạ anh, chị cho cho em hỏi 1 vấn đề là em làm chấm dứt chi nhánh của công ty mà đăng ký kinh doanh của chi nhánh chưa cập nhật CMND của người đứng đầu",
+      "category": "Loại 7: Thay đổi ĐKKD - Địa chỉ, tên, ngành nghề",
+      "expected_articles": [
+        "59-2020-QH14:d30",
+        "59-2020-QH14:d31",
+        "59-2020-QH14:d45"
+      ],
+      "expected_domain": "enterprise",
+      "error_type": "tree_traversal_error",
+      "tree_domain": "enterprise",
+      "near_miss_status": "absent_from_top30",
+      "top10_domain_dist": {
+        "enterprise": 10
+      },
+      "top10_retrieved": [
+        "59-2020-QH14:d213",
+        "01-2021-ND:d62",
+        "01-2021-ND:d63",
+        "01-2021-ND:d68",
+        "01-2021-ND:d72",
+        "168-2025-ND:d57",
+        "168-2025-ND:d66",
+        "59-2020-QH14:d17",
+        "59-2020-QH14:d217",
+        "59-2020-QH14:d47"
+      ],
+      "tree_articles": [
+        "59-2020-QH14:d213",
+        "01-2021-ND:d62",
+        "01-2021-ND:d63",
+        "01-2021-ND:d68",
+        "01-2021-ND:d72",
+        "168-2025-ND:d57",
+        "168-2025-ND:d66"
+      ],
+      "kg_articles": [
+        "01-2021-ND:d68",
+        "59-2020-QH14:d213",
+        "01-2021-ND:d62",
+        "01-2021-ND:d63",
+        "168-2025-ND:d57",
+        "168-2025-ND:d66",
+        "59-2020-QH14:d17",
+        "59-2020-QH14:d217",
+        "59-2020-QH14:d47",
+        "89-2024-ND:d6",
+        "168-2025-ND:d110",
+        "59-2020-QH14:d44",
+        "168-2025-ND:d72",
+        "59-2020-QH14:d55",
+        "01-2021-ND:d46"
+      ],
+      "near_miss_11_20": [],
+      "near_miss_21_30": [],
+      "completely_absent": [
+        "59-2020-QH14:d30",
+        "59-2020-QH14:d31",
+        "59-2020-QH14:d45"
+      ]
+    },
+    {
+      "stt": "68",
+      "question": "Chào mọi người ạ, em đang làm đăng ký thay đổi ngành nghề kinh doanh, hiện bên em cần đăng ký mục sàn giao dịch bất động sản thì em sẽ note chi tiết \"",
+      "category": "Loại 7: Thay đổi ĐKKD - Địa chỉ, tên, ngành nghề",
+      "expected_articles": [
+        "59-2020-QH14:d29",
+        "59-2020-QH14:d7"
+      ],
+      "expected_domain": "enterprise",
+      "error_type": "tree_traversal_error",
+      "tree_domain": "enterprise",
+      "near_miss_status": "absent_from_top30",
+      "top10_domain_dist": {
+        "enterprise": 10
+      },
+      "top10_retrieved": [
+        "59-2020-QH14:d31",
+        "59-2020-QH14:d30",
+        "01-2021-ND:d56",
+        "168-2025-ND:d49",
+        "168-2025-ND:d43",
+        "01-2021-ND:d63",
+        "168-2025-ND:d40",
+        "01-2021-ND:d47",
+        "168-2025-ND:d52",
+        "59-2020-QH14:d211"
+      ],
+      "tree_articles": [
+        "59-2020-QH14:d31",
+        "59-2020-QH14:d30",
+        "01-2021-ND:d56",
+        "168-2025-ND:d49"
+      ],
+      "kg_articles": [
+        "59-2020-QH14:d31",
+        "59-2020-QH14:d30",
+        "168-2025-ND:d43",
+        "01-2021-ND:d56",
+        "168-2025-ND:d49",
+        "01-2021-ND:d63",
+        "168-2025-ND:d40",
+        "01-2021-ND:d47",
+        "168-2025-ND:d52",
+        "59-2020-QH14:d211",
+        "168-2025-ND:d47",
+        "168-2025-ND:d123",
+        "59-2020-QH14:d86",
+        "168-2025-ND:d44",
+        "36-2024-QH15:d7"
+      ],
+      "near_miss_11_20": [],
+      "near_miss_21_30": [],
+      "completely_absent": [
+        "59-2020-QH14:d29",
+        "59-2020-QH14:d7"
+      ]
+    },
+    {
+      "stt": "69",
+      "question": "Mn ơi, mình muốn thành lập công ty, ngành nghề kinh doanh muốn cho cả mã ngành kho bãi (kho ở mảnh đất khác k có sổ hay giấy tờ) liệu có đăng ký đc k ",
+      "category": "Loại 1: Thành lập doanh nghiệp - Thủ tục, điều kiện, hồ sơ thành lập",
+      "expected_articles": [
+        "59-2020-QH14:d22",
+        "59-2020-QH14:d29",
+        "59-2020-QH14:d44",
+        "59-2020-QH14:d45"
+      ],
+      "expected_domain": "enterprise",
+      "error_type": "tree_traversal_error",
+      "tree_domain": "enterprise",
+      "near_miss_status": "absent_from_top30",
+      "top10_domain_dist": {
+        "enterprise": 10
+      },
+      "top10_retrieved": [
+        "59-2020-QH14:d7",
+        "59-2020-QH14:d4",
+        "59-2020-QH14:d16",
+        "59-2020-QH14:d1",
+        "59-2020-QH14:d3",
+        "59-2020-QH14:d8",
+        "59-2020-QH14:d26",
+        "01-2021-ND:d56",
+        "59-2020-QH14:d46",
+        "168-2025-ND:d49"
+      ],
+      "tree_articles": [
+        "59-2020-QH14:d7",
+        "59-2020-QH14:d4",
+        "59-2020-QH14:d16",
+        "59-2020-QH14:d1",
+        "59-2020-QH14:d3",
+        "59-2020-QH14:d8",
+        "59-2020-QH14:d26"
+      ],
+      "kg_articles": [
+        "59-2020-QH14:d7",
+        "59-2020-QH14:d4",
+        "59-2020-QH14:d26",
+        "59-2020-QH14:d16",
+        "59-2020-QH14:d8",
+        "01-2021-ND:d56",
+        "59-2020-QH14:d46",
+        "168-2025-ND:d49",
+        "168-2025-ND:d56",
+        "36-2024-QH15:d39",
+        "59-2020-QH14:d206",
+        "168-2025-ND:d116",
+        "36-2024-QH15:d63",
+        "100-2019-ND-CP:d18",
+        "59-2020-QH14:d31"
+      ],
+      "near_miss_11_20": [],
+      "near_miss_21_30": [],
+      "completely_absent": [
+        "59-2020-QH14:d22",
+        "59-2020-QH14:d29",
+        "59-2020-QH14:d44",
+        "59-2020-QH14:d45"
+      ]
+    },
+    {
+      "stt": "77",
+      "question": "Dạ em đang chuyển đổi loại hình từ công ty TNHH 2 TV thành công ty TNHH 1 TV, trong Mẫu 2 em đã điền thông tin mã ngành mới theo Quyết định 36, vậy em",
+      "category": "Loại 2: Loại hình doanh nghiệp - TNHH, Cổ phần, Hợp danh, DNTN",
+      "expected_articles": [
+        "59-2020-QH14:d31",
+        "59-2020-QH14:d52"
+      ],
+      "expected_domain": "enterprise",
+      "error_type": "tree_traversal_error",
+      "tree_domain": "enterprise",
+      "near_miss_status": "near_miss_11_20",
+      "top10_domain_dist": {
+        "enterprise": 10
+      },
+      "top10_retrieved": [
+        "59-2020-QH14:d87",
+        "59-2020-QH14:d68",
+        "59-2020-QH14:d74",
+        "59-2020-QH14:d46",
+        "59-2020-QH14:d73",
+        "59-2020-QH14:d198",
+        "59-2020-QH14:d199",
+        "59-2020-QH14:d17",
+        "59-2020-QH14:d217",
+        "59-2020-QH14:d22"
+      ],
+      "tree_articles": [
+        "59-2020-QH14:d87",
+        "59-2020-QH14:d68",
+        "59-2020-QH14:d74",
+        "59-2020-QH14:d46",
+        "59-2020-QH14:d73",
+        "59-2020-QH14:d198",
+        "59-2020-QH14:d199"
+      ],
+      "kg_articles": [
+        "59-2020-QH14:d198",
+        "59-2020-QH14:d87",
+        "59-2020-QH14:d68",
+        "59-2020-QH14:d74",
+        "59-2020-QH14:d46",
+        "59-2020-QH14:d73",
+        "59-2020-QH14:d199",
+        "59-2020-QH14:d17",
+        "59-2020-QH14:d217",
+        "59-2020-QH14:d22",
+        "59-2020-QH14:d37",
+        "168-2025-ND:d47",
+        "100-2019-ND-CP:d30",
+        "168-2024-ND-CP:d32",
+        "59-2020-QH14:d55"
+      ],
+      "near_miss_11_20": [
+        "59-2020-QH14:d31"
+      ],
+      "near_miss_21_30": [],
+      "completely_absent": [
+        "59-2020-QH14:d52"
+      ]
+    },
+    {
+      "stt": "80",
+      "question": "Các bác cho em hỏi: sau khi chuyển đổi từ cty TNHH 1 thành viên sang CTy Cổ phần có cần ký lại toàn bộ hợp đồng cho CBCNV không ạ?\nCác bác cho em hỏi:",
+      "category": "Loại 2: Loại hình doanh nghiệp - TNHH, Cổ phần, Hợp danh, DNTN",
+      "expected_articles": [
+        "59-2020-QH14:d203"
+      ],
+      "expected_domain": "enterprise",
+      "error_type": "tree_traversal_error",
+      "tree_domain": "enterprise",
+      "near_miss_status": "absent_from_top30",
+      "top10_domain_dist": {
+        "enterprise": 10
+      },
+      "top10_retrieved": [
+        "59-2020-QH14:d87",
+        "59-2020-QH14:d74",
+        "59-2020-QH14:d85",
+        "59-2020-QH14:d120",
+        "59-2020-QH14:d137",
+        "59-2020-QH14:d111",
+        "59-2020-QH14:d202",
+        "59-2020-QH14:d17",
+        "59-2020-QH14:d217",
+        "59-2020-QH14:d22"
+      ],
+      "tree_articles": [
+        "59-2020-QH14:d87",
+        "59-2020-QH14:d74",
+        "59-2020-QH14:d85",
+        "59-2020-QH14:d120",
+        "59-2020-QH14:d137",
+        "59-2020-QH14:d111",
+        "59-2020-QH14:d202"
+      ],
+      "kg_articles": [
+        "59-2020-QH14:d87",
+        "59-2020-QH14:d74",
+        "59-2020-QH14:d120",
+        "59-2020-QH14:d137",
+        "59-2020-QH14:d111",
+        "59-2020-QH14:d202",
+        "59-2020-QH14:d17",
+        "59-2020-QH14:d217",
+        "59-2020-QH14:d22",
+        "59-2020-QH14:d211",
+        "44-2025-ND:d1",
+        "59-2020-QH14:d123",
+        "59-2020-QH14:d191",
+        "100-2019-ND-CP:d23",
+        "01-2021-ND:d61"
+      ],
+      "near_miss_11_20": [],
+      "near_miss_21_30": [],
+      "completely_absent": [
+        "59-2020-QH14:d203"
+      ]
+    },
+    {
+      "stt": "91",
+      "question": "E chào anh/chị!! Cho e hỏi thủ tục chuyển từ CTY 1TV lên Cổ Phần thì thành phần hồ sơ gồm những mẫu nào ạ. Dạ và khi soạn hồ sơ cần lưu ý gì ko ạ\nE cả",
+      "category": "",
+      "expected_articles": [
+        "59-2020-QH14:d203"
+      ],
+      "expected_domain": "enterprise",
+      "error_type": "tree_traversal_error",
+      "tree_domain": "enterprise",
+      "near_miss_status": "absent_from_top30",
+      "top10_domain_dist": {
+        "enterprise": 10
+      },
+      "top10_retrieved": [
+        "59-2020-QH14:d74",
+        "59-2020-QH14:d76",
+        "59-2020-QH14:d77",
+        "59-2020-QH14:d87",
+        "59-2020-QH14:d111",
+        "59-2020-QH14:d112",
+        "59-2020-QH14:d113",
+        "59-2020-QH14:d29",
+        "01-2021-ND:d56",
+        "168-2025-ND:d49"
+      ],
+      "tree_articles": [
+        "59-2020-QH14:d74",
+        "59-2020-QH14:d76",
+        "59-2020-QH14:d77",
+        "59-2020-QH14:d87",
+        "59-2020-QH14:d111",
+        "59-2020-QH14:d112",
+        "59-2020-QH14:d113"
+      ],
+      "kg_articles": [
+        "59-2020-QH14:d74",
+        "59-2020-QH14:d76",
+        "59-2020-QH14:d77",
+        "59-2020-QH14:d87",
+        "59-2020-QH14:d111",
+        "59-2020-QH14:d112",
+        "59-2020-QH14:d113",
+        "59-2020-QH14:d29",
+        "01-2021-ND:d56",
+        "168-2025-ND:d49",
+        "59-2020-QH14:d123",
+        "168-2025-ND:d47",
+        "168-2025-ND:d24",
+        "168-2024-ND-CP:d40",
+        "100-2019-ND-CP:d48"
+      ],
+      "near_miss_11_20": [],
+      "near_miss_21_30": [],
+      "completely_absent": [
+        "59-2020-QH14:d203"
+      ]
+    },
+    {
+      "stt": "94",
+      "question": "Anh chị cho em hỏi ở TPHCM trong Thông báo tạm ngừng có bắt buộc điền số điện thoại đin diện không ạ? Nếu đại diện là người nước ngoài thì không phải ",
+      "category": "Loại 6: Giải thể & Phá sản - Thủ tục, thanh toán nợ, tạm ngưng",
+      "expected_articles": [
+        "59-2020-QH14:d206"
+      ],
+      "expected_domain": "enterprise",
+      "error_type": "tree_traversal_error",
+      "tree_domain": "enterprise",
+      "near_miss_status": "absent_from_top30",
+      "top10_domain_dist": {
+        "enterprise": 10
+      },
+      "top10_retrieved": [
+        "168-2025-ND:d60",
+        "01-2021-ND:d66",
+        "168-2025-ND:d37",
+        "168-2025-ND:d38",
+        "168-2025-ND:d40",
+        "168-2025-ND:d42",
+        "168-2025-ND:d46",
+        "168-2025-ND:d49",
+        "168-2025-ND:d51",
+        "168-2025-ND:d54"
+      ],
+      "tree_articles": [
+        "168-2025-ND:d60",
+        "01-2021-ND:d66"
+      ],
+      "kg_articles": [
+        "168-2025-ND:d37",
+        "168-2025-ND:d38",
+        "168-2025-ND:d40",
+        "168-2025-ND:d42",
+        "168-2025-ND:d46",
+        "168-2025-ND:d49",
+        "168-2025-ND:d51",
+        "168-2025-ND:d54",
+        "168-2025-ND:d56",
+        "168-2025-ND:d59",
+        "168-2025-ND:d62",
+        "168-2025-ND:d63",
+        "168-2025-ND:d65",
+        "168-2025-ND:d67",
+        "168-2025-ND:d70"
+      ],
+      "near_miss_11_20": [],
+      "near_miss_21_30": [],
+      "completely_absent": [
+        "59-2020-QH14:d206"
+      ]
+    },
+    {
+      "stt": "100",
+      "question": "Anh/chị cho em hỏi, công ty cổ phần mới thành lập 3 ngày, mà 1 cổ đông thông báo không góp vốn nữa thì giờ em làm giảm vốn và chuyển đổi loại hình (2t",
+      "category": "Loại 3: Vốn điều lệ - Góp vốn, tăng/giảm vốn, vốn pháp định",
+      "expected_articles": [
+        "59-2020-QH14:d112",
+        "59-2020-QH14:d113"
+      ],
+      "expected_domain": "enterprise",
+      "error_type": "tree_traversal_error",
+      "tree_domain": "enterprise",
+      "near_miss_status": "absent_from_top30",
+      "top10_domain_dist": {
+        "enterprise": 10
+      },
+      "top10_retrieved": [
+        "59-2020-QH14:d1",
+        "59-2020-QH14:d2",
+        "59-2020-QH14:d3",
+        "168-2025-ND:d52",
+        "59-2020-QH14:d203",
+        "168-2025-ND:d43",
+        "168-2025-ND:d24",
+        "47-2021-ND:d11",
+        "168-2025-ND:d84",
+        "59-2020-QH14:d55"
+      ],
+      "tree_articles": [
+        "59-2020-QH14:d1",
+        "59-2020-QH14:d2",
+        "59-2020-QH14:d3"
+      ],
+      "kg_articles": [
+        "168-2025-ND:d52",
+        "59-2020-QH14:d203",
+        "168-2025-ND:d43",
+        "168-2025-ND:d24",
+        "47-2021-ND:d11",
+        "168-2025-ND:d84",
+        "59-2020-QH14:d55",
+        "168-2025-ND:d55",
+        "59-2020-QH14:d206",
+        "59-2020-QH14:d198",
+        "168-2025-ND:d114",
+        "59-2020-QH14:d114",
+        "23-2022-ND:d13",
+        "59-2020-QH14:d211",
+        "59-2020-QH14:d123"
+      ],
+      "near_miss_11_20": [],
+      "near_miss_21_30": [],
+      "completely_absent": [
+        "59-2020-QH14:d112",
+        "59-2020-QH14:d113"
+      ]
+    },
+    {
+      "stt": "112",
+      "question": "Cả nhà cho e hỏi chút, công ty e, cty tnhh mtv, chủ sở hữu là tổ chức, đc cấp giấy CNĐT t5/25, cấp ĐKKD t8/25, cam kết góp vốn trong vòng 90 ngày kể t",
+      "category": "Loại 3: Vốn điều lệ - Góp vốn, tăng/giảm vốn, vốn pháp định",
+      "expected_articles": [
+        "59-2020-QH14:d75",
+        "59-2020-QH14:d87"
+      ],
+      "expected_domain": "enterprise",
+      "error_type": "tree_traversal_error",
+      "tree_domain": "enterprise",
+      "near_miss_status": "absent_from_top30",
+      "top10_domain_dist": {
+        "enterprise": 9,
+        "traffic": 1
+      },
+      "top10_retrieved": [
+        "59-2020-QH14:d1",
+        "59-2020-QH14:d2",
+        "59-2020-QH14:d3",
+        "168-2025-ND:d52",
+        "59-2020-QH14:d203",
+        "168-2025-ND:d43",
+        "59-2020-QH14:d30",
+        "44-2025-ND:d2",
+        "36-2024-QH15:d39",
+        "44-2025-ND:d1"
+      ],
+      "tree_articles": [
+        "59-2020-QH14:d1",
+        "59-2020-QH14:d2",
+        "59-2020-QH14:d3"
+      ],
+      "kg_articles": [
+        "168-2025-ND:d52",
+        "59-2020-QH14:d203",
+        "168-2025-ND:d43",
+        "59-2020-QH14:d30",
+        "44-2025-ND:d2",
+        "36-2024-QH15:d39",
+        "44-2025-ND:d1",
+        "59-2020-QH14:d24",
+        "248-2025-ND:d1",
+        "01-2021-ND:d89",
+        "168-2025-ND:d17",
+        "59-2020-QH14:d25",
+        "01-2021-ND:d68",
+        "59-2020-QH14:d55",
+        "01-2021-ND:d29"
+      ],
+      "near_miss_11_20": [],
+      "near_miss_21_30": [],
+      "completely_absent": [
+        "59-2020-QH14:d75",
+        "59-2020-QH14:d87"
+      ]
+    },
+    {
+      "stt": "119",
+      "question": "Giám đốc cty cũ đã ngừng hoạt động chưa hoàn tất thủ tục đóng mã số thuế (ko nợ thuế). Có được đứng giám đốc cty mới không?\nBác nào biết tháo gỡ cái n",
+      "category": "Loại 4: Người đại diện pháp luật - Điều kiện, thay đổi, trách nhiệm",
+      "expected_articles": [
+        "59-2020-QH14:d12",
+        "59-2020-QH14:d17"
+      ],
+      "expected_domain": "enterprise",
+      "error_type": "tree_traversal_error",
+      "tree_domain": "enterprise",
+      "near_miss_status": "near_miss_11_20",
+      "top10_domain_dist": {
+        "enterprise": 10
+      },
+      "top10_retrieved": [
+        "59-2020-QH14:d63",
+        "59-2020-QH14:d64",
+        "59-2020-QH14:d71",
+        "59-2020-QH14:d100",
+        "59-2020-QH14:d101",
+        "59-2020-QH14:d102",
+        "59-2020-QH14:d162",
+        "59-2020-QH14:d29",
+        "01-2021-ND:d56",
+        "168-2025-ND:d49"
+      ],
+      "tree_articles": [
+        "59-2020-QH14:d63",
+        "59-2020-QH14:d64",
+        "59-2020-QH14:d71",
+        "59-2020-QH14:d100",
+        "59-2020-QH14:d101",
+        "59-2020-QH14:d102",
+        "59-2020-QH14:d162"
+      ],
+      "kg_articles": [
+        "59-2020-QH14:d63",
+        "59-2020-QH14:d64",
+        "59-2020-QH14:d100",
+        "59-2020-QH14:d101",
+        "59-2020-QH14:d102",
+        "59-2020-QH14:d162",
+        "59-2020-QH14:d29",
+        "01-2021-ND:d56",
+        "168-2025-ND:d49",
+        "59-2020-QH14:d12",
+        "01-2021-ND:d8",
+        "44-2025-ND:d2",
+        "59-2020-QH14:d206",
+        "59-2020-QH14:d213",
+        "59-2020-QH14:d181"
+      ],
+      "near_miss_11_20": [
+        "59-2020-QH14:d12"
+      ],
+      "near_miss_21_30": [],
+      "completely_absent": [
+        "59-2020-QH14:d17"
+      ]
+    },
+    {
+      "stt": "133",
+      "question": "Chào anh/chị\nNhờ anh/chị tư vấn giúp em trường hợp:\nCông ty TNHH nhiều thành viên, 1 thành viên góp vốn chuyển nhượng 1 ít phần góp của mình thêm cho ",
+      "category": "Loại 9: Chuyển nhượng vốn/cổ phần - Mua bán, thừa kế",
+      "expected_articles": [
+        "59-2020-QH14:d51",
+        "59-2020-QH14:d52"
+      ],
+      "expected_domain": "enterprise",
+      "error_type": "tree_traversal_error",
+      "tree_domain": "enterprise",
+      "near_miss_status": "absent_from_top30",
+      "top10_domain_dist": {
+        "enterprise": 10
+      },
+      "top10_retrieved": [
+        "59-2020-QH14:d1",
+        "59-2020-QH14:d2",
+        "59-2020-QH14:d3",
+        "168-2025-ND:d43",
+        "168-2025-ND:d52",
+        "59-2020-QH14:d203",
+        "59-2020-QH14:d178",
+        "168-2025-ND:d47",
+        "59-2020-QH14:d55",
+        "59-2020-QH14:d37"
+      ],
+      "tree_articles": [
+        "59-2020-QH14:d1",
+        "59-2020-QH14:d2",
+        "59-2020-QH14:d3"
+      ],
+      "kg_articles": [
+        "168-2025-ND:d43",
+        "168-2025-ND:d52",
+        "59-2020-QH14:d203",
+        "59-2020-QH14:d178",
+        "168-2025-ND:d47",
+        "59-2020-QH14:d55",
+        "59-2020-QH14:d37",
+        "59-2020-QH14:d211",
+        "59-2020-QH14:d4",
+        "59-2020-QH14:d25",
+        "59-2020-QH14:d12",
+        "01-2021-ND:d52",
+        "59-2020-QH14:d70",
+        "36-2024-QH15:d37",
+        "59-2020-QH14:d181"
+      ],
+      "near_miss_11_20": [],
+      "near_miss_21_30": [],
+      "completely_absent": [
+        "59-2020-QH14:d51",
+        "59-2020-QH14:d52"
+      ]
+    },
+    {
+      "stt": "134",
+      "question": "A/c cho em hỏi, làm hồ sơ đổi loại hình công ty từ TNHH (1 thành viên) sang Cổ phần, tăng vốn và thêm 4 cổ đông (cho phần vốn tăng) cần những hồ sơ gi",
+      "category": "Loại 2: Loại hình doanh nghiệp - TNHH, Cổ phần, Hợp danh, DNTN",
+      "expected_articles": [
+        "59-2020-QH14:d111",
+        "59-2020-QH14:d202"
+      ],
+      "expected_domain": "enterprise",
+      "error_type": "tree_traversal_error",
+      "tree_domain": "enterprise",
+      "near_miss_status": "absent_from_top30",
+      "top10_domain_dist": {
+        "enterprise": 9,
+        "traffic": 1
+      },
+      "top10_retrieved": [
+        "59-2020-QH14:d1",
+        "59-2020-QH14:d3",
+        "168-2025-ND:d52",
+        "59-2020-QH14:d203",
+        "168-2025-ND:d43",
+        "100-2019-ND-CP:d82",
+        "01-2021-ND:d61",
+        "59-2020-QH14:d55",
+        "59-2020-QH14:d123",
+        "23-2022-ND:d51"
+      ],
+      "tree_articles": [
+        "59-2020-QH14:d1",
+        "59-2020-QH14:d3"
+      ],
+      "kg_articles": [
+        "168-2025-ND:d52",
+        "59-2020-QH14:d203",
+        "168-2025-ND:d43",
+        "100-2019-ND-CP:d82",
+        "01-2021-ND:d61",
+        "59-2020-QH14:d55",
+        "59-2020-QH14:d123",
+        "23-2022-ND:d51",
+        "59-2020-QH14:d198",
+        "23-2022-ND:d13",
+        "168-2025-ND:d47",
+        "59-2020-QH14:d211",
+        "168-2024-ND-CP:d40",
+        "100-2019-ND-CP:d51",
+        "168-2025-ND:d29"
+      ],
+      "near_miss_11_20": [],
+      "near_miss_21_30": [],
+      "completely_absent": [
+        "59-2020-QH14:d111",
+        "59-2020-QH14:d202"
+      ]
+    },
+    {
+      "stt": "135",
+      "question": "Em nộp hồ sơ thành lập mới Công ty Cổ phần và đã bị ra thông báo. Anh chị trong nhóm cho em hỏi là giờ em muốn chuyển đổi loại hình sang Công ty TNHH ",
+      "category": "Loại 1: Thành lập doanh nghiệp - Thủ tục, điều kiện, hồ sơ thành lập",
+      "expected_articles": [
+        "59-2020-QH14:d26",
+        "59-2020-QH14:d27"
+      ],
+      "expected_domain": "enterprise",
+      "error_type": "tree_traversal_error",
+      "tree_domain": "enterprise",
+      "near_miss_status": "absent_from_top30",
+      "top10_domain_dist": {
+        "enterprise": 10
+      },
+      "top10_retrieved": [
+        "59-2020-QH14:d1",
+        "59-2020-QH14:d2",
+        "59-2020-QH14:d3",
+        "168-2025-ND:d52",
+        "59-2020-QH14:d203",
+        "168-2025-ND:d43",
+        "168-2025-ND:d24",
+        "59-2020-QH14:d37",
+        "47-2021-ND:d11",
+        "59-2020-QH14:d55"
+      ],
+      "tree_articles": [
+        "59-2020-QH14:d1",
+        "59-2020-QH14:d2",
+        "59-2020-QH14:d3"
+      ],
+      "kg_articles": [
+        "168-2025-ND:d52",
+        "59-2020-QH14:d203",
+        "168-2025-ND:d43",
+        "168-2025-ND:d24",
+        "59-2020-QH14:d37",
+        "47-2021-ND:d11",
+        "59-2020-QH14:d55",
+        "36-2024-QH15:d55",
+        "168-2025-ND:d55",
+        "01-2021-ND:d37",
+        "59-2020-QH14:d123",
+        "59-2020-QH14:d198",
+        "168-2024-ND-CP:d33",
+        "23-2022-ND:d13",
+        "168-2024-ND-CP:d10"
+      ],
+      "near_miss_11_20": [],
+      "near_miss_21_30": [],
+      "completely_absent": [
+        "59-2020-QH14:d26",
+        "59-2020-QH14:d27"
+      ]
+    },
+    {
+      "stt": "136",
+      "question": "Cả nhà cho e hỏi,sau khi mình đăng ký thành công và được chấp nhận hợp lệ thì bao lâu mình mới nhận được bản chính có chữ ký của phòng đăng ký kinh do",
+      "category": "Loại 1: Thành lập doanh nghiệp - Thủ tục, điều kiện, hồ sơ thành lập",
+      "expected_articles": [
+        "59-2020-QH14:d28",
+        "59-2020-QH14:d29"
+      ],
+      "expected_domain": "enterprise",
+      "error_type": "tree_traversal_error",
+      "tree_domain": "enterprise",
+      "near_miss_status": "absent_from_top30",
+      "top10_domain_dist": {
+        "enterprise": 10
+      },
+      "top10_retrieved": [
+        "01-2021-ND:d6",
+        "01-2021-ND:d33",
+        "01-2021-ND:d34",
+        "01-2021-ND:d44",
+        "168-2025-ND:d33",
+        "168-2025-ND:d38",
+        "168-2025-ND:d39",
+        "59-2020-QH14:d206",
+        "59-2020-QH14:d30",
+        "59-2020-QH14:d44"
+      ],
+      "tree_articles": [
+        "01-2021-ND:d6",
+        "01-2021-ND:d33",
+        "01-2021-ND:d34",
+        "01-2021-ND:d44",
+        "168-2025-ND:d33",
+        "168-2025-ND:d38",
+        "168-2025-ND:d39"
+      ],
+      "kg_articles": [
+        "59-2020-QH14:d206",
+        "01-2021-ND:d6",
+        "01-2021-ND:d33",
+        "01-2021-ND:d34",
+        "01-2021-ND:d44",
+        "168-2025-ND:d33",
+        "168-2025-ND:d38",
+        "168-2025-ND:d39",
+        "59-2020-QH14:d30",
+        "59-2020-QH14:d44",
+        "59-2020-QH14:d45",
+        "59-2020-QH14:d31",
+        "01-2021-ND:d68",
+        "59-2020-QH14:d26",
+        "01-2021-ND:d46"
+      ],
+      "near_miss_11_20": [],
+      "near_miss_21_30": [],
+      "completely_absent": [
+        "59-2020-QH14:d28",
+        "59-2020-QH14:d29"
+      ]
+    },
+    {
+      "stt": "140",
+      "question": "Anh chị cho em hỏi, em cần đăng ký chuyển công ty TNHH 1 TV thành doanh nghiệp xã hội kèm theo đổi tên công ty và đổi chủ sở hữu, vậy có thể đăng ký t",
+      "category": "Loại 2: Loại hình doanh nghiệp - TNHH, Cổ phần, Hợp danh, DNTN",
+      "expected_articles": [
+        "59-2020-QH14:d10",
+        "59-2020-QH14:d30",
+        "59-2020-QH14:d37"
+      ],
+      "expected_domain": "enterprise",
+      "error_type": "tree_traversal_error",
+      "tree_domain": "enterprise",
+      "near_miss_status": "near_miss_11_20",
+      "top10_domain_dist": {
+        "enterprise": 10
+      },
+      "top10_retrieved": [
+        "59-2020-QH14:d87",
+        "59-2020-QH14:d78",
+        "59-2020-QH14:d76",
+        "59-2020-QH14:d74",
+        "59-2020-QH14:d202",
+        "01-2021-ND:d48",
+        "01-2021-ND:d53",
+        "59-2020-QH14:d17",
+        "59-2020-QH14:d217",
+        "59-2020-QH14:d22"
+      ],
+      "tree_articles": [
+        "59-2020-QH14:d87",
+        "59-2020-QH14:d78",
+        "59-2020-QH14:d76",
+        "59-2020-QH14:d74",
+        "59-2020-QH14:d202",
+        "01-2021-ND:d48",
+        "01-2021-ND:d53"
+      ],
+      "kg_articles": [
+        "59-2020-QH14:d87",
+        "59-2020-QH14:d78",
+        "59-2020-QH14:d76",
+        "59-2020-QH14:d74",
+        "59-2020-QH14:d202",
+        "01-2021-ND:d48",
+        "01-2021-ND:d53",
+        "59-2020-QH14:d17",
+        "59-2020-QH14:d217",
+        "59-2020-QH14:d22",
+        "59-2020-QH14:d37",
+        "01-2021-ND:d28",
+        "89-2024-ND:d6",
+        "100-2019-ND-CP:d40",
+        "23-2022-ND:d8"
+      ],
+      "near_miss_11_20": [
+        "59-2020-QH14:d37"
+      ],
+      "near_miss_21_30": [
+        "59-2020-QH14:d10"
+      ],
+      "completely_absent": [
+        "59-2020-QH14:d30"
+      ]
+    },
+    {
+      "stt": "144",
+      "question": "Mọi người cho em hỏi với.\nEm bị trả hồ sơ mà họ nói thêm cái này vào không biết là ngành nghề bị gì hay lí do gì mà bắt mình thêm nhỉ\nEm cảm ơn rất nh",
+      "category": "Loại 7: Thay đổi ĐKKD - Địa chỉ, tên, ngành nghề",
+      "expected_articles": [
+        "59-2020-QH14:d28",
+        "59-2020-QH14:d7"
+      ],
+      "expected_domain": "enterprise",
+      "error_type": "tree_traversal_error",
+      "tree_domain": "enterprise",
+      "near_miss_status": "near_miss_21_30",
+      "top10_domain_dist": {
+        "enterprise": 8,
+        "traffic": 2
+      },
+      "top10_retrieved": [
+        "59-2020-QH14:d17",
+        "59-2020-QH14:d23",
+        "01-2021-ND:d7",
+        "168-2025-ND:d7",
+        "168-2025-ND:d33",
+        "59-2020-QH14:d8",
+        "168-2025-ND:d24",
+        "168-2025-ND:d17",
+        "168-2024-ND-CP:d40",
+        "100-2019-ND-CP:d40"
+      ],
+      "tree_articles": [
+        "59-2020-QH14:d17",
+        "59-2020-QH14:d23",
+        "01-2021-ND:d7",
+        "168-2025-ND:d7",
+        "168-2025-ND:d33"
+      ],
+      "kg_articles": [
+        "59-2020-QH14:d17",
+        "01-2021-ND:d7",
+        "168-2025-ND:d7",
+        "168-2025-ND:d33",
+        "59-2020-QH14:d8",
+        "168-2025-ND:d24",
+        "168-2025-ND:d17",
+        "168-2024-ND-CP:d40",
+        "100-2019-ND-CP:d40",
+        "59-2020-QH14:d206",
+        "168-2024-ND-CP:d52",
+        "100-2019-ND-CP:d5",
+        "100-2019-ND-CP:d48",
+        "100-2019-ND-CP:d37",
+        "100-2019-ND-CP:d71"
+      ],
+      "near_miss_11_20": [],
+      "near_miss_21_30": [
+        "59-2020-QH14:d7"
+      ],
+      "completely_absent": [
+        "59-2020-QH14:d28"
+      ]
+    },
+    {
+      "stt": "148",
+      "question": "Dạ sếp em kêu em làm bổ sung ngành nghề kinh doanh mà em không rõ cái mục ngành nghề điền mã cấp 4 còn chi tiết là tìm ở đâu để ghi vào vậy các a/c. E",
+      "category": "Loại 7: Thay đổi ĐKKD - Địa chỉ, tên, ngành nghề",
+      "expected_articles": [
+        "59-2020-QH14:d28",
+        "59-2020-QH14:d7"
+      ],
+      "expected_domain": "enterprise",
+      "error_type": "tree_traversal_error",
+      "tree_domain": "enterprise",
+      "near_miss_status": "absent_from_top30",
+      "top10_domain_dist": {
+        "enterprise": 9,
+        "traffic": 1
+      },
+      "top10_retrieved": [
+        "168-2025-ND:d7",
+        "168-2025-ND:d24",
+        "59-2020-QH14:d17",
+        "59-2020-QH14:d208",
+        "59-2020-QH14:d207",
+        "168-2025-ND:d116",
+        "59-2020-QH14:d206",
+        "59-2020-QH14:d31",
+        "59-2020-QH14:d4",
+        "100-2019-ND-CP:d80"
+      ],
+      "tree_articles": [
+        "168-2025-ND:d7",
+        "168-2025-ND:d24"
+      ],
+      "kg_articles": [
+        "168-2025-ND:d7",
+        "168-2025-ND:d24",
+        "59-2020-QH14:d17",
+        "59-2020-QH14:d208",
+        "59-2020-QH14:d207",
+        "168-2025-ND:d116",
+        "59-2020-QH14:d206",
+        "59-2020-QH14:d31",
+        "59-2020-QH14:d4",
+        "100-2019-ND-CP:d80",
+        "168-2025-ND:d110",
+        "59-2020-QH14:d215",
+        "100-2019-ND-CP:d48",
+        "168-2024-ND-CP:d52",
+        "01-2021-ND:d88"
+      ],
+      "near_miss_11_20": [],
+      "near_miss_21_30": [],
+      "completely_absent": [
+        "59-2020-QH14:d28",
+        "59-2020-QH14:d7"
+      ]
+    },
+    {
+      "stt": "168",
+      "question": "Các anh/chị cho em hỏi em gặp tình huống như thế này ạ:\nEm làm hồ tăng vốn cho Công ty TNHH 2TV trở lên.\nFile scan hồ sơ đính kèm thông tin chuẩn với ",
+      "category": "Loại 3: Vốn điều lệ - Góp vốn, tăng/giảm vốn, vốn pháp định",
+      "expected_articles": [
+        "59-2020-QH14:d46",
+        "59-2020-QH14:d47"
+      ],
+      "expected_domain": "enterprise",
+      "error_type": "tree_traversal_error",
+      "tree_domain": "enterprise",
+      "near_miss_status": "absent_from_top30",
+      "top10_domain_dist": {
+        "enterprise": 10
+      },
+      "top10_retrieved": [
+        "59-2020-QH14:d1",
+        "59-2020-QH14:d2",
+        "59-2020-QH14:d3",
+        "168-2025-ND:d52",
+        "59-2020-QH14:d203",
+        "168-2025-ND:d43",
+        "59-2020-QH14:d178",
+        "59-2020-QH14:d55",
+        "59-2020-QH14:d37",
+        "47-2021-ND:d34"
+      ],
+      "tree_articles": [
+        "59-2020-QH14:d1",
+        "59-2020-QH14:d2",
+        "59-2020-QH14:d3"
+      ],
+      "kg_articles": [
+        "168-2025-ND:d52",
+        "59-2020-QH14:d203",
+        "168-2025-ND:d43",
+        "59-2020-QH14:d178",
+        "59-2020-QH14:d55",
+        "59-2020-QH14:d37",
+        "47-2021-ND:d34",
+        "47-2021-ND:d7",
+        "168-2024-ND-CP:d32",
+        "44-2025-ND:d1",
+        "59-2020-QH14:d25",
+        "168-2025-ND:d84",
+        "89-2024-ND:d7",
+        "59-2020-QH14:d70",
+        "23-2022-ND:d13"
+      ],
+      "near_miss_11_20": [],
+      "near_miss_21_30": [],
+      "completely_absent": [
+        "59-2020-QH14:d46",
+        "59-2020-QH14:d47"
+      ]
+    },
+    {
+      "stt": "169",
+      "question": "anh chị cho e hỏi với ạ , trang soạn thảo hồ sơ đky doanh nghiệp tại nhà sao bị mất tiêu trường đăng ký thành lập công ty rồi ạ . Anh chị nào có biểu ",
+      "category": "Loại 1: Thành lập doanh nghiệp - Thủ tục, điều kiện, hồ sơ thành lập",
+      "expected_articles": [
+        "59-2020-QH14:d26",
+        "59-2020-QH14:d27",
+        "59-2020-QH14:d28",
+        "59-2020-QH14:d29"
+      ],
+      "expected_domain": "enterprise",
+      "error_type": "tree_traversal_error",
+      "tree_domain": "enterprise",
+      "near_miss_status": "absent_from_top30",
+      "top10_domain_dist": {
+        "enterprise": 10
+      },
+      "top10_retrieved": [
+        "168-2025-ND:d24",
+        "168-2025-ND:d31",
+        "01-2021-ND:d32",
+        "01-2021-ND:d23",
+        "01-2021-ND:d24",
+        "01-2021-ND:d22",
+        "59-2020-QH14:d19",
+        "59-2020-QH14:d40",
+        "59-2020-QH14:d42",
+        "59-2020-QH14:d46"
+      ],
+      "tree_articles": [
+        "168-2025-ND:d24",
+        "168-2025-ND:d31",
+        "01-2021-ND:d32",
+        "01-2021-ND:d23",
+        "01-2021-ND:d24",
+        "01-2021-ND:d22",
+        "59-2020-QH14:d19"
+      ],
+      "kg_articles": [
+        "59-2020-QH14:d40",
+        "59-2020-QH14:d42",
+        "59-2020-QH14:d46",
+        "59-2020-QH14:d49",
+        "59-2020-QH14:d51",
+        "59-2020-QH14:d53",
+        "59-2020-QH14:d57",
+        "59-2020-QH14:d63",
+        "59-2020-QH14:d65",
+        "59-2020-QH14:d67",
+        "59-2020-QH14:d69",
+        "59-2020-QH14:d71",
+        "59-2020-QH14:d73",
+        "59-2020-QH14:d94",
+        "59-2020-QH14:d96"
+      ],
+      "near_miss_11_20": [],
+      "near_miss_21_30": [],
+      "completely_absent": [
+        "59-2020-QH14:d26",
+        "59-2020-QH14:d27",
+        "59-2020-QH14:d28",
+        "59-2020-QH14:d29"
+      ]
+    },
+    {
+      "stt": "172",
+      "question": "Mn ơi e nộp hồ sơ thành lập chi nhánh địa chỉ là số Thửa..số tờ bản đồ thì bị trả. Nhưng chỗ đó nằm trong kcn là đất nhà nước nên ko cấp số nhà. Mà e ",
+      "category": "Loại 7: Thay đổi ĐKKD - Địa chỉ, tên, ngành nghề",
+      "expected_articles": [
+        "59-2020-QH14:d42",
+        "59-2020-QH14:d45"
+      ],
+      "expected_domain": "enterprise",
+      "error_type": "tree_traversal_error",
+      "tree_domain": "enterprise",
+      "near_miss_status": "absent_from_top30",
+      "top10_domain_dist": {
+        "enterprise": 10
+      },
+      "top10_retrieved": [
+        "01-2021-ND:d20",
+        "01-2021-ND:d31",
+        "168-2025-ND:d24",
+        "168-2025-ND:d25",
+        "168-2025-ND:d26",
+        "59-2020-QH14:d17",
+        "59-2020-QH14:d28",
+        "59-2020-QH14:d44",
+        "01-2021-ND:d37",
+        "23-2022-ND:d48"
+      ],
+      "tree_articles": [
+        "01-2021-ND:d20",
+        "01-2021-ND:d31",
+        "168-2025-ND:d24",
+        "168-2025-ND:d25",
+        "168-2025-ND:d26"
+      ],
+      "kg_articles": [
+        "168-2025-ND:d24",
+        "01-2021-ND:d31",
+        "01-2021-ND:d20",
+        "59-2020-QH14:d17",
+        "59-2020-QH14:d28",
+        "59-2020-QH14:d44",
+        "01-2021-ND:d37",
+        "23-2022-ND:d48",
+        "36-2024-QH15:d39",
+        "168-2025-ND:d47",
+        "168-2025-ND:d3",
+        "100-2019-ND-CP:d51",
+        "01-2021-ND:d98",
+        "100-2019-ND-CP:d48",
+        "59-2020-QH14:d30"
+      ],
+      "near_miss_11_20": [],
+      "near_miss_21_30": [],
+      "completely_absent": [
+        "59-2020-QH14:d42",
+        "59-2020-QH14:d45"
+      ]
+    },
+    {
+      "stt": "176",
+      "question": "Công ty mình thành lập 2019. Sau đó tạm ngưng tới giờ và mình ko biết hiên tại như thế nào. Chưa có phát sinh chứng từ.\nMình kiểm tra thì báo là Ko có",
+      "category": "Loại 6: Giải thể & Phá sản - Thủ tục, thanh toán nợ, tạm ngưng",
+      "expected_articles": [
+        "59-2020-QH14:d206",
+        "59-2020-QH14:d207",
+        "59-2020-QH14:d209"
+      ],
+      "expected_domain": "enterprise",
+      "error_type": "tree_traversal_error",
+      "tree_domain": "enterprise",
+      "near_miss_status": "absent_from_top30",
+      "top10_domain_dist": {
+        "enterprise": 10
+      },
+      "top10_retrieved": [
+        "59-2020-QH14:d16",
+        "59-2020-QH14:d1",
+        "59-2020-QH14:d8",
+        "59-2020-QH14:d7",
+        "01-2021-ND:d66",
+        "01-2021-ND:d70",
+        "168-2025-ND:d60",
+        "168-2025-ND:d52",
+        "59-2020-QH14:d203",
+        "168-2025-ND:d43"
+      ],
+      "tree_articles": [
+        "59-2020-QH14:d16",
+        "59-2020-QH14:d1",
+        "59-2020-QH14:d8",
+        "59-2020-QH14:d7",
+        "01-2021-ND:d66",
+        "01-2021-ND:d70",
+        "168-2025-ND:d60"
+      ],
+      "kg_articles": [
+        "59-2020-QH14:d16",
+        "59-2020-QH14:d8",
+        "59-2020-QH14:d7",
+        "01-2021-ND:d66",
+        "168-2025-ND:d60",
+        "168-2025-ND:d52",
+        "59-2020-QH14:d203",
+        "168-2025-ND:d43",
+        "36-2024-QH15:d89",
+        "100-2019-ND-CP:d28",
+        "59-2020-QH14:d215",
+        "36-2024-QH15:d62",
+        "168-2024-ND-CP:d52",
+        "59-2020-QH14:d55",
+        "168-2025-ND:d17"
+      ],
+      "near_miss_11_20": [],
+      "near_miss_21_30": [],
+      "completely_absent": [
+        "59-2020-QH14:d206",
+        "59-2020-QH14:d207",
+        "59-2020-QH14:d209"
+      ]
+    },
+    {
+      "stt": "178",
+      "question": "Em muốn thành lập công ty con, công ty mẹ là CTCP, muốn góp 100% vốn chủ sở hữu vào công ty con. Vậy hồ sơ cần những gì ạ?",
+      "category": "Loại 1: Thành lập doanh nghiệp - Thủ tục, điều kiện, hồ sơ thành lập",
+      "expected_articles": [
+        "59-2020-QH14:d45",
+        "59-2020-QH14:d46",
+        "59-2020-QH14:d79"
+      ],
+      "expected_domain": "enterprise",
+      "error_type": "tree_traversal_error",
+      "tree_domain": "enterprise",
+      "near_miss_status": "near_miss_21_30",
+      "top10_domain_dist": {
+        "enterprise": 10
+      },
+      "top10_retrieved": [
+        "59-2020-QH14:d26",
+        "59-2020-QH14:d18",
+        "59-2020-QH14:d24",
+        "59-2020-QH14:d21",
+        "59-2020-QH14:d22",
+        "59-2020-QH14:d23",
+        "59-2020-QH14:d17",
+        "168-2025-ND:d30",
+        "168-2025-ND:d33",
+        "168-2025-ND:d35"
+      ],
+      "tree_articles": [
+        "59-2020-QH14:d26",
+        "59-2020-QH14:d18",
+        "59-2020-QH14:d24",
+        "59-2020-QH14:d21",
+        "59-2020-QH14:d22",
+        "59-2020-QH14:d23",
+        "59-2020-QH14:d17"
+      ],
+      "kg_articles": [
+        "168-2025-ND:d30",
+        "168-2025-ND:d33",
+        "168-2025-ND:d35",
+        "168-2025-ND:d38",
+        "168-2025-ND:d41",
+        "168-2025-ND:d44",
+        "168-2025-ND:d46",
+        "168-2025-ND:d52",
+        "168-2025-ND:d53",
+        "168-2025-ND:d58",
+        "168-2025-ND:d73",
+        "168-2025-ND:d75",
+        "168-2025-ND:d78",
+        "168-2025-ND:d80",
+        "168-2025-ND:d83"
+      ],
+      "near_miss_11_20": [],
+      "near_miss_21_30": [
+        "59-2020-QH14:d79"
+      ],
+      "completely_absent": [
+        "59-2020-QH14:d45",
+        "59-2020-QH14:d46"
+      ]
+    },
+    {
+      "stt": "200",
+      "question": "Chào mọi người. Mình chuyển đổi loại hình doanh nghiệp, lúc trước mình chưa cập nhật địa chỉ trụ sở với NĐDPL nên sẵn hồ sơ này mình cập nhật luôn\nTuy",
+      "category": "Loại 2: Loại hình doanh nghiệp - TNHH, Cổ phần, Hợp danh, DNTN",
+      "expected_articles": [
+        "59-2020-QH14:d199",
+        "59-2020-QH14:d202",
+        "59-2020-QH14:d203"
+      ],
+      "expected_domain": "enterprise",
+      "error_type": "tree_traversal_error",
+      "tree_domain": "enterprise",
+      "near_miss_status": "absent_from_top30",
+      "top10_domain_dist": {
+        "enterprise": 10
+      },
+      "top10_retrieved": [
+        "59-2020-QH14:d198",
+        "59-2020-QH14:d205",
+        "59-2020-QH14:d207",
+        "01-2021-ND:d47",
+        "01-2021-ND:d61",
+        "168-2025-ND:d40",
+        "168-2025-ND:d55",
+        "59-2020-QH14:d217",
+        "59-2020-QH14:d8",
+        "168-2025-ND:d70"
+      ],
+      "tree_articles": [
+        "59-2020-QH14:d198",
+        "59-2020-QH14:d205",
+        "59-2020-QH14:d207",
+        "01-2021-ND:d47",
+        "01-2021-ND:d61",
+        "168-2025-ND:d40",
+        "168-2025-ND:d55"
+      ],
+      "kg_articles": [
+        "59-2020-QH14:d198",
+        "59-2020-QH14:d205",
+        "59-2020-QH14:d207",
+        "01-2021-ND:d47",
+        "01-2021-ND:d61",
+        "168-2025-ND:d40",
+        "168-2025-ND:d55",
+        "59-2020-QH14:d217",
+        "59-2020-QH14:d8",
+        "168-2025-ND:d70",
+        "36-2024-QH15:d62",
+        "36-2024-QH15:d89",
+        "100-2019-ND-CP:d25",
+        "59-2020-QH14:d149",
+        "59-2020-QH14:d30"
+      ],
+      "near_miss_11_20": [],
+      "near_miss_21_30": [],
+      "completely_absent": [
+        "59-2020-QH14:d199",
+        "59-2020-QH14:d202",
+        "59-2020-QH14:d203"
+      ]
+    },
+    {
+      "stt": "212",
+      "question": "Em chào anh chị ạ, em nộp hồ sơ thay đổi người đại diện pháp luật cho công ty TNHH.\nCông ty đó có chủ sở hữu cũng là người đại diện pháp luật hiện tại",
+      "category": "Loại 4: Người đại diện pháp luật - Điều kiện, thay đổi, trách nhiệm",
+      "expected_articles": [
+        "59-2020-QH14:d12",
+        "59-2020-QH14:d80"
+      ],
+      "expected_domain": "enterprise",
+      "error_type": "tree_traversal_error",
+      "tree_domain": "enterprise",
+      "near_miss_status": "near_miss_11_20",
+      "top10_domain_dist": {
+        "enterprise": 9,
+        "traffic": 1
+      },
+      "top10_retrieved": [
+        "59-2020-QH14:d79",
+        "59-2020-QH14:d81",
+        "59-2020-QH14:d82",
+        "01-2021-ND:d50",
+        "59-2020-QH14:d29",
+        "01-2021-ND:d56",
+        "168-2025-ND:d49",
+        "59-2020-QH14:d30",
+        "36-2024-QH15:d39",
+        "59-2020-QH14:d25"
+      ],
+      "tree_articles": [
+        "59-2020-QH14:d79",
+        "59-2020-QH14:d81",
+        "59-2020-QH14:d82",
+        "01-2021-ND:d50"
+      ],
+      "kg_articles": [
+        "59-2020-QH14:d79",
+        "59-2020-QH14:d81",
+        "59-2020-QH14:d82",
+        "01-2021-ND:d50",
+        "59-2020-QH14:d29",
+        "01-2021-ND:d56",
+        "168-2025-ND:d49",
+        "59-2020-QH14:d30",
+        "36-2024-QH15:d39",
+        "59-2020-QH14:d25",
+        "59-2020-QH14:d37",
+        "248-2025-ND:d3",
+        "168-2025-ND:d43",
+        "100-2019-ND-CP:d57",
+        "89-2024-ND:d6"
+      ],
+      "near_miss_11_20": [
+        "59-2020-QH14:d12"
+      ],
+      "near_miss_21_30": [],
+      "completely_absent": [
+        "59-2020-QH14:d80"
+      ]
+    },
+    {
+      "stt": "220",
+      "question": "Mọi người cho e hỏi là e muốn chuyển đổi từ cty 1tv thành cty 2tv, thành viên mới sẽ góp thêm vốn bằng tài sản thì cần làm mấy bộ hồ sơ và thành phần ",
+      "category": "Loại 2: Loại hình doanh nghiệp - TNHH, Cổ phần, Hợp danh, DNTN",
+      "expected_articles": [
+        "59-2020-QH14:d202",
+        "59-2020-QH14:d34",
+        "59-2020-QH14:d35"
+      ],
+      "expected_domain": "enterprise",
+      "error_type": "tree_traversal_error",
+      "tree_domain": "enterprise",
+      "near_miss_status": "absent_from_top30",
+      "top10_domain_dist": {
+        "enterprise": 10
+      },
+      "top10_retrieved": [
+        "59-2020-QH14:d1",
+        "59-2020-QH14:d4",
+        "59-2020-QH14:d8",
+        "59-2020-QH14:d87",
+        "59-2020-QH14:d78",
+        "59-2020-QH14:d47",
+        "59-2020-QH14:d68",
+        "168-2025-ND:d52",
+        "59-2020-QH14:d203",
+        "168-2025-ND:d43"
+      ],
+      "tree_articles": [
+        "59-2020-QH14:d1",
+        "59-2020-QH14:d4",
+        "59-2020-QH14:d8",
+        "59-2020-QH14:d87",
+        "59-2020-QH14:d78",
+        "59-2020-QH14:d47",
+        "59-2020-QH14:d68"
+      ],
+      "kg_articles": [
+        "59-2020-QH14:d4",
+        "59-2020-QH14:d47",
+        "59-2020-QH14:d8",
+        "59-2020-QH14:d87",
+        "59-2020-QH14:d78",
+        "59-2020-QH14:d68",
+        "168-2025-ND:d52",
+        "59-2020-QH14:d203",
+        "168-2025-ND:d43",
+        "01-2021-ND:d52",
+        "59-2020-QH14:d181",
+        "59-2020-QH14:d211",
+        "01-2021-ND:d61",
+        "168-2025-ND:d47",
+        "23-2022-ND:d3"
+      ],
+      "near_miss_11_20": [],
+      "near_miss_21_30": [],
+      "completely_absent": [
+        "59-2020-QH14:d202",
+        "59-2020-QH14:d34",
+        "59-2020-QH14:d35"
+      ]
+    },
+    {
+      "stt": "224",
+      "question": "Chào mn, công ty TNHH MTV A có chủ sở hữu là cty nước ngoài B (cũng TNHH MTV). Bây giờ em cần làm thủ tục tăng vốn do CSH góp vốn thêm thì em đang vướ",
+      "category": "Loại 3: Vốn điều lệ - Góp vốn, tăng/giảm vốn, vốn pháp định",
+      "expected_articles": [
+        "59-2020-QH14:d68",
+        "59-2020-QH14:d79"
+      ],
+      "expected_domain": "enterprise",
+      "error_type": "tree_traversal_error",
+      "tree_domain": "enterprise",
+      "near_miss_status": "absent_from_top30",
+      "top10_domain_dist": {
+        "enterprise": 9,
+        "traffic": 1
+      },
+      "top10_retrieved": [
+        "59-2020-QH14:d1",
+        "59-2020-QH14:d2",
+        "59-2020-QH14:d3",
+        "168-2025-ND:d52",
+        "59-2020-QH14:d203",
+        "168-2025-ND:d43",
+        "59-2020-QH14:d37",
+        "59-2020-QH14:d55",
+        "59-2020-QH14:d24",
+        "100-2019-ND-CP:d57"
+      ],
+      "tree_articles": [
+        "59-2020-QH14:d1",
+        "59-2020-QH14:d2",
+        "59-2020-QH14:d3"
+      ],
+      "kg_articles": [
+        "168-2025-ND:d52",
+        "59-2020-QH14:d203",
+        "168-2025-ND:d43",
+        "59-2020-QH14:d37",
+        "59-2020-QH14:d55",
+        "59-2020-QH14:d24",
+        "100-2019-ND-CP:d57",
+        "168-2025-ND:d17",
+        "100-2019-ND-CP:d40",
+        "44-2025-ND:d2",
+        "168-2024-ND-CP:d32",
+        "59-2020-QH14:d211",
+        "59-2020-QH14:d144",
+        "248-2025-ND:d1",
+        "59-2020-QH14:d43"
+      ],
+      "near_miss_11_20": [],
+      "near_miss_21_30": [],
+      "completely_absent": [
+        "59-2020-QH14:d68",
+        "59-2020-QH14:d79"
+      ]
+    },
+    {
+      "stt": "243",
+      "question": "Các bác cho em hỏi, Cty tnhh 2 tv, ông A chuyển nhượng vốn cho ông B (không làm tăng vốn điều lệ - chuyển nhượng ngang giá); thì giữa ông A và B cần l",
+      "category": "Loại 9: Chuyển nhượng vốn/cổ phần - Mua bán, thừa kế",
+      "expected_articles": [
+        "59-2020-QH14:d52",
+        "59-2020-QH14:d53"
+      ],
+      "expected_domain": "enterprise",
+      "error_type": "tree_traversal_error",
+      "tree_domain": "enterprise",
+      "near_miss_status": "absent_from_top30",
+      "top10_domain_dist": {
+        "enterprise": 10
+      },
+      "top10_retrieved": [
+        "59-2020-QH14:d1",
+        "59-2020-QH14:d2",
+        "59-2020-QH14:d3",
+        "59-2020-QH14:d33",
+        "59-2020-QH14:d35",
+        "59-2020-QH14:d38",
+        "59-2020-QH14:d44",
+        "59-2020-QH14:d46",
+        "59-2020-QH14:d47",
+        "59-2020-QH14:d59"
+      ],
+      "tree_articles": [
+        "59-2020-QH14:d1",
+        "59-2020-QH14:d2",
+        "59-2020-QH14:d3"
+      ],
+      "kg_articles": [
+        "59-2020-QH14:d33",
+        "59-2020-QH14:d35",
+        "59-2020-QH14:d38",
+        "59-2020-QH14:d44",
+        "59-2020-QH14:d46",
+        "59-2020-QH14:d47",
+        "59-2020-QH14:d59",
+        "59-2020-QH14:d61",
+        "59-2020-QH14:d63",
+        "59-2020-QH14:d66",
+        "59-2020-QH14:d69",
+        "59-2020-QH14:d72",
+        "59-2020-QH14:d75",
+        "59-2020-QH14:d77",
+        "59-2020-QH14:d78"
+      ],
+      "near_miss_11_20": [],
+      "near_miss_21_30": [],
+      "completely_absent": [
+        "59-2020-QH14:d52",
+        "59-2020-QH14:d53"
+      ]
+    },
+    {
+      "stt": "246",
+      "question": "Các ac trong nhóm cho em hỏi: em mới thành lập công ty tnhh 2 thành viên ngày 1/8, lúc đăng ký vốn điều lệ là 10 tỷ, nhưng đến nay mới nộp vào tài kho",
+      "category": "Loại 3: Vốn điều lệ - Góp vốn, tăng/giảm vốn, vốn pháp định",
+      "expected_articles": [
+        "59-2020-QH14:d47",
+        "59-2020-QH14:d68"
+      ],
+      "expected_domain": "enterprise",
+      "error_type": "tree_traversal_error",
+      "tree_domain": "enterprise",
+      "near_miss_status": "absent_from_top30",
+      "top10_domain_dist": {
+        "enterprise": 9,
+        "traffic": 1
+      },
+      "top10_retrieved": [
+        "59-2020-QH14:d1",
+        "59-2020-QH14:d2",
+        "59-2020-QH14:d3",
+        "168-2025-ND:d43",
+        "168-2025-ND:d52",
+        "59-2020-QH14:d203",
+        "59-2020-QH14:d55",
+        "59-2020-QH14:d37",
+        "44-2025-ND:d1",
+        "36-2024-QH15:d39"
+      ],
+      "tree_articles": [
+        "59-2020-QH14:d1",
+        "59-2020-QH14:d2",
+        "59-2020-QH14:d3"
+      ],
+      "kg_articles": [
+        "168-2025-ND:d43",
+        "168-2025-ND:d52",
+        "59-2020-QH14:d203",
+        "59-2020-QH14:d55",
+        "59-2020-QH14:d37",
+        "44-2025-ND:d1",
+        "36-2024-QH15:d39",
+        "01-2021-ND:d61",
+        "168-2024-ND-CP:d32",
+        "100-2019-ND-CP:d30",
+        "59-2020-QH14:d30",
+        "23-2022-ND:d13",
+        "59-2020-QH14:d211",
+        "89-2024-ND:d7",
+        "168-2025-ND:d20"
+      ],
+      "near_miss_11_20": [],
+      "near_miss_21_30": [],
+      "completely_absent": [
+        "59-2020-QH14:d47",
+        "59-2020-QH14:d68"
+      ]
+    },
+    {
+      "stt": "251",
+      "question": "Mọi người cho em hỏi trường hợp công ty 1 thành viên 100% vốn đầu tư nước ngoài, chưa hết 90 ngày kể từ ngày cấp giấy chứng nhận đầu tư thì có làm giả",
+      "category": "Loại 3: Vốn điều lệ - Góp vốn, tăng/giảm vốn, vốn pháp định",
+      "expected_articles": [
+        "59-2020-QH14:d47",
+        "59-2020-QH14:d68"
+      ],
+      "expected_domain": "enterprise",
+      "error_type": "tree_traversal_error",
+      "tree_domain": "enterprise",
+      "near_miss_status": "absent_from_top30",
+      "top10_domain_dist": {
+        "enterprise": 8,
+        "traffic": 2
+      },
+      "top10_retrieved": [
+        "59-2020-QH14:d1",
+        "59-2020-QH14:d2",
+        "59-2020-QH14:d3",
+        "168-2025-ND:d52",
+        "59-2020-QH14:d203",
+        "168-2025-ND:d43",
+        "100-2019-ND-CP:d50",
+        "59-2020-QH14:d55",
+        "44-2025-ND:d1",
+        "100-2019-ND-CP:d58"
+      ],
+      "tree_articles": [
+        "59-2020-QH14:d1",
+        "59-2020-QH14:d2",
+        "59-2020-QH14:d3"
+      ],
+      "kg_articles": [
+        "168-2025-ND:d52",
+        "59-2020-QH14:d203",
+        "168-2025-ND:d43",
+        "100-2019-ND-CP:d50",
+        "59-2020-QH14:d55",
+        "44-2025-ND:d1",
+        "100-2019-ND-CP:d58",
+        "59-2020-QH14:d178",
+        "01-2021-ND:d40",
+        "59-2020-QH14:d11",
+        "36-2024-QH15:d42",
+        "01-2021-ND:d61",
+        "89-2024-ND:d6",
+        "23-2022-ND:d48",
+        "168-2024-ND-CP:d13"
+      ],
+      "near_miss_11_20": [],
+      "near_miss_21_30": [],
+      "completely_absent": [
+        "59-2020-QH14:d47",
+        "59-2020-QH14:d68"
+      ]
+    },
+    {
+      "stt": "257",
+      "question": "Anh chị ơi em có một số lăn tăn ban đầu nhờ anh chị hỗ trợ giúp em với ạ:\n1. Bản PDF trên trang đăng ký kinh doanh điện tử em thấy không có mộc nên sẽ",
+      "category": "Loại 1: Thành lập doanh nghiệp - Thủ tục, điều kiện, hồ sơ thành lập",
+      "expected_articles": [
+        "59-2020-QH14:d30",
+        "59-2020-QH14:d32"
+      ],
+      "expected_domain": "enterprise",
+      "error_type": "tree_traversal_error",
+      "tree_domain": "enterprise",
+      "near_miss_status": "absent_from_top30",
+      "top10_domain_dist": {
+        "enterprise": 5,
+        "traffic": 5
+      },
+      "top10_retrieved": [
+        "168-2025-ND:d37",
+        "168-2025-ND:d122",
+        "59-2020-QH14:d4",
+        "59-2020-QH14:d27",
+        "100-2019-ND-CP:d25",
+        "36-2024-QH15:d62",
+        "100-2019-ND-CP:d81",
+        "168-2024-ND-CP:d34",
+        "89-2024-ND:d6",
+        "168-2024-ND-CP:d39"
+      ],
+      "tree_articles": [
+        "168-2025-ND:d37",
+        "168-2025-ND:d122"
+      ],
+      "kg_articles": [
+        "59-2020-QH14:d4",
+        "168-2025-ND:d37",
+        "168-2025-ND:d122",
+        "59-2020-QH14:d27",
+        "100-2019-ND-CP:d25",
+        "36-2024-QH15:d62",
+        "100-2019-ND-CP:d81",
+        "168-2024-ND-CP:d34",
+        "89-2024-ND:d6",
+        "168-2024-ND-CP:d39",
+        "168-2024-ND-CP:d32",
+        "01-2021-ND:d68",
+        "168-2024-ND-CP:d5",
+        "168-2025-ND:d110",
+        "168-2025-ND:d72"
+      ],
+      "near_miss_11_20": [],
+      "near_miss_21_30": [],
+      "completely_absent": [
+        "59-2020-QH14:d30",
+        "59-2020-QH14:d32"
+      ]
+    },
+    {
+      "stt": "261",
+      "question": "Công ty em bị cảnh báo không hoạt động tại địa chỉ đã đăng ký nhưng đã làm việc với thuế và cập nhật trạng thái đang hoạt động. Tuy nhiên khi vào hệ t",
+      "category": "Loại 6: Giải thể & Phá sản - Thủ tục, thanh toán nợ, tạm ngưng",
+      "expected_articles": [
+        "59-2020-QH14:d209",
+        "59-2020-QH14:d212"
+      ],
+      "expected_domain": "enterprise",
+      "error_type": "tree_traversal_error",
+      "tree_domain": "enterprise",
+      "near_miss_status": "absent_from_top30",
+      "top10_domain_dist": {
+        "enterprise": 9,
+        "traffic": 1
+      },
+      "top10_retrieved": [
+        "01-2021-ND:d69",
+        "01-2021-ND:d75",
+        "01-2021-ND:d76",
+        "168-2025-ND:d63",
+        "168-2025-ND:d69",
+        "168-2025-ND:d70",
+        "59-2020-QH14:d208",
+        "59-2020-QH14:d207",
+        "168-2025-ND:d17",
+        "100-2019-ND-CP:d48"
+      ],
+      "tree_articles": [
+        "01-2021-ND:d69",
+        "01-2021-ND:d75",
+        "01-2021-ND:d76",
+        "168-2025-ND:d63",
+        "168-2025-ND:d69",
+        "168-2025-ND:d70"
+      ],
+      "kg_articles": [
+        "01-2021-ND:d69",
+        "168-2025-ND:d63",
+        "59-2020-QH14:d208",
+        "59-2020-QH14:d207",
+        "168-2025-ND:d17",
+        "100-2019-ND-CP:d48",
+        "36-2024-QH15:d39",
+        "100-2019-ND-CP:d61",
+        "59-2020-QH14:d55",
+        "168-2025-ND:d64",
+        "01-2021-ND:d37",
+        "23-2022-ND:d12",
+        "01-2021-ND:d29",
+        "16-2023-ND:d10",
+        "59-2020-QH14:d206"
+      ],
+      "near_miss_11_20": [],
+      "near_miss_21_30": [],
+      "completely_absent": [
+        "59-2020-QH14:d209",
+        "59-2020-QH14:d212"
+      ]
+    },
+    {
+      "stt": "284",
+      "question": "Cần hỗ trợ tư vấn làm lại đăng ký kinh doanh\nCông ty mình là TNHH 2 thành viên . Bạn mình là đại diện pháp luật mất rồi , Cần hỗ trợ thay người đại di",
+      "category": "Loại 4: Người đại diện pháp luật - Điều kiện, thay đổi, trách nhiệm",
+      "expected_articles": [
+        "59-2020-QH14:d12",
+        "59-2020-QH14:d30"
+      ],
+      "expected_domain": "enterprise",
+      "error_type": "tree_traversal_error",
+      "tree_domain": "enterprise",
+      "near_miss_status": "near_miss_11_20",
+      "top10_domain_dist": {
+        "enterprise": 10
+      },
+      "top10_retrieved": [
+        "59-2020-QH14:d55",
+        "59-2020-QH14:d46",
+        "59-2020-QH14:d64",
+        "59-2020-QH14:d54",
+        "59-2020-QH14:d71",
+        "01-2021-ND:d50",
+        "168-2025-ND:d43",
+        "59-2020-QH14:d26",
+        "01-2021-ND:d44",
+        "168-2025-ND:d37"
+      ],
+      "tree_articles": [
+        "59-2020-QH14:d55",
+        "59-2020-QH14:d46",
+        "59-2020-QH14:d64",
+        "59-2020-QH14:d54",
+        "59-2020-QH14:d71",
+        "01-2021-ND:d50",
+        "168-2025-ND:d43"
+      ],
+      "kg_articles": [
+        "59-2020-QH14:d55",
+        "168-2025-ND:d43",
+        "59-2020-QH14:d64",
+        "59-2020-QH14:d26",
+        "59-2020-QH14:d46",
+        "59-2020-QH14:d54",
+        "01-2021-ND:d50",
+        "01-2021-ND:d44",
+        "168-2025-ND:d37",
+        "59-2020-QH14:d12",
+        "89-2024-ND:d6",
+        "01-2021-ND:d68",
+        "168-2025-ND:d110",
+        "168-2025-ND:d72",
+        "248-2025-ND:d3"
+      ],
+      "near_miss_11_20": [
+        "59-2020-QH14:d12"
+      ],
+      "near_miss_21_30": [
+        "59-2020-QH14:d30"
+      ],
+      "completely_absent": []
+    },
+    {
+      "stt": "289",
+      "question": "Dạ anh chị cho em hỏi nhờ mình muốn chuyển hộ kinh doanh sang công ty TNHH 2 thành viên thì hồ sơ gồm những gì ạ. Em cảm ơn ạ",
+      "category": "Loại 5: Hộ kinh doanh - Đăng ký, thay đổi, chuyển đổi HKD",
+      "expected_articles": [
+        "59-2020-QH14:d21",
+        "59-2020-QH14:d24",
+        "59-2020-QH14:d25"
+      ],
+      "expected_domain": "enterprise",
+      "error_type": "tree_traversal_error",
+      "tree_domain": "enterprise",
+      "near_miss_status": "absent_from_top30",
+      "top10_domain_dist": {
+        "enterprise": 10
+      },
+      "top10_retrieved": [
+        "59-2020-QH14:d46",
+        "59-2020-QH14:d47",
+        "59-2020-QH14:d48",
+        "59-2020-QH14:d54",
+        "59-2020-QH14:d55",
+        "01-2021-ND:d23",
+        "01-2021-ND:d27",
+        "59-2020-QH14:d26",
+        "59-2020-QH14:d203",
+        "168-2025-ND:d37"
+      ],
+      "tree_articles": [
+        "59-2020-QH14:d46",
+        "59-2020-QH14:d47",
+        "59-2020-QH14:d48",
+        "59-2020-QH14:d54",
+        "59-2020-QH14:d55",
+        "01-2021-ND:d23",
+        "01-2021-ND:d27"
+      ],
+      "kg_articles": [
+        "59-2020-QH14:d55",
+        "59-2020-QH14:d46",
+        "59-2020-QH14:d47",
+        "59-2020-QH14:d54",
+        "01-2021-ND:d23",
+        "01-2021-ND:d27",
+        "59-2020-QH14:d26",
+        "59-2020-QH14:d203",
+        "168-2025-ND:d37",
+        "01-2021-ND:d44",
+        "01-2021-ND:d88",
+        "168-2025-ND:d116",
+        "168-2025-ND:d110",
+        "01-2021-ND:d89",
+        "59-2020-QH14:d37"
+      ],
+      "near_miss_11_20": [],
+      "near_miss_21_30": [],
+      "completely_absent": [
+        "59-2020-QH14:d21",
+        "59-2020-QH14:d24",
+        "59-2020-QH14:d25"
+      ]
+    },
+    {
+      "stt": "335",
+      "question": "dạ anh chị cho em hỏi trường hợp này với ạ.\nCá nhân người Nhật Bản, muốn đầu tư vào Việt Nam dịch vụ kiến trúc, có thể thành lập công ty 100% vốn đầu ",
+      "category": "Loại 10: Doanh nghiệp FDI - Vốn nước ngoài, tỷ lệ sở hữu",
+      "expected_articles": [
+        "59-2020-QH14:d22",
+        "59-2020-QH14:d8"
+      ],
+      "expected_domain": "enterprise",
+      "error_type": "tree_traversal_error",
+      "tree_domain": "enterprise",
+      "near_miss_status": "absent_from_top30",
+      "top10_domain_dist": {
+        "enterprise": 10
+      },
+      "top10_retrieved": [
+        "59-2020-QH14:d1",
+        "59-2020-QH14:d2",
+        "59-2020-QH14:d3",
+        "59-2020-QH14:d4",
+        "59-2020-QH14:d7",
+        "59-2020-QH14:d16",
+        "59-2020-QH14:d17",
+        "168-2025-ND:d52",
+        "59-2020-QH14:d203",
+        "168-2025-ND:d43"
+      ],
+      "tree_articles": [
+        "59-2020-QH14:d1",
+        "59-2020-QH14:d2",
+        "59-2020-QH14:d3",
+        "59-2020-QH14:d4",
+        "59-2020-QH14:d7",
+        "59-2020-QH14:d16",
+        "59-2020-QH14:d17"
+      ],
+      "kg_articles": [
+        "59-2020-QH14:d4",
+        "59-2020-QH14:d7",
+        "59-2020-QH14:d16",
+        "59-2020-QH14:d17",
+        "168-2025-ND:d52",
+        "59-2020-QH14:d203",
+        "168-2025-ND:d43",
+        "59-2020-QH14:d55",
+        "168-2024-ND-CP:d20",
+        "59-2020-QH14:d9",
+        "59-2020-QH14:d186",
+        "01-2021-ND:d61",
+        "47-2021-ND:d30",
+        "168-2024-ND-CP:d52",
+        "168-2025-ND:d45"
+      ],
+      "near_miss_11_20": [],
+      "near_miss_21_30": [],
+      "completely_absent": [
+        "59-2020-QH14:d22",
+        "59-2020-QH14:d8"
+      ]
+    },
+    {
+      "stt": "346",
+      "question": "Em chào admin và các anh chị trong nhóm ạ. Ad và a/c trong nhóm cho e hỏi với, Công ty TNHH 1 TV làm thay đổi chủ sở hữu và người đại diện theo pháp l",
+      "category": "Loại 9: Chuyển nhượng vốn/cổ phần - Mua bán, thừa kế",
+      "expected_articles": [
+        "59-2020-QH14:d12",
+        "59-2020-QH14:d30",
+        "59-2020-QH14:d78"
+      ],
+      "expected_domain": "enterprise",
+      "error_type": "tree_traversal_error",
+      "tree_domain": "enterprise",
+      "near_miss_status": "near_miss_11_20",
+      "top10_domain_dist": {
+        "enterprise": 10
+      },
+      "top10_retrieved": [
+        "59-2020-QH14:d79",
+        "59-2020-QH14:d85",
+        "59-2020-QH14:d81",
+        "59-2020-QH14:d82",
+        "01-2021-ND:d53",
+        "01-2021-ND:d50",
+        "168-2025-ND:d43",
+        "59-2020-QH14:d29",
+        "01-2021-ND:d56",
+        "168-2025-ND:d49"
+      ],
+      "tree_articles": [
+        "59-2020-QH14:d79",
+        "59-2020-QH14:d85",
+        "59-2020-QH14:d81",
+        "59-2020-QH14:d82",
+        "01-2021-ND:d53",
+        "01-2021-ND:d50",
+        "168-2025-ND:d43"
+      ],
+      "kg_articles": [
+        "168-2025-ND:d43",
+        "59-2020-QH14:d79",
+        "59-2020-QH14:d81",
+        "59-2020-QH14:d82",
+        "01-2021-ND:d53",
+        "01-2021-ND:d50",
+        "59-2020-QH14:d29",
+        "01-2021-ND:d56",
+        "168-2025-ND:d49",
+        "59-2020-QH14:d30",
+        "36-2024-QH15:d39",
+        "59-2020-QH14:d37",
+        "248-2025-ND:d3",
+        "168-2024-ND-CP:d14",
+        "89-2024-ND:d10"
+      ],
+      "near_miss_11_20": [
+        "59-2020-QH14:d30"
+      ],
+      "near_miss_21_30": [],
+      "completely_absent": [
+        "59-2020-QH14:d12",
+        "59-2020-QH14:d78"
+      ]
+    },
+    {
+      "stt": "370",
+      "question": "Dạ Anh/ chị cho em hỏi, bên em có trụ sở hộ kinh doanh ở NT, giờ muốn mở thêm địa điểm kinh doanh ở ĐN, thì có được không ạ. Bên em kinh doanh online,",
+      "category": "Loại 1: Thành lập doanh nghiệp - Thủ tục, điều kiện, hồ sơ thành lập",
+      "expected_articles": [
+        "01-2021-ND:d84",
+        "59-2020-QH14:d44"
+      ],
+      "expected_domain": "enterprise",
+      "error_type": "tree_traversal_error",
+      "tree_domain": "enterprise",
+      "near_miss_status": "absent_from_top30",
+      "top10_domain_dist": {
+        "enterprise": 10
+      },
+      "top10_retrieved": [
+        "01-2021-ND:d86",
+        "168-2025-ND:d87",
+        "168-2025-ND:d116",
+        "01-2021-ND:d88",
+        "168-2025-ND:d110",
+        "01-2021-ND:d89",
+        "168-2025-ND:d85",
+        "01-2021-ND:d90",
+        "168-2025-ND:d71",
+        "01-2021-ND:d68"
+      ],
+      "tree_articles": [
+        "01-2021-ND:d86",
+        "168-2025-ND:d87"
+      ],
+      "kg_articles": [
+        "168-2025-ND:d87",
+        "01-2021-ND:d86",
+        "168-2025-ND:d116",
+        "01-2021-ND:d88",
+        "168-2025-ND:d110",
+        "01-2021-ND:d89",
+        "168-2025-ND:d85",
+        "01-2021-ND:d90",
+        "168-2025-ND:d71",
+        "01-2021-ND:d68",
+        "01-2021-ND:d16",
+        "168-2025-ND:d113",
+        "168-2025-ND:d123",
+        "59-2020-QH14:d9",
+        "168-2025-ND:d99"
+      ],
+      "near_miss_11_20": [],
+      "near_miss_21_30": [],
+      "completely_absent": [
+        "01-2021-ND:d84",
+        "59-2020-QH14:d44"
+      ]
+    },
+    {
+      "stt": "410",
+      "question": "Các bác có ai ở Thanh Hoá k ạ\nTrước đây em bị CSGT huyện Như Xuân bắt, cho em hỏi trụ sở hiện tại chuyển về đâu ạ, em cảm ơn",
+      "category": "thông tin liên hệ cơ quan chức năng",
+      "expected_articles": [
+        "168-2024-ND-CP:d41",
+        "168-2024-ND-CP:d43"
+      ],
+      "expected_domain": "traffic",
+      "error_type": "tree_traversal_error",
+      "tree_domain": "unknown",
+      "near_miss_status": "near_miss_21_30",
+      "top10_domain_dist": {
+        "enterprise": 6,
+        "traffic": 4
+      },
+      "top10_retrieved": [
+        "168-2025-ND:d87",
+        "59-2020-QH14:d149",
+        "59-2020-QH14:d197",
+        "168-2025-ND:d116",
+        "59-2020-QH14:d83",
+        "59-2020-QH14:d30",
+        "36-2024-QH15:d49",
+        "168-2024-ND-CP:d47",
+        "100-2019-ND-CP:d5",
+        "168-2024-ND-CP:d27"
+      ],
+      "tree_articles": [],
+      "kg_articles": [
+        "168-2025-ND:d87",
+        "59-2020-QH14:d149",
+        "59-2020-QH14:d197",
+        "168-2025-ND:d116",
+        "59-2020-QH14:d83",
+        "59-2020-QH14:d30",
+        "36-2024-QH15:d49",
+        "168-2024-ND-CP:d47",
+        "100-2019-ND-CP:d5",
+        "168-2024-ND-CP:d27",
+        "100-2019-ND-CP:d77",
+        "168-2024-ND-CP:d44",
+        "168-2024-ND-CP:d8",
+        "100-2019-ND-CP:d6",
+        "168-2024-ND-CP:d21"
+      ],
+      "near_miss_11_20": [],
+      "near_miss_21_30": [
+        "168-2024-ND-CP:d41"
+      ],
+      "completely_absent": [
+        "168-2024-ND-CP:d43"
+      ]
+    },
+    {
+      "stt": "437",
+      "question": "Em đi xe 50cc bị công an thu xe do không xuất trình được cà vẹt, mà em chưa kí biên bản nên họ không đưa biên bản phạt cho em .Vậy không có biên bản v",
+      "category": "thủ tục hành chính giao thông",
+      "expected_articles": [
+        "168-2024-ND-CP:d14",
+        "168-2024-ND-CP:d47",
+        "168-2024-ND-CP:d48"
+      ],
+      "expected_domain": "traffic",
+      "error_type": "tree_traversal_error",
+      "tree_domain": "traffic",
+      "near_miss_status": "near_miss_11_20",
+      "top10_domain_dist": {
+        "traffic": 9,
+        "enterprise": 1
+      },
+      "top10_retrieved": [
+        "36-2024-QH15:d56",
+        "36-2024-QH15:d57",
+        "36-2024-QH15:d58",
+        "36-2024-QH15:d65",
+        "36-2024-QH15:d66",
+        "36-2024-QH15:d67",
+        "168-2024-ND-CP:d6",
+        "168-2024-ND-CP:d7",
+        "36-2024-QH15:d9",
+        "59-2020-QH14:d150"
+      ],
+      "tree_articles": [
+        "36-2024-QH15:d56",
+        "36-2024-QH15:d57",
+        "36-2024-QH15:d58",
+        "36-2024-QH15:d65",
+        "36-2024-QH15:d66",
+        "36-2024-QH15:d67",
+        "168-2024-ND-CP:d6"
+      ],
+      "kg_articles": [
+        "36-2024-QH15:d56",
+        "36-2024-QH15:d57",
+        "36-2024-QH15:d58",
+        "36-2024-QH15:d65",
+        "36-2024-QH15:d66",
+        "36-2024-QH15:d67",
+        "168-2024-ND-CP:d6",
+        "168-2024-ND-CP:d7",
+        "36-2024-QH15:d9",
+        "59-2020-QH14:d150",
+        "100-2019-ND-CP:d81",
+        "100-2019-ND-CP:d82",
+        "36-2024-QH15:d63",
+        "168-2024-ND-CP:d20",
+        "168-2024-ND-CP:d14"
+      ],
+      "near_miss_11_20": [
+        "168-2024-ND-CP:d14"
+      ],
+      "near_miss_21_30": [
+        "168-2024-ND-CP:d48"
+      ],
+      "completely_absent": [
+        "168-2024-ND-CP:d47"
+      ]
+    },
+    {
+      "stt": "442",
+      "question": "Xe mua cũ lâu rồi lúc mua chỉ viết giấy tay , có cavet xe nhưng người khác đứng tên vs mất liên lạc chủ củ , nay em bị vphc giam xe có nộp phạt được l",
+      "category": "thủ tục hành chính giao thông",
+      "expected_articles": [
+        "100-2019-ND-CP:d17",
+        "100-2019-ND-CP:d80",
+        "100-2019-ND-CP:d82",
+        "168-2024-ND-CP:d14",
+        "168-2024-ND-CP:d32",
+        "168-2024-ND-CP:d47",
+        "168-2024-ND-CP:d48"
+      ],
+      "expected_domain": "traffic",
+      "error_type": "tree_traversal_error",
+      "tree_domain": "traffic",
+      "near_miss_status": "near_miss_11_20",
+      "top10_domain_dist": {
+        "traffic": 10
+      },
+      "top10_retrieved": [
+        "36-2024-QH15:d39",
+        "36-2024-QH15:d65",
+        "36-2024-QH15:d72",
+        "168-2024-ND-CP:d13",
+        "168-2024-ND-CP:d34",
+        "100-2019-ND-CP:d5",
+        "36-2024-QH15:d54",
+        "100-2019-ND-CP:d16",
+        "168-2024-ND-CP:d50",
+        "168-2024-ND-CP:d9"
+      ],
+      "tree_articles": [
+        "36-2024-QH15:d39",
+        "36-2024-QH15:d65",
+        "36-2024-QH15:d72"
+      ],
+      "kg_articles": [
+        "36-2024-QH15:d39",
+        "36-2024-QH15:d65",
+        "36-2024-QH15:d72",
+        "168-2024-ND-CP:d13",
+        "168-2024-ND-CP:d34",
+        "100-2019-ND-CP:d5",
+        "36-2024-QH15:d54",
+        "100-2019-ND-CP:d16",
+        "168-2024-ND-CP:d50",
+        "168-2024-ND-CP:d9",
+        "36-2024-QH15:d12",
+        "36-2024-QH15:d29",
+        "59-2020-QH14:d4",
+        "36-2024-QH15:d62",
+        "100-2019-ND-CP:d24"
+      ],
+      "near_miss_11_20": [
+        "168-2024-ND-CP:d32"
+      ],
+      "near_miss_21_30": [],
+      "completely_absent": [
+        "100-2019-ND-CP:d17",
+        "100-2019-ND-CP:d80",
+        "100-2019-ND-CP:d82",
+        "168-2024-ND-CP:d14",
+        "168-2024-ND-CP:d47",
+        "168-2024-ND-CP:d48"
+      ]
+    },
+    {
+      "stt": "461",
+      "question": "E chưa blx bị tai nạn do tông phải ng kia đi ngược chiều 2 bên thỏa thuận tình cảm thì e bị phạt bao tiền ạ",
+      "category": "xử phạt vi phạm hành chính giao thông",
+      "expected_articles": [
+        "168-2024-ND-CP:d12",
+        "168-2024-ND-CP:d7",
+        "36-2024-QH15:d80"
+      ],
+      "expected_domain": "traffic",
+      "error_type": "tree_traversal_error",
+      "tree_domain": "traffic",
+      "near_miss_status": "near_miss_11_20",
+      "top10_domain_dist": {
+        "traffic": 10
+      },
+      "top10_retrieved": [
+        "36-2024-QH15:d17",
+        "36-2024-QH15:d22",
+        "36-2024-QH15:d83",
+        "168-2024-ND-CP:d6",
+        "168-2024-ND-CP:d47",
+        "168-2024-ND-CP:d48",
+        "168-2024-ND-CP:d5",
+        "100-2019-ND-CP:d11",
+        "100-2019-ND-CP:d5",
+        "36-2024-QH15:d81"
+      ],
+      "tree_articles": [
+        "36-2024-QH15:d17",
+        "36-2024-QH15:d22",
+        "36-2024-QH15:d83",
+        "168-2024-ND-CP:d6"
+      ],
+      "kg_articles": [
+        "168-2024-ND-CP:d6",
+        "36-2024-QH15:d83",
+        "36-2024-QH15:d17",
+        "36-2024-QH15:d22",
+        "168-2024-ND-CP:d47",
+        "168-2024-ND-CP:d48",
+        "168-2024-ND-CP:d5",
+        "100-2019-ND-CP:d11",
+        "100-2019-ND-CP:d5",
+        "36-2024-QH15:d81",
+        "168-2024-ND-CP:d9",
+        "100-2019-ND-CP:d6",
+        "100-2019-ND-CP:d48",
+        "168-2024-ND-CP:d12",
+        "36-2024-QH15:d15"
+      ],
+      "near_miss_11_20": [
+        "168-2024-ND-CP:d12"
+      ],
+      "near_miss_21_30": [
+        "36-2024-QH15:d80"
+      ],
+      "completely_absent": [
+        "168-2024-ND-CP:d7"
+      ]
+    },
+    {
+      "stt": "499",
+      "question": "Em chào các bác ạ, bác nào am hiểu về luật giao thông cho em hỏi với. Em vi phạm giao thông trên tuyến QL37, tại thời điểm kiểm tra em không xuất trìn",
+      "category": "giấy phép lái xe",
+      "expected_articles": [
+        "168-2024-ND-CP:d14",
+        "168-2024-ND-CP:d18"
+      ],
+      "expected_domain": "traffic",
+      "error_type": "tree_traversal_error",
+      "tree_domain": "traffic",
+      "near_miss_status": "near_miss_11_20",
+      "top10_domain_dist": {
+        "traffic": 10
+      },
+      "top10_retrieved": [
+        "168-2024-ND-CP:d2",
+        "168-2024-ND-CP:d5",
+        "168-2024-ND-CP:d6",
+        "168-2024-ND-CP:d7",
+        "168-2024-ND-CP:d8",
+        "168-2024-ND-CP:d47",
+        "168-2024-ND-CP:d43",
+        "168-2024-ND-CP:d41",
+        "36-2024-QH15:d62",
+        "36-2024-QH15:d89"
+      ],
+      "tree_articles": [
+        "168-2024-ND-CP:d2",
+        "168-2024-ND-CP:d5",
+        "168-2024-ND-CP:d6",
+        "168-2024-ND-CP:d7",
+        "168-2024-ND-CP:d8"
+      ],
+      "kg_articles": [
+        "168-2024-ND-CP:d5",
+        "168-2024-ND-CP:d47",
+        "168-2024-ND-CP:d6",
+        "168-2024-ND-CP:d43",
+        "168-2024-ND-CP:d41",
+        "36-2024-QH15:d62",
+        "36-2024-QH15:d89",
+        "100-2019-ND-CP:d21",
+        "100-2019-ND-CP:d82",
+        "100-2019-ND-CP:d25",
+        "36-2024-QH15:d60",
+        "100-2019-ND-CP:d62",
+        "168-2024-ND-CP:d39",
+        "168-2024-ND-CP:d18",
+        "168-2024-ND-CP:d50"
+      ],
+      "near_miss_11_20": [
+        "168-2024-ND-CP:d18"
+      ],
+      "near_miss_21_30": [
+        "168-2024-ND-CP:d14"
+      ],
+      "completely_absent": []
+    },
+    {
+      "stt": "503",
+      "question": "Cho e hỏi E có mua xe máy điện dưới 50cc không cần bằng lái, cho con chạy đi học, nhưng e không bik rằng xe phải đủ tuổi 16 mới chạy đượcCon e 15 tuổi",
+      "category": "giấy phép lái xe",
+      "expected_articles": [
+        "168-2024-ND-CP:d18",
+        "168-2024-ND-CP:d32",
+        "36-2024-QH15:d59"
+      ],
+      "expected_domain": "traffic",
+      "error_type": "tree_traversal_error",
+      "tree_domain": "traffic",
+      "near_miss_status": "near_miss_11_20",
+      "top10_domain_dist": {
+        "traffic": 10
+      },
+      "top10_retrieved": [
+        "168-2024-ND-CP:d6",
+        "168-2024-ND-CP:d7",
+        "168-2024-ND-CP:d8",
+        "100-2019-ND-CP:d5",
+        "100-2019-ND-CP:d6",
+        "100-2019-ND-CP:d7",
+        "168-2024-ND-CP:d5",
+        "168-2024-ND-CP:d47",
+        "168-2024-ND-CP:d48",
+        "100-2019-ND-CP:d21"
+      ],
+      "tree_articles": [
+        "168-2024-ND-CP:d6",
+        "168-2024-ND-CP:d7",
+        "168-2024-ND-CP:d8",
+        "100-2019-ND-CP:d5",
+        "100-2019-ND-CP:d6",
+        "100-2019-ND-CP:d7"
+      ],
+      "kg_articles": [
+        "100-2019-ND-CP:d5",
+        "168-2024-ND-CP:d6",
+        "168-2024-ND-CP:d5",
+        "168-2024-ND-CP:d47",
+        "168-2024-ND-CP:d48",
+        "100-2019-ND-CP:d21",
+        "168-2024-ND-CP:d13",
+        "36-2024-QH15:d56",
+        "100-2019-ND-CP:d16",
+        "23-2022-ND:d3",
+        "168-2024-ND-CP:d14",
+        "100-2019-ND-CP:d11",
+        "168-2024-ND-CP:d32",
+        "168-2024-ND-CP:d40",
+        "100-2019-ND-CP:d30"
+      ],
+      "near_miss_11_20": [
+        "168-2024-ND-CP:d32"
+      ],
+      "near_miss_21_30": [
+        "168-2024-ND-CP:d18"
+      ],
+      "completely_absent": [
+        "36-2024-QH15:d59"
+      ]
+    },
+    {
+      "stt": "576",
+      "question": "vậy nếu đến cơ quan chức năng nơi tạm giữ phương tiện, em xuất trình được đầy đủ giấy tờ trên thì có được tính vào là không mang theo đăng kí và giấy ",
+      "category": "giấy phép lái xe",
+      "expected_articles": [
+        "168-2024-ND-CP:d14",
+        "168-2024-ND-CP:d18"
+      ],
+      "expected_domain": "traffic",
+      "error_type": "tree_traversal_error",
+      "tree_domain": "traffic",
+      "near_miss_status": "near_miss_11_20",
+      "top10_domain_dist": {
+        "traffic": 10
+      },
+      "top10_retrieved": [
+        "168-2024-ND-CP:d6",
+        "168-2024-ND-CP:d7",
+        "168-2024-ND-CP:d8",
+        "168-2024-ND-CP:d48",
+        "168-2024-ND-CP:d47",
+        "168-2024-ND-CP:d5",
+        "36-2024-QH15:d11",
+        "36-2024-QH15:d9",
+        "36-2024-QH15:d62",
+        "36-2024-QH15:d89"
+      ],
+      "tree_articles": [
+        "168-2024-ND-CP:d6",
+        "168-2024-ND-CP:d7",
+        "168-2024-ND-CP:d8",
+        "168-2024-ND-CP:d48",
+        "168-2024-ND-CP:d47"
+      ],
+      "kg_articles": [
+        "168-2024-ND-CP:d47",
+        "168-2024-ND-CP:d48",
+        "168-2024-ND-CP:d5",
+        "168-2024-ND-CP:d6",
+        "36-2024-QH15:d11",
+        "36-2024-QH15:d9",
+        "36-2024-QH15:d62",
+        "36-2024-QH15:d89",
+        "100-2019-ND-CP:d21",
+        "100-2019-ND-CP:d62",
+        "168-2024-ND-CP:d39",
+        "100-2019-ND-CP:d25",
+        "168-2024-ND-CP:d14",
+        "36-2024-QH15:d60",
+        "36-2024-QH15:d61"
+      ],
+      "near_miss_11_20": [
+        "168-2024-ND-CP:d14",
+        "168-2024-ND-CP:d18"
+      ],
+      "near_miss_21_30": [],
+      "completely_absent": []
+    },
+    {
+      "stt": "595",
+      "question": "Mọi người cho em hỏi xe em mua được 4-5 tháng nay rồi nhưng em chưa sang tên đổi chủ liệu bị vẫy có sao không ạ?",
+      "category": "đăng ký xe",
+      "expected_articles": [
+        "168-2024-ND-CP:d32",
+        "36-2024-QH15:d36"
+      ],
+      "expected_domain": "traffic",
+      "error_type": "loop0_wrong_domain",
+      "tree_domain": "enterprise",
+      "near_miss_status": "near_miss_11_20",
+      "top10_domain_dist": {
+        "enterprise": 7,
+        "traffic": 3
+      },
+      "top10_retrieved": [
+        "59-2020-QH14:d1",
+        "59-2020-QH14:d2",
+        "59-2020-QH14:d3",
+        "168-2025-ND:d43",
+        "168-2025-ND:d52",
+        "59-2020-QH14:d203",
+        "36-2024-QH15:d30",
+        "36-2024-QH15:d40",
+        "168-2024-ND-CP:d3",
+        "168-2025-ND:d47"
+      ],
+      "tree_articles": [
+        "59-2020-QH14:d1",
+        "59-2020-QH14:d2",
+        "59-2020-QH14:d3"
+      ],
+      "kg_articles": [
+        "168-2025-ND:d43",
+        "168-2025-ND:d52",
+        "59-2020-QH14:d203",
+        "36-2024-QH15:d30",
+        "36-2024-QH15:d40",
+        "168-2024-ND-CP:d3",
+        "168-2025-ND:d47",
+        "36-2024-QH15:d19",
+        "168-2024-ND-CP:d32",
+        "100-2019-ND-CP:d30",
+        "168-2024-ND-CP:d29",
+        "36-2024-QH15:d75",
+        "36-2024-QH15:d7",
+        "100-2019-ND-CP:d6",
+        "36-2024-QH15:d46"
+      ],
+      "near_miss_11_20": [
+        "168-2024-ND-CP:d32"
+      ],
+      "near_miss_21_30": [],
+      "completely_absent": [
+        "36-2024-QH15:d36"
+      ]
+    },
+    {
+      "stt": "599",
+      "question": "các bạn cho mình hỏi, khi đến giao lộ phía trước là hướng đi thẳng, bên phải có 02 tuyến đường được đi vào, khi có tín hiệu đèn đỏ xe không được đi th",
+      "category": "vượt đèn đỏ",
+      "expected_articles": [
+        "168-2024-ND-CP:d6",
+        "36-2024-QH15:d11"
+      ],
+      "expected_domain": "traffic",
+      "error_type": "tree_traversal_error",
+      "tree_domain": "traffic",
+      "near_miss_status": "near_miss_11_20",
+      "top10_domain_dist": {
+        "traffic": 10
+      },
+      "top10_retrieved": [
+        "36-2024-QH15:d1",
+        "36-2024-QH15:d2",
+        "36-2024-QH15:d3",
+        "168-2024-ND-CP:d7",
+        "100-2019-ND-CP:d16",
+        "36-2024-QH15:d40",
+        "168-2024-ND-CP:d13",
+        "36-2024-QH15:d59",
+        "36-2024-QH15:d27",
+        "100-2019-ND-CP:d36"
+      ],
+      "tree_articles": [
+        "36-2024-QH15:d1",
+        "36-2024-QH15:d2",
+        "36-2024-QH15:d3"
+      ],
+      "kg_articles": [
+        "168-2024-ND-CP:d7",
+        "36-2024-QH15:d2",
+        "36-2024-QH15:d3",
+        "100-2019-ND-CP:d16",
+        "36-2024-QH15:d40",
+        "168-2024-ND-CP:d13",
+        "36-2024-QH15:d59",
+        "36-2024-QH15:d27",
+        "100-2019-ND-CP:d36",
+        "36-2024-QH15:d11",
+        "36-2024-QH15:d63",
+        "168-2024-ND-CP:d5",
+        "100-2019-ND-CP:d6",
+        "36-2024-QH15:d9",
+        "36-2024-QH15:d51"
+      ],
+      "near_miss_11_20": [
+        "36-2024-QH15:d11"
+      ],
+      "near_miss_21_30": [],
+      "completely_absent": [
+        "168-2024-ND-CP:d6"
+      ]
+    },
+    {
+      "stt": "600",
+      "question": "Vạch mắc võng tại ngã tư khi đèn đỏ không có biển phụ hay đèn mũi tên xanh được rẽ phải thì có được rẽ phải không các bác . Theo luật giao thông đường",
+      "category": "vượt đèn đỏ",
+      "expected_articles": [
+        "168-2024-ND-CP:d6",
+        "36-2024-QH15:d11"
+      ],
+      "expected_domain": "traffic",
+      "error_type": "tree_traversal_error",
+      "tree_domain": "traffic",
+      "near_miss_status": "absent_from_top30",
+      "top10_domain_dist": {
+        "traffic": 10
+      },
+      "top10_retrieved": [
+        "36-2024-QH15:d1",
+        "36-2024-QH15:d2",
+        "36-2024-QH15:d3",
+        "168-2024-ND-CP:d7",
+        "36-2024-QH15:d75",
+        "168-2024-ND-CP:d20",
+        "100-2019-ND-CP:d24",
+        "100-2019-ND-CP:d23",
+        "100-2019-ND-CP:d12",
+        "100-2019-ND-CP:d10"
+      ],
+      "tree_articles": [
+        "36-2024-QH15:d1",
+        "36-2024-QH15:d2",
+        "36-2024-QH15:d3"
+      ],
+      "kg_articles": [
+        "36-2024-QH15:d2",
+        "36-2024-QH15:d3",
+        "168-2024-ND-CP:d7",
+        "36-2024-QH15:d75",
+        "168-2024-ND-CP:d20",
+        "100-2019-ND-CP:d24",
+        "100-2019-ND-CP:d23",
+        "100-2019-ND-CP:d12",
+        "100-2019-ND-CP:d10",
+        "36-2024-QH15:d65",
+        "36-2024-QH15:d74",
+        "100-2019-ND-CP:d25",
+        "168-2024-ND-CP:d13",
+        "168-2024-ND-CP:d32",
+        "100-2019-ND-CP:d79"
+      ],
+      "near_miss_11_20": [],
+      "near_miss_21_30": [],
+      "completely_absent": [
+        "168-2024-ND-CP:d6",
+        "36-2024-QH15:d11"
+      ]
+    },
+    {
+      "stt": "601",
+      "question": "các cao nhân cho mình hỏi. mức phạt nồng độ cồn lái xe ô tô, 0.57 là bao nhiêu tiền vậy?? cảm ơn",
+      "category": "nồng độ cồn",
+      "expected_articles": [
+        "168-2024-ND-CP:d5",
+        "168-2024-ND-CP:d6",
+        "36-2024-QH15:d9"
+      ],
+      "expected_domain": "traffic",
+      "error_type": "tree_traversal_error",
+      "tree_domain": "traffic",
+      "near_miss_status": "near_miss_11_20",
+      "top10_domain_dist": {
+        "traffic": 10
+      },
+      "top10_retrieved": [
+        "36-2024-QH15:d1",
+        "36-2024-QH15:d2",
+        "36-2024-QH15:d3",
+        "168-2024-ND-CP:d7",
+        "36-2024-QH15:d61",
+        "168-2024-ND-CP:d17",
+        "36-2024-QH15:d89",
+        "100-2019-ND-CP:d28",
+        "36-2024-QH15:d62",
+        "36-2024-QH15:d59"
+      ],
+      "tree_articles": [
+        "36-2024-QH15:d1",
+        "36-2024-QH15:d2",
+        "36-2024-QH15:d3"
+      ],
+      "kg_articles": [
+        "168-2024-ND-CP:d7",
+        "36-2024-QH15:d2",
+        "36-2024-QH15:d3",
+        "36-2024-QH15:d61",
+        "168-2024-ND-CP:d17",
+        "36-2024-QH15:d89",
+        "100-2019-ND-CP:d28",
+        "36-2024-QH15:d62",
+        "36-2024-QH15:d59",
+        "36-2024-QH15:d64",
+        "36-2024-QH15:d63",
+        "36-2024-QH15:d56",
+        "100-2019-ND-CP:d66",
+        "36-2024-QH15:d9",
+        "36-2024-QH15:d81"
+      ],
+      "near_miss_11_20": [
+        "36-2024-QH15:d9"
+      ],
+      "near_miss_21_30": [],
+      "completely_absent": [
+        "168-2024-ND-CP:d5",
+        "168-2024-ND-CP:d6"
+      ]
+    },
+    {
+      "stt": "603",
+      "question": "Mọi người cho e hỏi bữa e bị công an bắt nồng độ cồn 0.356 , không Có bằng lái cavet xe ( bị mất) mới tích hợp lại .đã ký biên bản . Cho e hỏi nếu e b",
+      "category": "nồng độ cồn",
+      "expected_articles": [
+        "168-2024-ND-CP:d18",
+        "168-2024-ND-CP:d48",
+        "168-2024-ND-CP:d5",
+        "168-2024-ND-CP:d7"
+      ],
+      "expected_domain": "traffic",
+      "error_type": "loop0_wrong_domain",
+      "tree_domain": "enterprise",
+      "near_miss_status": "absent_from_top30",
+      "top10_domain_dist": {
+        "enterprise": 7,
+        "traffic": 3
+      },
+      "top10_retrieved": [
+        "59-2020-QH14:d1",
+        "59-2020-QH14:d2",
+        "59-2020-QH14:d3",
+        "168-2025-ND:d52",
+        "59-2020-QH14:d203",
+        "168-2025-ND:d43",
+        "100-2019-ND-CP:d66",
+        "100-2019-ND-CP:d5",
+        "59-2020-QH14:d150",
+        "36-2024-QH15:d87"
+      ],
+      "tree_articles": [
+        "59-2020-QH14:d1",
+        "59-2020-QH14:d2",
+        "59-2020-QH14:d3"
+      ],
+      "kg_articles": [
+        "168-2025-ND:d52",
+        "59-2020-QH14:d203",
+        "168-2025-ND:d43",
+        "100-2019-ND-CP:d66",
+        "100-2019-ND-CP:d5",
+        "59-2020-QH14:d150",
+        "36-2024-QH15:d87",
+        "36-2024-QH15:d81",
+        "168-2024-ND-CP:d9",
+        "100-2019-ND-CP:d56",
+        "100-2019-ND-CP:d6",
+        "36-2024-QH15:d83",
+        "36-2024-QH15:d30",
+        "36-2024-QH15:d63",
+        "168-2024-ND-CP:d14"
+      ],
+      "near_miss_11_20": [],
+      "near_miss_21_30": [],
+      "completely_absent": [
+        "168-2024-ND-CP:d18",
+        "168-2024-ND-CP:d48",
+        "168-2024-ND-CP:d5",
+        "168-2024-ND-CP:d7"
+      ]
+    },
+    {
+      "stt": "605",
+      "question": "E vào tra cứu trên phần mềm thì thấy thông báo bị lỗi tốc độ trên cao tốc Hà nội - Lào cai. Mà không biết thủ tục phải như thế nào để nộp phạt. Xin cá",
+      "category": "vi phạm tốc độ",
+      "expected_articles": [
+        "168-2024-ND-CP:d47",
+        "168-2024-ND-CP:d6",
+        "36-2024-QH15:d25"
+      ],
+      "expected_domain": "traffic",
+      "error_type": "tree_traversal_error",
+      "tree_domain": "traffic",
+      "near_miss_status": "near_miss_11_20",
+      "top10_domain_dist": {
+        "traffic": 8,
+        "enterprise": 2
+      },
+      "top10_retrieved": [
+        "36-2024-QH15:d1",
+        "36-2024-QH15:d2",
+        "36-2024-QH15:d3",
+        "168-2024-ND-CP:d7",
+        "36-2024-QH15:d55",
+        "36-2024-QH15:d27",
+        "36-2024-QH15:d12",
+        "01-2021-ND:d89",
+        "168-2025-ND:d71",
+        "100-2019-ND-CP:d6"
+      ],
+      "tree_articles": [
+        "36-2024-QH15:d1",
+        "36-2024-QH15:d2",
+        "36-2024-QH15:d3"
+      ],
+      "kg_articles": [
+        "168-2024-ND-CP:d7",
+        "36-2024-QH15:d2",
+        "36-2024-QH15:d3",
+        "36-2024-QH15:d55",
+        "36-2024-QH15:d27",
+        "36-2024-QH15:d12",
+        "01-2021-ND:d89",
+        "168-2025-ND:d71",
+        "100-2019-ND-CP:d6",
+        "100-2019-ND-CP:d66",
+        "01-2021-ND:d68",
+        "168-2024-ND-CP:d32",
+        "36-2024-QH15:d25",
+        "100-2019-ND-CP:d43",
+        "100-2019-ND-CP:d4"
+      ],
+      "near_miss_11_20": [
+        "36-2024-QH15:d25"
+      ],
+      "near_miss_21_30": [],
+      "completely_absent": [
+        "168-2024-ND-CP:d47",
+        "168-2024-ND-CP:d6"
+      ]
+    },
+    {
+      "stt": "606",
+      "question": "Lúc trưa nay em chỉ đi 2b đoạn ngã tư Láng Hạ đi Giảng Võ. Đang đi thì bị 1 thằng nó rẽ phải ép em. Em đành phải rẽ phải đi La Thành. Lúc hết cái phân",
+      "category": "thủ tục nộp phạt",
+      "expected_articles": [
+        "168-2024-ND-CP:d47",
+        "168-2024-ND-CP:d7",
+        "36-2024-QH15:d13"
+      ],
+      "expected_domain": "traffic",
+      "error_type": "loop0_wrong_domain",
+      "tree_domain": "enterprise",
+      "near_miss_status": "absent_from_top30",
+      "top10_domain_dist": {
+        "enterprise": 7,
+        "traffic": 3
+      },
+      "top10_retrieved": [
+        "59-2020-QH14:d1",
+        "59-2020-QH14:d2",
+        "59-2020-QH14:d3",
+        "168-2025-ND:d52",
+        "59-2020-QH14:d203",
+        "168-2025-ND:d43",
+        "168-2024-ND-CP:d11",
+        "100-2019-ND-CP:d6",
+        "100-2019-ND-CP:d31",
+        "59-2020-QH14:d150"
+      ],
+      "tree_articles": [
+        "59-2020-QH14:d1",
+        "59-2020-QH14:d2",
+        "59-2020-QH14:d3"
+      ],
+      "kg_articles": [
+        "168-2025-ND:d52",
+        "59-2020-QH14:d203",
+        "168-2025-ND:d43",
+        "168-2024-ND-CP:d11",
+        "100-2019-ND-CP:d6",
+        "100-2019-ND-CP:d31",
+        "59-2020-QH14:d150",
+        "36-2024-QH15:d15",
+        "36-2024-QH15:d33",
+        "100-2019-ND-CP:d23",
+        "01-2021-ND:d99",
+        "168-2025-ND:d58",
+        "100-2019-ND-CP:d10",
+        "168-2024-ND-CP:d46",
+        "89-2024-ND:d7"
+      ],
+      "near_miss_11_20": [],
+      "near_miss_21_30": [],
+      "completely_absent": [
+        "168-2024-ND-CP:d47",
+        "168-2024-ND-CP:d7",
+        "36-2024-QH15:d13"
+      ]
+    },
+    {
+      "stt": "610",
+      "question": "Chào các cụ, Mình ở HN, có mua 1 con xe cũ trong SG chuyển ra và đến nay vẫn để biển 51 chạy bình thường ở thủ đô. Hôm trước mình check lỗi phạt nguội",
+      "category": "phạt nguội",
+      "expected_articles": [
+        "168-2024-ND-CP:d32",
+        "168-2024-ND-CP:d47",
+        "36-2024-QH15:d42"
+      ],
+      "expected_domain": "traffic",
+      "error_type": "tree_traversal_error",
+      "tree_domain": "traffic",
+      "near_miss_status": "near_miss_21_30",
+      "top10_domain_dist": {
+        "traffic": 9,
+        "enterprise": 1
+      },
+      "top10_retrieved": [
+        "36-2024-QH15:d1",
+        "36-2024-QH15:d2",
+        "36-2024-QH15:d3",
+        "168-2024-ND-CP:d7",
+        "59-2020-QH14:d211",
+        "36-2024-QH15:d63",
+        "100-2019-ND-CP:d4",
+        "168-2024-ND-CP:d4",
+        "36-2024-QH15:d73",
+        "36-2024-QH15:d55"
+      ],
+      "tree_articles": [
+        "36-2024-QH15:d1",
+        "36-2024-QH15:d2",
+        "36-2024-QH15:d3"
+      ],
+      "kg_articles": [
+        "36-2024-QH15:d3",
+        "36-2024-QH15:d2",
+        "168-2024-ND-CP:d7",
+        "59-2020-QH14:d211",
+        "36-2024-QH15:d63",
+        "100-2019-ND-CP:d4",
+        "168-2024-ND-CP:d4",
+        "36-2024-QH15:d73",
+        "36-2024-QH15:d55",
+        "100-2019-ND-CP:d82",
+        "168-2024-ND-CP:d3",
+        "100-2019-ND-CP:d58",
+        "168-2024-ND-CP:d52",
+        "01-2021-ND:d89",
+        "100-2019-ND-CP:d75"
+      ],
+      "near_miss_11_20": [],
+      "near_miss_21_30": [
+        "168-2024-ND-CP:d47"
+      ],
+      "completely_absent": [
+        "168-2024-ND-CP:d32",
+        "36-2024-QH15:d42"
+      ]
+    },
+    {
+      "stt": "611",
+      "question": "Các cụ am hiểu cho em hỏi đi PKL móc bô gặp 141, CSGT có bị phạt k ạ?",
+      "category": "xử phạt vi phạm giao thông",
+      "expected_articles": [
+        "168-2024-ND-CP:d14",
+        "36-2024-QH15:d35"
+      ],
+      "expected_domain": "traffic",
+      "error_type": "tree_traversal_error",
+      "tree_domain": "traffic",
+      "near_miss_status": "absent_from_top30",
+      "top10_domain_dist": {
+        "traffic": 9,
+        "enterprise": 1
+      },
+      "top10_retrieved": [
+        "36-2024-QH15:d1",
+        "36-2024-QH15:d2",
+        "36-2024-QH15:d3",
+        "168-2024-ND-CP:d7",
+        "01-2021-ND:d88",
+        "36-2024-QH15:d20",
+        "168-2024-ND-CP:d13",
+        "100-2019-ND-CP:d16",
+        "36-2024-QH15:d80",
+        "100-2019-ND-CP:d80"
+      ],
+      "tree_articles": [
+        "36-2024-QH15:d1",
+        "36-2024-QH15:d2",
+        "36-2024-QH15:d3"
+      ],
+      "kg_articles": [
+        "36-2024-QH15:d2",
+        "168-2024-ND-CP:d7",
+        "36-2024-QH15:d3",
+        "01-2021-ND:d88",
+        "36-2024-QH15:d20",
+        "168-2024-ND-CP:d13",
+        "100-2019-ND-CP:d16",
+        "36-2024-QH15:d80",
+        "100-2019-ND-CP:d80",
+        "36-2024-QH15:d46",
+        "100-2019-ND-CP:d6",
+        "168-2024-ND-CP:d32",
+        "168-2024-ND-CP:d12",
+        "100-2019-ND-CP:d28",
+        "100-2019-ND-CP:d23"
+      ],
+      "near_miss_11_20": [],
+      "near_miss_21_30": [],
+      "completely_absent": [
+        "168-2024-ND-CP:d14",
+        "36-2024-QH15:d35"
+      ]
+    },
+    {
+      "stt": "612",
+      "question": "Em nghe nói là xe quá hạn đăng kiểm đi trên đường ở Hà Nội sẽ có camera ghi lại và phạt nguội gửi về nhà. Đúng không các cụ, mợ?",
+      "category": "phạt nguội",
+      "expected_articles": [
+        "168-2024-ND-CP:d13",
+        "36-2024-QH15:d42",
+        "36-2024-QH15:d67"
+      ],
+      "expected_domain": "traffic",
+      "error_type": "tree_traversal_error",
+      "tree_domain": "traffic",
+      "near_miss_status": "near_miss_21_30",
+      "top10_domain_dist": {
+        "traffic": 10
+      },
+      "top10_retrieved": [
+        "36-2024-QH15:d1",
+        "36-2024-QH15:d2",
+        "36-2024-QH15:d3",
+        "168-2024-ND-CP:d7",
+        "100-2019-ND-CP:d23",
+        "100-2019-ND-CP:d6",
+        "100-2019-ND-CP:d10",
+        "168-2024-ND-CP:d11",
+        "100-2019-ND-CP:d28",
+        "100-2019-ND-CP:d4"
+      ],
+      "tree_articles": [
+        "36-2024-QH15:d1",
+        "36-2024-QH15:d2",
+        "36-2024-QH15:d3"
+      ],
+      "kg_articles": [
+        "36-2024-QH15:d2",
+        "36-2024-QH15:d3",
+        "168-2024-ND-CP:d7",
+        "100-2019-ND-CP:d23",
+        "100-2019-ND-CP:d6",
+        "100-2019-ND-CP:d10",
+        "168-2024-ND-CP:d11",
+        "100-2019-ND-CP:d28",
+        "100-2019-ND-CP:d4",
+        "168-2024-ND-CP:d21",
+        "100-2019-ND-CP:d24",
+        "100-2019-ND-CP:d25",
+        "168-2024-ND-CP:d35",
+        "100-2019-ND-CP:d11",
+        "100-2019-ND-CP:d41"
+      ],
+      "near_miss_11_20": [],
+      "near_miss_21_30": [
+        "36-2024-QH15:d42"
+      ],
+      "completely_absent": [
+        "168-2024-ND-CP:d13",
+        "36-2024-QH15:d67"
+      ]
+    },
+    {
+      "stt": "613",
+      "question": "Em đi xe thì chấp hành rất đúng các quy định. Nhưng em muốn hỏi các cụ cách nháy pha để hỏi xe đối diện xem có CSGT hay không. Bởi vì nhiều khi đi nhữ",
+      "category": "biển báo giao thông",
+      "expected_articles": [
+        "168-2024-ND-CP:d12",
+        "36-2024-QH15:d9"
+      ],
+      "expected_domain": "traffic",
+      "error_type": "tree_traversal_error",
+      "tree_domain": "traffic",
+      "near_miss_status": "absent_from_top30",
+      "top10_domain_dist": {
+        "traffic": 10
+      },
+      "top10_retrieved": [
+        "36-2024-QH15:d1",
+        "36-2024-QH15:d2",
+        "36-2024-QH15:d3",
+        "168-2024-ND-CP:d7",
+        "168-2024-ND-CP:d10",
+        "100-2019-ND-CP:d6",
+        "100-2019-ND-CP:d56",
+        "168-2024-ND-CP:d9",
+        "100-2019-ND-CP:d13",
+        "168-2024-ND-CP:d6"
+      ],
+      "tree_articles": [
+        "36-2024-QH15:d1",
+        "36-2024-QH15:d2",
+        "36-2024-QH15:d3"
+      ],
+      "kg_articles": [
+        "36-2024-QH15:d2",
+        "168-2024-ND-CP:d7",
+        "36-2024-QH15:d3",
+        "168-2024-ND-CP:d10",
+        "100-2019-ND-CP:d6",
+        "100-2019-ND-CP:d56",
+        "168-2024-ND-CP:d9",
+        "100-2019-ND-CP:d13",
+        "168-2024-ND-CP:d6",
+        "100-2019-ND-CP:d66",
+        "36-2024-QH15:d11",
+        "100-2019-ND-CP:d9",
+        "01-2021-ND:d88",
+        "01-2021-ND:d81",
+        "59-2020-QH14:d56"
+      ],
+      "near_miss_11_20": [],
+      "near_miss_21_30": [],
+      "completely_absent": [
+        "168-2024-ND-CP:d12",
+        "36-2024-QH15:d9"
+      ]
+    },
+    {
+      "stt": "614",
+      "question": "Đi 4b vào đường cấm 4b theo giờ, theo đúng QD thì bị lỗi gì? phạt bao nhiêu các cụ?",
+      "category": "xử phạt vi phạm giao thông",
+      "expected_articles": [
+        "168-2024-ND-CP:d6",
+        "36-2024-QH15:d11"
+      ],
+      "expected_domain": "traffic",
+      "error_type": "tree_traversal_error",
+      "tree_domain": "traffic",
+      "near_miss_status": "absent_from_top30",
+      "top10_domain_dist": {
+        "traffic": 10
+      },
+      "top10_retrieved": [
+        "36-2024-QH15:d1",
+        "36-2024-QH15:d2",
+        "36-2024-QH15:d3",
+        "168-2024-ND-CP:d7",
+        "168-2024-ND-CP:d11",
+        "100-2019-ND-CP:d41",
+        "100-2019-ND-CP:d26",
+        "100-2019-ND-CP:d9",
+        "100-2019-ND-CP:d10",
+        "100-2019-ND-CP:d6"
+      ],
+      "tree_articles": [
+        "36-2024-QH15:d1",
+        "36-2024-QH15:d2",
+        "36-2024-QH15:d3"
+      ],
+      "kg_articles": [
+        "168-2024-ND-CP:d7",
+        "36-2024-QH15:d2",
+        "36-2024-QH15:d3",
+        "168-2024-ND-CP:d11",
+        "100-2019-ND-CP:d41",
+        "100-2019-ND-CP:d26",
+        "100-2019-ND-CP:d9",
+        "100-2019-ND-CP:d10",
+        "100-2019-ND-CP:d6",
+        "100-2019-ND-CP:d60",
+        "100-2019-ND-CP:d12",
+        "100-2019-ND-CP:d13",
+        "168-2024-ND-CP:d9",
+        "100-2019-ND-CP:d43",
+        "100-2019-ND-CP:d28"
+      ],
+      "near_miss_11_20": [],
+      "near_miss_21_30": [],
+      "completely_absent": [
+        "168-2024-ND-CP:d6",
+        "36-2024-QH15:d11"
+      ]
+    },
+    {
+      "stt": "615",
+      "question": "Các cụ thông thái cho em hỏi trường hợp này em bị bắt nạt hay mắc lỗi thật ạ. Sáng nay em về đón cu con ở quê lên để đi học. Em đi theo hướng cầu giẽ ",
+      "category": "vi phạm tốc độ",
+      "expected_articles": [
+        "168-2024-ND-CP:d6",
+        "36-2024-QH15:d13"
+      ],
+      "expected_domain": "traffic",
+      "error_type": "tree_traversal_error",
+      "tree_domain": "traffic",
+      "near_miss_status": "near_miss_11_20",
+      "top10_domain_dist": {
+        "traffic": 9,
+        "enterprise": 1
+      },
+      "top10_retrieved": [
+        "36-2024-QH15:d1",
+        "36-2024-QH15:d2",
+        "36-2024-QH15:d3",
+        "168-2024-ND-CP:d7",
+        "100-2019-ND-CP:d58",
+        "59-2020-QH14:d186",
+        "36-2024-QH15:d65",
+        "100-2019-ND-CP:d6",
+        "100-2019-ND-CP:d56",
+        "168-2024-ND-CP:d35"
+      ],
+      "tree_articles": [
+        "36-2024-QH15:d1",
+        "36-2024-QH15:d2",
+        "36-2024-QH15:d3"
+      ],
+      "kg_articles": [
+        "36-2024-QH15:d3",
+        "168-2024-ND-CP:d7",
+        "36-2024-QH15:d2",
+        "100-2019-ND-CP:d58",
+        "59-2020-QH14:d186",
+        "36-2024-QH15:d65",
+        "100-2019-ND-CP:d6",
+        "100-2019-ND-CP:d56",
+        "168-2024-ND-CP:d35",
+        "168-2024-ND-CP:d6",
+        "36-2024-QH15:d27",
+        "59-2020-QH14:d211",
+        "36-2024-QH15:d69",
+        "100-2019-ND-CP:d82",
+        "100-2019-ND-CP:d66"
+      ],
+      "near_miss_11_20": [
+        "168-2024-ND-CP:d6"
+      ],
+      "near_miss_21_30": [],
+      "completely_absent": [
+        "36-2024-QH15:d13"
+      ]
+    },
+    {
+      "stt": "618",
+      "question": "Em xin trình bày ạ. Ra tết em lấy lại chiếc xe ford đã qua sử dụng, về em đã ra chi cục thuế nộp thuế luôn nhưng do bận việc, do dịch em chưa đi nộp s",
+      "category": "đăng ký xe",
+      "expected_articles": [
+        "168-2024-ND-CP:d32",
+        "36-2024-QH15:d36"
+      ],
+      "expected_domain": "traffic",
+      "error_type": "loop0_wrong_domain",
+      "tree_domain": "enterprise",
+      "near_miss_status": "absent_from_top30",
+      "top10_domain_dist": {
+        "enterprise": 10
+      },
+      "top10_retrieved": [
+        "59-2020-QH14:d1",
+        "59-2020-QH14:d2",
+        "59-2020-QH14:d3",
+        "168-2025-ND:d43",
+        "168-2025-ND:d52",
+        "59-2020-QH14:d203",
+        "01-2021-ND:d37",
+        "168-2025-ND:d47",
+        "168-2025-ND:d3",
+        "168-2025-ND:d50"
+      ],
+      "tree_articles": [
+        "59-2020-QH14:d1",
+        "59-2020-QH14:d2",
+        "59-2020-QH14:d3"
+      ],
+      "kg_articles": [
+        "168-2025-ND:d43",
+        "168-2025-ND:d52",
+        "59-2020-QH14:d203",
+        "01-2021-ND:d37",
+        "168-2025-ND:d47",
+        "168-2025-ND:d3",
+        "168-2025-ND:d50",
+        "59-2020-QH14:d206",
+        "59-2020-QH14:d146",
+        "36-2024-QH15:d67",
+        "59-2020-QH14:d26",
+        "168-2025-ND:d24",
+        "01-2021-ND:d68",
+        "89-2024-ND:d6",
+        "01-2021-ND:d95"
+      ],
+      "near_miss_11_20": [],
+      "near_miss_21_30": [],
+      "completely_absent": [
+        "168-2024-ND-CP:d32",
+        "36-2024-QH15:d36"
+      ]
+    },
+    {
+      "stt": "619",
+      "question": "Em mạn phép các cụ hỏi câu này, em thấy có một số trường hợp người điều khiển xe mô tô đỗ xe vào bên đường bỏ mũ bảo hiểm ra để gãi đầu hoặc nghe điện",
+      "category": "dừng đỗ xe",
+      "expected_articles": [
+        "168-2024-ND-CP:d7",
+        "36-2024-QH15:d18",
+        "36-2024-QH15:d9"
+      ],
+      "expected_domain": "traffic",
+      "error_type": "loop0_wrong_domain",
+      "tree_domain": "enterprise",
+      "near_miss_status": "absent_from_top30",
+      "top10_domain_dist": {
+        "enterprise": 6,
+        "traffic": 4
+      },
+      "top10_retrieved": [
+        "59-2020-QH14:d1",
+        "59-2020-QH14:d2",
+        "59-2020-QH14:d3",
+        "168-2025-ND:d52",
+        "59-2020-QH14:d203",
+        "168-2025-ND:d43",
+        "168-2024-ND-CP:d13",
+        "100-2019-ND-CP:d6",
+        "100-2019-ND-CP:d5",
+        "100-2019-ND-CP:d16"
+      ],
+      "tree_articles": [
+        "59-2020-QH14:d1",
+        "59-2020-QH14:d2",
+        "59-2020-QH14:d3"
+      ],
+      "kg_articles": [
+        "168-2025-ND:d52",
+        "59-2020-QH14:d203",
+        "168-2025-ND:d43",
+        "168-2024-ND-CP:d13",
+        "100-2019-ND-CP:d6",
+        "100-2019-ND-CP:d5",
+        "100-2019-ND-CP:d16",
+        "168-2024-ND-CP:d9",
+        "168-2024-ND-CP:d34",
+        "100-2019-ND-CP:d36",
+        "168-2024-ND-CP:d14",
+        "100-2019-ND-CP:d18",
+        "168-2024-ND-CP:d15",
+        "100-2019-ND-CP:d10",
+        "100-2019-ND-CP:d23"
+      ],
+      "near_miss_11_20": [],
+      "near_miss_21_30": [],
+      "completely_absent": [
+        "168-2024-ND-CP:d7",
+        "36-2024-QH15:d18",
+        "36-2024-QH15:d9"
+      ]
+    },
+    {
+      "stt": "620",
+      "question": "E vừa mua con xe cỏ để đi tết. Xe qua nhiều đời chủ rồi và e cũng chả có ý định sang tên đổi chủ làm gì, nhưng để đối phó với công an khi mình vi phạm",
+      "category": "đăng ký xe",
+      "expected_articles": [
+        "168-2024-ND-CP:d14",
+        "168-2024-ND-CP:d32",
+        "36-2024-QH15:d36"
+      ],
+      "expected_domain": "traffic",
+      "error_type": "loop0_wrong_domain",
+      "tree_domain": "enterprise",
+      "near_miss_status": "absent_from_top30",
+      "top10_domain_dist": {
+        "enterprise": 7,
+        "traffic": 3
+      },
+      "top10_retrieved": [
+        "59-2020-QH14:d1",
+        "59-2020-QH14:d2",
+        "59-2020-QH14:d3",
+        "168-2025-ND:d52",
+        "59-2020-QH14:d203",
+        "168-2025-ND:d43",
+        "59-2020-QH14:d211",
+        "168-2024-ND-CP:d4",
+        "36-2024-QH15:d63",
+        "168-2024-ND-CP:d3"
+      ],
+      "tree_articles": [
+        "59-2020-QH14:d1",
+        "59-2020-QH14:d2",
+        "59-2020-QH14:d3"
+      ],
+      "kg_articles": [
+        "168-2025-ND:d52",
+        "59-2020-QH14:d203",
+        "168-2025-ND:d43",
+        "59-2020-QH14:d211",
+        "168-2024-ND-CP:d4",
+        "36-2024-QH15:d63",
+        "168-2024-ND-CP:d3",
+        "36-2024-QH15:d39",
+        "100-2019-ND-CP:d58",
+        "36-2024-QH15:d70",
+        "168-2024-ND-CP:d52",
+        "36-2024-QH15:d73",
+        "36-2024-QH15:d65",
+        "100-2019-ND-CP:d82",
+        "100-2019-ND-CP:d75"
+      ],
+      "near_miss_11_20": [],
+      "near_miss_21_30": [],
+      "completely_absent": [
+        "168-2024-ND-CP:d14",
+        "168-2024-ND-CP:d32",
+        "36-2024-QH15:d36"
+      ]
+    },
+    {
+      "stt": "621",
+      "question": "Một ngày xấu trời, em tò mò vào trang csgt.vn, nhập biển số xe mình vào thì thấy bị dính lỗi tốc độ 10-20km trên đường HN-BG, đoạn Km141+900 ở BN. Vi ",
+      "category": "vi phạm tốc độ",
+      "expected_articles": [
+        "168-2024-ND-CP:d32",
+        "168-2024-ND-CP:d47",
+        "168-2024-ND-CP:d6"
+      ],
+      "expected_domain": "traffic",
+      "error_type": "tree_traversal_error",
+      "tree_domain": "traffic",
+      "near_miss_status": "near_miss_11_20",
+      "top10_domain_dist": {
+        "traffic": 9,
+        "enterprise": 1
+      },
+      "top10_retrieved": [
+        "36-2024-QH15:d1",
+        "36-2024-QH15:d2",
+        "36-2024-QH15:d3",
+        "168-2024-ND-CP:d7",
+        "36-2024-QH15:d36",
+        "36-2024-QH15:d38",
+        "168-2024-ND-CP:d31",
+        "168-2024-ND-CP:d14",
+        "36-2024-QH15:d4",
+        "59-2020-QH14:d211"
+      ],
+      "tree_articles": [
+        "36-2024-QH15:d1",
+        "36-2024-QH15:d2",
+        "36-2024-QH15:d3"
+      ],
+      "kg_articles": [
+        "36-2024-QH15:d3",
+        "168-2024-ND-CP:d7",
+        "36-2024-QH15:d2",
+        "36-2024-QH15:d36",
+        "36-2024-QH15:d38",
+        "168-2024-ND-CP:d31",
+        "168-2024-ND-CP:d14",
+        "36-2024-QH15:d4",
+        "59-2020-QH14:d211",
+        "100-2019-ND-CP:d83",
+        "36-2024-QH15:d9",
+        "168-2024-ND-CP:d47",
+        "168-2024-ND-CP:d32",
+        "36-2024-QH15:d37",
+        "36-2024-QH15:d88"
+      ],
+      "near_miss_11_20": [
+        "168-2024-ND-CP:d32",
+        "168-2024-ND-CP:d47"
+      ],
+      "near_miss_21_30": [],
+      "completely_absent": [
+        "168-2024-ND-CP:d6"
+      ]
+    },
+    {
+      "stt": "622",
+      "question": "Chả là mấy hôm trước có cài cái app ttdk để xếp lịch đi khám xe. Lúc cài có xuất hiện thêm mấy app tra cứu phạt nguội. Cháu có cài thử 1 app. Nhận thấ",
+      "category": "phạt nguội",
+      "expected_articles": [
+        "168-2024-ND-CP:d47",
+        "36-2024-QH15:d67"
+      ],
+      "expected_domain": "traffic",
+      "error_type": "tree_traversal_error",
+      "tree_domain": "traffic",
+      "near_miss_status": "absent_from_top30",
+      "top10_domain_dist": {
+        "traffic": 9,
+        "enterprise": 1
+      },
+      "top10_retrieved": [
+        "36-2024-QH15:d1",
+        "36-2024-QH15:d2",
+        "36-2024-QH15:d3",
+        "168-2024-ND-CP:d7",
+        "100-2019-ND-CP:d51",
+        "01-2021-ND:d88",
+        "36-2024-QH15:d20",
+        "100-2019-ND-CP:d6",
+        "168-2024-ND-CP:d32",
+        "100-2019-ND-CP:d4"
+      ],
+      "tree_articles": [
+        "36-2024-QH15:d1",
+        "36-2024-QH15:d2",
+        "36-2024-QH15:d3"
+      ],
+      "kg_articles": [
+        "36-2024-QH15:d2",
+        "36-2024-QH15:d3",
+        "168-2024-ND-CP:d7",
+        "100-2019-ND-CP:d51",
+        "01-2021-ND:d88",
+        "36-2024-QH15:d20",
+        "100-2019-ND-CP:d6",
+        "168-2024-ND-CP:d32",
+        "100-2019-ND-CP:d4",
+        "100-2019-ND-CP:d9",
+        "100-2019-ND-CP:d14",
+        "100-2019-ND-CP:d16",
+        "100-2019-ND-CP:d19",
+        "100-2019-ND-CP:d21",
+        "100-2019-ND-CP:d31"
+      ],
+      "near_miss_11_20": [],
+      "near_miss_21_30": [],
+      "completely_absent": [
+        "168-2024-ND-CP:d47",
+        "36-2024-QH15:d67"
+      ]
+    },
+    {
+      "stt": "624",
+      "question": "Chào các cụ các mợ, Em có theo dõi mấy thớt về NĐ 100 và cũng có xem mấy video CSGT lập biên bản, trong đó có người 0.015 miligam/1 lít khí thở. Tuy n",
+      "category": "thủ tục nộp phạt",
+      "expected_articles": [
+        "168-2024-ND-CP:d6",
+        "36-2024-QH15:d67"
+      ],
+      "expected_domain": "traffic",
+      "error_type": "loop0_wrong_domain",
+      "tree_domain": "enterprise",
+      "near_miss_status": "absent_from_top30",
+      "top10_domain_dist": {
+        "enterprise": 7,
+        "traffic": 3
+      },
+      "top10_retrieved": [
+        "59-2020-QH14:d1",
+        "59-2020-QH14:d2",
+        "59-2020-QH14:d3",
+        "168-2025-ND:d52",
+        "59-2020-QH14:d203",
+        "168-2025-ND:d43",
+        "100-2019-ND-CP:d81",
+        "168-2024-ND-CP:d46",
+        "59-2020-QH14:d150",
+        "100-2019-ND-CP:d6"
+      ],
+      "tree_articles": [
+        "59-2020-QH14:d1",
+        "59-2020-QH14:d2",
+        "59-2020-QH14:d3"
+      ],
+      "kg_articles": [
+        "168-2025-ND:d52",
+        "59-2020-QH14:d203",
+        "168-2025-ND:d43",
+        "100-2019-ND-CP:d81",
+        "168-2024-ND-CP:d46",
+        "59-2020-QH14:d150",
+        "100-2019-ND-CP:d6",
+        "100-2019-ND-CP:d5",
+        "100-2019-ND-CP:d41",
+        "01-2021-ND:d68",
+        "01-2021-ND:d99",
+        "100-2019-ND-CP:d45",
+        "168-2025-ND:d58",
+        "168-2025-ND:d123",
+        "01-2021-ND:d88"
+      ],
+      "near_miss_11_20": [],
+      "near_miss_21_30": [],
+      "completely_absent": [
+        "168-2024-ND-CP:d6",
+        "36-2024-QH15:d67"
+      ]
+    },
+    {
+      "stt": "626",
+      "question": "Tình hình là em có mua lại 1 cái xe cũ. Check trên phạt nguội có thấy bị phạt tốc độ từ 2022 nhưng lần đăng kiểm gần nhất là gần cuối 2024. Giờ cũng s",
+      "category": "vi phạm tốc độ",
+      "expected_articles": [
+        "168-2024-ND-CP:d47",
+        "168-2024-ND-CP:d6",
+        "36-2024-QH15:d42"
+      ],
+      "expected_domain": "traffic",
+      "error_type": "tree_traversal_error",
+      "tree_domain": "traffic",
+      "near_miss_status": "near_miss_11_20",
+      "top10_domain_dist": {
+        "traffic": 9,
+        "enterprise": 1
+      },
+      "top10_retrieved": [
+        "36-2024-QH15:d1",
+        "36-2024-QH15:d2",
+        "36-2024-QH15:d3",
+        "168-2024-ND-CP:d7",
+        "100-2019-ND-CP:d4",
+        "36-2024-QH15:d27",
+        "36-2024-QH15:d12",
+        "100-2019-ND-CP:d45",
+        "168-2024-ND-CP:d44",
+        "59-2020-QH14:d206"
+      ],
+      "tree_articles": [
+        "36-2024-QH15:d1",
+        "36-2024-QH15:d2",
+        "36-2024-QH15:d3"
+      ],
+      "kg_articles": [
+        "168-2024-ND-CP:d7",
+        "36-2024-QH15:d2",
+        "36-2024-QH15:d3",
+        "100-2019-ND-CP:d4",
+        "36-2024-QH15:d27",
+        "36-2024-QH15:d12",
+        "100-2019-ND-CP:d45",
+        "168-2024-ND-CP:d44",
+        "59-2020-QH14:d206",
+        "100-2019-ND-CP:d66",
+        "168-2025-ND:d85",
+        "59-2020-QH14:d16",
+        "100-2019-ND-CP:d6",
+        "100-2019-ND-CP:d38",
+        "36-2024-QH15:d42"
+      ],
+      "near_miss_11_20": [
+        "36-2024-QH15:d42"
+      ],
+      "near_miss_21_30": [
+        "168-2024-ND-CP:d47"
+      ],
+      "completely_absent": [
+        "168-2024-ND-CP:d6"
+      ]
+    },
+    {
+      "stt": "628",
+      "question": "Chào các bác, Xe em đã bán tầm tháng 7/2024, xe đã công chứng mua bán và làm hồ sơ thu hồi biển số sang tên cho chủ xe mới bấm biển mới luôn rồi, vậy ",
+      "category": "phạt nguội",
+      "expected_articles": [
+        "168-2024-ND-CP:d32",
+        "168-2024-ND-CP:d47"
+      ],
+      "expected_domain": "traffic",
+      "error_type": "loop0_wrong_domain",
+      "tree_domain": "enterprise",
+      "near_miss_status": "near_miss_11_20",
+      "top10_domain_dist": {
+        "enterprise": 7,
+        "traffic": 3
+      },
+      "top10_retrieved": [
+        "59-2020-QH14:d1",
+        "59-2020-QH14:d2",
+        "59-2020-QH14:d3",
+        "168-2025-ND:d43",
+        "168-2025-ND:d52",
+        "59-2020-QH14:d203",
+        "168-2024-ND-CP:d14",
+        "36-2024-QH15:d38",
+        "168-2025-ND:d47",
+        "100-2019-ND-CP:d30"
+      ],
+      "tree_articles": [
+        "59-2020-QH14:d1",
+        "59-2020-QH14:d2",
+        "59-2020-QH14:d3"
+      ],
+      "kg_articles": [
+        "168-2025-ND:d43",
+        "168-2025-ND:d52",
+        "59-2020-QH14:d203",
+        "168-2024-ND-CP:d14",
+        "36-2024-QH15:d38",
+        "168-2025-ND:d47",
+        "100-2019-ND-CP:d30",
+        "36-2024-QH15:d39",
+        "100-2019-ND-CP:d17",
+        "100-2019-ND-CP:d16",
+        "168-2024-ND-CP:d32",
+        "168-2024-ND-CP:d13",
+        "168-2024-ND-CP:d47",
+        "36-2024-QH15:d36",
+        "168-2024-ND-CP:d18"
+      ],
+      "near_miss_11_20": [
+        "168-2024-ND-CP:d32",
+        "168-2024-ND-CP:d47"
+      ],
+      "near_miss_21_30": [],
+      "completely_absent": []
+    },
+    {
+      "stt": "629",
+      "question": "Trên QL51 về SG, e đang đi lane sát con lươn đèn xanh, lane rẽ trái sát lane hỗn hợp là đang đèn đỏ, e đang đi lane có đèn xanh đi thẳng nhưng e lỡ rẽ",
+      "category": "vượt đèn đỏ",
+      "expected_articles": [
+        "168-2024-ND-CP:d6",
+        "36-2024-QH15:d11"
+      ],
+      "expected_domain": "traffic",
+      "error_type": "tree_traversal_error",
+      "tree_domain": "traffic",
+      "near_miss_status": "absent_from_top30",
+      "top10_domain_dist": {
+        "traffic": 9,
+        "enterprise": 1
+      },
+      "top10_retrieved": [
+        "36-2024-QH15:d1",
+        "36-2024-QH15:d2",
+        "36-2024-QH15:d3",
+        "168-2024-ND-CP:d7",
+        "36-2024-QH15:d24",
+        "36-2024-QH15:d56",
+        "36-2024-QH15:d15",
+        "36-2024-QH15:d30",
+        "168-2025-ND:d20",
+        "168-2024-ND-CP:d14"
+      ],
+      "tree_articles": [
+        "36-2024-QH15:d1",
+        "36-2024-QH15:d2",
+        "36-2024-QH15:d3"
+      ],
+      "kg_articles": [
+        "36-2024-QH15:d2",
+        "36-2024-QH15:d3",
+        "168-2024-ND-CP:d7",
+        "36-2024-QH15:d24",
+        "36-2024-QH15:d56",
+        "36-2024-QH15:d15",
+        "36-2024-QH15:d30",
+        "168-2025-ND:d20",
+        "168-2024-ND-CP:d14",
+        "168-2024-ND-CP:d15",
+        "168-2024-ND-CP:d20",
+        "36-2024-QH15:d49",
+        "168-2024-ND-CP:d33",
+        "100-2019-ND-CP:d10",
+        "168-2024-ND-CP:d11"
+      ],
+      "near_miss_11_20": [],
+      "near_miss_21_30": [],
+      "completely_absent": [
+        "168-2024-ND-CP:d6",
+        "36-2024-QH15:d11"
+      ]
+    },
+    {
+      "stt": "633",
+      "question": "Xe em vượt đèn đỏ ở Vũng Tàu, có thông tin phạt nguội. Có bác nào đã đóng phạt online chưa và có bị giữ bằng lái không? Cảm ơn các bác.",
+      "category": "vượt đèn đỏ",
+      "expected_articles": [
+        "168-2024-ND-CP:d47",
+        "168-2024-ND-CP:d5",
+        "168-2024-ND-CP:d6",
+        "36-2024-QH15:d11"
+      ],
+      "expected_domain": "traffic",
+      "error_type": "tree_traversal_error",
+      "tree_domain": "traffic",
+      "near_miss_status": "near_miss_21_30",
+      "top10_domain_dist": {
+        "traffic": 9,
+        "enterprise": 1
+      },
+      "top10_retrieved": [
+        "36-2024-QH15:d1",
+        "36-2024-QH15:d2",
+        "36-2024-QH15:d3",
+        "168-2024-ND-CP:d7",
+        "100-2019-ND-CP:d51",
+        "36-2024-QH15:d24",
+        "100-2019-ND-CP:d59",
+        "47-2021-ND:d2",
+        "100-2019-ND-CP:d86",
+        "100-2019-ND-CP:d45"
+      ],
+      "tree_articles": [
+        "36-2024-QH15:d1",
+        "36-2024-QH15:d2",
+        "36-2024-QH15:d3"
+      ],
+      "kg_articles": [
+        "36-2024-QH15:d2",
+        "36-2024-QH15:d3",
+        "168-2024-ND-CP:d7",
+        "100-2019-ND-CP:d51",
+        "36-2024-QH15:d24",
+        "100-2019-ND-CP:d59",
+        "47-2021-ND:d2",
+        "100-2019-ND-CP:d86",
+        "100-2019-ND-CP:d45",
+        "36-2024-QH15:d5",
+        "100-2019-ND-CP:d42",
+        "59-2020-QH14:d26",
+        "168-2025-ND:d113",
+        "168-2025-ND:d78",
+        "168-2025-ND:d79"
+      ],
+      "near_miss_11_20": [],
+      "near_miss_21_30": [
+        "168-2024-ND-CP:d5"
+      ],
+      "completely_absent": [
+        "168-2024-ND-CP:d47",
+        "168-2024-ND-CP:d6",
+        "36-2024-QH15:d11"
+      ]
+    },
+    {
+      "stt": "634",
+      "question": "Chẳng là 1 giây lơ đễnh nên em bị cs vịn vì vượt đèn đỏ. Cảnh sát thu bằng 2 tháng. Các bác cho hỏi nếu để đến ngày hết hạn thu bằng đến nộp phạt thì ",
+      "category": "vượt đèn đỏ",
+      "expected_articles": [
+        "168-2024-ND-CP:d48",
+        "168-2024-ND-CP:d5",
+        "168-2024-ND-CP:d6",
+        "36-2024-QH15:d11"
+      ],
+      "expected_domain": "traffic",
+      "error_type": "tree_traversal_error",
+      "tree_domain": "traffic",
+      "near_miss_status": "absent_from_top30",
+      "top10_domain_dist": {
+        "traffic": 9,
+        "enterprise": 1
+      },
+      "top10_retrieved": [
+        "36-2024-QH15:d1",
+        "36-2024-QH15:d2",
+        "36-2024-QH15:d3",
+        "168-2024-ND-CP:d7",
+        "36-2024-QH15:d24",
+        "168-2024-ND-CP:d41",
+        "168-2024-ND-CP:d43",
+        "168-2024-ND-CP:d18",
+        "59-2020-QH14:d193",
+        "36-2024-QH15:d52"
+      ],
+      "tree_articles": [
+        "36-2024-QH15:d1",
+        "36-2024-QH15:d2",
+        "36-2024-QH15:d3"
+      ],
+      "kg_articles": [
+        "36-2024-QH15:d2",
+        "36-2024-QH15:d3",
+        "168-2024-ND-CP:d7",
+        "36-2024-QH15:d24",
+        "168-2024-ND-CP:d41",
+        "168-2024-ND-CP:d43",
+        "168-2024-ND-CP:d18",
+        "59-2020-QH14:d193",
+        "36-2024-QH15:d52",
+        "100-2019-ND-CP:d16",
+        "36-2024-QH15:d68",
+        "168-2024-ND-CP:d38",
+        "100-2019-ND-CP:d54",
+        "36-2024-QH15:d51",
+        "100-2019-ND-CP:d62"
+      ],
+      "near_miss_11_20": [],
+      "near_miss_21_30": [],
+      "completely_absent": [
+        "168-2024-ND-CP:d48",
+        "168-2024-ND-CP:d5",
+        "168-2024-ND-CP:d6",
+        "36-2024-QH15:d11"
+      ]
+    },
+    {
+      "stt": "635",
+      "question": "Lòng đường kẻ mũi tên đi thẳng và rẽ trái, tôi đi thẳng dừng đèn đỏ nhưng đèn đang xanh ở hướng rẽ trái. Vậy có bị phạt lỗi gì không các bác?",
+      "category": "vượt đèn đỏ",
+      "expected_articles": [
+        "168-2024-ND-CP:d6",
+        "36-2024-QH15:d11"
+      ],
+      "expected_domain": "traffic",
+      "error_type": "tree_traversal_error",
+      "tree_domain": "traffic",
+      "near_miss_status": "near_miss_11_20",
+      "top10_domain_dist": {
+        "traffic": 10
+      },
+      "top10_retrieved": [
+        "36-2024-QH15:d1",
+        "36-2024-QH15:d2",
+        "36-2024-QH15:d3",
+        "168-2024-ND-CP:d7",
+        "36-2024-QH15:d15",
+        "168-2024-ND-CP:d9",
+        "36-2024-QH15:d24",
+        "100-2019-ND-CP:d12",
+        "36-2024-QH15:d77",
+        "100-2019-ND-CP:d6"
+      ],
+      "tree_articles": [
+        "36-2024-QH15:d1",
+        "36-2024-QH15:d2",
+        "36-2024-QH15:d3"
+      ],
+      "kg_articles": [
+        "168-2024-ND-CP:d7",
+        "36-2024-QH15:d2",
+        "36-2024-QH15:d3",
+        "36-2024-QH15:d15",
+        "168-2024-ND-CP:d9",
+        "36-2024-QH15:d24",
+        "100-2019-ND-CP:d12",
+        "36-2024-QH15:d77",
+        "100-2019-ND-CP:d6",
+        "168-2024-ND-CP:d12",
+        "100-2019-ND-CP:d47",
+        "100-2019-ND-CP:d13",
+        "168-2024-ND-CP:d10",
+        "36-2024-QH15:d27",
+        "168-2024-ND-CP:d34"
+      ],
+      "near_miss_11_20": [
+        "36-2024-QH15:d11"
+      ],
+      "near_miss_21_30": [],
+      "completely_absent": [
+        "168-2024-ND-CP:d6"
+      ]
+    },
+    {
+      "stt": "637",
+      "question": "Vượt đèn đỏ để nhường đường xe ưu tiên có bị CSGT phạt nguội hay không? Khi camera giám sát giao thông ở khắp các giao lộ, nhiều người thắc mắc điều n",
+      "category": "vượt đèn đỏ",
+      "expected_articles": [
+        "168-2024-ND-CP:d6",
+        "36-2024-QH15:d11",
+        "36-2024-QH15:d27"
+      ],
+      "expected_domain": "traffic",
+      "error_type": "tree_traversal_error",
+      "tree_domain": "traffic",
+      "near_miss_status": "absent_from_top30",
+      "top10_domain_dist": {
+        "traffic": 10
+      },
+      "top10_retrieved": [
+        "36-2024-QH15:d1",
+        "36-2024-QH15:d2",
+        "36-2024-QH15:d3",
+        "168-2024-ND-CP:d7",
+        "36-2024-QH15:d52",
+        "36-2024-QH15:d75",
+        "100-2019-ND-CP:d64",
+        "168-2024-ND-CP:d9",
+        "36-2024-QH15:d68",
+        "100-2019-ND-CP:d23"
+      ],
+      "tree_articles": [
+        "36-2024-QH15:d1",
+        "36-2024-QH15:d2",
+        "36-2024-QH15:d3"
+      ],
+      "kg_articles": [
+        "36-2024-QH15:d2",
+        "168-2024-ND-CP:d7",
+        "36-2024-QH15:d3",
+        "36-2024-QH15:d52",
+        "36-2024-QH15:d75",
+        "100-2019-ND-CP:d64",
+        "168-2024-ND-CP:d9",
+        "36-2024-QH15:d68",
+        "100-2019-ND-CP:d23",
+        "59-2020-QH14:d41",
+        "168-2024-ND-CP:d47",
+        "36-2024-QH15:d25",
+        "168-2024-ND-CP:d50",
+        "36-2024-QH15:d23",
+        "36-2024-QH15:d24"
+      ],
+      "near_miss_11_20": [],
+      "near_miss_21_30": [],
+      "completely_absent": [
+        "168-2024-ND-CP:d6",
+        "36-2024-QH15:d11",
+        "36-2024-QH15:d27"
+      ]
+    },
+    {
+      "stt": "643",
+      "question": "Không vi phạm, CSGT có được yêu cầu dừng xe đo nồng độ cồn không?",
+      "category": "nồng độ cồn",
+      "expected_articles": [
+        "168-2024-ND-CP:d5",
+        "168-2024-ND-CP:d6",
+        "36-2024-QH15:d67",
+        "36-2024-QH15:d9"
+      ],
+      "expected_domain": "traffic",
+      "error_type": "tree_traversal_error",
+      "tree_domain": "traffic",
+      "near_miss_status": "near_miss_11_20",
+      "top10_domain_dist": {
+        "traffic": 9,
+        "enterprise": 1
+      },
+      "top10_retrieved": [
+        "36-2024-QH15:d1",
+        "36-2024-QH15:d2",
+        "36-2024-QH15:d3",
+        "168-2024-ND-CP:d7",
+        "100-2019-ND-CP:d6",
+        "168-2024-ND-CP:d9",
+        "100-2019-ND-CP:d66",
+        "36-2024-QH15:d81",
+        "59-2020-QH14:d211",
+        "36-2024-QH15:d83"
+      ],
+      "tree_articles": [
+        "36-2024-QH15:d1",
+        "36-2024-QH15:d2",
+        "36-2024-QH15:d3"
+      ],
+      "kg_articles": [
+        "168-2024-ND-CP:d7",
+        "36-2024-QH15:d2",
+        "36-2024-QH15:d3",
+        "100-2019-ND-CP:d6",
+        "168-2024-ND-CP:d9",
+        "100-2019-ND-CP:d66",
+        "36-2024-QH15:d81",
+        "59-2020-QH14:d211",
+        "36-2024-QH15:d83",
+        "36-2024-QH15:d87",
+        "100-2019-ND-CP:d51",
+        "36-2024-QH15:d25",
+        "36-2024-QH15:d9",
+        "100-2019-ND-CP:d77",
+        "36-2024-QH15:d73"
+      ],
+      "near_miss_11_20": [
+        "168-2024-ND-CP:d6",
+        "36-2024-QH15:d9"
+      ],
+      "near_miss_21_30": [],
+      "completely_absent": [
+        "168-2024-ND-CP:d5",
+        "36-2024-QH15:d67"
+      ]
+    },
+    {
+      "stt": "644",
+      "question": "Yêu cầu CSGT chứng minh vi phạm mới đưa giấy tờ, đúng hay sai?",
+      "category": "xử phạt vi phạm giao thông",
+      "expected_articles": [
+        "168-2024-ND-CP:d47",
+        "36-2024-QH15:d72"
+      ],
+      "expected_domain": "traffic",
+      "error_type": "tree_traversal_error",
+      "tree_domain": "traffic",
+      "near_miss_status": "near_miss_11_20",
+      "top10_domain_dist": {
+        "traffic": 8,
+        "enterprise": 2
+      },
+      "top10_retrieved": [
+        "36-2024-QH15:d1",
+        "36-2024-QH15:d2",
+        "36-2024-QH15:d3",
+        "168-2024-ND-CP:d7",
+        "168-2025-ND:d3",
+        "100-2019-ND-CP:d82",
+        "59-2020-QH14:d211",
+        "100-2019-ND-CP:d51",
+        "168-2024-ND-CP:d4",
+        "36-2024-QH15:d73"
+      ],
+      "tree_articles": [
+        "36-2024-QH15:d1",
+        "36-2024-QH15:d2",
+        "36-2024-QH15:d3"
+      ],
+      "kg_articles": [
+        "36-2024-QH15:d3",
+        "36-2024-QH15:d2",
+        "168-2024-ND-CP:d7",
+        "168-2025-ND:d3",
+        "100-2019-ND-CP:d82",
+        "59-2020-QH14:d211",
+        "100-2019-ND-CP:d51",
+        "168-2024-ND-CP:d4",
+        "36-2024-QH15:d73",
+        "168-2024-ND-CP:d3",
+        "36-2024-QH15:d65",
+        "168-2024-ND-CP:d52",
+        "100-2019-ND-CP:d50",
+        "100-2019-ND-CP:d58",
+        "168-2024-ND-CP:d47"
+      ],
+      "near_miss_11_20": [
+        "168-2024-ND-CP:d47"
+      ],
+      "near_miss_21_30": [],
+      "completely_absent": [
+        "36-2024-QH15:d72"
+      ]
+    },
+    {
+      "stt": "648",
+      "question": "Xe máy không chính chủ thì có bị phạt hay không?",
+      "category": "đăng ký xe",
+      "expected_articles": [
+        "168-2024-ND-CP:d32",
+        "36-2024-QH15:d36"
+      ],
+      "expected_domain": "traffic",
+      "error_type": "tree_traversal_error",
+      "tree_domain": "traffic",
+      "near_miss_status": "near_miss_21_30",
+      "top10_domain_dist": {
+        "traffic": 10
+      },
+      "top10_retrieved": [
+        "36-2024-QH15:d1",
+        "36-2024-QH15:d2",
+        "36-2024-QH15:d3",
+        "168-2024-ND-CP:d7",
+        "36-2024-QH15:d7",
+        "36-2024-QH15:d34",
+        "100-2019-ND-CP:d11",
+        "36-2024-QH15:d42",
+        "100-2019-ND-CP:d6",
+        "100-2019-ND-CP:d21"
+      ],
+      "tree_articles": [
+        "36-2024-QH15:d1",
+        "36-2024-QH15:d2",
+        "36-2024-QH15:d3"
+      ],
+      "kg_articles": [
+        "36-2024-QH15:d2",
+        "36-2024-QH15:d3",
+        "168-2024-ND-CP:d7",
+        "36-2024-QH15:d7",
+        "36-2024-QH15:d34",
+        "100-2019-ND-CP:d11",
+        "36-2024-QH15:d42",
+        "100-2019-ND-CP:d6",
+        "100-2019-ND-CP:d21",
+        "100-2019-ND-CP:d34",
+        "36-2024-QH15:d62",
+        "100-2019-ND-CP:d28",
+        "36-2024-QH15:d56",
+        "100-2019-ND-CP:d22",
+        "168-2024-ND-CP:d39"
+      ],
+      "near_miss_11_20": [],
+      "near_miss_21_30": [
+        "168-2024-ND-CP:d32"
+      ],
+      "completely_absent": [
+        "36-2024-QH15:d36"
+      ]
+    },
+    {
+      "stt": "650",
+      "question": "Dừng xe cách đường giao nhau bao nhiêu mét là vi phạm luật giao thông?",
+      "category": "dừng đỗ xe",
+      "expected_articles": [
+        "168-2024-ND-CP:d6",
+        "36-2024-QH15:d18"
+      ],
+      "expected_domain": "traffic",
+      "error_type": "tree_traversal_error",
+      "tree_domain": "traffic",
+      "near_miss_status": "absent_from_top30",
+      "top10_domain_dist": {
+        "traffic": 9,
+        "enterprise": 1
+      },
+      "top10_retrieved": [
+        "36-2024-QH15:d1",
+        "36-2024-QH15:d2",
+        "36-2024-QH15:d3",
+        "168-2024-ND-CP:d7",
+        "168-2024-ND-CP:d35",
+        "59-2020-QH14:d211",
+        "36-2024-QH15:d14",
+        "168-2024-ND-CP:d4",
+        "100-2019-ND-CP:d6",
+        "36-2024-QH15:d23"
+      ],
+      "tree_articles": [
+        "36-2024-QH15:d1",
+        "36-2024-QH15:d2",
+        "36-2024-QH15:d3"
+      ],
+      "kg_articles": [
+        "36-2024-QH15:d3",
+        "168-2024-ND-CP:d7",
+        "36-2024-QH15:d2",
+        "168-2024-ND-CP:d35",
+        "59-2020-QH14:d211",
+        "36-2024-QH15:d14",
+        "168-2024-ND-CP:d4",
+        "100-2019-ND-CP:d6",
+        "36-2024-QH15:d23",
+        "36-2024-QH15:d20",
+        "36-2024-QH15:d27",
+        "36-2024-QH15:d25",
+        "36-2024-QH15:d39",
+        "168-2024-ND-CP:d52",
+        "168-2024-ND-CP:d3"
+      ],
+      "near_miss_11_20": [],
+      "near_miss_21_30": [],
+      "completely_absent": [
+        "168-2024-ND-CP:d6",
+        "36-2024-QH15:d18"
+      ]
+    },
+    {
+      "stt": "657",
+      "question": "Dán tem phản quang lên vành xe có vi phạm pháp luật không?",
+      "category": "xử phạt vi phạm giao thông",
+      "expected_articles": [
+        "168-2024-ND-CP:d14",
+        "36-2024-QH15:d35"
+      ],
+      "expected_domain": "traffic",
+      "error_type": "tree_traversal_error",
+      "tree_domain": "traffic",
+      "near_miss_status": "near_miss_21_30",
+      "top10_domain_dist": {
+        "traffic": 8,
+        "enterprise": 2
+      },
+      "top10_retrieved": [
+        "36-2024-QH15:d1",
+        "36-2024-QH15:d2",
+        "36-2024-QH15:d3",
+        "168-2024-ND-CP:d7",
+        "36-2024-QH15:d73",
+        "36-2024-QH15:d70",
+        "168-2025-ND:d89",
+        "59-2020-QH14:d211",
+        "36-2024-QH15:d86",
+        "36-2024-QH15:d33"
+      ],
+      "tree_articles": [
+        "36-2024-QH15:d1",
+        "36-2024-QH15:d2",
+        "36-2024-QH15:d3"
+      ],
+      "kg_articles": [
+        "36-2024-QH15:d3",
+        "36-2024-QH15:d2",
+        "168-2024-ND-CP:d7",
+        "36-2024-QH15:d73",
+        "36-2024-QH15:d70",
+        "168-2025-ND:d89",
+        "59-2020-QH14:d211",
+        "36-2024-QH15:d86",
+        "36-2024-QH15:d33",
+        "168-2024-ND-CP:d4",
+        "36-2024-QH15:d66",
+        "23-2022-ND:d1",
+        "36-2024-QH15:d52",
+        "100-2019-ND-CP:d6",
+        "36-2024-QH15:d57"
+      ],
+      "near_miss_11_20": [],
+      "near_miss_21_30": [
+        "168-2024-ND-CP:d14"
+      ],
+      "completely_absent": [
+        "36-2024-QH15:d35"
+      ]
+    },
+    {
+      "stt": "660",
+      "question": "Xe máy có bị phạt nguội không? Cách tra cứu phạt nguội trên csgt.vn như thế nào?",
+      "category": "phạt nguội",
+      "expected_articles": [
+        "168-2024-ND-CP:d47",
+        "36-2024-QH15:d67"
+      ],
+      "expected_domain": "traffic",
+      "error_type": "tree_traversal_error",
+      "tree_domain": "traffic",
+      "near_miss_status": "absent_from_top30",
+      "top10_domain_dist": {
+        "traffic": 10
+      },
+      "top10_retrieved": [
+        "36-2024-QH15:d1",
+        "36-2024-QH15:d2",
+        "36-2024-QH15:d3",
+        "168-2024-ND-CP:d7",
+        "36-2024-QH15:d7",
+        "36-2024-QH15:d34",
+        "36-2024-QH15:d42",
+        "100-2019-ND-CP:d11",
+        "100-2019-ND-CP:d6",
+        "100-2019-ND-CP:d22"
+      ],
+      "tree_articles": [
+        "36-2024-QH15:d1",
+        "36-2024-QH15:d2",
+        "36-2024-QH15:d3"
+      ],
+      "kg_articles": [
+        "168-2024-ND-CP:d7",
+        "36-2024-QH15:d2",
+        "36-2024-QH15:d3",
+        "36-2024-QH15:d7",
+        "36-2024-QH15:d34",
+        "36-2024-QH15:d42",
+        "100-2019-ND-CP:d11",
+        "100-2019-ND-CP:d6",
+        "100-2019-ND-CP:d22",
+        "36-2024-QH15:d62",
+        "36-2024-QH15:d56",
+        "100-2019-ND-CP:d21",
+        "100-2019-ND-CP:d34",
+        "36-2024-QH15:d65",
+        "36-2024-QH15:d63"
+      ],
+      "near_miss_11_20": [],
+      "near_miss_21_30": [],
+      "completely_absent": [
+        "168-2024-ND-CP:d47",
+        "36-2024-QH15:d67"
+      ]
+    },
+    {
+      "stt": "663",
+      "question": "Ô tô đỗ xe bên trái đường 1 chiều phạt bao nhiêu tiền?",
+      "category": "dừng đỗ xe",
+      "expected_articles": [
+        "168-2024-ND-CP:d6",
+        "36-2024-QH15:d18"
+      ],
+      "expected_domain": "traffic",
+      "error_type": "tree_traversal_error",
+      "tree_domain": "traffic",
+      "near_miss_status": "near_miss_11_20",
+      "top10_domain_dist": {
+        "traffic": 10
+      },
+      "top10_retrieved": [
+        "36-2024-QH15:d1",
+        "36-2024-QH15:d2",
+        "36-2024-QH15:d3",
+        "168-2024-ND-CP:d7",
+        "36-2024-QH15:d9",
+        "36-2024-QH15:d25",
+        "36-2024-QH15:d57",
+        "100-2019-ND-CP:d6",
+        "36-2024-QH15:d40",
+        "168-2024-ND-CP:d35"
+      ],
+      "tree_articles": [
+        "36-2024-QH15:d1",
+        "36-2024-QH15:d2",
+        "36-2024-QH15:d3"
+      ],
+      "kg_articles": [
+        "168-2024-ND-CP:d7",
+        "36-2024-QH15:d2",
+        "36-2024-QH15:d3",
+        "36-2024-QH15:d9",
+        "36-2024-QH15:d25",
+        "36-2024-QH15:d57",
+        "100-2019-ND-CP:d6",
+        "36-2024-QH15:d40",
+        "168-2024-ND-CP:d35",
+        "36-2024-QH15:d59",
+        "168-2024-ND-CP:d5",
+        "36-2024-QH15:d63",
+        "100-2019-ND-CP:d36",
+        "36-2024-QH15:d35",
+        "100-2019-ND-CP:d34"
+      ],
+      "near_miss_11_20": [
+        "36-2024-QH15:d18"
+      ],
+      "near_miss_21_30": [],
+      "completely_absent": [
+        "168-2024-ND-CP:d6"
+      ]
+    },
+    {
+      "stt": "672",
+      "question": "Tra cứu phạt nguội ô tô 2026 trên VNeTraffic thế nào?",
+      "category": "phạt nguội",
+      "expected_articles": [
+        "168-2024-ND-CP:d47",
+        "36-2024-QH15:d67"
+      ],
+      "expected_domain": "traffic",
+      "error_type": "tree_traversal_error",
+      "tree_domain": "traffic",
+      "near_miss_status": "absent_from_top30",
+      "top10_domain_dist": {
+        "traffic": 10
+      },
+      "top10_retrieved": [
+        "36-2024-QH15:d1",
+        "36-2024-QH15:d2",
+        "36-2024-QH15:d3",
+        "168-2024-ND-CP:d7",
+        "36-2024-QH15:d9",
+        "36-2024-QH15:d57",
+        "36-2024-QH15:d40",
+        "36-2024-QH15:d89",
+        "36-2024-QH15:d59",
+        "168-2024-ND-CP:d5"
+      ],
+      "tree_articles": [
+        "36-2024-QH15:d1",
+        "36-2024-QH15:d2",
+        "36-2024-QH15:d3"
+      ],
+      "kg_articles": [
+        "36-2024-QH15:d2",
+        "36-2024-QH15:d3",
+        "168-2024-ND-CP:d7",
+        "36-2024-QH15:d9",
+        "36-2024-QH15:d57",
+        "36-2024-QH15:d40",
+        "36-2024-QH15:d89",
+        "36-2024-QH15:d59",
+        "168-2024-ND-CP:d5",
+        "36-2024-QH15:d61",
+        "100-2019-ND-CP:d3",
+        "168-2024-ND-CP:d38",
+        "168-2024-ND-CP:d50",
+        "100-2019-ND-CP:d16",
+        "36-2024-QH15:d35"
+      ],
+      "near_miss_11_20": [],
+      "near_miss_21_30": [],
+      "completely_absent": [
+        "168-2024-ND-CP:d47",
+        "36-2024-QH15:d67"
+      ]
+    },
+    {
+      "stt": "674",
+      "question": "Uống rượu đi bộ có bị phạt không 2026?",
+      "category": "nồng độ cồn",
+      "expected_articles": [
+        "168-2024-ND-CP:d10",
+        "36-2024-QH15:d9"
+      ],
+      "expected_domain": "traffic",
+      "error_type": "tree_traversal_error",
+      "tree_domain": "traffic",
+      "near_miss_status": "near_miss_11_20",
+      "top10_domain_dist": {
+        "traffic": 9,
+        "enterprise": 1
+      },
+      "top10_retrieved": [
+        "36-2024-QH15:d1",
+        "36-2024-QH15:d2",
+        "36-2024-QH15:d3",
+        "168-2024-ND-CP:d7",
+        "23-2022-ND:d3",
+        "36-2024-QH15:d30",
+        "100-2019-ND-CP:d12",
+        "100-2019-ND-CP:d6",
+        "36-2024-QH15:d18",
+        "36-2024-QH15:d14"
+      ],
+      "tree_articles": [
+        "36-2024-QH15:d1",
+        "36-2024-QH15:d2",
+        "36-2024-QH15:d3"
+      ],
+      "kg_articles": [
+        "168-2024-ND-CP:d7",
+        "36-2024-QH15:d2",
+        "36-2024-QH15:d3",
+        "23-2022-ND:d3",
+        "36-2024-QH15:d30",
+        "100-2019-ND-CP:d12",
+        "100-2019-ND-CP:d6",
+        "36-2024-QH15:d18",
+        "36-2024-QH15:d14",
+        "36-2024-QH15:d33",
+        "168-2024-ND-CP:d10",
+        "36-2024-QH15:d20",
+        "36-2024-QH15:d16",
+        "36-2024-QH15:d9",
+        "168-2024-ND-CP:d39"
+      ],
+      "near_miss_11_20": [
+        "168-2024-ND-CP:d10",
+        "36-2024-QH15:d9"
+      ],
+      "near_miss_21_30": [],
+      "completely_absent": []
+    },
+    {
+      "stt": "683",
+      "question": "Bị trừ hết điểm giấy phép lái xe máy có được lái xe không?",
+      "category": "giấy phép lái xe",
+      "expected_articles": [
+        "168-2024-ND-CP:d18",
+        "168-2024-ND-CP:d50",
+        "36-2024-QH15:d58"
+      ],
+      "expected_domain": "traffic",
+      "error_type": "loop0_wrong_domain",
+      "tree_domain": "enterprise",
+      "near_miss_status": "near_miss_11_20",
+      "top10_domain_dist": {
+        "enterprise": 4,
+        "traffic": 6
+      },
+      "top10_retrieved": [
+        "01-2021-ND:d1",
+        "01-2021-ND:d2",
+        "01-2021-ND:d3",
+        "59-2020-QH14:d27",
+        "36-2024-QH15:d62",
+        "36-2024-QH15:d89",
+        "100-2019-ND-CP:d25",
+        "100-2019-ND-CP:d21",
+        "36-2024-QH15:d60",
+        "168-2024-ND-CP:d51"
+      ],
+      "tree_articles": [
+        "01-2021-ND:d1",
+        "01-2021-ND:d2",
+        "01-2021-ND:d3"
+      ],
+      "kg_articles": [
+        "01-2021-ND:d1",
+        "01-2021-ND:d2",
+        "01-2021-ND:d3",
+        "59-2020-QH14:d27",
+        "36-2024-QH15:d62",
+        "36-2024-QH15:d89",
+        "100-2019-ND-CP:d25",
+        "100-2019-ND-CP:d21",
+        "36-2024-QH15:d60",
+        "168-2024-ND-CP:d51",
+        "36-2024-QH15:d7",
+        "168-2024-ND-CP:d39",
+        "168-2024-ND-CP:d18",
+        "100-2019-ND-CP:d28",
+        "100-2019-ND-CP:d37"
+      ],
+      "near_miss_11_20": [
+        "168-2024-ND-CP:d18",
+        "168-2024-ND-CP:d50"
+      ],
+      "near_miss_21_30": [],
+      "completely_absent": [
+        "36-2024-QH15:d58"
+      ]
+    }
+  ]
+}
