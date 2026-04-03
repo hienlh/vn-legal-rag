@@ -176,6 +176,89 @@ class OpenAIProvider(BaseLLMProvider):
         raise LLMError(f"OpenAI failed after {max_retries} retries")
 
 
+class AnthropicProvider(BaseLLMProvider):
+    """Anthropic Claude provider with timeout and retry."""
+
+    def __init__(self, model: str = "claude-sonnet-4-20250514", timeout: int = DEFAULT_TIMEOUT, **kwargs):
+        super().__init__(model, timeout, **kwargs)
+        base_url = kwargs.get("base_url") or os.getenv("ANTHROPIC_BASE_URL") or None
+        api_key = os.getenv("ANTHROPIC_API_KEY") or None
+        # Treat empty string as unset
+        if not api_key:
+            api_key = "sk-ant-placeholder"
+        if base_url is not None and not base_url:
+            base_url = None
+        try:
+            from anthropic import Anthropic
+            client_kwargs = {"api_key": api_key}
+            if base_url:
+                client_kwargs["base_url"] = base_url
+            # Prevent empty auth_token from being sent
+            auth_token = os.getenv("ANTHROPIC_AUTH_TOKEN")
+            if not auth_token:
+                os.environ.pop("ANTHROPIC_AUTH_TOKEN", None)
+            self.client = Anthropic(**client_kwargs)
+        except ImportError:
+            raise ImportError("anthropic not installed. Run: pip install anthropic")
+
+    def generate(
+        self,
+        prompt: str,
+        temperature: float = 0.1,
+        timeout: Optional[int] = None,
+        max_retries: int = MAX_RETRIES,
+        **kwargs
+    ) -> str:
+        """Generate with retry and timeout."""
+        timeout = timeout or self.timeout
+        backoff = INITIAL_BACKOFF
+
+        for attempt in range(max_retries):
+            try:
+                response = self.client.messages.create(
+                    model=self.model,
+                    max_tokens=4096,
+                    messages=[{"role": "user", "content": prompt}],
+                    temperature=temperature,
+                    timeout=timeout,
+                )
+                # Handle both parsed object and raw SSE string (Meridian proxy)
+                if isinstance(response, str):
+                    return self._parse_sse_response(response)
+                content = response.content[0].text
+                return self._validate_response(content)
+            except LLMEmptyResponseError:
+                raise
+            except Exception as e:
+                error_str = str(e).lower()
+                is_retryable = any(x in error_str for x in ["rate", "limit", "timeout", "429", "503", "overloaded"])
+
+                if attempt < max_retries - 1 and is_retryable:
+                    logger.warning(f"Anthropic attempt {attempt + 1} failed: {e}. Retrying in {backoff}s...")
+                    time.sleep(backoff)
+                    backoff *= 2
+                else:
+                    raise LLMError(f"Anthropic API error after {attempt + 1} attempts: {e}")
+
+        raise LLMError(f"Anthropic failed after {max_retries} retries")
+
+    def _parse_sse_response(self, raw: str) -> str:
+        """Parse SSE stream response from Meridian proxy."""
+        import json as _json
+        text_parts = []
+        for line in raw.split("\n"):
+            if line.startswith("data: "):
+                try:
+                    data = _json.loads(line[6:])
+                    if data.get("type") == "content_block_delta":
+                        delta = data.get("delta", {})
+                        if delta.get("type") == "text_delta":
+                            text_parts.append(delta.get("text", ""))
+                except _json.JSONDecodeError:
+                    continue
+        return self._validate_response("".join(text_parts))
+
+
 def create_llm_provider(
     provider: str,
     model: Optional[str] = None,
@@ -185,7 +268,7 @@ def create_llm_provider(
     Create LLM provider instance.
 
     Args:
-        provider: Provider name (gemini, openai)
+        provider: Provider name (gemini, openai, anthropic)
         model: Model name (optional)
         **kwargs: Additional provider-specific arguments
 

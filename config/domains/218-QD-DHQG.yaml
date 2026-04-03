@@ -1,0 +1,17 @@
+# Domain Configuration for 218/QĐ-ĐHQG
+# Sửa đổi bổ sung quy định GVHD (sửa đổi QĐ 1393)
+
+_extends: _education_common.yaml
+
+abbreviations:
+  # Document-specific
+  WoS: Web of Science
+  ISBN: International Standard Book Number
+
+chapter_hints:
+  "GVHD,hướng dẫn,người hướng dẫn,tiêu chuẩn": "Quy định về giáo viên hướng dẫn"
+  "chỉ tiêu,số lượng hướng dẫn": "Chỉ tiêu hướng dẫn"
+  "công bố,bài báo,tạp chí,Scopus": "Yêu cầu công bố khoa học"
+
+article_selection_examples: []
+chapter_selection_examples: []

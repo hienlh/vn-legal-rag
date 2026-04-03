@@ -1,0 +1,20 @@
+# Domain Configuration for 270/QĐ-ĐHCNTT
+# Quy chế đào tạo trình độ thạc sĩ UIT (2022)
+
+_extends: _education_common.yaml
+
+abbreviations:
+  # Document-specific
+  Trường: Trường Đại học Công nghệ Thông tin
+
+chapter_hints:
+  "quy định chung,phạm vi,đối tượng": "Quy định chung"
+  "chương trình đào tạo,CTĐT,tín chỉ,môn học": "Chương trình đào tạo"
+  "tuyển sinh,nhập học,điều kiện nhập học": "Tuyển sinh"
+  "tổ chức đào tạo,đăng ký môn,học kỳ": "Tổ chức đào tạo"
+  "luận văn,bảo vệ,GVHD,hội đồng": "Luận văn và bảo vệ luận văn"
+  "tốt nghiệp,điều kiện tốt nghiệp,cấp bằng": "Tốt nghiệp và cấp bằng"
+  "quyền,nghĩa vụ,khen thưởng,kỷ luật": "Quyền và nghĩa vụ của học viên"
+
+article_selection_examples: []
+chapter_selection_examples: []
