@@ -107,7 +107,7 @@ class SemanticBridge:
         # Reduce tree weight and boost KG to let relation-based results
         # compete for top-10 slots.
         source_weights = {
-            "tree": 1.4,
+            "tree": 1.2,
             "dual": 0.7,
             "kg": 1.0,
         }

@@ -1,0 +1,883 @@
+{
+  "processed_articles": [
+    "270-QD-DHCNTT:d3",
+    "160-QD-DHQG:d37",
+    "1393-QD-DHQG:d5",
+    "851-QD-DHCNTT:d6",
+    "1393-QD-DHQG:d21",
+    "270-QD-DHCNTT:d14",
+    "270-QD-DHCNTT:d12",
+    "270-QD-DHCNTT:d34",
+    "270-QD-DHCNTT:d18",
+    "1393-QD-DHQG:d22",
+    "160-QD-DHQG:d30",
+    "1393-QD-DHQG:d26",
+    "270-QD-DHCNTT:d11",
+    "270-QD-DHCNTT:d2",
+    "851-QD-DHCNTT:d5",
+    "851-QD-DHCNTT:d12",
+    "1393-QD-DHQG:d4",
+    "218-QD-DHQG:d17",
+    "160-QD-DHQG:d27",
+    "1393-QD-DHQG:d32",
+    "160-QD-DHQG:d26",
+    "851-QD-DHCNTT:d9",
+    "1393-QD-DHQG:d14",
+    "851-QD-DHCNTT:d14",
+    "160-QD-DHQG:d7",
+    "160-QD-DHQG:d23",
+    "1393-QD-DHQG:d1",
+    "270-QD-DHCNTT:d16",
+    "160-QD-DHQG:d21",
+    "851-QD-DHCNTT:d3",
+    "270-QD-DHCNTT:d31",
+    "270-QD-DHCNTT:d30",
+    "160-QD-DHQG:d32",
+    "1393-QD-DHQG:d8",
+    "270-QD-DHCNTT:d36",
+    "1393-QD-DHQG:d29",
+    "160-QD-DHQG:d34",
+    "160-QD-DHQG:d19",
+    "270-QD-DHCNTT:d27",
+    "1393-QD-DHQG:d18",
+    "1393-QD-DHQG:d2",
+    "851-QD-DHCNTT:d10",
+    "160-QD-DHQG:d12",
+    "270-QD-DHCNTT:d32",
+    "1393-QD-DHQG:d30",
+    "1393-QD-DHQG:d12",
+    "270-QD-DHCNTT:d35",
+    "270-QD-DHCNTT:d15",
+    "270-QD-DHCNTT:d5",
+    "851-QD-DHCNTT:d11",
+    "160-QD-DHQG:d31",
+    "270-QD-DHCNTT:d21",
+    "1393-QD-DHQG:d6",
+    "851-QD-DHCNTT:d8",
+    "270-QD-DHCNTT:d29",
+    "160-QD-DHQG:d18",
+    "160-QD-DHQG:d36",
+    "270-QD-DHCNTT:d10",
+    "270-QD-DHCNTT:d26",
+    "218-QD-DHQG:d1",
+    "160-QD-DHQG:d9",
+    "851-QD-DHCNTT:d7",
+    "1393-QD-DHQG:d10",
+    "270-QD-DHCNTT:d28",
+    "1393-QD-DHQG:d20",
+    "851-QD-DHCNTT:d2",
+    "270-QD-DHCNTT:d4",
+    "270-QD-DHCNTT:d9",
+    "1393-QD-DHQG:d9",
+    "160-QD-DHQG:d20",
+    "218-QD-DHQG:d3",
+    "1393-QD-DHQG:d11",
+    "270-QD-DHCNTT:d17",
+    "160-QD-DHQG:d25",
+    "270-QD-DHCNTT:d25",
+    "851-QD-DHCNTT:d4",
+    "270-QD-DHCNTT:d13",
+    "270-QD-DHCNTT:d37",
+    "851-QD-DHCNTT:d13",
+    "1393-QD-DHQG:d7",
+    "160-QD-DHQG:d35",
+    "218-QD-DHQG:d2",
+    "1393-QD-DHQG:d24",
+    "1393-QD-DHQG:d19",
+    "1393-QD-DHQG:d15",
+    "270-QD-DHCNTT:d1",
+    "1393-QD-DHQG:d25",
+    "160-QD-DHQG:d16",
+    "270-QD-DHCNTT:d20",
+    "160-QD-DHQG:d17",
+    "270-QD-DHCNTT:d19",
+    "851-QD-DHCNTT:d1",
+    "270-QD-DHCNTT:d38",
+    "1393-QD-DHQG:d33",
+    "160-QD-DHQG:d6",
+    "270-QD-DHCNTT:d24",
+    "270-QD-DHCNTT:d6",
+    "1393-QD-DHQG:d13",
+    "160-QD-DHQG:d24",
+    "1393-QD-DHQG:d3",
+    "160-QD-DHQG:d13",
+    "270-QD-DHCNTT:d33",
+    "270-QD-DHCNTT:d22",
+    "1393-QD-DHQG:d31",
+    "160-QD-DHQG:d8",
+    "270-QD-DHCNTT:d7",
+    "1393-QD-DHQG:d23",
+    "270-QD-DHCNTT:d23",
+    "160-QD-DHQG:d33"
+  ],
+  "summaries": [
+    {
+      "article_id": "1393-QD-DHQG:d1",
+      "article_number": "1",
+      "article_title": "Phạm vi điều chỉnh và đối tượng áp dụng",
+      "keywords": "đào tạo thạc sĩ, ĐHQG-HCM, cơ sở đào tạo, chương trình đào tạo, tổ chức đào tạo, quản lý đào tạo, Giám đốc ĐHQG-HCM, trường đại học, viện thành viên, liên kết nước ngoài, chất lượng cao, thanh tra kiểm tra, khiếu nại tố cáo, phạm vi áp dụng, quy chế thạc sĩ",
+      "description": "Phạm vi điều chỉnh và đối tượng áp dụng. Từ khóa: đào tạo thạc sĩ, ĐHQG-HCM, cơ sở đào tạo, chương trình đào tạo, tổ chức đào tạo, quản lý đào tạo, Giám đốc ĐHQG-HCM, trường đại học, viện thành viên, liên kết nước ngoài, chất lượng cao, thanh tra kiểm tra, khiếu nại tố cáo, phạm vi áp dụng, quy chế thạc sĩ"
+    },
+    {
+      "article_id": "1393-QD-DHQG:d2",
+      "article_number": "2",
+      "article_title": "Hình thức, ngôn ngữ và thời gian đào tạo",
+      "keywords": "hình thức đào tạo, chính quy, vừa làm vừa học, tín chỉ tích lũy, thời gian đào tạo, ngôn ngữ đào tạo, tiếng nước ngoài, thủ trưởng cơ sở đào tạo, 20% đến 50%, 24 tháng, nhập học, chương trình đào tạo, khung cơ cấu giáo dục, thời gian tối đa, giảng dạy",
+      "description": "Hình thức, ngôn ngữ và thời gian đào tạo. Từ khóa: hình thức đào tạo, chính quy, vừa làm vừa học, tín chỉ tích lũy, thời gian đào tạo, ngôn ngữ đào tạo, tiếng nước ngoài, thủ trưởng cơ sở đào tạo, 20% đến 50%, 24 tháng, nhập học, chương trình đào tạo, khung cơ cấu giáo dục, thời gian tối đa, giảng dạy"
+    },
+    {
+      "article_id": "1393-QD-DHQG:d3",
+      "article_number": "3",
+      "article_title": "Loại chương trình đào tạo",
+      "keywords": "chương trình đào tạo thạc sĩ, cơ sở đào tạo, cấp văn bằng, đơn ngành, song ngành, liên thông, liên kết, ĐHQG-HCM, cơ sở giáo dục nước ngoài, văn bằng chung, hai văn bằng, hợp tác đào tạo, quy chế thạc sĩ, chương trình liên kết quốc tế",
+      "description": "Loại chương trình đào tạo. Từ khóa: chương trình đào tạo thạc sĩ, cơ sở đào tạo, cấp văn bằng, đơn ngành, song ngành, liên thông, liên kết, ĐHQG-HCM, cơ sở giáo dục nước ngoài, văn bằng chung, hai văn bằng, hợp tác đào tạo, quy chế thạc sĩ, chương trình liên kết quốc tế"
+    },
+    {
+      "article_id": "1393-QD-DHQG:d4",
+      "article_number": "4",
+      "article_title": "Quy định về chương trình đào tạo",
+      "keywords": "chương trình đào tạo, tín chỉ, 60 tín chỉ, khung trình độ quốc gia, định hướng nghiên cứu, định hướng ứng dụng, cơ sở đào tạo, thủ trưởng, xây dựng chương trình, thẩm định, ban hành, kiểm định chất lượng, môn học, học phần, đề cương chi tiết",
+      "description": "Quy định về chương trình đào tạo. Từ khóa: chương trình đào tạo, tín chỉ, 60 tín chỉ, khung trình độ quốc gia, định hướng nghiên cứu, định hướng ứng dụng, cơ sở đào tạo, thủ trưởng, xây dựng chương trình, thẩm định, ban hành, kiểm định chất lượng, môn học, học phần, đề cương chi tiết"
+    },
+    {
+      "article_id": "1393-QD-DHQG:d5",
+      "article_number": "5",
+      "article_title": "Phương thức đào tạo và cấu trúc chương trình đào tạo",
+      "keywords": "học viên thạc sĩ, chương trình nghiên cứu, chương trình ứng dụng, phương thức đào tạo, luận văn, đề án tốt nghiệp, tích lũy tín chỉ, nghiên cứu khoa học, tạp chí quốc tế, tối thiểu 53 tín chỉ, thực tập, Triết học, cao học, cơ sở đào tạo, công bố bài báo",
+      "description": "Phương thức đào tạo và cấu trúc chương trình đào tạo. Từ khóa: học viên thạc sĩ, chương trình nghiên cứu, chương trình ứng dụng, phương thức đào tạo, luận văn, đề án tốt nghiệp, tích lũy tín chỉ, nghiên cứu khoa học, tạp chí quốc tế, tối thiểu 53 tín chỉ, thực tập, Triết học, cao học, cơ sở đào tạo, công bố bài báo"
+    },
+    {
+      "article_id": "1393-QD-DHQG:d6",
+      "article_number": "6",
+      "article_title": "Chuẩn đầu ra của chương trình đào tạo",
+      "keywords": "chuẩn đầu ra, chương trình đào tạo, thủ trưởng cơ sở đào tạo, học viên, tốt nghiệp, kiến thức, kỹ năng, năng lực chuyên môn, mức tự chủ, trách nhiệm, vị trí việc làm, chuẩn ngoại ngữ, thạc sĩ, Khung trình độ Quốc gia",
+      "description": "Chuẩn đầu ra của chương trình đào tạo. Từ khóa: chuẩn đầu ra, chương trình đào tạo, thủ trưởng cơ sở đào tạo, học viên, tốt nghiệp, kiến thức, kỹ năng, năng lực chuyên môn, mức tự chủ, trách nhiệm, vị trí việc làm, chuẩn ngoại ngữ, thạc sĩ, Khung trình độ Quốc gia"
+    },
+    {
+      "article_id": "1393-QD-DHQG:d7",
+      "article_number": "7",
+      "article_title": "Địa điểm đào tạo",
+      "keywords": "địa điểm đào tạo, cơ sở đào tạo, ĐHQG-HCM, phân hiệu, trụ sở chính, thực hành thực tập, 20% khối lượng, lĩnh vực sức khỏe, cơ sở thực hành, kế hoạch giảng dạy, ngoài cơ sở đào tạo, quy định Chính phủ, hoạt động đào tạo",
+      "description": "Địa điểm đào tạo. Từ khóa: địa điểm đào tạo, cơ sở đào tạo, ĐHQG-HCM, phân hiệu, trụ sở chính, thực hành thực tập, 20% khối lượng, lĩnh vực sức khỏe, cơ sở thực hành, kế hoạch giảng dạy, ngoài cơ sở đào tạo, quy định Chính phủ, hoạt động đào tạo"
+    },
+    {
+      "article_id": "1393-QD-DHQG:d8",
+      "article_number": "8",
+      "article_title": "Tổ chức đào tạo",
+      "keywords": "CSĐT, học viên, giảng viên, tín chỉ, chương trình đào tạo, trực tuyến, 50%, thạc sĩ, rà soát định kỳ, kế hoạch giảng dạy, bất khả kháng, cập nhật chương trình, tổ chức lớp học, thông báo đầu khóa, ĐHQG-HCM",
+      "description": "Tổ chức đào tạo. Từ khóa: CSĐT, học viên, giảng viên, tín chỉ, chương trình đào tạo, trực tuyến, 50%, thạc sĩ, rà soát định kỳ, kế hoạch giảng dạy, bất khả kháng, cập nhật chương trình, tổ chức lớp học, thông báo đầu khóa, ĐHQG-HCM"
+    },
+    {
+      "article_id": "1393-QD-DHQG:d9",
+      "article_number": "9",
+      "article_title": "Chương trình song ngành",
+      "keywords": "chương trình song ngành, học viên, cơ sở đào tạo, đăng ký song ngành, điều kiện đăng ký, ngành gần, ngành khác, tín chỉ tối thiểu, điểm trung bình tích lũy 6.5, hoàn thành năm đầu, công nhận tín chỉ, chuyển đổi tín chỉ, chuẩn đầu ra, học đồng thời hai ngành, văn bằng thứ hai",
+      "description": "Chương trình song ngành. Từ khóa: chương trình song ngành, học viên, cơ sở đào tạo, đăng ký song ngành, điều kiện đăng ký, ngành gần, ngành khác, tín chỉ tối thiểu, điểm trung bình tích lũy 6.5, hoàn thành năm đầu, công nhận tín chỉ, chuyển đổi tín chỉ, chuẩn đầu ra, học đồng thời hai ngành, văn bằng thứ hai"
+    },
+    {
+      "article_id": "1393-QD-DHQG:d10",
+      "article_number": "10",
+      "article_title": "Chương trình đào tạo liên thông từ trình độ đại học lên trình độ thạc sĩ (Chương trình liên thông).",
+      "keywords": "sinh viên, cơ sở đào tạo, ĐHQG-HCM, liên thông, đào tạo, đăng ký, rút ngắn, học lực khá, đại học lên thạc sĩ, khung chương trình, thạc sĩ nhanh, liên thông lên cao học",
+      "description": "Chương trình đào tạo liên thông từ trình độ đại học lên trình độ thạc sĩ (Chương trình liên thông).. Từ khóa: sinh viên, cơ sở đào tạo, ĐHQG-HCM, liên thông, đào tạo, đăng ký, rút ngắn, học lực khá, đại học lên thạc sĩ, khung chương trình, thạc sĩ nhanh, liên thông lên cao học"
+    },
+    {
+      "article_id": "1393-QD-DHQG:d11",
+      "article_number": "11",
+      "article_title": "Bồi dưỡng sau đại học",
+      "keywords": "bồi dưỡng sau đại học, chứng nhận bồi dưỡng, thủ trưởng cơ sở đào tạo, công nhận chứng nhận, bằng tốt nghiệp đại học, thạc sĩ, tiến sĩ, cập nhật kiến thức, nhiều cơ sở đào tạo, xem xét quyết định, đào tạo đồng thời, nâng cao trình độ",
+      "description": "Bồi dưỡng sau đại học. Từ khóa: bồi dưỡng sau đại học, chứng nhận bồi dưỡng, thủ trưởng cơ sở đào tạo, công nhận chứng nhận, bằng tốt nghiệp đại học, thạc sĩ, tiến sĩ, cập nhật kiến thức, nhiều cơ sở đào tạo, xem xét quyết định, đào tạo đồng thời, nâng cao trình độ"
+    },
+    {
+      "article_id": "1393-QD-DHQG:d12",
+      "article_number": "12",
+      "article_title": "Trao đổi học viên",
+      "keywords": "trao đổi học viên, cơ sở đào tạo, thỏa thuận hợp tác, công nhận tín chỉ, học phần, thạc sĩ, văn bản hợp tác, miễn trừ tín chỉ, điều kiện trao đổi, cơ sở giáo dục nước ngoài, thủ trưởng, tích lũy học tập, liên kết đào tạo",
+      "description": "Trao đổi học viên. Từ khóa: trao đổi học viên, cơ sở đào tạo, thỏa thuận hợp tác, công nhận tín chỉ, học phần, thạc sĩ, văn bản hợp tác, miễn trừ tín chỉ, điều kiện trao đổi, cơ sở giáo dục nước ngoài, thủ trưởng, tích lũy học tập, liên kết đào tạo"
+    },
+    {
+      "article_id": "1393-QD-DHQG:d13",
+      "article_number": "13",
+      "article_title": "Công nhận và chuyển đổi tín chỉ trong chương trình đào tạo",
+      "keywords": "công nhận tín chỉ, chuyển đổi tín chỉ, học viên thạc sĩ, điểm 5.5, thời hạn 5 năm, 50% tín chỉ, chương trình bồi dưỡng sau đại học, liên thông, trao đổi học viên, 25% tín chỉ, chuẩn đầu ra, ĐHQG-HCM, tích lũy tín chỉ, song ngành, chương trình đặc thù",
+      "description": "Công nhận và chuyển đổi tín chỉ trong chương trình đào tạo. Từ khóa: công nhận tín chỉ, chuyển đổi tín chỉ, học viên thạc sĩ, điểm 5.5, thời hạn 5 năm, 50% tín chỉ, chương trình bồi dưỡng sau đại học, liên thông, trao đổi học viên, 25% tín chỉ, chuẩn đầu ra, ĐHQG-HCM, tích lũy tín chỉ, song ngành, chương trình đặc thù"
+    },
+    {
+      "article_id": "1393-QD-DHQG:d14",
+      "article_number": "14",
+      "article_title": "Điều kiện đăng ký và quy định công bố khoa học đối với chương",
+      "keywords": "học viên thạc sĩ, đăng ký chương trình nghiên cứu, phương thức 1, nhập học, giấy chấp thuận hướng dẫn, người hướng dẫn luận văn, bài báo khoa học, tác giả chính, WoS/Scopus, công bố quốc tế, điều kiện đăng ký thạc sĩ, luận văn nghiên cứu, tạp chí khoa học quốc tế",
+      "description": "Điều kiện đăng ký và quy định công bố khoa học đối với chương. Từ khóa: học viên thạc sĩ, đăng ký chương trình nghiên cứu, phương thức 1, nhập học, giấy chấp thuận hướng dẫn, người hướng dẫn luận văn, bài báo khoa học, tác giả chính, WoS/Scopus, công bố quốc tế, điều kiện đăng ký thạc sĩ, luận văn nghiên cứu, tạp chí khoa học quốc tế"
+    },
+    {
+      "article_id": "1393-QD-DHQG:d15",
+      "article_number": "15",
+      "article_title": "Đánh giá môn học",
+      "keywords": "đánh giá môn học, điểm thành phần, thi kết thúc môn học, điểm tổng kết, học viên, thủ trưởng CSĐT, người hướng dẫn luận văn, thay đổi người hướng dẫn, đơn đề nghị, trưởng đơn vị chuyên môn, ít nhất 2 thành phần, bắt buộc, tự luận trắc nghiệm vấn đáp, đổi giáo viên hướng dẫn, điểm môn học",
+      "description": "Đánh giá môn học. Từ khóa: đánh giá môn học, điểm thành phần, thi kết thúc môn học, điểm tổng kết, học viên, thủ trưởng CSĐT, người hướng dẫn luận văn, thay đổi người hướng dẫn, đơn đề nghị, trưởng đơn vị chuyên môn, ít nhất 2 thành phần, bắt buộc, tự luận trắc nghiệm vấn đáp, đổi giáo viên hướng dẫn, điểm môn học"
+    },
+    {
+      "article_id": "1393-QD-DHQG:d18",
+      "article_number": "18",
+      "article_title": "Điều kiện bảo vệ, miễn bảo luận văn",
+      "keywords": "học viên, luận văn, bảo vệ luận văn, miễn bảo vệ, điều kiện bảo vệ, điểm trung bình tích lũy, 5.5, WoS/Scopus, bài báo khoa học, tác giả chính, tác giả liên hệ, kỷ luật đình chỉ, truy cứu hình sự, tóm tắt bài báo, chương trình đào tạo thạc sĩ",
+      "description": "Điều kiện bảo vệ, miễn bảo luận văn. Từ khóa: học viên, luận văn, bảo vệ luận văn, miễn bảo vệ, điều kiện bảo vệ, điểm trung bình tích lũy, 5.5, WoS/Scopus, bài báo khoa học, tác giả chính, tác giả liên hệ, kỷ luật đình chỉ, truy cứu hình sự, tóm tắt bài báo, chương trình đào tạo thạc sĩ"
+    },
+    {
+      "article_id": "1393-QD-DHQG:d19",
+      "article_number": "19",
+      "article_title": "Hội đồng đánh giá luận văn",
+      "keywords": "Hội đồng đánh giá luận văn, thủ trưởng cơ sở đào tạo, thành lập hội đồng, chương trình nghiên cứu, chương trình ứng dụng, phản biện luận văn, tiến sĩ, 30 ngày làm việc, điều kiện bảo vệ, thành viên ngoài CSĐT, chủ tịch hội đồng, vắng mặt thành viên, thay đổi bổ sung thành viên, bảo vệ thạc sĩ",
+      "description": "Hội đồng đánh giá luận văn. Từ khóa: Hội đồng đánh giá luận văn, thủ trưởng cơ sở đào tạo, thành lập hội đồng, chương trình nghiên cứu, chương trình ứng dụng, phản biện luận văn, tiến sĩ, 30 ngày làm việc, điều kiện bảo vệ, thành viên ngoài CSĐT, chủ tịch hội đồng, vắng mặt thành viên, thay đổi bổ sung thành viên, bảo vệ thạc sĩ"
+    },
+    {
+      "article_id": "1393-QD-DHQG:d20",
+      "article_number": "20",
+      "article_title": "Đánh giá luận văn",
+      "keywords": "hội đồng chấm luận văn, đánh giá luận văn, bảo vệ luận văn, học viên, điểm luận văn, thang điểm 10, điểm trung bình, điểm đạt yêu cầu, bảo vệ lần 2, miễn bảo vệ, bài báo khoa học, chênh lệch điểm, không đạt yêu cầu, chi phí bảo vệ lại, hoàn thành chương trình đào tạo",
+      "description": "Đánh giá luận văn. Từ khóa: hội đồng chấm luận văn, đánh giá luận văn, bảo vệ luận văn, học viên, điểm luận văn, thang điểm 10, điểm trung bình, điểm đạt yêu cầu, bảo vệ lần 2, miễn bảo vệ, bài báo khoa học, chênh lệch điểm, không đạt yêu cầu, chi phí bảo vệ lại, hoàn thành chương trình đào tạo"
+    },
+    {
+      "article_id": "1393-QD-DHQG:d21",
+      "article_number": "21",
+      "article_title": "Thẩm định luận văn",
+      "keywords": "CSĐT, ĐHQG-HCM, hội đồng thẩm định, tác giả luận văn, người hướng dẫn, thẩm định luận văn, thu hồi bằng thạc sĩ, khiếu nại tố cáo, ngẫu nhiên, không đạt yêu cầu, hủy bằng, phản ánh chất lượng, trùng lặp đề tài, đạo văn, kiểm tra luận văn",
+      "description": "Thẩm định luận văn. Từ khóa: CSĐT, ĐHQG-HCM, hội đồng thẩm định, tác giả luận văn, người hướng dẫn, thẩm định luận văn, thu hồi bằng thạc sĩ, khiếu nại tố cáo, ngẫu nhiên, không đạt yêu cầu, hủy bằng, phản ánh chất lượng, trùng lặp đề tài, đạo văn, kiểm tra luận văn"
+    },
+    {
+      "article_id": "1393-QD-DHQG:d22",
+      "article_number": "22",
+      "article_title": "Đề án tốt nghiệp",
+      "keywords": "đề án tốt nghiệp, thủ trưởng cơ sở đào tạo, quy định chi tiết, tín chỉ, người hướng dẫn, hội đồng đánh giá, quy trình, thủ tục, khóa luận tốt nghiệp, luận văn, chấm điểm, bảo vệ đề án, sinh viên, học viên",
+      "description": "Đề án tốt nghiệp. Từ khóa: đề án tốt nghiệp, thủ trưởng cơ sở đào tạo, quy định chi tiết, tín chỉ, người hướng dẫn, hội đồng đánh giá, quy trình, thủ tục, khóa luận tốt nghiệp, luận văn, chấm điểm, bảo vệ đề án, sinh viên, học viên"
+    },
+    {
+      "article_id": "1393-QD-DHQG:d23",
+      "article_number": "23",
+      "article_title": "Điều kiện xét và công nhận tốt nghiệp",
+      "keywords": "học viên, tốt nghiệp, điều kiện tốt nghiệp, điểm trung bình tích lũy, luận văn, đề án tốt nghiệp, ngoại ngữ, hội đồng đánh giá, chỉnh sửa luận văn, người hướng dẫn, chủ tịch hội đồng, bài báo khoa học, công nhận tốt nghiệp, hoàn thành chương trình",
+      "description": "Điều kiện xét và công nhận tốt nghiệp. Từ khóa: học viên, tốt nghiệp, điều kiện tốt nghiệp, điểm trung bình tích lũy, luận văn, đề án tốt nghiệp, ngoại ngữ, hội đồng đánh giá, chỉnh sửa luận văn, người hướng dẫn, chủ tịch hội đồng, bài báo khoa học, công nhận tốt nghiệp, hoàn thành chương trình"
+    },
+    {
+      "article_id": "1393-QD-DHQG:d24",
+      "article_number": "24",
+      "article_title": "Nghỉ học tạm thời, thôi học, quá thời gian đào tạo",
+      "keywords": "học viên, nghỉ học tạm thời, bảo lưu kết quả, thôi học, quá thời gian đào tạo, lực lượng vũ trang, ốm thai sản tai nạn, điều trị dài ngày, trở lại học, dự tuyển đầu vào, xét chuyển điểm tín chỉ, 06 tháng, đơn xin nghỉ học, buộc thôi học, kỷ luật học viên",
+      "description": "Nghỉ học tạm thời, thôi học, quá thời gian đào tạo. Từ khóa: học viên, nghỉ học tạm thời, bảo lưu kết quả, thôi học, quá thời gian đào tạo, lực lượng vũ trang, ốm thai sản tai nạn, điều trị dài ngày, trở lại học, dự tuyển đầu vào, xét chuyển điểm tín chỉ, 06 tháng, đơn xin nghỉ học, buộc thôi học, kỷ luật học viên"
+    },
+    {
+      "article_id": "1393-QD-DHQG:d25",
+      "article_number": "25",
+      "article_title": "Chuyển đổi phương thức đào tạo và chuyển ngành đào tạo trong",
+      "keywords": "học viên, chuyển đổi phương thức đào tạo, chuyển ngành, cùng cơ sở đào tạo, tích lũy tín chỉ, thời hạn khóa học, chương trình nghiên cứu, chương trình ứng dụng, điều kiện chuyển ngành, đề án tuyển sinh, công nhận học phần, học bổ sung, thủ trưởng CSĐT",
+      "description": "Chuyển đổi phương thức đào tạo và chuyển ngành đào tạo trong. Từ khóa: học viên, chuyển đổi phương thức đào tạo, chuyển ngành, cùng cơ sở đào tạo, tích lũy tín chỉ, thời hạn khóa học, chương trình nghiên cứu, chương trình ứng dụng, điều kiện chuyển ngành, đề án tuyển sinh, công nhận học phần, học bổ sung, thủ trưởng CSĐT"
+    },
+    {
+      "article_id": "1393-QD-DHQG:d26",
+      "article_number": "26",
+      "article_title": "Chuyển CSĐT trong và ngoài hệ thống ĐHQG-HCM",
+      "keywords": "học viên, chuyển cơ sở đào tạo, thạc sĩ, ĐHQG-HCM, kỷ luật, cùng mã ngành, điều kiện chuyển trường, học kỳ cuối, luận văn, báo cáo đào tạo, lưu trữ hồ sơ, công khai thông tin, 30 ngày, tỷ lệ giảng dạy trực tuyến, chuyển ngành",
+      "description": "Chuyển CSĐT trong và ngoài hệ thống ĐHQG-HCM. Từ khóa: học viên, chuyển cơ sở đào tạo, thạc sĩ, ĐHQG-HCM, kỷ luật, cùng mã ngành, điều kiện chuyển trường, học kỳ cuối, luận văn, báo cáo đào tạo, lưu trữ hồ sơ, công khai thông tin, 30 ngày, tỷ lệ giảng dạy trực tuyến, chuyển ngành"
+    },
+    {
+      "article_id": "1393-QD-DHQG:d29",
+      "article_number": "29",
+      "article_title": "Khiếu nại, tố cáo",
+      "keywords": "khiếu nại, tố cáo, cơ quan tổ chức cá nhân, học viên, gian lận, vi phạm quy chế, cơ sở đào tạo, sai phạm đào tạo, giải quyết khiếu nại, pháp luật hiện hành, phản ánh, khiếu kiện, báo cáo vi phạm, quyền khiếu nại",
+      "description": "Khiếu nại, tố cáo. Từ khóa: khiếu nại, tố cáo, cơ quan tổ chức cá nhân, học viên, gian lận, vi phạm quy chế, cơ sở đào tạo, sai phạm đào tạo, giải quyết khiếu nại, pháp luật hiện hành, phản ánh, khiếu kiện, báo cáo vi phạm, quyền khiếu nại"
+    },
+    {
+      "article_id": "1393-QD-DHQG:d30",
+      "article_number": "30",
+      "article_title": "Xử lý vi phạm",
+      "keywords": "vi phạm, xử lý kỷ luật, học viên, gian lận thi cử, thi hộ, đình chỉ học tập, buộc thôi học, thu hồi văn bằng, đạo văn, sở hữu trí tuệ, văn bằng giả, bồi thường thiệt hại, xử phạt hành chính, trách nhiệm hình sự, cơ sở đào tạo",
+      "description": "Xử lý vi phạm. Từ khóa: vi phạm, xử lý kỷ luật, học viên, gian lận thi cử, thi hộ, đình chỉ học tập, buộc thôi học, thu hồi văn bằng, đạo văn, sở hữu trí tuệ, văn bằng giả, bồi thường thiệt hại, xử phạt hành chính, trách nhiệm hình sự, cơ sở đào tạo"
+    },
+    {
+      "article_id": "1393-QD-DHQG:d31",
+      "article_number": "31",
+      "article_title": "Quy chế này áp dụng cho các khóa tuyển sinh từ ngày 01 tháng 01 năm",
+      "keywords": "quy chế tuyển sinh, khóa tuyển sinh, áp dụng, hiệu lực, ngày 01/01/2022, năm 2022, thời điểm áp dụng, đối tượng áp dụng, tuyển sinh đại học, quy định tuyển sinh",
+      "description": "Quy chế này áp dụng cho các khóa tuyển sinh từ ngày 01 tháng 01 năm. Từ khóa: quy chế tuyển sinh, khóa tuyển sinh, áp dụng, hiệu lực, ngày 01/01/2022, năm 2022, thời điểm áp dụng, đối tượng áp dụng, tuyển sinh đại học, quy định tuyển sinh"
+    },
+    {
+      "article_id": "1393-QD-DHQG:d32",
+      "article_number": "32",
+      "article_title": "Trách nhiệm của CSĐT",
+      "keywords": "CSĐT, Thủ trưởng cơ sở đào tạo, Hội đồng Khoa học & Đào tạo, Hội đồng Trường, ĐHQG-HCM, xây dựng quy định đào tạo thạc sĩ, phê duyệt chương trình đào tạo, hợp tác đào tạo, kiểm định chất lượng giáo dục, trách nhiệm giải trình, khóa tuyển sinh 2022, tổ chức quản lý đào tạo sau đại học",
+      "description": "Trách nhiệm của CSĐT. Từ khóa: CSĐT, Thủ trưởng cơ sở đào tạo, Hội đồng Khoa học & Đào tạo, Hội đồng Trường, ĐHQG-HCM, xây dựng quy định đào tạo thạc sĩ, phê duyệt chương trình đào tạo, hợp tác đào tạo, kiểm định chất lượng giáo dục, trách nhiệm giải trình, khóa tuyển sinh 2022, tổ chức quản lý đào tạo sau đại học"
+    },
+    {
+      "article_id": "1393-QD-DHQG:d33",
+      "article_number": "33",
+      "article_title": "Căn cứ tình hình thực tế, Giám đốc ĐHQG-HCM xem xét, quyết định",
+      "keywords": "Giám đốc ĐHQG-HCM, quy chế đào tạo thạc sĩ, điều chỉnh bổ sung quy chế, chương trình đào tạo thạc sĩ, khung chương trình, đề cương môn học, chuẩn đầu ra, tín chỉ, điều kiện tốt nghiệp, sửa đổi quy định, thẩm quyền giám đốc, phụ lục đào tạo, học phần thạc sĩ",
+      "description": "Căn cứ tình hình thực tế, Giám đốc ĐHQG-HCM xem xét, quyết định. Từ khóa: Giám đốc ĐHQG-HCM, quy chế đào tạo thạc sĩ, điều chỉnh bổ sung quy chế, chương trình đào tạo thạc sĩ, khung chương trình, đề cương môn học, chuẩn đầu ra, tín chỉ, điều kiện tốt nghiệp, sửa đổi quy định, thẩm quyền giám đốc, phụ lục đào tạo, học phần thạc sĩ"
+    },
+    {
+      "article_id": "160-QD-DHQG:d6",
+      "article_number": "6",
+      "article_title": "Yêu cầu đối với việc xây dựng chương trình đào tạo",
+      "keywords": "cơ sở đào tạo, chương trình thạc sĩ, xây dựng chương trình, ngành đào tạo, chuẩn đầu ra, tín chỉ, khối lượng kiến thức, luận văn, định hướng nghiên cứu, định hướng ứng dụng, ĐHQG-HCM, mục tiêu đào tạo, cấp IV, đào tạo thí điểm, năng lực chuyên môn",
+      "description": "Yêu cầu đối với việc xây dựng chương trình đào tạo. Từ khóa: cơ sở đào tạo, chương trình thạc sĩ, xây dựng chương trình, ngành đào tạo, chuẩn đầu ra, tín chỉ, khối lượng kiến thức, luận văn, định hướng nghiên cứu, định hướng ứng dụng, ĐHQG-HCM, mục tiêu đào tạo, cấp IV, đào tạo thí điểm, năng lực chuyên môn"
+    },
+    {
+      "article_id": "160-QD-DHQG:d7",
+      "article_number": "7",
+      "article_title": "Loại chương trình đào tạo",
+      "keywords": "thạc sĩ, chương trình đào tạo, nghiên cứu, định hướng ứng dụng, luận văn, tiến sĩ, học viên, bài báo khoa học, kiến thức chuyên sâu, kỹ năng nghề nghiệp, độc lập nghiên cứu, ĐHQG-HCM, tác giả chính, giảng dạy, hoạch định chính sách",
+      "description": "Loại chương trình đào tạo. Từ khóa: thạc sĩ, chương trình đào tạo, nghiên cứu, định hướng ứng dụng, luận văn, tiến sĩ, học viên, bài báo khoa học, kiến thức chuyên sâu, kỹ năng nghề nghiệp, độc lập nghiên cứu, ĐHQG-HCM, tác giả chính, giảng dạy, hoạch định chính sách"
+    },
+    {
+      "article_id": "160-QD-DHQG:d8",
+      "article_number": "8",
+      "article_title": "Yêu cầu và cấu trúc của chương trình đào tạo",
+      "keywords": "**Từ khóa tìm kiếm:**\n\nhọc viên thạc sĩ, cơ sở đào tạo, thủ trưởng, người nước ngoài, tín chỉ, môn tự chọn, luận văn thạc sĩ, bảo vệ luận văn, công bố khoa học, ngoại ngữ điều kiện, 30% tự chọn, chương trình nghiên cứu, chương trình ứng dụng, cấu trúc chương trình, cao học ĐHQG-HCM",
+      "description": "Yêu cầu và cấu trúc của chương trình đào tạo. Từ khóa: **Từ khóa tìm kiếm:**\n\nhọc viên thạc sĩ, cơ sở đào tạo, thủ trưởng, người nước ngoài, tín chỉ, môn tự chọn, luận văn thạc sĩ, bảo vệ luận văn, công bố khoa học, ngoại ngữ điều kiện, 30% tự chọn, chương trình nghiên cứu, chương trình ứng dụng, cấu trúc chương trình, cao học ĐHQG-HCM"
+    },
+    {
+      "article_id": "160-QD-DHQG:d9",
+      "article_number": "9",
+      "article_title": "Chuẩn đầu ra của chương trình đào tạo",
+      "keywords": "chuẩn đầu ra, chương trình đào tạo thạc sĩ, tín chỉ, học viên, cơ sở đào tạo, kiến thức chuyên môn, kỹ năng, xây dựng chương trình, tổ chức đào tạo, tập trung từng đợt, tự học, nghiên cứu khoa học, định hướng ứng dụng, ban hành, công khai",
+      "description": "Chuẩn đầu ra của chương trình đào tạo. Từ khóa: chuẩn đầu ra, chương trình đào tạo thạc sĩ, tín chỉ, học viên, cơ sở đào tạo, kiến thức chuyên môn, kỹ năng, xây dựng chương trình, tổ chức đào tạo, tập trung từng đợt, tự học, nghiên cứu khoa học, định hướng ứng dụng, ban hành, công khai"
+    },
+    {
+      "article_id": "160-QD-DHQG:d12",
+      "article_number": "12",
+      "article_title": "Trách nhiệm của cơ sở đào tạo",
+      "keywords": "cơ sở đào tạo, trường đại học thành viên, ĐHQG-HCM, chương trình đào tạo, tuyển sinh, mở ngành, công nhận tốt nghiệp, cấp bằng thạc sĩ, quản lý đào tạo, kiểm định chất lượng, hợp tác đào tạo, công bố công khai, chỉ tiêu tuyển sinh, viện nghiên cứu, học viên cao học",
+      "description": "Trách nhiệm của cơ sở đào tạo. Từ khóa: cơ sở đào tạo, trường đại học thành viên, ĐHQG-HCM, chương trình đào tạo, tuyển sinh, mở ngành, công nhận tốt nghiệp, cấp bằng thạc sĩ, quản lý đào tạo, kiểm định chất lượng, hợp tác đào tạo, công bố công khai, chỉ tiêu tuyển sinh, viện nghiên cứu, học viên cao học"
+    },
+    {
+      "article_id": "160-QD-DHQG:d13",
+      "article_number": "13",
+      "article_title": "Địa điểm đào tạo",
+      "keywords": "**Từ khóa tìm kiếm Điều 13:**\n\nđịa điểm đào tạo, cơ sở đào tạo, trụ sở, ĐHQG-HCM, học viên thạc sĩ, chương trình ứng dụng, ngoài cơ sở, phân hiệu, đủ điều kiện, toàn thời gian, người hướng dẫn, luận văn, đăng ký học, giấy cam kết, cơ quan có thẩm quyền",
+      "description": "Địa điểm đào tạo. Từ khóa: **Từ khóa tìm kiếm Điều 13:**\n\nđịa điểm đào tạo, cơ sở đào tạo, trụ sở, ĐHQG-HCM, học viên thạc sĩ, chương trình ứng dụng, ngoài cơ sở, phân hiệu, đủ điều kiện, toàn thời gian, người hướng dẫn, luận văn, đăng ký học, giấy cam kết, cơ quan có thẩm quyền"
+    },
+    {
+      "article_id": "160-QD-DHQG:d16",
+      "article_number": "16",
+      "article_title": "Quy định công bố khoa học đối với chương trình nghiên cứu",
+      "keywords": "học viên, tác giả chính, công bố khoa học, luận văn, Hội đồng chức danh Giáo sư Nhà nước, danh mục tạp chí, bảo vệ luận văn, tín chỉ, chương trình nghiên cứu, định hướng ứng dụng, tích lũy tín chỉ, thời hạn khóa đào tạo, bài báo khoa học",
+      "description": "Quy định công bố khoa học đối với chương trình nghiên cứu. Từ khóa: học viên, tác giả chính, công bố khoa học, luận văn, Hội đồng chức danh Giáo sư Nhà nước, danh mục tạp chí, bảo vệ luận văn, tín chỉ, chương trình nghiên cứu, định hướng ứng dụng, tích lũy tín chỉ, thời hạn khóa đào tạo, bài báo khoa học"
+    },
+    {
+      "article_id": "160-QD-DHQG:d17",
+      "article_number": "17",
+      "article_title": "Đăng ký môn học liên thông",
+      "keywords": "học viên, đăng ký môn học, liên thông, tín chỉ lựa chọn, 15%, cơ sở đào tạo khác, ĐHQG-HCM, tích lũy tín chỉ, đồng ý thủ trưởng, nhiều cơ sở, học chéo trường, chuyển tín chỉ, ngành đào tạo chung",
+      "description": "Đăng ký môn học liên thông. Từ khóa: học viên, đăng ký môn học, liên thông, tín chỉ lựa chọn, 15%, cơ sở đào tạo khác, ĐHQG-HCM, tích lũy tín chỉ, đồng ý thủ trưởng, nhiều cơ sở, học chéo trường, chuyển tín chỉ, ngành đào tạo chung"
+    },
+    {
+      "article_id": "160-QD-DHQG:d18",
+      "article_number": "18",
+      "article_title": "Thi, kiểm tra, đánh giá",
+      "keywords": "đánh giá môn học, điểm thành phần, thi kết thúc môn học, kiểm tra thường kỳ, giảng viên, bộ môn, cơ sở đào tạo, thang điểm 10, đề thi, tiểu luận, bài tập, chấm điểm, đề cương chi tiết, hình thức thi, tự luận trắc nghiệm vấn đáp",
+      "description": "Thi, kiểm tra, đánh giá. Từ khóa: đánh giá môn học, điểm thành phần, thi kết thúc môn học, kiểm tra thường kỳ, giảng viên, bộ môn, cơ sở đào tạo, thang điểm 10, đề thi, tiểu luận, bài tập, chấm điểm, đề cương chi tiết, hình thức thi, tự luận trắc nghiệm vấn đáp"
+    },
+    {
+      "article_id": "160-QD-DHQG:d19",
+      "article_number": "19",
+      "article_title": "Luận văn thạc sĩ",
+      "keywords": "học viên, luận văn thạc sĩ, đề tài luận văn, người hướng dẫn, trưởng đơn vị chuyên môn, thủ trưởng cơ sở đào tạo, giao đề tài, thay đổi đề tài, bảo vệ luận văn, đề cương nghiên cứu, trích dẫn nguồn, sở hữu trí tuệ, kết quả nghiên cứu, chưa công bố, trình bày luận văn",
+      "description": "Luận văn thạc sĩ. Từ khóa: học viên, luận văn thạc sĩ, đề tài luận văn, người hướng dẫn, trưởng đơn vị chuyên môn, thủ trưởng cơ sở đào tạo, giao đề tài, thay đổi đề tài, bảo vệ luận văn, đề cương nghiên cứu, trích dẫn nguồn, sở hữu trí tuệ, kết quả nghiên cứu, chưa công bố, trình bày luận văn"
+    },
+    {
+      "article_id": "160-QD-DHQG:d20",
+      "article_number": "20",
+      "article_title": "Hướng dẫn luận văn và điều kiện bảo vệ luận văn",
+      "keywords": "học viên, luận văn, người hướng dẫn, bảo vệ luận văn, giáo sư, phó giáo sư, tiến sĩ, thạc sĩ, điều kiện bảo vệ, điểm trung bình tích lũy, ngoại ngữ, hướng dẫn tối đa, định hướng ứng dụng, đình chỉ học tập, tốt nghiệp thạc sĩ",
+      "description": "Hướng dẫn luận văn và điều kiện bảo vệ luận văn. Từ khóa: học viên, luận văn, người hướng dẫn, bảo vệ luận văn, giáo sư, phó giáo sư, tiến sĩ, thạc sĩ, điều kiện bảo vệ, điểm trung bình tích lũy, ngoại ngữ, hướng dẫn tối đa, định hướng ứng dụng, đình chỉ học tập, tốt nghiệp thạc sĩ"
+    },
+    {
+      "article_id": "160-QD-DHQG:d21",
+      "article_number": "21",
+      "article_title": "Hội đồng đánh giá luận văn",
+      "keywords": "Hội đồng đánh giá luận văn, thủ trưởng cơ sở đào tạo, thành lập hội đồng, 30 ngày làm việc, năm thành viên, phản biện luận văn, ngoài cơ sở đào tạo, tiến sĩ phó giáo sư, 3 công trình khoa học, 5 năm gần đây, quan hệ thân nhân, họp đánh giá luận văn, 60 ngày thành lập, vắng mặt chủ tịch",
+      "description": "Hội đồng đánh giá luận văn. Từ khóa: Hội đồng đánh giá luận văn, thủ trưởng cơ sở đào tạo, thành lập hội đồng, 30 ngày làm việc, năm thành viên, phản biện luận văn, ngoài cơ sở đào tạo, tiến sĩ phó giáo sư, 3 công trình khoa học, 5 năm gần đây, quan hệ thân nhân, họp đánh giá luận văn, 60 ngày thành lập, vắng mặt chủ tịch"
+    },
+    {
+      "article_id": "160-QD-DHQG:d23",
+      "article_number": "23",
+      "article_title": "Thẩm định luận văn",
+      "keywords": "hội đồng thẩm định, luận văn thạc sĩ, thủ trưởng cơ sở đào tạo, tố cáo, thành lập hội đồng, thu hồi bằng, hủy bỏ bằng, bảo vệ lại, sao chép bất hợp pháp, không đạt yêu cầu, chỉnh sửa bổ sung, điều kiện tốt nghiệp, phản biện độc lập, đạo văn, tố giác luận văn",
+      "description": "Thẩm định luận văn. Từ khóa: hội đồng thẩm định, luận văn thạc sĩ, thủ trưởng cơ sở đào tạo, tố cáo, thành lập hội đồng, thu hồi bằng, hủy bỏ bằng, bảo vệ lại, sao chép bất hợp pháp, không đạt yêu cầu, chỉnh sửa bổ sung, điều kiện tốt nghiệp, phản biện độc lập, đạo văn, tố giác luận văn"
+    },
+    {
+      "article_id": "160-QD-DHQG:d24",
+      "article_number": "24",
+      "article_title": "Những thay đổi trong quá trình đào tạo",
+      "keywords": "học viên, nghỉ học tạm thời, bảo lưu kết quả, ốm đau tai nạn, nhu cầu cá nhân, chuyển cơ sở đào tạo, cùng chuyên ngành, thủ trưởng cơ sở đào tạo, công nhận tín chỉ, 50% tín chỉ, thời gian đào tạo, kỷ luật cảnh cáo, luận văn thạc sĩ, đơn xin bảo lưu, chuyển trường thạc sĩ",
+      "description": "Những thay đổi trong quá trình đào tạo. Từ khóa: học viên, nghỉ học tạm thời, bảo lưu kết quả, ốm đau tai nạn, nhu cầu cá nhân, chuyển cơ sở đào tạo, cùng chuyên ngành, thủ trưởng cơ sở đào tạo, công nhận tín chỉ, 50% tín chỉ, thời gian đào tạo, kỷ luật cảnh cáo, luận văn thạc sĩ, đơn xin bảo lưu, chuyển trường thạc sĩ"
+    },
+    {
+      "article_id": "160-QD-DHQG:d25",
+      "article_number": "25",
+      "article_title": "Điều kiện tốt nghiệp, cấp bằng điểm, cấp bằng thạc sĩ",
+      "keywords": "học viên, tốt nghiệp thạc sĩ, điều kiện tốt nghiệp, hoàn thành chương trình, ngoại ngữ, luận văn, hội đồng chấm luận văn, cấp bằng, bảng điểm, điểm trung bình tích lũy, hồ sơ cấp bằng, số tín chỉ, phản biện, thủ trưởng cơ sở đào tạo, bảo vệ luận văn",
+      "description": "Điều kiện tốt nghiệp, cấp bằng điểm, cấp bằng thạc sĩ. Từ khóa: học viên, tốt nghiệp thạc sĩ, điều kiện tốt nghiệp, hoàn thành chương trình, ngoại ngữ, luận văn, hội đồng chấm luận văn, cấp bằng, bảng điểm, điểm trung bình tích lũy, hồ sơ cấp bằng, số tín chỉ, phản biện, thủ trưởng cơ sở đào tạo, bảo vệ luận văn"
+    },
+    {
+      "article_id": "160-QD-DHQG:d26",
+      "article_number": "26",
+      "article_title": "Xử lý học vụ buộc thôi học",
+      "keywords": "**học viên cao học, buộc thôi học, xóa tên danh sách, cơ sở đào tạo, hết thời hạn đào tạo, không đăng ký môn học, thi hộ, đạo văn, giả mạo giấy tờ, kỷ luật, luận văn thạc sĩ, điều kiện tốt nghiệp, đuổi học, không trích dẫn tài liệu, nghỉ học không phép**",
+      "description": "Xử lý học vụ buộc thôi học. Từ khóa: **học viên cao học, buộc thôi học, xóa tên danh sách, cơ sở đào tạo, hết thời hạn đào tạo, không đăng ký môn học, thi hộ, đạo văn, giả mạo giấy tờ, kỷ luật, luận văn thạc sĩ, điều kiện tốt nghiệp, đuổi học, không trích dẫn tài liệu, nghỉ học không phép**"
+    },
+    {
+      "article_id": "160-QD-DHQG:d27",
+      "article_number": "27",
+      "article_title": "Chế độ báo cáo, lưu trữ",
+      "keywords": "báo cáo đào tạo thạc sĩ, thủ trưởng cơ sở đào tạo, ĐHQG-HCM, tháng 12 hàng năm, lưu trữ tài liệu, bảo quản vĩnh viễn, quyết định công nhận tốt nghiệp, luận văn thạc sĩ, 30 năm, thư viện cơ sở đào tạo, hội đồng đánh giá, cấp phát bằng tốt nghiệp, chế độ báo cáo định kỳ, bảo quản hồ sơ sau tốt nghiệp",
+      "description": "Chế độ báo cáo, lưu trữ. Từ khóa: báo cáo đào tạo thạc sĩ, thủ trưởng cơ sở đào tạo, ĐHQG-HCM, tháng 12 hàng năm, lưu trữ tài liệu, bảo quản vĩnh viễn, quyết định công nhận tốt nghiệp, luận văn thạc sĩ, 30 năm, thư viện cơ sở đào tạo, hội đồng đánh giá, cấp phát bằng tốt nghiệp, chế độ báo cáo định kỳ, bảo quản hồ sơ sau tốt nghiệp"
+    },
+    {
+      "article_id": "160-QD-DHQG:d30",
+      "article_number": "30",
+      "article_title": "Nhiệm vụ và quyền của học viên",
+      "keywords": "học viên, nhiệm vụ học viên, quyền học viên, kế hoạch học tập, học phí, trung thực nghiên cứu, nội quy cơ sở đào tạo, tài sản cơ sở đào tạo, thông tin học tập, thư viện phòng thí nghiệm, đoàn thể tổ chức xã hội, nghĩa vụ người học, quyền lợi học viên, cơ sở đào tạo",
+      "description": "Nhiệm vụ và quyền của học viên. Từ khóa: học viên, nhiệm vụ học viên, quyền học viên, kế hoạch học tập, học phí, trung thực nghiên cứu, nội quy cơ sở đào tạo, tài sản cơ sở đào tạo, thông tin học tập, thư viện phòng thí nghiệm, đoàn thể tổ chức xã hội, nghĩa vụ người học, quyền lợi học viên, cơ sở đào tạo"
+    },
+    {
+      "article_id": "160-QD-DHQG:d31",
+      "article_number": "31",
+      "article_title": "Thanh tra, kiểm tra",
+      "keywords": "ĐHQG-HCM, cơ sở đào tạo, thạc sĩ, thanh tra, kiểm tra, quá trình đào tạo, cấp bằng, kết luận thanh tra, kiến nghị, thông báo văn bản, giám sát đào tạo, kiểm soát chất lượng, đào tạo sau đại học, thanh tra giáo dục, báo cáo kiểm tra",
+      "description": "Thanh tra, kiểm tra. Từ khóa: ĐHQG-HCM, cơ sở đào tạo, thạc sĩ, thanh tra, kiểm tra, quá trình đào tạo, cấp bằng, kết luận thanh tra, kiến nghị, thông báo văn bản, giám sát đào tạo, kiểm soát chất lượng, đào tạo sau đại học, thanh tra giáo dục, báo cáo kiểm tra"
+    },
+    {
+      "article_id": "160-QD-DHQG:d32",
+      "article_number": "32",
+      "article_title": "Khiếu nại, tố cáo",
+      "keywords": "khiếu nại, tố cáo, cơ quan, tổ chức, cá nhân, vi phạm quy chế, gian lận thí sinh, sai phạm chương trình đào tạo, cơ sở đào tạo, giải quyết khiếu nại, pháp luật hiện hành, phản ánh, tố giác, khiếu kiện, đào tạo",
+      "description": "Khiếu nại, tố cáo. Từ khóa: khiếu nại, tố cáo, cơ quan, tổ chức, cá nhân, vi phạm quy chế, gian lận thí sinh, sai phạm chương trình đào tạo, cơ sở đào tạo, giải quyết khiếu nại, pháp luật hiện hành, phản ánh, tố giác, khiếu kiện, đào tạo"
+    },
+    {
+      "article_id": "160-QD-DHQG:d33",
+      "article_number": "33",
+      "article_title": "Xử lý vi phạm",
+      "keywords": "học viên, vi phạm quy chế thi, kỷ luật, đình chỉ học tập, buộc thôi học, thi hộ, kiểm tra học phần, luận văn, lần thứ nhất, lần thứ hai, xử phạt hành chính, trách nhiệm hình sự, bồi thường thiệt hại, gian lận thi cử, xử lý vi phạm đào tạo",
+      "description": "Xử lý vi phạm. Từ khóa: học viên, vi phạm quy chế thi, kỷ luật, đình chỉ học tập, buộc thôi học, thi hộ, kiểm tra học phần, luận văn, lần thứ nhất, lần thứ hai, xử phạt hành chính, trách nhiệm hình sự, bồi thường thiệt hại, gian lận thi cử, xử lý vi phạm đào tạo"
+    },
+    {
+      "article_id": "160-QD-DHQG:d34",
+      "article_number": "34",
+      "article_title": "Quy chế này được áp dụng cho khóa đào tạo trình độ thạc sĩ từ năm 2017.",
+      "keywords": "quy chế đào tạo, thạc sĩ, áp dụng, khóa đào tạo, năm 2017, trình độ thạc sĩ, hiệu lực, chương trình thạc sĩ, quy định đào tạo sau đại học, học viên cao học, tuyển sinh thạc sĩ, điều khoản thi hành, phạm vi áp dụng, văn bằng thạc sĩ",
+      "description": "Quy chế này được áp dụng cho khóa đào tạo trình độ thạc sĩ từ năm 2017.. Từ khóa: quy chế đào tạo, thạc sĩ, áp dụng, khóa đào tạo, năm 2017, trình độ thạc sĩ, hiệu lực, chương trình thạc sĩ, quy định đào tạo sau đại học, học viên cao học, tuyển sinh thạc sĩ, điều khoản thi hành, phạm vi áp dụng, văn bằng thạc sĩ"
+    },
+    {
+      "article_id": "160-QD-DHQG:d35",
+      "article_number": "35",
+      "article_title": "Các quy định trong Quy chế này sẽ thay thế cho các quy định liên quan của",
+      "keywords": "**Từ khóa tìm kiếm Điều 35:**\n\nthay thế, bãi bỏ, ĐHQG-HCM, Giám đốc, quy chế đào tạo thạc sĩ, ban hành, sửa đổi, quyết định, hiệu lực, điều khoản chuyển tiếp, quy định cũ, thạc sĩ, 2009, 2011, thay thế quy định trước",
+      "description": "Các quy định trong Quy chế này sẽ thay thế cho các quy định liên quan của. Từ khóa: **Từ khóa tìm kiếm Điều 35:**\n\nthay thế, bãi bỏ, ĐHQG-HCM, Giám đốc, quy chế đào tạo thạc sĩ, ban hành, sửa đổi, quyết định, hiệu lực, điều khoản chuyển tiếp, quy định cũ, thạc sĩ, 2009, 2011, thay thế quy định trước"
+    },
+    {
+      "article_id": "160-QD-DHQG:d36",
+      "article_number": "36",
+      "article_title": "Thủ trưởng cơ sở đào tạo báo cáo quy định chi tiết về tổ chức và quản lý đào tạo",
+      "keywords": "Thủ trưởng cơ sở đào tạo, ban hành chương trình đào tạo, thạc sĩ, báo cáo, ĐHQG-HCM, tổ chức đào tạo, quản lý đào tạo, quy chế, thời hạn 30/8/2017, hiệu trưởng, quy định chi tiết, trình độ thạc sĩ",
+      "description": "Thủ trưởng cơ sở đào tạo báo cáo quy định chi tiết về tổ chức và quản lý đào tạo. Từ khóa: Thủ trưởng cơ sở đào tạo, ban hành chương trình đào tạo, thạc sĩ, báo cáo, ĐHQG-HCM, tổ chức đào tạo, quản lý đào tạo, quy chế, thời hạn 30/8/2017, hiệu trưởng, quy định chi tiết, trình độ thạc sĩ"
+    },
+    {
+      "article_id": "160-QD-DHQG:d37",
+      "article_number": "37",
+      "article_title": "Căn cứ tình hình thực tế, Giám đốc ĐHQG-HCM xem xét, quyết định điều",
+      "keywords": "Giám đốc ĐHQG-HCM, thạc sĩ, chuẩn ngoại ngữ đầu ra, B1, IELTS 4.5, TOEIC 450, TOEFL, miễn thi ngoại ngữ, chứng chỉ ngoại ngữ, bằng đại học nước ngoài, chương trình tiên tiến, HSK, JLPT N3, quy đổi tương đương, điều kiện xét tuyển thạc sĩ",
+      "description": "Căn cứ tình hình thực tế, Giám đốc ĐHQG-HCM xem xét, quyết định điều. Từ khóa: Giám đốc ĐHQG-HCM, thạc sĩ, chuẩn ngoại ngữ đầu ra, B1, IELTS 4.5, TOEIC 450, TOEFL, miễn thi ngoại ngữ, chứng chỉ ngoại ngữ, bằng đại học nước ngoài, chương trình tiên tiến, HSK, JLPT N3, quy đổi tương đương, điều kiện xét tuyển thạc sĩ"
+    },
+    {
+      "article_id": "270-QD-DHCNTT:d1",
+      "article_number": "1",
+      "article_title": "Phạm vi điều chỉnh và đối tượng áp dụng",
+      "keywords": "đào tạo thạc sĩ, quy chế thạc sĩ, Trường ĐH CNTT, ĐHQG-HCM, chương trình đào tạo, tổ chức đào tạo, quản lý đào tạo, thanh tra kiểm tra, giải quyết khiếu nại, xử lý vi phạm, liên kết nước ngoài, chất lượng cao, phạm vi áp dụng, học viên cao học, bằng thạc sĩ",
+      "description": "Phạm vi điều chỉnh và đối tượng áp dụng. Từ khóa: đào tạo thạc sĩ, quy chế thạc sĩ, Trường ĐH CNTT, ĐHQG-HCM, chương trình đào tạo, tổ chức đào tạo, quản lý đào tạo, thanh tra kiểm tra, giải quyết khiếu nại, xử lý vi phạm, liên kết nước ngoài, chất lượng cao, phạm vi áp dụng, học viên cao học, bằng thạc sĩ"
+    },
+    {
+      "article_id": "270-QD-DHCNTT:d2",
+      "article_number": "2",
+      "article_title": "Hình thức, ngôn ngữ và thời gian đào tạo",
+      "keywords": "**Từ khóa tìm kiếm:**\n\nđơn vị đào tạo, hình thức đào tạo, chính quy, vừa làm vừa học, tín chỉ, thời gian đào tạo toàn khóa, 20% đến 50%, 24 tháng, ngôn ngữ đào tạo, tiếng nước ngoài, hiệu trưởng, chương trình đào tạo, tích lũy tín chỉ, thạc sĩ, cao học",
+      "description": "Hình thức, ngôn ngữ và thời gian đào tạo. Từ khóa: **Từ khóa tìm kiếm:**\n\nđơn vị đào tạo, hình thức đào tạo, chính quy, vừa làm vừa học, tín chỉ, thời gian đào tạo toàn khóa, 20% đến 50%, 24 tháng, ngôn ngữ đào tạo, tiếng nước ngoài, hiệu trưởng, chương trình đào tạo, tích lũy tín chỉ, thạc sĩ, cao học"
+    },
+    {
+      "article_id": "270-QD-DHCNTT:d3",
+      "article_number": "3",
+      "article_title": "Mục tiêu đào tạo",
+      "keywords": "**Học viên, đào tạo thạc sĩ, mục tiêu đào tạo, nâng cao kiến thức, kiến thức chuyên sâu, kiến thức liên ngành, kỹ năng thực tiễn, nghiên cứu khoa học, làm việc độc lập, tư duy sáng tạo, giải quyết vấn đề, năng lực chuyên môn, cập nhật kiến thức, ứng dụng nghề nghiệp, lĩnh vực đào tạo**",
+      "description": "Mục tiêu đào tạo. Từ khóa: **Học viên, đào tạo thạc sĩ, mục tiêu đào tạo, nâng cao kiến thức, kiến thức chuyên sâu, kiến thức liên ngành, kỹ năng thực tiễn, nghiên cứu khoa học, làm việc độc lập, tư duy sáng tạo, giải quyết vấn đề, năng lực chuyên môn, cập nhật kiến thức, ứng dụng nghề nghiệp, lĩnh vực đào tạo**"
+    },
+    {
+      "article_id": "270-QD-DHCNTT:d4",
+      "article_number": "4",
+      "article_title": "Học phí",
+      "keywords": "học viên, học phí, đóng học phí, học kỳ, thời điểm quy định, miễn giảm học phí, xét miễn giảm, quy định hiện hành, từng trường hợp cụ thể, nghĩa vụ tài chính, lệ phí, miễn học phí, giảm học phí, hỗ trợ học phí",
+      "description": "Học phí. Từ khóa: học viên, học phí, đóng học phí, học kỳ, thời điểm quy định, miễn giảm học phí, xét miễn giảm, quy định hiện hành, từng trường hợp cụ thể, nghĩa vụ tài chính, lệ phí, miễn học phí, giảm học phí, hỗ trợ học phí"
+    },
+    {
+      "article_id": "270-QD-DHCNTT:d5",
+      "article_number": "5",
+      "article_title": "Giải thích từ ngữ",
+      "keywords": "tín chỉ, học viên, môn học, giảng viên, tự học, lý thuyết, thực hành, tích lũy, bắt buộc, tự chọn, chuẩn đầu ra, ngành đào tạo, chuyên ngành, tiết học, 15 giờ",
+      "description": "Giải thích từ ngữ. Từ khóa: tín chỉ, học viên, môn học, giảng viên, tự học, lý thuyết, thực hành, tích lũy, bắt buộc, tự chọn, chuẩn đầu ra, ngành đào tạo, chuyên ngành, tiết học, 15 giờ"
+    },
+    {
+      "article_id": "270-QD-DHCNTT:d6",
+      "article_number": "6",
+      "article_title": "Loại chương trình đào tạo",
+      "keywords": "chương trình đào tạo thạc sĩ, Trường ĐH CNTT, cấp văn bằng, đơn ngành, song ngành, liên thông, liên kết, ĐHQG-HCM, cơ sở đào tạo, cơ sở giáo dục nước ngoài, văn bằng kép, chương trình liên kết quốc tế, loại hình đào tạo sau đại học",
+      "description": "Loại chương trình đào tạo. Từ khóa: chương trình đào tạo thạc sĩ, Trường ĐH CNTT, cấp văn bằng, đơn ngành, song ngành, liên thông, liên kết, ĐHQG-HCM, cơ sở đào tạo, cơ sở giáo dục nước ngoài, văn bằng kép, chương trình liên kết quốc tế, loại hình đào tạo sau đại học"
+    },
+    {
+      "article_id": "270-QD-DHCNTT:d7",
+      "article_number": "7",
+      "article_title": "Quy định về chương trình đào tạo",
+      "keywords": "CTĐT thạc sĩ, khối lượng học tập, 60 tín chỉ, ngành đào tạo, chuẩn đầu ra, mục tiêu chương trình, định hướng nghiên cứu, định hướng ứng dụng, rà soát định kỳ, sửa đổi chương trình, Hiệu trưởng phê duyệt, khóa tuyển sinh, kiến thức liên ngành, luận văn, ĐHQG-HCM",
+      "description": "Quy định về chương trình đào tạo. Từ khóa: CTĐT thạc sĩ, khối lượng học tập, 60 tín chỉ, ngành đào tạo, chuẩn đầu ra, mục tiêu chương trình, định hướng nghiên cứu, định hướng ứng dụng, rà soát định kỳ, sửa đổi chương trình, Hiệu trưởng phê duyệt, khóa tuyển sinh, kiến thức liên ngành, luận văn, ĐHQG-HCM"
+    },
+    {
+      "article_id": "270-QD-DHCNTT:d9",
+      "article_number": "9",
+      "article_title": "Chuẩn đầu ra của chương trình đào tạo",
+      "keywords": "chuẩn đầu ra, chương trình đào tạo, Trường ĐH CNTT, xây dựng, kiến thức, kỹ năng, mức tự chủ, trách nhiệm, vị trí việc làm, tốt nghiệp, chuẩn ngoại ngữ, thạc sĩ, Khung trình độ Quốc gia, học viên, năng lực chuyên môn",
+      "description": "Chuẩn đầu ra của chương trình đào tạo. Từ khóa: chuẩn đầu ra, chương trình đào tạo, Trường ĐH CNTT, xây dựng, kiến thức, kỹ năng, mức tự chủ, trách nhiệm, vị trí việc làm, tốt nghiệp, chuẩn ngoại ngữ, thạc sĩ, Khung trình độ Quốc gia, học viên, năng lực chuyên môn"
+    },
+    {
+      "article_id": "270-QD-DHCNTT:d10",
+      "article_number": "10",
+      "article_title": "Địa điểm đào tạo",
+      "keywords": "địa điểm đào tạo, tỉnh thành phố, trụ sở chính, phân hiệu, ĐHQG-HCM, cho phép hoạt động, thực hành thực tập, nghiên cứu thực tế, ngoài trường, 20%, khối lượng chương trình, cơ sở đào tạo, địa bàn, giới hạn tỷ lệ",
+      "description": "Địa điểm đào tạo. Từ khóa: địa điểm đào tạo, tỉnh thành phố, trụ sở chính, phân hiệu, ĐHQG-HCM, cho phép hoạt động, thực hành thực tập, nghiên cứu thực tế, ngoài trường, 20%, khối lượng chương trình, cơ sở đào tạo, địa bàn, giới hạn tỷ lệ"
+    },
+    {
+      "article_id": "270-QD-DHCNTT:d11",
+      "article_number": "11",
+      "article_title": "Tổ chức đào tạo",
+      "keywords": "Trường ĐH CNTT, học viên, ĐVQL, ĐVĐT, nhập học, phân công giảng dạy, thời khóa biểu, đề cương chi tiết, chương trình đào tạo, tín chỉ, đăng ký môn học, hướng chuyên ngành, quy chế đào tạo, giảng viên thỉnh giảng, kế hoạch học tập",
+      "description": "Tổ chức đào tạo. Từ khóa: Trường ĐH CNTT, học viên, ĐVQL, ĐVĐT, nhập học, phân công giảng dạy, thời khóa biểu, đề cương chi tiết, chương trình đào tạo, tín chỉ, đăng ký môn học, hướng chuyên ngành, quy chế đào tạo, giảng viên thỉnh giảng, kế hoạch học tập"
+    },
+    {
+      "article_id": "270-QD-DHCNTT:d12",
+      "article_number": "12",
+      "article_title": "Chương trình song ngành",
+      "keywords": "chương trình song ngành, học viên, trường đại học, đăng ký song ngành, điều kiện đăng ký, ngành gần, ngành khác, tín chỉ tối thiểu, điểm trung bình tích lũy 6.5, hoàn thành năm đầu, 30 tín chỉ, công nhận tương đương, chuyển đổi tín chỉ, học hai ngành, chuẩn đầu ra",
+      "description": "Chương trình song ngành. Từ khóa: chương trình song ngành, học viên, trường đại học, đăng ký song ngành, điều kiện đăng ký, ngành gần, ngành khác, tín chỉ tối thiểu, điểm trung bình tích lũy 6.5, hoàn thành năm đầu, 30 tín chỉ, công nhận tương đương, chuyển đổi tín chỉ, học hai ngành, chuẩn đầu ra"
+    },
+    {
+      "article_id": "270-QD-DHCNTT:d13",
+      "article_number": "13",
+      "article_title": "Chương trình đào tạo liên thông từ trình độ đại học lên trình độ thạc sĩ (Chương",
+      "keywords": "chương trình liên thông, sinh viên, Trường ĐH CNTT, ĐHQG-HCM, đào tạo, rút ngắn thời gian, học lực khá, đại học lên thạc sĩ, đăng ký tổ chức, khung chương trình đào tạo, liên thông đại học thạc sĩ, fast-track, văn bằng 2, học vượt cấp, Phụ lục 8",
+      "description": "Chương trình đào tạo liên thông từ trình độ đại học lên trình độ thạc sĩ (Chương. Từ khóa: chương trình liên thông, sinh viên, Trường ĐH CNTT, ĐHQG-HCM, đào tạo, rút ngắn thời gian, học lực khá, đại học lên thạc sĩ, đăng ký tổ chức, khung chương trình đào tạo, liên thông đại học thạc sĩ, fast-track, văn bằng 2, học vượt cấp, Phụ lục 8"
+    },
+    {
+      "article_id": "270-QD-DHCNTT:d14",
+      "article_number": "14",
+      "article_title": "Bồi dưỡng sau đại học",
+      "keywords": "bồi dưỡng sau đại học, cập nhật kiến thức, hiệu trưởng, công nhận chứng nhận, CSĐT, bằng tốt nghiệp đại học, thạc sĩ, tiến sĩ, đào tạo liên kết, chứng chỉ bồi dưỡng, nhiều cơ sở đào tạo, kiến thức chuyên môn, nhu cầu nghề nghiệp, xem xét quyết định",
+      "description": "Bồi dưỡng sau đại học. Từ khóa: bồi dưỡng sau đại học, cập nhật kiến thức, hiệu trưởng, công nhận chứng nhận, CSĐT, bằng tốt nghiệp đại học, thạc sĩ, tiến sĩ, đào tạo liên kết, chứng chỉ bồi dưỡng, nhiều cơ sở đào tạo, kiến thức chuyên môn, nhu cầu nghề nghiệp, xem xét quyết định"
+    },
+    {
+      "article_id": "270-QD-DHCNTT:d15",
+      "article_number": "15",
+      "article_title": "Trao đổi học viên",
+      "keywords": "trao đổi học viên, Trường ĐH CNTT, cơ sở giáo dục, thỏa thuận hợp tác, công nhận tín chỉ, học phần, Hiệu trưởng, điều kiện trao đổi, miễn trừ tín chỉ, trong ngoài nước, chương trình đào tạo, tích lũy học tập, hợp tác đào tạo thạc sĩ",
+      "description": "Trao đổi học viên. Từ khóa: trao đổi học viên, Trường ĐH CNTT, cơ sở giáo dục, thỏa thuận hợp tác, công nhận tín chỉ, học phần, Hiệu trưởng, điều kiện trao đổi, miễn trừ tín chỉ, trong ngoài nước, chương trình đào tạo, tích lũy học tập, hợp tác đào tạo thạc sĩ"
+    },
+    {
+      "article_id": "270-QD-DHCNTT:d16",
+      "article_number": "16",
+      "article_title": "Công nhận và chuyển đổi tín chỉ trong chương trình đào tạo",
+      "keywords": "học viên, tín chỉ, công nhận, chuyển đổi, miễn môn học, điểm 5.5, 5 năm, 12 tín chỉ, thạc sĩ, ĐHQG-HCM, bồi dưỡng sau đại học, liên thông, chứng chỉ Triết học, chuyển trường, tích lũy môn tự chọn",
+      "description": "Công nhận và chuyển đổi tín chỉ trong chương trình đào tạo. Từ khóa: học viên, tín chỉ, công nhận, chuyển đổi, miễn môn học, điểm 5.5, 5 năm, 12 tín chỉ, thạc sĩ, ĐHQG-HCM, bồi dưỡng sau đại học, liên thông, chứng chỉ Triết học, chuyển trường, tích lũy môn tự chọn"
+    },
+    {
+      "article_id": "270-QD-DHCNTT:d17",
+      "article_number": "17",
+      "article_title": "Điều kiện đăng ký và quy định công bố khoa học đối với chương trình thạc sĩ",
+      "keywords": "học viên thạc sĩ, đăng ký học, chương trình nghiên cứu, bài báo khoa học, tác giả chính, Scopus, Web of Science, người hướng dẫn, luận văn, chấp thuận hướng dẫn, công bố quốc tế, điều kiện đăng ký, phương thức 1, tạp chí khoa học, ĐHQG-HCM",
+      "description": "Điều kiện đăng ký và quy định công bố khoa học đối với chương trình thạc sĩ. Từ khóa: học viên thạc sĩ, đăng ký học, chương trình nghiên cứu, bài báo khoa học, tác giả chính, Scopus, Web of Science, người hướng dẫn, luận văn, chấp thuận hướng dẫn, công bố quốc tế, điều kiện đăng ký, phương thức 1, tạp chí khoa học, ĐHQG-HCM"
+    },
+    {
+      "article_id": "270-QD-DHCNTT:d18",
+      "article_number": "18",
+      "article_title": "Đánh giá môn học",
+      "keywords": "Học viên, giảng viên, Hiệu trưởng, đánh giá môn học, điểm thành phần, điểm tổng kết, thi kết thúc môn học, điều kiện dự thi, cấm thi, hoãn thi, vắng thi, 5.5, trọng số, bất khả kháng, xếp loại",
+      "description": "Đánh giá môn học. Từ khóa: Học viên, giảng viên, Hiệu trưởng, đánh giá môn học, điểm thành phần, điểm tổng kết, thi kết thúc môn học, điều kiện dự thi, cấm thi, hoãn thi, vắng thi, 5.5, trọng số, bất khả kháng, xếp loại"
+    },
+    {
+      "article_id": "270-QD-DHCNTT:d19",
+      "article_number": "19",
+      "article_title": "Luận văn thạc sĩ",
+      "keywords": "luận văn thạc sĩ, học viên, người hướng dẫn, Hiệu trưởng, đề tài, gia hạn, bảo vệ luận văn, 6 tháng, 12 tháng, bài báo khoa học, sở hữu trí tuệ, thời gian thực hiện, đề cương nghiên cứu, chương trình thạc sĩ ứng dụng, thạc sĩ nghiên cứu",
+      "description": "Luận văn thạc sĩ. Từ khóa: luận văn thạc sĩ, học viên, người hướng dẫn, Hiệu trưởng, đề tài, gia hạn, bảo vệ luận văn, 6 tháng, 12 tháng, bài báo khoa học, sở hữu trí tuệ, thời gian thực hiện, đề cương nghiên cứu, chương trình thạc sĩ ứng dụng, thạc sĩ nghiên cứu"
+    },
+    {
+      "article_id": "270-QD-DHCNTT:d20",
+      "article_number": "20",
+      "article_title": "Người hướng dẫn luận văn",
+      "keywords": "người hướng dẫn luận văn, giảng viên cơ hữu, tiến sĩ, hướng dẫn chính, hướng dẫn phụ, WoS/Scopus, công bố khoa học, sở hữu trí tuệ, 5 năm, điều kiện hướng dẫn, đồng hướng dẫn, thạc sĩ giảng viên, năng lực ngoại ngữ, nghiên cứu khoa học",
+      "description": "Người hướng dẫn luận văn. Từ khóa: người hướng dẫn luận văn, giảng viên cơ hữu, tiến sĩ, hướng dẫn chính, hướng dẫn phụ, WoS/Scopus, công bố khoa học, sở hữu trí tuệ, 5 năm, điều kiện hướng dẫn, đồng hướng dẫn, thạc sĩ giảng viên, năng lực ngoại ngữ, nghiên cứu khoa học"
+    },
+    {
+      "article_id": "270-QD-DHCNTT:d21",
+      "article_number": "21",
+      "article_title": "Điều kiện bảo vệ",
+      "keywords": "học viên, luận văn, bảo vệ luận văn, điều kiện bảo vệ, điểm trung bình tích lũy, gia hạn bảo vệ, người hướng dẫn, đổi tên đề tài, thay đổi người hướng dẫn, học phí, kỷ luật, đình chỉ, 5.5, 6 tháng, 12 tháng",
+      "description": "Điều kiện bảo vệ. Từ khóa: học viên, luận văn, bảo vệ luận văn, điều kiện bảo vệ, điểm trung bình tích lũy, gia hạn bảo vệ, người hướng dẫn, đổi tên đề tài, thay đổi người hướng dẫn, học phí, kỷ luật, đình chỉ, 5.5, 6 tháng, 12 tháng"
+    },
+    {
+      "article_id": "270-QD-DHCNTT:d22",
+      "article_number": "22",
+      "article_title": "Hội đồng đánh giá luận văn",
+      "keywords": "Hội đồng đánh giá luận văn, Hiệu trưởng, thành lập hội đồng, phản biện, chủ tịch hội đồng, thư ký, tiến sĩ, 30 ngày làm việc, thành viên ngoài trường, điều kiện bảo vệ, vắng mặt, họp hội đồng, chương trình nghiên cứu, chương trình ứng dụng, bảo vệ luận văn thạc sĩ",
+      "description": "Hội đồng đánh giá luận văn. Từ khóa: Hội đồng đánh giá luận văn, Hiệu trưởng, thành lập hội đồng, phản biện, chủ tịch hội đồng, thư ký, tiến sĩ, 30 ngày làm việc, thành viên ngoài trường, điều kiện bảo vệ, vắng mặt, họp hội đồng, chương trình nghiên cứu, chương trình ứng dụng, bảo vệ luận văn thạc sĩ"
+    },
+    {
+      "article_id": "270-QD-DHCNTT:d23",
+      "article_number": "23",
+      "article_title": "Đánh giá luận văn",
+      "keywords": "hội đồng chấm luận văn, học viên, điểm luận văn, bảo vệ luận văn, điểm trung bình 5.5, thang điểm 10, chênh lệch 3.0 điểm, bài báo khoa học, điểm thành tích nghiên cứu, bảo vệ lần 2, 3-6 tháng, chỉnh sửa luận văn, không đạt yêu cầu, phiên họp hội đồng",
+      "description": "Đánh giá luận văn. Từ khóa: hội đồng chấm luận văn, học viên, điểm luận văn, bảo vệ luận văn, điểm trung bình 5.5, thang điểm 10, chênh lệch 3.0 điểm, bài báo khoa học, điểm thành tích nghiên cứu, bảo vệ lần 2, 3-6 tháng, chỉnh sửa luận văn, không đạt yêu cầu, phiên họp hội đồng"
+    },
+    {
+      "article_id": "270-QD-DHCNTT:d24",
+      "article_number": "24",
+      "article_title": "Thẩm định luận văn",
+      "keywords": "thẩm định luận văn, hội đồng thẩm định, ĐVQL, ĐVĐT, ĐHQG-HCM, phản ánh khiếu nại tố cáo, thu hồi bằng thạc sĩ, hủy bỏ bằng, thẩm định ngẫu nhiên, không đạt yêu cầu, trùng lặp đề tài, tính trung thực trích dẫn, dừng cấp bằng, chất lượng luận văn",
+      "description": "Thẩm định luận văn. Từ khóa: thẩm định luận văn, hội đồng thẩm định, ĐVQL, ĐVĐT, ĐHQG-HCM, phản ánh khiếu nại tố cáo, thu hồi bằng thạc sĩ, hủy bỏ bằng, thẩm định ngẫu nhiên, không đạt yêu cầu, trùng lặp đề tài, tính trung thực trích dẫn, dừng cấp bằng, chất lượng luận văn"
+    },
+    {
+      "article_id": "270-QD-DHCNTT:d25",
+      "article_number": "25",
+      "article_title": "Điều kiện xét và công nhận tốt nghiệp",
+      "keywords": "học viên, tốt nghiệp thạc sĩ, điều kiện công nhận tốt nghiệp, điểm trung bình tích lũy, luận văn tốt nghiệp, ngoại ngữ, hội đồng chấm luận văn, chỉnh sửa luận văn, cấp bằng thạc sĩ, hồ sơ tốt nghiệp, bảng điểm, kỷ luật đình chỉ, nộp luận văn thư viện, xét tốt nghiệp",
+      "description": "Điều kiện xét và công nhận tốt nghiệp. Từ khóa: học viên, tốt nghiệp thạc sĩ, điều kiện công nhận tốt nghiệp, điểm trung bình tích lũy, luận văn tốt nghiệp, ngoại ngữ, hội đồng chấm luận văn, chỉnh sửa luận văn, cấp bằng thạc sĩ, hồ sơ tốt nghiệp, bảng điểm, kỷ luật đình chỉ, nộp luận văn thư viện, xét tốt nghiệp"
+    },
+    {
+      "article_id": "270-QD-DHCNTT:d26",
+      "article_number": "26",
+      "article_title": "Nghỉ học tạm thời, thôi học, quá thời gian đào tạo",
+      "keywords": "học viên, nghỉ học tạm thời, bảo lưu kết quả, thôi học, quá thời gian đào tạo, lý do cá nhân, ốm thai sản tai nạn, lực lượng vũ trang, thi quốc tế, 06 tháng, đơn xin trở lại, dự tuyển đầu vào, xét chuyển điểm, Hiệu trưởng, nghĩa vụ tài chính",
+      "description": "Nghỉ học tạm thời, thôi học, quá thời gian đào tạo. Từ khóa: học viên, nghỉ học tạm thời, bảo lưu kết quả, thôi học, quá thời gian đào tạo, lý do cá nhân, ốm thai sản tai nạn, lực lượng vũ trang, thi quốc tế, 06 tháng, đơn xin trở lại, dự tuyển đầu vào, xét chuyển điểm, Hiệu trưởng, nghĩa vụ tài chính"
+    },
+    {
+      "article_id": "270-QD-DHCNTT:d27",
+      "article_number": "27",
+      "article_title": "Chuyển đổi phương thức đào tạo và chuyển ngành đào tạo trong cùng cơ sở",
+      "keywords": "học viên, chuyển đổi phương thức đào tạo, chuyển ngành, thạc sĩ, tín chỉ, điều kiện chuyển ngành, thời hạn khóa đào tạo, kỷ luật, học phí, đơn xin chuyển, đơn vị đào tạo, công nhận học phần, học bổ sung",
+      "description": "Chuyển đổi phương thức đào tạo và chuyển ngành đào tạo trong cùng cơ sở. Từ khóa: học viên, chuyển đổi phương thức đào tạo, chuyển ngành, thạc sĩ, tín chỉ, điều kiện chuyển ngành, thời hạn khóa đào tạo, kỷ luật, học phí, đơn xin chuyển, đơn vị đào tạo, công nhận học phần, học bổ sung"
+    },
+    {
+      "article_id": "270-QD-DHCNTT:d28",
+      "article_number": "28",
+      "article_title": "Chuyển cơ sở đào tạo trong và ngoài hệ thống ĐHQG-HCM",
+      "keywords": "học viên, chuyển cơ sở đào tạo, ĐHQG-HCM, kỷ luật, học kỳ cuối, luận văn thạc sĩ, cùng mã ngành, điều kiện trúng tuyển, đồng ý cơ sở, công nhận học phần, học bổ sung, thạc sĩ, chuyển trường, cấp III cấp IV",
+      "description": "Chuyển cơ sở đào tạo trong và ngoài hệ thống ĐHQG-HCM. Từ khóa: học viên, chuyển cơ sở đào tạo, ĐHQG-HCM, kỷ luật, học kỳ cuối, luận văn thạc sĩ, cùng mã ngành, điều kiện trúng tuyển, đồng ý cơ sở, công nhận học phần, học bổ sung, thạc sĩ, chuyển trường, cấp III cấp IV"
+    },
+    {
+      "article_id": "270-QD-DHCNTT:d29",
+      "article_number": "29",
+      "article_title": "Xử lý học vụ",
+      "keywords": "học viên cao học, gia hạn học tập, cảnh cáo học vụ, đình chỉ học tập, buộc thôi học, thi hộ, vi phạm học vụ, học phí, thời gian đào tạo, đạo văn, giả mạo giấy tờ, xóa tên học viên, kỷ luật, luận văn thạc sĩ, nghỉ học tạm thời",
+      "description": "Xử lý học vụ. Từ khóa: học viên cao học, gia hạn học tập, cảnh cáo học vụ, đình chỉ học tập, buộc thôi học, thi hộ, vi phạm học vụ, học phí, thời gian đào tạo, đạo văn, giả mạo giấy tờ, xóa tên học viên, kỷ luật, luận văn thạc sĩ, nghỉ học tạm thời"
+    },
+    {
+      "article_id": "270-QD-DHCNTT:d30",
+      "article_number": "30",
+      "article_title": "Báo cáo, lưu trữ và công khai thông tin",
+      "keywords": "Trường đại học, ĐHQG-HCM, báo cáo đào tạo, lưu trữ hồ sơ, công khai thông tin, trang thông tin điện tử, 30 tháng 12, 30 ngày làm việc, học viên thạc sĩ, chương trình đào tạo, tỷ lệ giảng dạy trực tuyến, chuẩn đầu ra, danh sách tốt nghiệp, chỉ tiêu tuyển sinh",
+      "description": "Báo cáo, lưu trữ và công khai thông tin. Từ khóa: Trường đại học, ĐHQG-HCM, báo cáo đào tạo, lưu trữ hồ sơ, công khai thông tin, trang thông tin điện tử, 30 tháng 12, 30 ngày làm việc, học viên thạc sĩ, chương trình đào tạo, tỷ lệ giảng dạy trực tuyến, chuẩn đầu ra, danh sách tốt nghiệp, chỉ tiêu tuyển sinh"
+    },
+    {
+      "article_id": "270-QD-DHCNTT:d31",
+      "article_number": "31",
+      "article_title": "Giảng viên tham gia đào tạo trình độ thạc sĩ",
+      "keywords": "giảng viên thạc sĩ, giảng viên cơ hữu, giảng viên thỉnh giảng, hướng dẫn luận văn, học vị tiến sĩ, giáo sư phó giáo sư, giảng dạy lý thuyết, tiêu chuẩn giảng viên, học phần tiếng Anh, triết học thạc sĩ, chuyên gia báo cáo viên, phân công giảng dạy, điều kiện tham gia đào tạo",
+      "description": "Giảng viên tham gia đào tạo trình độ thạc sĩ. Từ khóa: giảng viên thạc sĩ, giảng viên cơ hữu, giảng viên thỉnh giảng, hướng dẫn luận văn, học vị tiến sĩ, giáo sư phó giáo sư, giảng dạy lý thuyết, tiêu chuẩn giảng viên, học phần tiếng Anh, triết học thạc sĩ, chuyên gia báo cáo viên, phân công giảng dạy, điều kiện tham gia đào tạo"
+    },
+    {
+      "article_id": "270-QD-DHCNTT:d32",
+      "article_number": "32",
+      "article_title": "Nghĩa vụ và quyền của giảng viên, trợ lý giảng dạy",
+      "keywords": "giảng viên, CBGD, nghỉ dạy, dạy bù, ĐVQL, thông báo, 15 phút, 3 buổi/học kỳ, dạy thay, 30%, 5 ngày, thanh tra, nghĩa vụ giảng dạy, hướng dẫn luận văn, cập nhật kiến thức",
+      "description": "Nghĩa vụ và quyền của giảng viên, trợ lý giảng dạy. Từ khóa: giảng viên, CBGD, nghỉ dạy, dạy bù, ĐVQL, thông báo, 15 phút, 3 buổi/học kỳ, dạy thay, 30%, 5 ngày, thanh tra, nghĩa vụ giảng dạy, hướng dẫn luận văn, cập nhật kiến thức"
+    },
+    {
+      "article_id": "270-QD-DHCNTT:d33",
+      "article_number": "33",
+      "article_title": "Nhiệm vụ và quyền của học viên",
+      "keywords": "học viên, thạc sĩ, nhiệm vụ, quyền lợi, học phí, gia hạn luận văn, báo cáo giữa kỳ, người hướng dẫn, buộc thôi học, nộp đơn xin gia hạn, 30 ngày, 3 tháng, chương trình đào tạo, nội quy quy chế, bảo vệ luận văn",
+      "description": "Nhiệm vụ và quyền của học viên. Từ khóa: học viên, thạc sĩ, nhiệm vụ, quyền lợi, học phí, gia hạn luận văn, báo cáo giữa kỳ, người hướng dẫn, buộc thôi học, nộp đơn xin gia hạn, 30 ngày, 3 tháng, chương trình đào tạo, nội quy quy chế, bảo vệ luận văn"
+    },
+    {
+      "article_id": "270-QD-DHCNTT:d34",
+      "article_number": "34",
+      "article_title": "Thanh tra, kiểm tra",
+      "keywords": "thanh tra đào tạo thạc sĩ, kiểm tra chương trình đào tạo, Hiệu trưởng, ĐHQG-HCM, giảng viên, đề cương chi tiết, kế hoạch đào tạo, lịch trình giảng dạy, đánh giá môn học, cấp bằng thạc sĩ, liên kết đào tạo, giám sát chất lượng, cơ quan thẩm quyền, công khai thông tin đào tạo",
+      "description": "Thanh tra, kiểm tra. Từ khóa: thanh tra đào tạo thạc sĩ, kiểm tra chương trình đào tạo, Hiệu trưởng, ĐHQG-HCM, giảng viên, đề cương chi tiết, kế hoạch đào tạo, lịch trình giảng dạy, đánh giá môn học, cấp bằng thạc sĩ, liên kết đào tạo, giám sát chất lượng, cơ quan thẩm quyền, công khai thông tin đào tạo"
+    },
+    {
+      "article_id": "270-QD-DHCNTT:d35",
+      "article_number": "35",
+      "article_title": "Khiếu nại, tố cáo",
+      "keywords": "khiếu nại, tố cáo, cơ quan tổ chức cá nhân, học viên, vi phạm quy chế, gian lận, sai phạm đào tạo, giải quyết khiếu nại, pháp luật hiện hành, phản ánh, khiếu kiện, tố giác, quyền khiếu nại, xử lý vi phạm, gian lận thi cử",
+      "description": "Khiếu nại, tố cáo. Từ khóa: khiếu nại, tố cáo, cơ quan tổ chức cá nhân, học viên, vi phạm quy chế, gian lận, sai phạm đào tạo, giải quyết khiếu nại, pháp luật hiện hành, phản ánh, khiếu kiện, tố giác, quyền khiếu nại, xử lý vi phạm, gian lận thi cử"
+    },
+    {
+      "article_id": "270-QD-DHCNTT:d36",
+      "article_number": "36",
+      "article_title": "Xử lý vi phạm",
+      "keywords": "vi phạm, xử lý kỷ luật, học viên, gian lận thi cử, thi hộ, đình chỉ học tập, buộc thôi học, thu hồi văn bằng, đạo văn, sở hữu trí tuệ, văn bằng giả, bồi thường thiệt hại, xử phạt hành chính, trách nhiệm hình sự, Hiệu trưởng",
+      "description": "Xử lý vi phạm. Từ khóa: vi phạm, xử lý kỷ luật, học viên, gian lận thi cử, thi hộ, đình chỉ học tập, buộc thôi học, thu hồi văn bằng, đạo văn, sở hữu trí tuệ, văn bằng giả, bồi thường thiệt hại, xử phạt hành chính, trách nhiệm hình sự, Hiệu trưởng"
+    },
+    {
+      "article_id": "270-QD-DHCNTT:d37",
+      "article_number": "37",
+      "article_title": "Phạm vi áp dụng quy chế",
+      "keywords": "quy chế đào tạo thạc sĩ, phạm vi áp dụng, khóa tuyển sinh 2022, thay thế quy định, Quyết định 530/QĐ-ĐHCNTT, hiệu lực, chuyển tiếp, áp dụng, khóa cũ, khóa mới, Đại học Công nghệ Thông tin, hiệu trưởng, ban hành, điều khoản chuyển tiếp",
+      "description": "Phạm vi áp dụng quy chế. Từ khóa: quy chế đào tạo thạc sĩ, phạm vi áp dụng, khóa tuyển sinh 2022, thay thế quy định, Quyết định 530/QĐ-ĐHCNTT, hiệu lực, chuyển tiếp, áp dụng, khóa cũ, khóa mới, Đại học Công nghệ Thông tin, hiệu trưởng, ban hành, điều khoản chuyển tiếp"
+    },
+    {
+      "article_id": "270-QD-DHCNTT:d38",
+      "article_number": "38",
+      "article_title": "Trách nhiệm tổ chức thực hiện",
+      "keywords": "Hiệu trưởng, học viên thạc sĩ, cơ sở đào tạo, điều chỉnh quy chế, công nhận chứng chỉ, chuẩn đầu ra ngoại ngữ, bậc 4/6, B2 CEFR, IELTS 5.5, TOEFL iBT 46, TOEIC 4 kỹ năng, khung năng lực ngoại ngữ Việt Nam, hiệu lực thi hành, sửa đổi quy chế",
+      "description": "Trách nhiệm tổ chức thực hiện. Từ khóa: Hiệu trưởng, học viên thạc sĩ, cơ sở đào tạo, điều chỉnh quy chế, công nhận chứng chỉ, chuẩn đầu ra ngoại ngữ, bậc 4/6, B2 CEFR, IELTS 5.5, TOEFL iBT 46, TOEIC 4 kỹ năng, khung năng lực ngoại ngữ Việt Nam, hiệu lực thi hành, sửa đổi quy chế"
+    },
+    {
+      "article_id": "851-QD-DHCNTT:d1",
+      "article_number": "1",
+      "article_title": "Mục đích, phạm vi và đối tượng áp dụng",
+      "keywords": "liêm chính học thuật, đạo đức học thuật, viên chức, người học, đại học sau đại học, ĐHCNTT, kiểm soát sản phẩm học thuật, xử lý vi phạm, nghiên cứu khoa học, đào tạo, trung thực học thuật, đạo văn, chống gian lận, tiêu chuẩn học thuật, quản lý liêm chính",
+      "description": "Mục đích, phạm vi và đối tượng áp dụng. Từ khóa: liêm chính học thuật, đạo đức học thuật, viên chức, người học, đại học sau đại học, ĐHCNTT, kiểm soát sản phẩm học thuật, xử lý vi phạm, nghiên cứu khoa học, đào tạo, trung thực học thuật, đạo văn, chống gian lận, tiêu chuẩn học thuật, quản lý liêm chính"
+    },
+    {
+      "article_id": "851-QD-DHCNTT:d2",
+      "article_number": "2",
+      "article_title": "Giải thích từ ngữ",
+      "keywords": "liêm chính học thuật, vi phạm học thuật, đạo văn, bịa đặt, gian lận, sản phẩm học thuật, tác giả, đồng tác giả, công bố khoa học, nghiên cứu khoa học, viên chức người học, trích dẫn nguồn, sử dụng không phép, hành vi không trung thực, sao chép",
+      "description": "Giải thích từ ngữ. Từ khóa: liêm chính học thuật, vi phạm học thuật, đạo văn, bịa đặt, gian lận, sản phẩm học thuật, tác giả, đồng tác giả, công bố khoa học, nghiên cứu khoa học, viên chức người học, trích dẫn nguồn, sử dụng không phép, hành vi không trung thực, sao chép"
+    },
+    {
+      "article_id": "851-QD-DHCNTT:d3",
+      "article_number": "3",
+      "article_title": "Nguyên tắc liêm chính học thuật trong học tập và đào tạo",
+      "keywords": "liêm chính học thuật, viên chức người học, trung thực học tập, vi phạm LCHT, phần mềm phát hiện trùng lặp, giám sát thi cử, đánh giá phản biện, khóa luận tốt nghiệp, hồ sơ minh chứng, kiểm tra đạo văn, bản giải trình, sản phẩm học thuật, quy định đào tạo",
+      "description": "Nguyên tắc liêm chính học thuật trong học tập và đào tạo. Từ khóa: liêm chính học thuật, viên chức người học, trung thực học tập, vi phạm LCHT, phần mềm phát hiện trùng lặp, giám sát thi cử, đánh giá phản biện, khóa luận tốt nghiệp, hồ sơ minh chứng, kiểm tra đạo văn, bản giải trình, sản phẩm học thuật, quy định đào tạo"
+    },
+    {
+      "article_id": "851-QD-DHCNTT:d4",
+      "article_number": "4",
+      "article_title": "Nguyên tắc liêm chính học thuật trong nghiên cứu khoa học",
+      "keywords": "viên chức, người học, tác giả, trung thực, liêm chính học thuật, nghiên cứu khoa học, đạo đức, sao chép, giả mạo, phản biện, tài trợ, khen thưởng, mua bán công trình, vi phạm, tính tin cậy",
+      "description": "Nguyên tắc liêm chính học thuật trong nghiên cứu khoa học. Từ khóa: viên chức, người học, tác giả, trung thực, liêm chính học thuật, nghiên cứu khoa học, đạo đức, sao chép, giả mạo, phản biện, tài trợ, khen thưởng, mua bán công trình, vi phạm, tính tin cậy"
+    },
+    {
+      "article_id": "851-QD-DHCNTT:d5",
+      "article_number": "5",
+      "article_title": "Báo cáo về vi phạm liêm chính học thuật:",
+      "keywords": "vi phạm liêm chính học thuật, tố cáo khiếu nại, người báo cáo, viên chức người lao động người học, phòng Thanh tra Pháp chế, đơn vị chuyên môn, phát hiện báo cáo phản ánh, bảo mật danh tính, đạo văn, nghiên cứu khoa học, đào tạo học tập, bằng chứng, tiếp nhận kiến nghị",
+      "description": "Báo cáo về vi phạm liêm chính học thuật:. Từ khóa: vi phạm liêm chính học thuật, tố cáo khiếu nại, người báo cáo, viên chức người lao động người học, phòng Thanh tra Pháp chế, đơn vị chuyên môn, phát hiện báo cáo phản ánh, bảo mật danh tính, đạo văn, nghiên cứu khoa học, đào tạo học tập, bằng chứng, tiếp nhận kiến nghị"
+    },
+    {
+      "article_id": "851-QD-DHCNTT:d6",
+      "article_number": "6",
+      "article_title": "Hội đồng tư vấn liêm chính học thuật",
+      "keywords": "Hội đồng tư vấn liêm chính học thuật, HĐTVLCHT, Hiệu trưởng, viên chức người lao động, thành lập kiện toàn, tư vấn thẩm định đánh giá, xử lý vi phạm, nhiệm kỳ, tối thiểu 5 thành viên số lẻ, chủ tịch phó chủ tịch thư ký, Ban giám hiệu, phòng ĐTSĐH&KHCN, chuyên gia nhà khoa học uy tín",
+      "description": "Hội đồng tư vấn liêm chính học thuật. Từ khóa: Hội đồng tư vấn liêm chính học thuật, HĐTVLCHT, Hiệu trưởng, viên chức người lao động, thành lập kiện toàn, tư vấn thẩm định đánh giá, xử lý vi phạm, nhiệm kỳ, tối thiểu 5 thành viên số lẻ, chủ tịch phó chủ tịch thư ký, Ban giám hiệu, phòng ĐTSĐH&KHCN, chuyên gia nhà khoa học uy tín"
+    },
+    {
+      "article_id": "851-QD-DHCNTT:d7",
+      "article_number": "7",
+      "article_title": "Nguyên tắc làm việc của Hội đồng tư vấn Liêm chính học thuật",
+      "keywords": "Hội đồng tư vấn liêm chính học thuật, thành viên hội đồng, xung đột lợi ích, người thân liên quan, triệu tập phiên họp, họp hội đồng, túc số 2/3, bỏ phiếu kín, đồng thuận 1/2, kiểm phiếu, thông báo kết luận, báo cáo ĐHQG-HCM, ủy quyền chủ tịch, né tránh xung đột lợi ích",
+      "description": "Nguyên tắc làm việc của Hội đồng tư vấn Liêm chính học thuật. Từ khóa: Hội đồng tư vấn liêm chính học thuật, thành viên hội đồng, xung đột lợi ích, người thân liên quan, triệu tập phiên họp, họp hội đồng, túc số 2/3, bỏ phiếu kín, đồng thuận 1/2, kiểm phiếu, thông báo kết luận, báo cáo ĐHQG-HCM, ủy quyền chủ tịch, né tránh xung đột lợi ích"
+    },
+    {
+      "article_id": "851-QD-DHCNTT:d8",
+      "article_number": "8",
+      "article_title": "Nguyên tắc xử lý vi phạm LCHT",
+      "keywords": "khiếu nại, tố cáo, phản ánh kiến nghị, vi phạm LCHT, ĐVCM, giảng viên, đơn vị chức năng, bằng chứng vi phạm, đóng hồ sơ, viên chức, người lao động, người học, HĐTVLCHT, xem xét xử lý, hành vi vi phạm",
+      "description": "Nguyên tắc xử lý vi phạm LCHT. Từ khóa: khiếu nại, tố cáo, phản ánh kiến nghị, vi phạm LCHT, ĐVCM, giảng viên, đơn vị chức năng, bằng chứng vi phạm, đóng hồ sơ, viên chức, người lao động, người học, HĐTVLCHT, xem xét xử lý, hành vi vi phạm"
+    },
+    {
+      "article_id": "851-QD-DHCNTT:d9",
+      "article_number": "9",
+      "article_title": "Xử lý vi phạm LCHT đối với viên chức, người lao động",
+      "keywords": "vi phạm liêm chính học thuật, viên chức người lao động, xử lý kỷ luật, HĐTVLCHT, đạo văn, gian lận nghiên cứu, công bố khoa học, chủ nhiệm đề tài, nhắc nhở khắc phục, hủy kết quả nghiệm thu, thu hồi kinh phí, cấm tham gia nhiệm vụ KH&CN, tái phạm, biên bản làm việc, Hiệu trưởng quyết định xử lý",
+      "description": "Xử lý vi phạm LCHT đối với viên chức, người lao động. Từ khóa: vi phạm liêm chính học thuật, viên chức người lao động, xử lý kỷ luật, HĐTVLCHT, đạo văn, gian lận nghiên cứu, công bố khoa học, chủ nhiệm đề tài, nhắc nhở khắc phục, hủy kết quả nghiệm thu, thu hồi kinh phí, cấm tham gia nhiệm vụ KH&CN, tái phạm, biên bản làm việc, Hiệu trưởng quyết định xử lý"
+    },
+    {
+      "article_id": "851-QD-DHCNTT:d10",
+      "article_number": "10",
+      "article_title": "Xử lý vi phạm liêm chính học thuật đối với người học",
+      "keywords": "người học, vi phạm liêm chính học thuật, kỷ luật, nhắc nhở, trừ điểm, hủy kết quả, tạm dừng học tập, buộc thôi học, khóa luận tốt nghiệp, luận văn thạc sĩ, luận án tiến sĩ, người hướng dẫn, Hội đồng xử lý học vụ, đạo văn, xử lý vi phạm",
+      "description": "Xử lý vi phạm liêm chính học thuật đối với người học. Từ khóa: người học, vi phạm liêm chính học thuật, kỷ luật, nhắc nhở, trừ điểm, hủy kết quả, tạm dừng học tập, buộc thôi học, khóa luận tốt nghiệp, luận văn thạc sĩ, luận án tiến sĩ, người hướng dẫn, Hội đồng xử lý học vụ, đạo văn, xử lý vi phạm"
+    },
+    {
+      "article_id": "851-QD-DHCNTT:d11",
+      "article_number": "11",
+      "article_title": "Trách nhiệm của người học",
+      "keywords": "người học, sinh viên, học viên, liêm chính học thuật, đạo văn, trích dẫn, phần mềm phát hiện trùng lặp, báo cáo vi phạm, NCKH, sản phẩm học thuật, tự kiểm tra, môi trường học thuật, trách nhiệm, thông báo, giải trình",
+      "description": "Trách nhiệm của người học. Từ khóa: người học, sinh viên, học viên, liêm chính học thuật, đạo văn, trích dẫn, phần mềm phát hiện trùng lặp, báo cáo vi phạm, NCKH, sản phẩm học thuật, tự kiểm tra, môi trường học thuật, trách nhiệm, thông báo, giải trình"
+    },
+    {
+      "article_id": "851-QD-DHCNTT:d12",
+      "article_number": "12",
+      "article_title": "Trách nhiệm của giảng viên",
+      "keywords": "giảng viên, LCHT, liêm chính học thuật, trích dẫn, vi phạm, đạo văn, phần mềm phát hiện trùng lặp, báo cáo vi phạm, sản phẩm học thuật, tập huấn, hệ thống trích dẫn, nghiên cứu khoa học, NCKH, xử lý vi phạm, hướng dẫn người học",
+      "description": "Trách nhiệm của giảng viên. Từ khóa: giảng viên, LCHT, liêm chính học thuật, trích dẫn, vi phạm, đạo văn, phần mềm phát hiện trùng lặp, báo cáo vi phạm, sản phẩm học thuật, tập huấn, hệ thống trích dẫn, nghiên cứu khoa học, NCKH, xử lý vi phạm, hướng dẫn người học"
+    },
+    {
+      "article_id": "851-QD-DHCNTT:d13",
+      "article_number": "13",
+      "article_title": "Trách nhiệm của các đơn vị",
+      "keywords": "đơn vị đào tạo, phòng ban, liêm chính học thuật, đạo văn, phần mềm kiểm tra trùng lặp, tập huấn, hậu kiểm, xử lý vi phạm, phổ biến quy định, quản lý tài khoản, phối hợp, sản phẩm học thuật, khóa luận luận văn, phát hiện vi phạm, trách nhiệm",
+      "description": "Trách nhiệm của các đơn vị. Từ khóa: đơn vị đào tạo, phòng ban, liêm chính học thuật, đạo văn, phần mềm kiểm tra trùng lặp, tập huấn, hậu kiểm, xử lý vi phạm, phổ biến quy định, quản lý tài khoản, phối hợp, sản phẩm học thuật, khóa luận luận văn, phát hiện vi phạm, trách nhiệm"
+    },
+    {
+      "article_id": "851-QD-DHCNTT:d14",
+      "article_number": "14",
+      "article_title": "Điều khoản thi hành",
+      "keywords": "**Từ khóa tìm kiếm:**\n\nhiệu lực 01/9/2024, không hồi tố, trùng lặp, kiểm tra đạo văn, Turnitin, loại trừ trích dẫn, ngưỡng 1%, luận văn luận án, sinh viên, Phòng ĐTSĐH&KHCN, Hiệu trưởng, giải trình, đồ án tốt nghiệp, điều chỉnh bổ sung, sản phẩm học thuật",
+      "description": "Điều khoản thi hành. Từ khóa: **Từ khóa tìm kiếm:**\n\nhiệu lực 01/9/2024, không hồi tố, trùng lặp, kiểm tra đạo văn, Turnitin, loại trừ trích dẫn, ngưỡng 1%, luận văn luận án, sinh viên, Phòng ĐTSĐH&KHCN, Hiệu trưởng, giải trình, đồ án tốt nghiệp, điều chỉnh bổ sung, sản phẩm học thuật"
+    },
+    {
+      "article_id": "218-QD-DHQG:d1",
+      "article_number": "1",
+      "article_title": "Sửa đổi, bổ sung một số điều của Quy chế đào tạo trình độ thạc sĩ ban",
+      "keywords": "Học viên thạc sĩ, người hướng dẫn luận văn, giảng viên cơ hữu ĐHQG-HCM, hướng dẫn đề án tốt nghiệp, tiêu chuẩn người hướng dẫn, công bố WoS/Scopus, tác giả chính, đồng tác giả, 5 năm, sở hữu trí tuệ, chỉ tiêu hướng dẫn, tối đa 05 học viên, chương trình nghiên cứu, đồng hướng dẫn",
+      "description": "Sửa đổi, bổ sung một số điều của Quy chế đào tạo trình độ thạc sĩ ban. Từ khóa: Học viên thạc sĩ, người hướng dẫn luận văn, giảng viên cơ hữu ĐHQG-HCM, hướng dẫn đề án tốt nghiệp, tiêu chuẩn người hướng dẫn, công bố WoS/Scopus, tác giả chính, đồng tác giả, 5 năm, sở hữu trí tuệ, chỉ tiêu hướng dẫn, tối đa 05 học viên, chương trình nghiên cứu, đồng hướng dẫn"
+    },
+    {
+      "article_id": "218-QD-DHQG:d17",
+      "article_number": "17",
+      "article_title": "Quy chế đào tạo trình độ thạc sĩ ban hành kèm theo Quyết định số 1393/QĐ-",
+      "keywords": "quy chế đào tạo thạc sĩ, sửa đổi, chủ tịch hội đồng, giảng viên cơ hữu, ĐHQG-HCM, hội đồng chấm luận văn, năng lực chuyên môn, hướng dẫn luận văn, chuyển đổi phương thức đào tạo, điều kiện học viên, uy tín khoa học, bảo vệ luận văn thạc sĩ",
+      "description": "Quy chế đào tạo trình độ thạc sĩ ban hành kèm theo Quyết định số 1393/QĐ-. Từ khóa: quy chế đào tạo thạc sĩ, sửa đổi, chủ tịch hội đồng, giảng viên cơ hữu, ĐHQG-HCM, hội đồng chấm luận văn, năng lực chuyên môn, hướng dẫn luận văn, chuyển đổi phương thức đào tạo, điều kiện học viên, uy tín khoa học, bảo vệ luận văn thạc sĩ"
+    },
+    {
+      "article_id": "218-QD-DHQG:d2",
+      "article_number": "2",
+      "article_title": "Quyết định này có hiệu lực từ ngày ký.",
+      "keywords": "hiệu lực, ngày ký, quyết định, có hiệu lực, thời điểm hiệu lực, ban hành, ký ban hành, áp dụng, thi hành, có giá trị pháp lý",
+      "description": "Quyết định này có hiệu lực từ ngày ký.. Từ khóa: hiệu lực, ngày ký, quyết định, có hiệu lực, thời điểm hiệu lực, ban hành, ký ban hành, áp dụng, thi hành, có giá trị pháp lý"
+    },
+    {
+      "article_id": "218-QD-DHQG:d3",
+      "article_number": "3",
+      "article_title": "Chánh Văn phòng, Trưởng các ban chức năng, Thủ trưởng các đơn vị",
+      "keywords": "Chánh Văn phòng, Trưởng ban chức năng, Thủ trưởng đơn vị, ĐHQG-HCM, thi hành quyết định, giao nhiệm vụ, đào tạo thạc sĩ, đơn vị thành viên, trực thuộc, Giám đốc, Phó Giám đốc, trách nhiệm thực hiện, chịu trách nhiệm",
+      "description": "Chánh Văn phòng, Trưởng các ban chức năng, Thủ trưởng các đơn vị. Từ khóa: Chánh Văn phòng, Trưởng ban chức năng, Thủ trưởng đơn vị, ĐHQG-HCM, thi hành quyết định, giao nhiệm vụ, đào tạo thạc sĩ, đơn vị thành viên, trực thuộc, Giám đốc, Phó Giám đốc, trách nhiệm thực hiện, chịu trách nhiệm"
+    }
+  ],
+  "stats": {
+    "successful": 109,
+    "failed": 0
+  },
+  "last_saved": "2026-04-04 05:47:03"
+}

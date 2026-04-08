@@ -514,16 +514,26 @@ Trả về JSON:
     result = parse_json_response(content)
     node_ids = result.get("node_list", [])
 
+    # Build reverse map: article_id -> article_id (LLM sometimes returns article IDs
+    # like "1393-QD-DHQG:d2" instead of node IDs like "1393-QD-DHQG_0003")
+    article_id_set = set(node_to_article.values())
+
     # Map node_ids to article_ids
     ranked = []
     seen = set()
     for nid in node_ids:
         nid_str = str(nid)
         if nid_str in node_to_article:
+            # Proper node_id -> article_id mapping
             aid = node_to_article[nid_str]
-            if aid not in seen:
-                ranked.append(aid)
-                seen.add(aid)
+        elif nid_str in article_id_set:
+            # LLM returned article_id directly (e.g. "1393-QD-DHQG:d2")
+            aid = nid_str
+        else:
+            continue
+        if aid not in seen:
+            ranked.append(aid)
+            seen.add(aid)
         if len(ranked) >= max_articles:
             break
 
@@ -746,7 +756,11 @@ def main():
     benchmark_path = args.test_file
     output_path = args.output if args.output.endswith(".json") else f"{args.output}.json"
 
-    api_key = os.getenv("ANTHROPIC_API_KEY") or os.getenv("OPENAI_API_KEY") or "sk-ant-dummy"
+    # Re-read .env to ensure key is loaded (shell env may have empty ANTHROPIC_API_KEY)
+    from dotenv import dotenv_values
+    env_vals = dotenv_values()
+    api_key = (env_vals.get("ANTHROPIC_API_KEY") or os.getenv("ANTHROPIC_API_KEY")
+               or os.getenv("OPENAI_API_KEY") or "sk-ant-dummy")
     base_url = args.base_url or os.getenv("ANTHROPIC_BASE_URL") or os.getenv("OPENAI_BASE_URL")
     model = args.llm_model
 

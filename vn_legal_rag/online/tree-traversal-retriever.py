@@ -11,6 +11,7 @@ Implements 3-loop approach for multi-document support:
 from dataclasses import dataclass, field
 from typing import Any, Dict, List, Optional, Tuple
 import json
+import os
 
 from ..types.tree_models import TreeNode, UnifiedForest, NodeType
 
@@ -414,8 +415,10 @@ JSON:"""
                     chapter_info = {
                         "index": len(all_chapters) - 1,
                         "name": chapter.name,
-                        "description": chapter.description,  # Contains keywords
                     }
+                    # Ablation: skip description when LOOP1_NO_DESCRIPTION=1
+                    if not os.environ.get("LOOP1_NO_DESCRIPTION"):
+                        chapter_info["description"] = chapter.description
                     doc_info["chapters"].append(chapter_info)
 
             doc_overview.append(doc_info)
@@ -453,7 +456,7 @@ JSON:"""
 JSON:"""
 
         try:
-            response = self.llm_provider.generate(prompt)
+            response = self.llm_provider.generate(prompt, temperature=0.0)
             data = self._parse_json_response(response)
 
             indices = data.get("selected_indices", [])
@@ -472,7 +475,11 @@ JSON:"""
             return selected, confidence, reasoning
 
         except Exception as e:
-            return [all_chapters[0]] if all_chapters else [], 0.3, f"Fallback: {e}"
+            # Fallback: prefer largest chapters (most articles) over first chapter
+            fallback = sorted(all_chapters, key=lambda ch: len(ch.sub_nodes), reverse=True)[:self.max_chapters]
+            if not fallback:
+                fallback = [all_chapters[0]] if all_chapters else []
+            return fallback, 0.2, f"Fallback (largest chapters): {e}"
 
     def _loop2_select_articles(
         self, query: str, chapter: TreeNode

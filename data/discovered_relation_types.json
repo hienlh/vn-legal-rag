@@ -1,0 +1,15 @@
+{
+  "relation_types": [
+    "BẢO_ĐẢM",
+    "CHO_PHÉP",
+    "CHẾ_TÀI",
+    "CÔNG_NHẬN",
+    "HÀNH_VI",
+    "LIÊN_QUAN",
+    "THỜI_HẠN",
+    "ÁP_DỤNG",
+    "ĐIỀU_KIỆN",
+    "ĐỊNH_NGHĨA"
+  ],
+  "count": 10
+}

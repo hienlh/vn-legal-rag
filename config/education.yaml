@@ -4,7 +4,7 @@
 llm:
   provider: "anthropic"
   model: "claude-sonnet-4-20250514"
-  base_url: "http://127.0.0.1:3456"  # Meridian - Claude Max Proxy
+  base_url: "http://localhost:3210/proxy"  # PPM proxy
   use_cache: true
   cache_db: "data/education/llm_cache.db"
 
@@ -17,6 +17,8 @@ kg:
   path: "data/education/kg_enhanced/legal_kg.json"
   chapter_summaries: "data/education/kg_enhanced/chapter_summaries.json"
   article_summaries: "data/education/kg_enhanced/article_summaries.json"
+  document_summaries: "data/education/kg_enhanced/document_summaries.json"
+  domain_groups: "data/education/kg_enhanced/domain_groups.json"
 
 # Retrieval Settings
 retrieval:

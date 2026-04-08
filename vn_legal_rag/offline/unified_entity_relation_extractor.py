@@ -111,13 +111,21 @@ class UnifiedLegalExtractor:
             **llm_kwargs,
         )
 
+    # Texts longer than this trigger chunked extraction
+    CHUNK_THRESHOLD = 2000
+    CHUNK_SIZE = 1500
+
     def extract(
         self,
         text: str,
         source_id: str = "",
         document_id: str = "",
     ) -> ExtractionResult:
-        """Extract entities and relations in single LLM call."""
+        """Extract entities and relations in single LLM call.
+
+        For long texts (>CHUNK_THRESHOLD chars), splits into chunks
+        and merges results to avoid LLM output truncation.
+        """
         if not text or not text.strip():
             return ExtractionResult(
                 entities=[],
@@ -126,6 +134,25 @@ class UnifiedLegalExtractor:
                 document_id=document_id,
             )
 
+        # Try single-call first
+        result = self._extract_single(text, source_id, document_id)
+        if result.entities or result.relations:
+            return result
+
+        # Fallback: chunked extraction for long texts
+        if len(text) > self.CHUNK_THRESHOLD:
+            self.logger.info(f"Falling back to chunked extraction for {source_id} ({len(text)} chars)")
+            return self._extract_chunked(text, source_id, document_id)
+
+        return result
+
+    def _extract_single(
+        self,
+        text: str,
+        source_id: str = "",
+        document_id: str = "",
+    ) -> ExtractionResult:
+        """Single-call extraction with retries."""
         prompt = EXTRACTION_PROMPT.format(
             entity_types=ENTITY_TYPES_PROMPT,
             relation_types=RELATION_TYPES_PROMPT,
@@ -134,7 +161,7 @@ class UnifiedLegalExtractor:
 
         for attempt in range(self.max_retries + 1):
             try:
-                response = self._provider.generate(prompt, temperature=self.temperature)
+                response = self._provider.generate(prompt, temperature=self.temperature, max_tokens=8192)
                 entities, relations = self._parse_response(response)
 
                 # Add metadata
@@ -162,7 +189,7 @@ class UnifiedLegalExtractor:
                 if attempt < self.max_retries:
                     self.logger.warning(f"Attempt {attempt + 1} failed: {e}. Retrying...")
                 else:
-                    self.logger.error(f"All attempts failed: {e}")
+                    self.logger.error(f"Single-call failed for {source_id}: {e}")
                     return ExtractionResult(
                         entities=[],
                         relations=[],
@@ -178,29 +205,149 @@ class UnifiedLegalExtractor:
             document_id=document_id,
         )
 
+    def _split_into_chunks(self, text: str) -> List[str]:
+        """Split text into chunks at paragraph boundaries."""
+        paragraphs = re.split(r'\n\s*\n|\n(?=\d+\.)', text)
+        chunks = []
+        current = ""
+        for para in paragraphs:
+            if len(current) + len(para) > self.CHUNK_SIZE and current:
+                chunks.append(current.strip())
+                current = para
+            else:
+                current = current + "\n" + para if current else para
+        if current.strip():
+            chunks.append(current.strip())
+        return chunks
+
+    def _extract_chunked(
+        self,
+        text: str,
+        source_id: str,
+        document_id: str,
+    ) -> ExtractionResult:
+        """Extract from long text by splitting into chunks and merging."""
+        chunks = self._split_into_chunks(text)
+        self.logger.info(f"Split {source_id} into {len(chunks)} chunks")
+
+        all_entities = []
+        all_relations = []
+        seen_entity_names = set()
+
+        for i, chunk in enumerate(chunks):
+            result = self._extract_single(chunk, source_id, document_id)
+            # Deduplicate entities across chunks
+            for e in result.entities:
+                name_lower = e.get("name", "").lower()
+                if name_lower not in seen_entity_names:
+                    seen_entity_names.add(name_lower)
+                    all_entities.append(e)
+            all_relations.extend(result.relations)
+
+        self.logger.info(
+            f"Chunked extraction for {source_id}: "
+            f"{len(all_entities)} entities, {len(all_relations)} relations "
+            f"from {len(chunks)} chunks"
+        )
+
+        return ExtractionResult(
+            entities=all_entities,
+            relations=all_relations,
+            source_id=source_id,
+            document_id=document_id,
+        )
+
+    def _repair_truncated_json(self, json_str: str) -> str:
+        """Repair JSON truncated by LLM output limit.
+
+        Handles: unterminated strings, missing closing brackets,
+        trailing commas, incomplete key-value pairs.
+        """
+        s = json_str.rstrip()
+
+        # Remove trailing incomplete key-value pair (e.g. `"key": ` or `"key":`)
+        s = re.sub(r',\s*"[^"]*"\s*:\s*$', '', s)
+        # Remove trailing comma + incomplete string value (e.g. `"evidence": "some text`)
+        s = re.sub(r',\s*"[^"]*"\s*:\s*"[^"]*$', '', s)
+
+        # Count open/close braces and brackets
+        in_string = False
+        escape = False
+        opens = []
+        for ch in s:
+            if escape:
+                escape = False
+                continue
+            if ch == '\\' and in_string:
+                escape = True
+                continue
+            if ch == '"' and not escape:
+                in_string = not in_string
+                continue
+            if in_string:
+                continue
+            if ch in ('{', '['):
+                opens.append(ch)
+            elif ch == '}' and opens and opens[-1] == '{':
+                opens.pop()
+            elif ch == ']' and opens and opens[-1] == '[':
+                opens.pop()
+
+        # If we're inside a string, close it
+        if in_string:
+            s += '"'
+
+        # Remove trailing commas before closing
+        s = re.sub(r',\s*$', '', s)
+
+        # Close unclosed brackets/braces
+        for opener in reversed(opens):
+            s += ']' if opener == '[' else '}'
+
+        return s
+
     def _parse_response(self, response: str) -> Tuple[List[Dict], List[Dict]]:
         """Parse LLM response to extract entities and relations."""
+        # Try ```json ... ``` first, then raw JSON
         json_match = re.search(r'```json\s*(.*?)\s*```', response, re.DOTALL)
         if json_match:
             json_str = json_match.group(1)
         else:
-            json_match = re.search(r'\{.*\}', response, re.DOTALL)
+            # For truncated responses, ``` closing may be missing
+            json_match = re.search(r'```json\s*(.*)', response, re.DOTALL)
             if json_match:
-                json_str = json_match.group(0)
+                json_str = json_match.group(1)
             else:
-                raise ValueError("No JSON found in response")
+                json_match = re.search(r'\{.*', response, re.DOTALL)
+                if json_match:
+                    json_str = json_match.group(0)
+                else:
+                    raise ValueError("No JSON found in response")
 
-        try:
-            data = json.loads(json_str)
-        except json.JSONDecodeError:
-            json_str = re.sub(r',\s*}', '}', json_str)
-            json_str = re.sub(r',\s*]', ']', json_str)
-            data = json.loads(json_str)
+        # Try parsing as-is first
+        for attempt_repair in [False, True]:
+            try:
+                candidate = json_str
+                if attempt_repair:
+                    candidate = self._repair_truncated_json(candidate)
+                # Clean trailing commas
+                candidate = re.sub(r',\s*}', '}', candidate)
+                candidate = re.sub(r',\s*]', ']', candidate)
+                data = json.loads(candidate)
 
-        entities = self._validate_entities(data.get("entities", []))
-        relations = self._validate_relations(data.get("relations", []), entities)
+                entities = self._validate_entities(data.get("entities", []))
+                relations = self._validate_relations(data.get("relations", []), entities)
 
-        return entities, relations
+                if attempt_repair and (entities or relations):
+                    self.logger.info(f"Repaired truncated JSON: {len(entities)} entities, {len(relations)} relations")
+
+                return entities, relations
+            except (json.JSONDecodeError, ValueError):
+                if attempt_repair:
+                    raise
+                continue
+
+        raise ValueError("Could not parse JSON from response")
 
     def _validate_entities(self, entities: List[Dict]) -> List[Dict]:
         """Validate and clean entities."""

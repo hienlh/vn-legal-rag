@@ -166,14 +166,15 @@ class ArticleSummaryGenerator:
             else:
                 docs = session.query(LegalDocumentModel).all()
 
-            # Count total articles (avoid double-counting articles in sections)
-            total_articles = 0
-            for doc in docs:
-                for chapter in doc.chapters:
-                    # Only count articles NOT in a section
-                    total_articles += len([a for a in chapter.articles if a.section_id is None])
-                    for section in chapter.sections:
-                        total_articles += len(section.articles)
+            # Get all articles for selected documents via direct query
+            doc_ids = [doc.id for doc in docs]
+            all_articles = (
+                session.query(LegalArticleModel)
+                .filter(LegalArticleModel.document_id.in_(doc_ids))
+                .order_by(LegalArticleModel.document_id, LegalArticleModel.position)
+                .all()
+            )
+            total_articles = len(all_articles)
 
             processed = 0
             self.logger.info(f"Found {len(docs)} documents, {total_articles} articles total")
@@ -181,20 +182,9 @@ class ArticleSummaryGenerator:
             for doc in docs:
                 self.logger.info(f"Document: {doc.so_hieu} ({doc.title[:50] if doc.title else 'N/A'}...)")
 
-                for chapter in sorted(doc.chapters, key=lambda c: c.position):
-                    # Direct articles (not in any section)
-                    for article in sorted(
-                        [a for a in chapter.articles if a.section_id is None],
-                        key=lambda a: a.position
-                    ):
-                        processed += 1
-                        self._process_article(article, processed, total_articles)
-
-                    # Articles in sections
-                    for section in chapter.sections:
-                        for article in sorted(section.articles, key=lambda a: a.position):
-                            processed += 1
-                            self._process_article(article, processed, total_articles)
+            for article in all_articles:
+                processed += 1
+                self._process_article(article, processed, total_articles)
 
         self.logger.info(f"Completed: {self.checkpoint.stats['successful']} success, {self.checkpoint.stats['failed']} failed")
 

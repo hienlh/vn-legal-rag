@@ -240,11 +240,23 @@ class RelationValidator:
         Remove relations where subject == object.
 
         Comparison is case-insensitive and whitespace-normalized.
+        Supports both field naming conventions:
+        - subject_text/object_text (legacy)
+        - source/target (unified extractor)
         """
         valid = []
         for r in relations:
-            subj = self._normalize_text(r.get("subject_text", ""))
-            obj = self._normalize_text(r.get("object_text", ""))
+            subj = self._normalize_text(
+                r.get("subject_text") or r.get("source") or ""
+            )
+            obj = self._normalize_text(
+                r.get("object_text") or r.get("target") or ""
+            )
+
+            if not subj or not obj:
+                # Skip relations with missing subject/object
+                self.stats.self_references_filtered += 1
+                continue
 
             if subj != obj:
                 valid.append(r)

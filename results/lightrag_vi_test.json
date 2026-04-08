@@ -1,0 +1,99 @@
+{
+  "metadata": {
+    "baseline": "LightRAG",
+    "mode": "hybrid",
+    "timestamp": "2026-04-08 09:07:01",
+    "test_file": "data/benchmark/hard-200-qa-benchmark.csv",
+    "total_questions": 3,
+    "total_tested": 3,
+    "status": "complete"
+  },
+  "summary": {
+    "hit@10": "0/3 (0.0%)",
+    "mrr": 0.0,
+    "hit@1_rate": 0.0,
+    "hit@3_rate": 0.0,
+    "hit@5_rate": 0.0,
+    "hit@10_rate": 0.0,
+    "hit@20_rate": 0.0,
+    "hit@30_rate": 0.0
+  },
+  "results": [
+    {
+      "stt": "1",
+      "category": "Loại 6: Giải thể & Phá sản - Thủ tục, thanh toán nợ, tạm ngưng",
+      "question": "cho mình hỏi mình nộp hồ sơ tạm ngừng kinh doanh hồ sơ đã nộp có + thông báo tạm ngừng + biên bản họp + quyết định tạm ngừng mà nhận được thông tin phản hồi cần bổ sung thêm tài liệu là cần bổ sung thêm tài liệu gì vậy mọi người",
+      "expected_articles": [
+        "59-2020-QH14:d206"
+      ],
+      "num_expected": 1,
+      "skipped": false,
+      "lightrag_error": "[Errno 32] Broken pipe",
+      "lightrag_retrieved": [],
+      "lightrag_hit@1": 0,
+      "lightrag_recall@1": 0.0,
+      "lightrag_hit@3": 0,
+      "lightrag_recall@3": 0.0,
+      "lightrag_hit@5": 0,
+      "lightrag_recall@5": 0.0,
+      "lightrag_hit@10": 0,
+      "lightrag_recall@10": 0.0,
+      "lightrag_hit@20": 0,
+      "lightrag_recall@20": 0.0,
+      "lightrag_hit@30": 0,
+      "lightrag_recall@30": 0.0,
+      "lightrag_mrr": 0.0
+    },
+    {
+      "stt": "2",
+      "category": "Loại 6: Giải thể & Phá sản - Thủ tục, thanh toán nợ, tạm ngưng",
+      "question": "Nộp hồ sơ tạm ngừng kinh doanh có thông báo tạm ngừng, biên bản họp, quyết định tạm ngừng mà nhận được thông tin phản hồi cần bổ sung thêm tài liệu là cần bổ sung thêm tài liệu gì vậy mọi người?",
+      "expected_articles": [
+        "59-2020-QH14:d206"
+      ],
+      "num_expected": 1,
+      "skipped": false,
+      "lightrag_error": "[Errno 32] Broken pipe",
+      "lightrag_retrieved": [],
+      "lightrag_hit@1": 0,
+      "lightrag_recall@1": 0.0,
+      "lightrag_hit@3": 0,
+      "lightrag_recall@3": 0.0,
+      "lightrag_hit@5": 0,
+      "lightrag_recall@5": 0.0,
+      "lightrag_hit@10": 0,
+      "lightrag_recall@10": 0.0,
+      "lightrag_hit@20": 0,
+      "lightrag_recall@20": 0.0,
+      "lightrag_hit@30": 0,
+      "lightrag_recall@30": 0.0,
+      "lightrag_mrr": 0.0
+    },
+    {
+      "stt": "3",
+      "category": "Loại 3: Vốn điều lệ - Góp vốn, tăng/giảm vốn, vốn pháp định",
+      "question": "Trường hợp đi vay để nộp đủ vốn điều lệ khi kiểm tra sau đó rút ra thì quy định xử lý như thế nào ạ?",
+      "expected_articles": [
+        "59-2020-QH14:d16",
+        "59-2020-QH14:d47"
+      ],
+      "num_expected": 2,
+      "skipped": false,
+      "lightrag_error": "[Errno 32] Broken pipe",
+      "lightrag_retrieved": [],
+      "lightrag_hit@1": 0,
+      "lightrag_recall@1": 0.0,
+      "lightrag_hit@3": 0,
+      "lightrag_recall@3": 0.0,
+      "lightrag_hit@5": 0,
+      "lightrag_recall@5": 0.0,
+      "lightrag_hit@10": 0,
+      "lightrag_recall@10": 0.0,
+      "lightrag_hit@20": 0,
+      "lightrag_recall@20": 0.0,
+      "lightrag_hit@30": 0,
+      "lightrag_recall@30": 0.0,
+      "lightrag_mrr": 0.0
+    }
+  ]
+}

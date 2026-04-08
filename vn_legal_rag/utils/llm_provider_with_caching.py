@@ -74,7 +74,13 @@ class LLMProvider:
         elif self.provider == "anthropic":
             try:
                 from anthropic import Anthropic
-                api_key = self.config.get("api_key") or os.getenv("ANTHROPIC_API_KEY") or None
+                # Load API key: config > .env file > shell env
+                from dotenv import dotenv_values
+                env_vals = dotenv_values()
+                api_key = (self.config.get("api_key")
+                           or env_vals.get("ANTHROPIC_API_KEY")
+                           or os.getenv("ANTHROPIC_API_KEY")
+                           or None)
                 auth_token = os.getenv("ANTHROPIC_AUTH_TOKEN") or None
                 # When using proxy, set dummy keys to avoid empty-string header errors
                 if base_url:
@@ -108,36 +114,36 @@ class LLMProvider:
             return
 
         self.cache_db.parent.mkdir(parents=True, exist_ok=True)
-        conn = sqlite3.connect(str(self.cache_db))
+        conn = sqlite3.connect(str(self.cache_db), timeout=30)
         cursor = conn.cursor()
+        # WAL mode for concurrent read/write from parallel workers
+        cursor.execute("PRAGMA journal_mode=WAL")
         cursor.execute("""
             CREATE TABLE IF NOT EXISTS llm_cache (
                 cache_key TEXT PRIMARY KEY,
                 provider TEXT,
                 model TEXT,
-                prompt TEXT,
+                prompt_hash TEXT,
+                params_hash TEXT,
+                prompt_text TEXT,
                 response TEXT,
-                timestamp INTEGER,
-                response_time_ms INTEGER
+                created_at REAL,
+                expires_at REAL,
+                hit_count INTEGER DEFAULT 0
             )
         """)
         conn.commit()
         conn.close()
 
-    # Canonical provider/model for cache key stability across proxy switches
-    _CACHE_PROVIDER = "anthropic"
-    _CACHE_MODEL = "claude-3-5-haiku-20241022"
-
     def _get_cache_key(self, prompt: str, **kwargs) -> str:
-        """Generate cache key from prompt and parameters.
+        """Generate cache key from prompt, provider, and actual model.
 
-        Uses canonical provider/model so cache survives proxy switches.
-        Excludes temperature/params to match semantica's stored cache keys
-        (semantica stored with empty params {}).
+        Uses the actual provider/model so different models produce different
+        cache keys and don't return stale responses from a different model.
         """
         key_data = {
-            "provider": self._CACHE_PROVIDER,
-            "model": self._CACHE_MODEL,
+            "provider": self.provider,
+            "model": self.model,
             "prompt": prompt,
             "params": {},
         }
@@ -149,7 +155,7 @@ class LLMProvider:
         if not self.cache_db or not self.cache_db.exists():
             return None
 
-        conn = sqlite3.connect(str(self.cache_db))
+        conn = sqlite3.connect(str(self.cache_db), timeout=30)
         cursor = conn.cursor()
         cursor.execute(
             "SELECT response FROM llm_cache WHERE cache_key = ?",
@@ -171,7 +177,7 @@ class LLMProvider:
         now = time.time()
         expires_at = now + 86400 * 365  # 1 year expiry
 
-        conn = sqlite3.connect(str(self.cache_db))
+        conn = sqlite3.connect(str(self.cache_db), timeout=30)
         cursor = conn.cursor()
         cursor.execute("""
             INSERT OR REPLACE INTO llm_cache
@@ -179,8 +185,8 @@ class LLMProvider:
             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         """, (
             cache_key,
-            self._CACHE_PROVIDER,
-            self._CACHE_MODEL,
+            self.provider,
+            self.model,
             prompt_hash,
             params_hash,
             prompt,
@@ -209,10 +215,21 @@ class LLMProvider:
         if cached:
             return cached
 
-        # Generate
-        start_time = time.time()
-        response = self._generate_impl(prompt, **kwargs)
-        response_time_ms = int((time.time() - start_time) * 1000)
+        # Generate with retry for proxy errors
+        max_retries = 3
+        last_error = None
+        for attempt in range(max_retries):
+            try:
+                start_time = time.time()
+                response = self._generate_impl(prompt, **kwargs)
+                response_time_ms = int((time.time() - start_time) * 1000)
+                break
+            except Exception as e:
+                last_error = e
+                if attempt < max_retries - 1:
+                    time.sleep(0.5 * (attempt + 1))
+                else:
+                    raise last_error
 
         # Cache
         self._cache_response(cache_key, prompt, response, response_time_ms)

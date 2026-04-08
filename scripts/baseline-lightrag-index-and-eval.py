@@ -211,13 +211,21 @@ async def create_lightrag_instance(working_dir: str, llm_model: str, api_key: st
         # Chunking: each article is already a coherent unit, use large chunks
         chunk_token_size=2000,
         chunk_overlap_token_size=200,
-        # Limit parallelism — proxy can't handle many concurrent LLM calls
-        max_parallel_insert=1,
-        llm_model_max_async=1,
+        # 5 parallel workers — proxy handles this well (tested)
+        max_parallel_insert=5,
+        llm_model_max_async=5,
         entity_extract_max_gleaning=0,  # Skip gleaning to reduce LLM calls
+        # Vietnamese legal docs — extract entities/relations in Vietnamese
+        addon_params={"language": "Vietnamese"},
     )
 
     await rag.initialize_storages()
+    # Required by newer LightRAG versions for pipeline to work
+    try:
+        from lightrag.kg.shared_storage import initialize_pipeline_status
+        await initialize_pipeline_status()
+    except ImportError:
+        pass  # Older LightRAG version without pipeline_status
     return rag
 
 
@@ -274,49 +282,53 @@ def build_content_to_article_index(articles: list) -> dict:
     return index
 
 
-def extract_article_ids_from_chunks(chunks: list, content_index: dict, all_article_ids: set) -> list:
+def load_chunk_to_article_map(working_dir: str) -> dict:
+    """Load chunk_id → article_id mapping from LightRAG's text_chunks store.
+
+    Each chunk has a `full_doc_id` field that directly maps to the article_id
+    (e.g., "59-2020-QH14:d206"). This is far more reliable than content prefix matching.
+    """
+    kv_path = os.path.join(working_dir, "kv_store_text_chunks.json")
+    if not os.path.exists(kv_path):
+        return {}
+    with open(kv_path, "r", encoding="utf-8") as f:
+        chunks = json.load(f)
+    return {cid: cdata["full_doc_id"] for cid, cdata in chunks.items()
+            if cdata.get("full_doc_id")}
+
+
+def extract_article_ids_from_chunks(chunks: list, chunk_to_article: dict,
+                                     content_index: dict, all_article_ids: set) -> list:
     """Extract ranked article IDs from LightRAG chunk results.
 
-    LightRAG chunks have file_path="unknown_source" so we match by content.
-    Strategy:
-    1. Match chunk content prefix against article content index
-    2. Extract "Điều XX" from chunk content and resolve to article IDs
+    Primary strategy: use chunk_id → full_doc_id direct mapping.
+    Fallback: content prefix matching (for chunks without chunk_id).
     """
     ranked = []
     seen = set()
 
     for chunk in chunks:
-        content = ""
-        if isinstance(chunk, dict):
-            content = chunk.get("content", "")
-        elif isinstance(chunk, str):
-            content = chunk
-
-        if not content:
+        if isinstance(chunk, str):
+            continue
+        if not isinstance(chunk, dict):
             continue
 
         article_id = None
 
-        # Strategy 1: match content prefix against article index
-        content_stripped = content.strip()
-        for prefix_len in [80, 50, 30]:
-            key = content_stripped[:prefix_len]
-            if key in content_index:
-                article_id = content_index[key]
-                break
+        # Strategy 1 (primary): direct chunk_id → article_id via full_doc_id
+        chunk_id = chunk.get("chunk_id") or chunk.get("_id") or chunk.get("id")
+        if chunk_id and chunk_id in chunk_to_article:
+            article_id = chunk_to_article[chunk_id]
 
-        # Strategy 2: extract "Điều XX" from beginning of chunk
+        # Strategy 2 (fallback): content prefix matching
         if not article_id:
-            match = re.match(r'[Đđ]iều\s+(\d+)', content_stripped)
-            if match:
-                art_num = match.group(1)
-                # Find matching article IDs (may match multiple docs)
-                candidates = [aid for aid in all_article_ids if aid.endswith(f":d{art_num}")]
-                if len(candidates) == 1:
-                    article_id = candidates[0]
-                elif candidates:
-                    # Disambiguate by checking more content
-                    article_id = candidates[0]  # Best effort
+            content = chunk.get("content", "").strip()
+            if content:
+                for prefix_len in [80, 50, 30]:
+                    key = content[:prefix_len]
+                    if key in content_index:
+                        article_id = content_index[key]
+                        break
 
         if article_id and article_id not in seen:
             ranked.append(article_id)
@@ -325,7 +337,8 @@ def extract_article_ids_from_chunks(chunks: list, content_index: dict, all_artic
     return ranked
 
 
-async def evaluate_single_query(rag, question: str, mode: str, content_index: dict,
+async def evaluate_single_query(rag, question: str, mode: str,
+                                chunk_to_article: dict, content_index: dict,
                                 all_article_ids: set, top_k: int = 30):
     """Run a single query and return ranked article IDs."""
     from lightrag import QueryParam
@@ -350,7 +363,8 @@ async def evaluate_single_query(rag, question: str, mode: str, content_index: di
                 chunks = data.get("chunks", [])
 
         if chunks:
-            ranked = extract_article_ids_from_chunks(chunks, content_index, all_article_ids)
+            ranked = extract_article_ids_from_chunks(
+                chunks, chunk_to_article, content_index, all_article_ids)
 
     except Exception as e:
         return [], str(e)
@@ -358,10 +372,11 @@ async def evaluate_single_query(rag, question: str, mode: str, content_index: di
     return ranked, None
 
 
-async def run_evaluation(rag, benchmark_path: str, mode: str, content_index: dict,
+async def run_evaluation(rag, benchmark_path: str, mode: str,
+                         chunk_to_article: dict, content_index: dict,
                          all_article_ids: set, output_path: str,
-                         start: int = 1, limit: int = None):
-    """Run evaluation on benchmark dataset."""
+                         start: int = 1, limit: int = None, workers: int = 1):
+    """Run evaluation on benchmark dataset with optional parallel workers."""
 
     with open(benchmark_path, "r", encoding="utf-8-sig") as f:
         rows = list(csv.DictReader(f))
@@ -375,37 +390,47 @@ async def run_evaluation(rag, benchmark_path: str, mode: str, content_index: dic
             break
         tasks.append(row)
 
-    print(f"\n  Evaluating {len(tasks)} questions (mode={mode})...")
+    print(f"\n  Evaluating {len(tasks)} questions (mode={mode}, workers={workers})...")
     print(f"  {'#':>4} {'STT':>5} {'Result':>6}  Running Hit@10")
     print("-" * 55)
 
-    all_results = []
-    hits_10 = 0
-    tested = 0
-
+    # Pre-build records and identify evaluable tasks
+    records = []
+    eval_indices = []  # indices into records that need evaluation
     for idx, row in enumerate(tasks):
         stt = row.get("STT", "?")
         question = row.get("Content", "") or row.get("question", "")
         article_ids = row.get("Article_IDs", "") or row.get("article_ids", "")
         category = row.get("Category", "")
         expected = extract_expected_article_ids(article_ids)
-
         record = {
-            "stt": stt,
-            "category": category,
-            "question": question,
-            "expected_articles": sorted(expected),
-            "num_expected": len(expected),
+            "stt": stt, "category": category, "question": question,
+            "expected_articles": sorted(expected), "num_expected": len(expected),
         }
-
         if not expected:
             record["skipped"] = True
-            all_results.append(record)
+            records.append(record)
             print(f"[{idx+1:4d}] STT {stt:>5} SKIPPED")
-            continue
+        else:
+            record["skipped"] = False
+            records.append(record)
+            eval_indices.append(idx)
 
-        record["skipped"] = False
-        ranked, error = await evaluate_single_query(rag, question, mode, content_index, all_article_ids)
+    # Evaluate queries (parallel with semaphore)
+    sem = asyncio.Semaphore(workers)
+    completed = [0]  # mutable counter
+    hits_10 = [0]
+    tested = [0]
+    lock = asyncio.Lock()
+
+    async def eval_one(idx):
+        record = records[idx]
+        question = record["question"]
+        expected = set(record["expected_articles"])
+
+        async with sem:
+            ranked, error = await evaluate_single_query(
+                rag, question, mode, chunk_to_article, content_index, all_article_ids)
 
         if error:
             record["lightrag_error"] = error
@@ -422,19 +447,21 @@ async def run_evaluation(rag, benchmark_path: str, mode: str, content_index: dic
                 record[f"lightrag_recall@{k}"] = round(ir[f"recall@{k}"], 4)
             record["lightrag_mrr"] = round(ir["rr"], 4)
 
-        all_results.append(record)
-        tested += 1
-        hit10 = record.get("lightrag_hit@10", 0)
-        hits_10 += hit10
-        rate = hits_10 / tested * 100
+        async with lock:
+            completed[0] += 1
+            tested[0] += 1
+            hit10 = record.get("lightrag_hit@10", 0)
+            hits_10[0] += hit10
+            rate = hits_10[0] / tested[0] * 100
+            result_str = "HIT" if hit10 else "MISS"
+            print(f"[{completed[0]:4d}] STT {record['stt']:>5} {result_str:>6}  {rate:.1f}%")
+            # Incremental save
+            _save_results(output_path, records, benchmark_path, mode,
+                          tested[0], hits_10[0], "in_progress")
 
-        result_str = "HIT" if hit10 else "MISS"
-        print(f"[{idx+1:4d}] STT {stt:>5} {result_str:>6}  {rate:.1f}%")
+    await asyncio.gather(*[eval_one(i) for i in eval_indices])
 
-        # Incremental save
-        _save_results(output_path, all_results, benchmark_path, mode, tested, hits_10, "in_progress")
-
-    return all_results, tested, hits_10
+    return records, tested[0], hits_10[0]
 
 
 def _save_results(output_path: str, results: list, benchmark_path: str,
@@ -488,8 +515,11 @@ async def async_main(args):
     all_article_ids = {a["article_id"] for a in articles}
     print(f"  Loaded {len(articles)} articles from {db_path}")
 
-    # Check for API key (Anthropic proxy)
-    api_key = os.getenv("ANTHROPIC_API_KEY") or os.getenv("OPENAI_API_KEY") or "sk-ant-dummy"
+    # Check for API key (Anthropic proxy) — prefer dotenv to avoid empty env var issues
+    from dotenv import dotenv_values
+    env_vals = dotenv_values()
+    api_key = (env_vals.get("ANTHROPIC_API_KEY") or os.getenv("ANTHROPIC_API_KEY")
+               or os.getenv("OPENAI_API_KEY") or "sk-ant-dummy")
     base_url = args.base_url or os.getenv("ANTHROPIC_BASE_URL") or os.getenv("OPENAI_BASE_URL")
     llm_model = args.llm_model
 
@@ -521,16 +551,21 @@ async def async_main(args):
         with open(index_marker, "w") as f:
             f.write(f"indexed {len(articles)} articles at {time.strftime('%Y-%m-%d %H:%M:%S')}\n")
 
-    # Build content-to-article-id index for chunk matching
+    # Build chunk_id → article_id mapping from LightRAG's text_chunks store
+    chunk_to_article = load_chunk_to_article_map(working_dir)
+    print(f"  Chunk→article map: {len(chunk_to_article)} entries")
+
+    # Build content-to-article-id index as fallback
     content_index = build_content_to_article_index(articles)
-    print(f"  Content index: {len(content_index)} entries")
+    print(f"  Content index (fallback): {len(content_index)} entries")
 
     # Phase 2: Online Evaluation
     print(f"\n[Phase 2] Online Evaluation")
     t0 = time.time()
     results, tested, hits_10 = await run_evaluation(
-        rag, benchmark_path, args.mode, content_index, all_article_ids,
-        output_path, start=args.start, limit=args.limit,
+        rag, benchmark_path, args.mode, chunk_to_article, content_index,
+        all_article_ids, output_path, start=args.start, limit=args.limit,
+        workers=args.workers,
     )
     elapsed = time.time() - t0
 
@@ -579,6 +614,7 @@ def main():
     parser.add_argument("--start", type=int, default=1, help="Start from row number")
     parser.add_argument("--limit", type=int, default=None, help="Limit number of questions")
     parser.add_argument("--batch-size", type=int, default=20, help="Indexing batch size")
+    parser.add_argument("-w", "--workers", type=int, default=1, help="Parallel eval workers")
     parser.add_argument("--reindex", action="store_true", help="Force re-indexing from scratch")
     parser.add_argument("--eval-only", action="store_true", help="Skip indexing, evaluate only")
 

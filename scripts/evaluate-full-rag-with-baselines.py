@@ -362,21 +362,27 @@ Trả lời:"""
         return ""
 
 
-def run_query_with_retry(rag, question: str, max_retries=5, base_delay=5, max_results=30, retrieval_only=False):
-    """Run RAG query with rate-limit retry. Returns (result, error)."""
+RETRYABLE_KEYWORDS = ["rate", "limit", "429", "quota", "timeout", "timed out",
+                      "connection", "503", "502", "overloaded", "capacity",
+                      "reset", "refused", "broken pipe", "eof"]
+
+
+def run_query_with_retry(rag, question: str, max_retries=5, base_delay=3, max_results=30, retrieval_only=False):
+    """Run RAG query with retry on transient errors. Returns (result, error)."""
     for attempt in range(max_retries):
         try:
             result = rag.query(question, max_results=max_results, adaptive_retrieval=True, retrieval_only=retrieval_only)
             return result, None
         except Exception as e:
             error_str = str(e).lower()
-            if any(kw in error_str for kw in ["rate", "limit", "429", "quota"]):
-                delay = base_delay * (2 ** attempt)
-                print(f"       [Rate limit] Waiting {delay}s (attempt {attempt + 1}/{max_retries})")
+            is_retryable = any(kw in error_str for kw in RETRYABLE_KEYWORDS)
+            if is_retryable and attempt < max_retries - 1:
+                delay = base_delay * (2 ** attempt) + (time.time() % 1)  # jitter
+                print(f"       [Retry {attempt + 1}/{max_retries}] {type(e).__name__}: {str(e)[:80]}... waiting {delay:.0f}s")
                 time.sleep(delay)
                 continue
             return None, str(e)
-    return None, "Max retries exceeded (rate limit)"
+    return None, "Max retries exceeded"
 
 
 # ---------------------------------------------------------------------------
@@ -627,7 +633,8 @@ def main():
     parser.add_argument("--start", type=int, default=1, help="Start from row number")
     parser.add_argument("--limit", type=int, default=None, help="Limit number of questions")
     parser.add_argument("--output", "-o", required=True, help="Output JSON file")
-    parser.add_argument("--workers", "-w", type=int, default=1, help="Parallel workers")
+    parser.add_argument("--workers", "-w", type=int, default=1,
+                        help="Parallel workers for concurrent query processing (recommended: 5-15)")
     parser.add_argument("--ablations", default=",".join(DEFAULT_ABLATIONS),
                         help=f"Comma-separated ablation names (default: {','.join(DEFAULT_ABLATIONS)})")
     parser.add_argument("--no-ablations", action="store_true", help="Skip ablation baselines")
@@ -814,23 +821,57 @@ def main():
         with open(output_path, "w", encoding="utf-8") as f:
             json.dump(inc_data, f, ensure_ascii=False, indent=2)
 
+    def process_with_task_retry(row, task_retries=3):
+        """Wrap process_and_report with task-level retry for unhandled errors."""
+        for attempt in range(task_retries):
+            try:
+                return process_and_report(row)
+            except Exception as e:
+                error_str = str(e).lower()
+                is_retryable = any(kw in error_str for kw in RETRYABLE_KEYWORDS)
+                if is_retryable and attempt < task_retries - 1:
+                    delay = 3 * (2 ** attempt)
+                    stt = row.get("STT", "?")
+                    print(f"       [Task retry {attempt + 1}/{task_retries}] STT {stt}: {type(e).__name__}: {str(e)[:80]}... waiting {delay}s")
+                    time.sleep(delay)
+                    continue
+                raise
+        raise RuntimeError("Unreachable")
+
     try:
         if args.workers == 1:
             for row in tasks:
-                record = process_and_report(row)
+                record = process_with_task_retry(row)
                 all_results.append(record)
                 _save_incremental()
         else:
+            # Parallel execution with controlled concurrency
+            failed_rows = []
             with ThreadPoolExecutor(max_workers=args.workers) as executor:
-                futures = {executor.submit(process_and_report, row): row for row in tasks}
+                futures = {executor.submit(process_with_task_retry, row): row for row in tasks}
                 for future in as_completed(futures):
+                    row = futures[future]
                     try:
                         record = future.result()
                         all_results.append(record)
                         _save_incremental()
                     except Exception as e:
-                        row = futures[future]
-                        print(f"[ERR] STT {row.get('STT', '?')} - {e}")
+                        stt = row.get("STT", "?")
+                        print(f"[ERR] STT {stt} - {e}")
+                        failed_rows.append(row)
+
+            # Retry failed rows sequentially (more reliable)
+            if failed_rows:
+                print(f"\n  Retrying {len(failed_rows)} failed queries sequentially...")
+                for row in failed_rows:
+                    try:
+                        record = process_with_task_retry(row, task_retries=5)
+                        all_results.append(record)
+                        _save_incremental()
+                    except Exception as e:
+                        stt = row.get("STT", "?")
+                        print(f"[FINAL ERR] STT {stt} - {e}")
+
     except KeyboardInterrupt:
         print("\n\n*** INTERRUPTED ***")
         _save_incremental()

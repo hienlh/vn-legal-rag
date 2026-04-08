@@ -1,0 +1,33 @@
+{
+  "domain_groups": {
+    "other": {
+      "label": "Khác",
+      "anchor_doc_id": null,
+      "domain_keywords": [
+        "báo cáo vi phạm",
+        "chuẩn đầu ra",
+        "mục đích áp dụng",
+        "chương trình thạc sĩ",
+        "thẩm định luận văn",
+        "thời gian đào tạo",
+        "hình thức đào tạo",
+        "nghiên cứu khoa học",
+        "học tập và đào tạo",
+        "buộc thôi học",
+        "phạm vi áp dụng",
+        "Đại học Quốc gia TP.HCM",
+        "ngôn ngữ đào tạo",
+        "cấp bằng thạc sĩ",
+        "luận văn thạc sĩ"
+      ],
+      "documents": [
+        "1393-QD-DHQG",
+        "160-QD-DHQG",
+        "218-QD-DHQG",
+        "270-QD-DHCNTT",
+        "851-QD-DHCNTT"
+      ],
+      "doc_count": 5
+    }
+  }
+}
