@@ -97,4 +97,16 @@ data/education/api_call_log.csv
 .gitnexus
 
 data/baseline_lightrag_index/
+data/baseline_lightrag_index_vi/
+data/baseline_lightrag_index_vi_test/
 data/baseline_pageindex_index/
+data/edu_baseline_lightrag_index/
+data/edu_baseline_lightrag_index_vi/
+data/edu_baseline_pageindex_index/
+
+# Nohup output files
+nohup_*.out
+nohup.out
+
+# LLM cache (large, regenerable)
+data/education/llm_cache.db
