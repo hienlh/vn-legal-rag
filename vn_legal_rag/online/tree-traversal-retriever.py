@@ -579,7 +579,7 @@ JSON:"""
 JSON:"""
 
         try:
-            response = self.llm_provider.generate(prompt)
+            response = self.llm_provider.generate(prompt, temperature=0.0)
             data = self._parse_json_response(response)
 
             indices = data.get("selected_indices", [])

@@ -204484,6 +204484,150 @@
       "description": "NĐ01-2021 tạm ngừng KD → tạm ngừng (LDN)",
       "confidence": 0.95,
       "weight": 1.0
+    },
+    {
+      "source": "59-2020-QH14:d23",
+      "target": "59-2020-QH14:d22",
+      "type": "REFERENCES",
+      "predicate": "REFERENCES",
+      "relation_type": "REFERENCES",
+      "evidence": "Cross-reference between 59-2020-QH14:d23 and 59-2020-QH14:d22",
+      "confidence": 0.9,
+      "metadata": {
+        "article_ids": []
+      }
+    },
+    {
+      "source": "59-2020-QH14:d22",
+      "target": "59-2020-QH14:d23",
+      "type": "REFERENCES",
+      "predicate": "REFERENCES",
+      "relation_type": "REFERENCES",
+      "evidence": "Cross-reference between 59-2020-QH14:d22 and 59-2020-QH14:d23",
+      "confidence": 0.9,
+      "metadata": {
+        "article_ids": []
+      }
+    },
+    {
+      "source": "59-2020-QH14:d81",
+      "target": "59-2020-QH14:d80",
+      "type": "REFERENCES",
+      "predicate": "REFERENCES",
+      "relation_type": "REFERENCES",
+      "evidence": "Cross-reference between 59-2020-QH14:d81 and 59-2020-QH14:d80",
+      "confidence": 0.9,
+      "metadata": {
+        "article_ids": []
+      }
+    },
+    {
+      "source": "59-2020-QH14:d80",
+      "target": "59-2020-QH14:d81",
+      "type": "REFERENCES",
+      "predicate": "REFERENCES",
+      "relation_type": "REFERENCES",
+      "evidence": "Cross-reference between 59-2020-QH14:d80 and 59-2020-QH14:d81",
+      "confidence": 0.9,
+      "metadata": {
+        "article_ids": []
+      }
+    },
+    {
+      "source": "01-2021-ND:d86",
+      "target": "01-2021-ND:d84",
+      "type": "REFERENCES",
+      "predicate": "REFERENCES",
+      "relation_type": "REFERENCES",
+      "evidence": "Cross-reference between 01-2021-ND:d86 and 01-2021-ND:d84",
+      "confidence": 0.9,
+      "metadata": {
+        "article_ids": []
+      }
+    },
+    {
+      "source": "01-2021-ND:d84",
+      "target": "01-2021-ND:d86",
+      "type": "REFERENCES",
+      "predicate": "REFERENCES",
+      "relation_type": "REFERENCES",
+      "evidence": "Cross-reference between 01-2021-ND:d84 and 01-2021-ND:d86",
+      "confidence": 0.9,
+      "metadata": {
+        "article_ids": []
+      }
+    },
+    {
+      "source": "36-2024-QH15:d33",
+      "target": "36-2024-QH15:d35",
+      "type": "REFERENCES",
+      "predicate": "REFERENCES",
+      "relation_type": "REFERENCES",
+      "evidence": "Cross-reference between 36-2024-QH15:d33 and 36-2024-QH15:d35",
+      "confidence": 0.9,
+      "metadata": {
+        "article_ids": []
+      }
+    },
+    {
+      "source": "36-2024-QH15:d35",
+      "target": "36-2024-QH15:d33",
+      "type": "REFERENCES",
+      "predicate": "REFERENCES",
+      "relation_type": "REFERENCES",
+      "evidence": "Cross-reference between 36-2024-QH15:d35 and 36-2024-QH15:d33",
+      "confidence": 0.9,
+      "metadata": {
+        "article_ids": []
+      }
+    },
+    {
+      "source": "36-2024-QH15:d11",
+      "target": "36-2024-QH15:d9",
+      "type": "REFERENCES",
+      "predicate": "REFERENCES",
+      "relation_type": "REFERENCES",
+      "evidence": "Cross-reference between 36-2024-QH15:d11 and 36-2024-QH15:d9",
+      "confidence": 0.9,
+      "metadata": {
+        "article_ids": []
+      }
+    },
+    {
+      "source": "36-2024-QH15:d9",
+      "target": "36-2024-QH15:d11",
+      "type": "REFERENCES",
+      "predicate": "REFERENCES",
+      "relation_type": "REFERENCES",
+      "evidence": "Cross-reference between 36-2024-QH15:d9 and 36-2024-QH15:d11",
+      "confidence": 0.9,
+      "metadata": {
+        "article_ids": []
+      }
+    },
+    {
+      "source": "168-2024-ND-CP:d10",
+      "target": "168-2024-ND-CP:d12",
+      "type": "REFERENCES",
+      "predicate": "REFERENCES",
+      "relation_type": "REFERENCES",
+      "evidence": "Cross-reference between 168-2024-ND-CP:d10 and 168-2024-ND-CP:d12",
+      "confidence": 0.9,
+      "metadata": {
+        "article_ids": []
+      }
+    },
+    {
+      "source": "168-2024-ND-CP:d12",
+      "target": "168-2024-ND-CP:d10",
+      "type": "REFERENCES",
+      "predicate": "REFERENCES",
+      "relation_type": "REFERENCES",
+      "evidence": "Cross-reference between 168-2024-ND-CP:d12 and 168-2024-ND-CP:d10",
+      "confidence": 0.9,
+      "metadata": {
+        "article_ids": []
+      }
     }
   ],
   "stats": {

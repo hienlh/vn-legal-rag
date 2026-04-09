@@ -843,9 +843,12 @@ Trả lời:"""
                     rel_article.split(":")[0] != article_id.split(":")[0]
                 is_cross_chapter = is_cross_doc or bool(rel_chapters - selected_chapters)
 
-                if rel_type in STRONG_REL_TYPES and is_cross_chapter:
+                if rel_type in STRONG_REL_TYPES:
                     if self._is_semantically_relevant(rel_article, query):
-                        cross_chapter_additions.append(rel_article)
+                        if is_cross_chapter:
+                            cross_chapter_additions.append(rel_article)
+                        else:
+                            same_chapter_additions.append(rel_article)
                 elif rel_type in EXPANSION_REL_TYPES:
                     if self._is_semantically_relevant(rel_article, query):
                         if is_cross_chapter:
