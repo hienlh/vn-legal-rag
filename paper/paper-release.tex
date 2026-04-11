@@ -72,14 +72,9 @@ The \textbf{Vietnamese legal domain} adds further complexity. Vietnamese is tona
 
 Traditional RAG systems \cite{r1} retrieve passages by vector similarity between query and document embeddings \cite{r2}. This works adequately for many domains \cite{r3,r4}, but legal QA exposes its weaknesses. Legal terminology carries precise meanings that general embeddings blur (\textbf{semantic gap}); documents organize content hierarchically, yet vector search treats them as flat text (\textbf{no structural awareness}); and answering a question often requires chaining references across articles, something dense retrieval cannot do (\textbf{no multi-hop reasoning}).
 
-Existing approaches tackle parts of this problem. LightRAG \cite{r5} and GraphRAG \cite{r6} model entity relationships but disregard document hierarchy. PageIndex \cite{r7} exploits structure but has no semantic reasoning component. Legal ontology systems \cite{r8,r9} formalize domain knowledge but remain disconnected from modern retrieval pipelines. We propose a \textbf{three-tier knowledge graph RAG} architecture that brings these capabilities together:
-\begin{enumerate}
-\item \textbf{LLM-guided tree traversal} through document hierarchies for structural navigation (Tier~1),
-\item \textbf{Dual-level semantic retrieval} with intent-aware Personalized PageRank on a domain knowledge graph (Tier~2),
-\item \textbf{Reciprocal Rank Fusion} for cross-tier merging with knowledge graph expansion (Tier~3).
-\end{enumerate}
+Existing approaches tackle parts of this problem. LightRAG \cite{r5} and GraphRAG \cite{r6} model entity relationships but disregard document hierarchy. PageIndex \cite{r7} exploits structure but has no semantic reasoning component. Legal ontology systems \cite{r8,r9} formalize domain knowledge but remain disconnected from modern retrieval pipelines. We propose a \textbf{three-tier knowledge graph RAG} architecture that brings these capabilities together. Tier~1 performs \textbf{LLM-guided tree traversal} through document hierarchies for structural navigation. Tier~2 applies \textbf{dual-level semantic retrieval} with intent-aware Personalized PageRank on a domain knowledge graph, capturing cross-reference articles that tree traversal alone would miss. Tier~3 merges the outputs through \textbf{Reciprocal Rank Fusion} with knowledge graph expansion, producing a final ranked list that benefits from both structural and semantic signals.
 
-Our contributions: (1)~a three-tier RAG architecture combining structural, semantic, and graph-based retrieval; (2)~a Vietnamese legal KG (5,936 entities, 5,963 relations) with semi-automatic construction; (3)~a multi-intent PPR algorithm adapting edge weights to query intent. Experiments on 530 questions across three domains show 92.2\% Hit@10 on legal QA (+7.4pp over PageIndex) and 88.5\% on education regulation (+13.9pp over PageIndex), demonstrating generalization beyond legal text.
+This paper makes three contributions. First, we design a three-tier RAG architecture that unifies structural tree traversal, semantic graph retrieval, and reciprocal rank fusion into a single pipeline. Second, we construct a Vietnamese legal knowledge graph comprising 5,936 entities and 5,963 relations through a semi-automatic process that combines LLM extraction with expert refinement. Third, we introduce a multi-intent Personalized PageRank algorithm that adapts edge weights to the detected query intent, allowing the graph to emphasize different relation types for penalty, procedural, or definitional questions. Experiments on 530 questions across three domains show that our system reaches 92.2\% Hit@10 on legal QA, surpassing PageIndex by +7.4pp, and 88.5\% on education regulation, exceeding PageIndex by +13.9pp, demonstrating that the architecture generalizes beyond legal text.
 
 \section{Related Work}
 \label{sec:related}
@@ -128,91 +123,13 @@ Given a legal corpus $\mathcal{D} = \{d_1, \ldots, d_m\}$ with hierarchically or
 
 \subsection{System Overview}
 
-Figure~\ref{fig:architecture} illustrates the architecture. The \textbf{offline phase} constructs $\mathcal{M}$ through parsing, extraction, and ontology generation. The \textbf{online phase} processes queries via ontology expansion (Stage~0) followed by three retrieval tiers leveraging $\mathcal{T}$, $\mathcal{G}$, and $\mathcal{O}$.
+Figure~\ref{fig:architecture} illustrates the architecture. The \textbf{offline phase} constructs $\mathcal{M}$ through parsing, extraction, and summary generation. The \textbf{online phase} processes queries via query analysis (Stage~0) followed by three retrieval tiers leveraging $\mathcal{T}$ and $\mathcal{G}$.
 
-% Figure 1: System Architecture
+% Figure 1: System Architecture (generated from figure1-architecture.mmd via mermaid-cli)
 \begin{figure}[H]
 \centering
-\resizebox{0.72\textwidth}{!}{%
-\begin{tikzpicture}[
-    % Styles
-    box/.style={rectangle, draw, rounded corners, minimum height=0.7cm, minimum width=1.8cm, align=center, font=\small},
-    phase/.style={rectangle, draw, dashed, rounded corners, inner sep=8pt},
-    tier/.style={rectangle, draw, dashed, rounded corners, inner sep=6pt, fill=blue!3},
-    arrow/.style={-{Stealth[length=2mm]}, thick},
-    dataarrow/.style={-{Stealth[length=2mm]}, thick, blue!60},
-    label/.style={font=\footnotesize\bfseries},
-]
-
-% === OFFLINE PHASE (Left) ===
-\node[box, fill=orange!20] (doc) at (0,0) {Legal\\Document};
-\node[box, fill=blue!15] (parse) at (3,0) {Document\\Parsing};
-\node[box, fill=blue!15] (extract) at (6,0) {LLM Entity \&\\Relation Extraction};
-\node[box, fill=green!15] (kgbuild) at (3,-2.5) {Incremental KG\\Builder (Dedup)};
-\node[box, fill=green!15] (summary) at (6,-2.5) {Chapter \&\\Article Summaries};
-\node[box, fill=purple!20, minimum width=3cm] (kg) at (4.5,-5) {Knowledge Model $\mathcal{M}$\\$(\mathcal{O}, \mathcal{G}, \mathcal{T}, \Phi)$};
-
-% Offline arrows
-\draw[arrow] (doc) -- (parse);
-\draw[arrow] (parse) -- (extract);
-\draw[arrow] (extract.south) -- ++(0,-0.5) -| (kgbuild.north);
-\draw[arrow] (extract.south) -- ++(0,-0.5) -| (summary.north);
-\draw[arrow] (kgbuild.south) -- (kg.north west);
-\draw[arrow] (summary.south) -- (kg.north east);
-
-% Offline phase box
-\begin{scope}[on background layer]
-\node[phase, fill=gray!5, fit=(doc)(parse)(extract)(kgbuild)(summary)(kg), label={[label]above:Offline Phase: Knowledge Model Construction}] (offline) {};
-\end{scope}
-
-% === ONLINE PHASE (Right) ===
-\node[box, fill=yellow!20] (query) at (10.5,0) {User\\Query};
-\node[box, fill=blue!15] (analyzer) at (13.5,0) {Query Analyzer\\(Intent + Type)};
-
-% Tier 1
-\node[box, fill=green!15] (tree) at (11,-2.5) {Tree Traversal\\(LLM-guided)};
-
-% Tier 2
-\node[box, fill=green!15] (dual) at (16,-2.5) {Dual-Level\\Retriever};
-\node[box, fill=green!15] (ppr) at (16,-4.0) {Intent-Aware\\PPR};
-
-% Tier 3
-\node[box, fill=red!15] (bridge) at (13.5,-5.8) {Semantic Bridge\\(RRF Fusion)};
-
-% Output
-\node[box, fill=purple!20] (gen) at (13.5,-7.5) {Answer\\Generation};
-\node[box, fill=yellow!20] (answer) at (16.5,-7.5) {Legal\\Answer};
-
-% Online arrows
-\draw[arrow] (query) -- (analyzer);
-\draw[arrow] (analyzer.south) -- ++(0,-0.5) -| (tree.north);
-\draw[arrow] (analyzer.south) -- ++(0,-0.5) -| (dual.north);
-\draw[arrow] (dual) -- (ppr);
-\draw[arrow] (tree.south) |- (bridge.west);
-\draw[arrow] (ppr.south) |- (bridge.east);
-\draw[arrow] (bridge) -- (gen);
-\draw[arrow] (gen) -- (answer);
-
-% KG to Online connections
-\coordinate (splitpt) at (8.5,-5);
-\draw[blue!60, thick] (kg.east) -- (splitpt);
-\draw[blue!60, thick] (splitpt) -- (8.5,-2.5);
-\draw[dataarrow] (8.5,-2.5) -- (tree.west);
-\draw[dataarrow] (splitpt) -- (8.5,-5.8) -- (bridge.west);
-
-% Tier labels
-\node[font=\scriptsize\itshape, gray, anchor=west] at (12.1,-2.5) {Tier 1};
-\node[font=\scriptsize\itshape, gray, anchor=east] at (14.9,-2.5) {Tier 2};
-\node[font=\scriptsize\itshape, gray] at (13.5,-5.1) {Tier 3};
-
-% Online phase box
-\begin{scope}[on background layer]
-\node[phase, fill=gray!5, fit=(query)(analyzer)(tree)(dual)(ppr)(bridge)(gen)(answer), label={[label]above:Online Phase: Three-Tier Query Processing}] (online) {};
-\end{scope}
-
-\end{tikzpicture}
-}
-\caption{System architecture. Offline: knowledge model construction. Online: three-tier query processing (Tier~1: tree traversal, Tier~2: semantic+PPR, Tier~3: RRF fusion).}
+\includegraphics[width=\textwidth]{figure1-architecture.pdf}
+\caption{System architecture. Offline phase (left): knowledge model construction from legal documents. Online phase (right): three-tier query processing---Tier~1 (structural tree traversal), Tier~2 (dual-level semantic retrieval), and Tier~3 (RRF fusion with KG expansion).}
 \label{fig:architecture}
 \end{figure}
 
@@ -236,18 +153,11 @@ In short, $\mathcal{O}$ answers ``\textit{what kind of entity?}'' via taxonomy t
 
 \textbf{Document Forest} $\mathcal{T} = \{T_1, \ldots, T_m\} \cup X$ represents structural knowledge. Each $T_i$ is a rooted tree with six levels (Document${}\to{}$\allowbreak Chapter${}\to{}$\allowbreak Section${}\to{}$\allowbreak Article${}\to{}$\allowbreak Clause${}\to{}$\allowbreak Point), and $X$ contains cross-reference edges between documents. The forest spans multiple legal domains, with documents organized into domain groups (e.g., enterprise law, traffic safety law) that enable domain-aware routing during retrieval.
 
-\textbf{Retrieval Functions} $\Phi = \{\phi_0, \phi_1, \phi_2, \phi_3\}$ replace Legal-Onto's manual inference rules:
-\begin{itemize}[nosep,leftmargin=1.5em]
-\item $\phi_0\colon Q \times \mathcal{O} \to Q'$ (ontology expansion),
-\item $\phi_1\colon Q' \times \mathcal{T} \to 2^A$ (tree traversal),
-\item $\phi_2\colon Q' \times \mathcal{G} \times \mathcal{O} \to 2^A$ (semantic retrieval),
-\item $\phi_3\colon 2^A \times 2^A \times \mathcal{G} \to A^*$ (fusion).
-\end{itemize}
-Where Legal-Onto applies hand-crafted deductive rules, our functions leverage LLM reasoning while preserving formal relation properties in the graph structure.
+\textbf{Retrieval Functions} $\Phi = \{\phi_0, \phi_1, \phi_2, \phi_3\}$ replace Legal-Onto's manual inference rules. The query analysis function $\phi_0\colon Q \to Q'$ classifies intent, expands abbreviations, and extracts entities to produce an enriched query representation. The tree traversal function $\phi_1\colon Q' \times \mathcal{T} \to 2^A$ navigates the document forest to produce a candidate article set. The semantic retrieval function $\phi_2\colon Q' \times \mathcal{G} \to 2^A$ scores articles through graph-based signals including PPR, keyphrase matching, and concept hierarchy traversal. Finally, the fusion function $\phi_3\colon 2^A \times 2^A \times \mathcal{G} \to A^*$ merges both candidate sets via reciprocal rank fusion with knowledge graph expansion. Where Legal-Onto applies hand-crafted deductive rules, our functions leverage LLM reasoning while preserving formal relation properties in the graph structure.
 
 \subsection{Knowledge Graph Construction}
 
-The offline phase builds $\mathcal{G}$ in four steps: \textbf{(1)~Document Parsing} into hierarchical trees forming $\mathcal{T}$; \textbf{(2)~Entity-Relation Extraction} via one LLM call per article, producing evidence-grounded triples; \textbf{(3)~Incremental KG Building} with Vietnamese slug normalization (NFD $\to$ diacritics removal $\to$ lowercasing, e.g., ``Cong ty co phan'' $\to$ \textit{cong-ty-co-phan}) and a 4-pass deduplication pipeline across all 13 documents; \textbf{(4)~Summary Generation} of chapter and article summaries for Tier~1 traversal. Following knowledge engineering practice in ontology-based expert systems \cite{r9}, construction is \textbf{semi-automatic}: after LLM extraction, retrieval evaluation on a development query set revealed that LLM-generated relations missed most cross-document references. A domain expert then added $\sim$130 relations (cross-document and intra-document references, concept entities linking common legal terms to their governing articles). This evaluate-and-refine loop is standard in expert systems and contributes to the retrieval accuracy reported in Section~\ref{sec:experiments}.
+The offline phase builds $\mathcal{G}$ through a four-stage pipeline. It begins with \textbf{document parsing}, which converts raw legal text into the hierarchical trees that form $\mathcal{T}$. Next, \textbf{entity-relation extraction} issues one LLM call per article, producing evidence-grounded triples that anchor every extracted fact to its source text. The extracted triples are then consolidated via \textbf{incremental KG building}, which applies Vietnamese slug normalization (NFD $\to$ diacritics removal $\to$ lowercasing, e.g., ``Cong ty co phan'' $\to$ \textit{cong-ty-co-phan}) and a 4-pass deduplication pipeline across all 13 documents to merge equivalent entities. Finally, \textbf{summary generation} creates chapter-level and article-level summaries that Tier~1 uses for LLM-guided traversal. Following knowledge engineering practice in ontology-based expert systems \cite{r9}, construction is \textbf{semi-automatic}: after LLM extraction, retrieval evaluation on a development query set revealed that LLM-generated relations missed most cross-document references. A domain expert then added $\sim$130 relations covering cross-document and intra-document references, as well as concept entities linking common legal terms to their governing articles. This evaluate-and-refine loop is standard in expert systems and contributes to the retrieval accuracy reported in Section~\ref{sec:experiments}.
 
 \subsubsection{Intent-Aware Edge Weights}
 
@@ -257,7 +167,7 @@ Each query intent amplifies its most relevant relation types during PPR traversa
 
 \subsubsection{Stage 0: Query Analysis}
 
-The query analyzer performs: (1)~\textbf{intent detection} across 6 types (Penalty, Definition, Procedure, Requirement, Reference, General) via Vietnamese regex with LLM fallback; (2)~\textbf{type classification} into 7 categories; (3)~\textbf{abbreviation expansion} (e.g., \textit{TNHH} $\to$ \textit{trach nhiem huu han}); and (4)~\textbf{ontology expansion} $\phi_0(q, \mathcal{O})$ via class hierarchy traversal in $H$ with Vietnamese label lookup through $L$.
+The query analyzer first classifies the user's \textbf{intent} into one of six types---Penalty, Definition, Procedure, Requirement, Reference, or General---using Vietnamese regex patterns with LLM fallback for ambiguous cases. It then assigns a \textbf{query type} among seven categories to guide downstream routing. Domain-specific \textbf{abbreviations} are expanded (e.g., \textit{TNHH} $\to$ \textit{trach nhiem huu han}) so that downstream components can match full terms in the knowledge graph. Finally, \textbf{entity extraction} identifies article references, law references, and legal keywords from the query to seed downstream retrieval components.
 
 \subsubsection{Tier 1: LLM-Guided Tree Traversal}
 
@@ -265,7 +175,7 @@ Tier~1 navigates $\mathcal{T}$ using LLM reasoning in three loops: \textbf{Loop~
 
 \subsubsection{Tier 2: Dual-Level Semantic Retrieval}
 
-Tier~2 performs hybrid semantic search over $\mathcal{G}$ and $\mathcal{O}$ with six components. \textit{Low-level} (entity-specific): (1)~keyphrase matching, (2)~query-entity cosine similarity, (3)~intent-aware PPR, (4)~ontology class matching. \textit{High-level} (theme/concept): (5)~legal theme identification, (6)~hierarchy traversal through $\mathcal{O}$'s taxonomy. The combined score is:
+Tier~2 performs hybrid semantic search over $\mathcal{G}$ through six complementary scoring components organized at two granularity levels. At the \textit{low level}, entity-specific signals include keyphrase matching against entity names, query-entity cosine similarity over sentence embeddings, and intent-aware PPR scores that propagate relevance through the knowledge graph's relation edges. At the \textit{high level}, broader conceptual signals come from legal theme identification and concept hierarchy traversal, which surfaces related articles that share a thematic context even when no direct entity match exists. The combined score is:
 \begin{equation}
 S_{\text{T2}} = .05 S_{\text{kp}} + .20 S_{\text{con}} + .25 S_{\text{PPR}} + .20 S_{\text{sem}} + .15 S_{\text{thm}} + .15 S_{\text{hier}}
 \end{equation}
@@ -293,7 +203,7 @@ where $k=60$ and source weights are $w_{T1}=1.2$, $w_{T2}=0.7$, $w_{KG}=1.0$. Tr
 
 \subsection{Experimental Setup}
 
-\textbf{Dataset.} 18 Vietnamese documents across three domains: (1)~\textit{Enterprise law}: Law~59/2020/QH14 + 9~decrees, 77~chapters, 840~articles; (2)~\textit{Traffic safety law}: Law~36/2024/QH15 + 2~penalty decrees; (3)~\textit{Education regulation}: 5~postgraduate regulation documents from UIT/VNUHCM, 109~articles covering enrollment, degree requirements, and thesis procedures. Total: 949~articles. Evaluation: 530 expert-annotated questions (197~enterprise, 203~traffic, 130~education; 1--8 relevant articles each, avg.~2.3) from legal platforms LuatVietnam and ThuVienPhapLuat (legal) and university regulation portals (education).
+\textbf{Dataset.} We evaluate on 18 Vietnamese documents spanning three domains. The \textit{enterprise law} corpus consists of Law~59/2020/QH14 together with 9~implementing decrees, totaling 77~chapters and 840~articles. The \textit{traffic safety law} corpus includes Law~36/2024/QH15 and 2~penalty decrees. The \textit{education regulation} corpus comprises 5~postgraduate regulation documents from UIT and VNUHCM, covering 109~articles on enrollment, degree requirements, and thesis procedures. Across all domains the corpus contains 949~articles. For evaluation, we collected 530 expert-annotated questions (197~enterprise, 203~traffic, 130~education), each mapped to 1--8 relevant articles (avg.~2.3), drawn from the legal platforms LuatVietnam and ThuVienPhapLuat and from university regulation portals.
 
 \textbf{Knowledge graph statistics.} Table~\ref{tab:kg-stats} summarizes the constructed knowledge graph.
 
@@ -325,7 +235,7 @@ Other (9 types) & 1,450 & Other (52 types) & 2,506 & & \\
 
 \subsection{Main Results}
 
-Table~\ref{tab:main-results} presents Hit@$k$ performance on the legal domain (400 questions).
+We first evaluate all systems on the combined legal benchmark of 400 questions covering both enterprise and traffic law. Table~\ref{tab:main-results} reports Hit@$k$ at multiple cutoffs alongside MRR.
 
 \begin{table}[H]
 \centering\footnotesize
@@ -354,7 +264,7 @@ Our 3-Tier system achieves 92.2\% Hit@10 (MRR 0.603), outperforming PageIndex by
 
 \subsection{Multi-Domain Performance}
 
-Table~\ref{tab:domain-results} compares per-domain Hit@10 across all methods.
+To understand how retrieval difficulty varies across legal sub-domains, we break the same 400 legal questions into enterprise and traffic subsets and add the education domain as a generalization test. Table~\ref{tab:domain-results} compares per-domain Hit@10 across all methods.
 
 \begin{table}[H]
 \centering\footnotesize
@@ -382,7 +292,7 @@ Our system outperforms all baselines across all three domains. Traffic law achie
 
 \subsection{Cross-Domain Generalization: Education}
 
-Table~\ref{tab:edu-results} presents full results on the education domain (130 questions, 5 documents), demonstrating generalization beyond legal text.
+A natural question is whether an architecture designed for legal text transfers to other hierarchically structured documents. We test this on 130 postgraduate education questions drawn from 5 university regulation documents, applying the same pipeline, parameters, and RRF weights without any domain-specific adaptation. Table~\ref{tab:edu-results} reports the results.
 
 \begin{table}[H]
 \centering\footnotesize
@@ -414,7 +324,7 @@ On the legal domain, Hit@10 ranges from 0\% (household business, 4 queries) to 1
 
 \subsubsection{Qualitative and Error Analysis}
 
-Two examples illustrate how the tiers cooperate. (1)~\textit{Multi-hop}: ``If a member borrows money to meet charter capital and later withdraws it, what are the penalties?''. Tier~1 reaches Art.\,47 (member obligations); PPR then walks \textit{requires} edges from ``charter capital'' to Art.\,16\,Cl.\,5 (prohibited acts); RRF places both in top~5. (2)~\textit{Cross-chapter}: ``A partner contributed a house worth 1\,bn VND, now worth 1.5\,bn, can they withdraw it?''. Tier~1 reaches Art.\,178--180 (partnership rules); PPR adds Art.\,186 (capital transfer) via \textit{condition\_for} edges. Neither example is answered by any baseline at Hit@30.
+Two examples illustrate how the tiers cooperate. In a \textit{multi-hop} scenario, the query ``If a member borrows money to meet charter capital and later withdraws it, what are the penalties?'' requires linking two concepts across chapters. Tier~1 reaches Art.\,47 (member obligations) through tree traversal, while PPR walks \textit{requires} edges from the ``charter capital'' entity to Art.\,16\,Cl.\,5 (prohibited acts) in a different chapter; RRF then places both articles in the top~5. In a \textit{cross-chapter} scenario, the query ``A partner contributed a house worth 1\,bn VND, now worth 1.5\,bn, can they withdraw it?'' spans partnership rules and capital transfer provisions. Tier~1 reaches Art.\,178--180 (partnership rules), while PPR adds Art.\,186 (capital transfer) via \textit{condition\_for} edges. Neither query is answered by any baseline at Hit@30, confirming that multi-tier cooperation is essential for complex legal reasoning.
 
 Of the 31 missed queries (7.8\%), 27 are enterprise and only 4 are traffic. The primary failure modes: 6 stem from company establishment queries requiring articles across multiple decrees (31.6\% miss rate in this category), 4 concern household business registration (100\% miss rate, as governing articles lie in decrees outside our primary corpus), and 3 involve legal representative conditions spanning multiple chapters. An additional 10 queries are borderline misses that appear at Hit@20 but not Hit@10. Queries with more than 2 expected articles account for 14 of the 31 misses, confirming that multi-article retrieval remains the hardest sub-problem.
 

@@ -1,0 +1,85 @@
+---
+config:
+  theme: neutral
+  flowchart:
+    nodeSpacing: 25
+    rankSpacing: 40
+    padding: 12
+    htmlLabels: true
+    curve: basis
+    subGraphTitleMargin:
+      top: 6
+      bottom: 4
+  themeVariables:
+    fontSize: 14px
+    fontFamily: serif
+---
+flowchart LR
+    subgraph offline["<b>⚙ Offline Phase</b>"]
+        direction TB
+        DOC(["<b>📄</b> Legal Documents"])
+        PARSE["<b>📋</b> Document<br/>Parsing"]
+        EXTRACT["<b>🤖</b> LLM Entity &<br/>Relation Extraction"]
+        KGBUILD["<b>🔗</b> Incremental KG<br/>Builder"]
+        SUMMARY["<b>📝</b> Chapter & Article<br/>Summaries"]
+        KM[/"<b>💎 Knowledge Model <i>M</i></b><br/><i>(O, G, T, Φ)</i>"\]
+
+        DOC --> PARSE --> EXTRACT
+        EXTRACT --> KGBUILD --> KM
+        EXTRACT --> SUMMARY --> KM
+    end
+
+    subgraph online["<b>🔍 Online Phase</b>"]
+        direction TB
+        QUERY(["<b>💬</b> User Query"])
+        ANALYZER["<b>🎯</b> Stage 0:<br/>Query Analyzer"]
+
+        subgraph tier12[" "]
+            direction LR
+            subgraph t1["<b>Tier 1: Structural</b>"]
+                TREE["<b>🌲</b> LLM-Guided<br/>Tree Traversal"]
+            end
+            subgraph t2["<b>Tier 2: Semantic</b>"]
+                DUAL["<b>🔎</b> Dual-Level<br/>Retriever"]
+            end
+        end
+
+        subgraph t3["<b>Tier 3: Fusion</b>"]
+            BRIDGE["<b>🔀</b> Semantic Bridge<br/>(RRF + KG Expansion)"]
+        end
+
+        GEN["<b>✨</b> Answer<br/>Generation"]
+        ANSWER(["<b>✅</b> Legal Answer"])
+
+        QUERY --> ANALYZER
+        ANALYZER --> TREE
+        ANALYZER --> DUAL
+        TREE --> BRIDGE
+        DUAL --> BRIDGE
+        BRIDGE --> GEN --> ANSWER
+    end
+
+    KM -. "<i>T</i>" .-> TREE
+    KM -. "<i>G</i>" .-> DUAL
+    KM -. "<i>G</i>" .-> BRIDGE
+
+    style offline fill:#fafafa,stroke:#888,stroke-dasharray: 5 5,stroke-width:2px
+    style online fill:#fafafa,stroke:#888,stroke-dasharray: 5 5,stroke-width:2px
+    style tier12 fill:none,stroke:none
+    style t1 fill:#e8f5e9,stroke:#66bb6a,stroke-width:1.5px
+    style t2 fill:#e3f2fd,stroke:#42a5f5,stroke-width:1.5px
+    style t3 fill:#fff3e0,stroke:#ffa726,stroke-width:1.5px
+
+    style DOC fill:#fff9c4,stroke:#f9a825,stroke-width:1.5px
+    style QUERY fill:#fff9c4,stroke:#f9a825,stroke-width:1.5px
+    style ANSWER fill:#c8e6c9,stroke:#43a047,stroke-width:1.5px
+    style KM fill:#e1bee7,stroke:#8e24aa,stroke-width:2px
+    style GEN fill:#e1bee7,stroke:#8e24aa,stroke-width:1.5px
+    style PARSE fill:#e3f2fd,stroke:#42a5f5
+    style EXTRACT fill:#e3f2fd,stroke:#42a5f5
+    style KGBUILD fill:#e8f5e9,stroke:#66bb6a
+    style SUMMARY fill:#e8f5e9,stroke:#66bb6a
+    style ANALYZER fill:#e3f2fd,stroke:#42a5f5
+    style TREE fill:#e8f5e9,stroke:#66bb6a
+    style DUAL fill:#e3f2fd,stroke:#42a5f5
+    style BRIDGE fill:#fff3e0,stroke:#ffa726,stroke-width:1.5px
