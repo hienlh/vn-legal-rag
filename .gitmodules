@@ -6,4 +6,4 @@
 	url = https://github.com/VectifyAI/PageIndex.git
 [submodule "baselines/raptor"]
 	path = baselines/raptor
-	url = https://github.com/parthsarthi03/raptor.git
+	url = https://github.com/hienlh/raptor.git
