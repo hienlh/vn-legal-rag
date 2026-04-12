@@ -112,3 +112,19 @@ nohup.out
 
 # LLM cache (large, regenerable)
 data/education/llm_cache.db
+
+# Education domain DB (regenerable)
+data/edu_legal_docs.db
+data/edu_legal_docs.db-shm
+data/edu_legal_docs.db-wal
+
+# Paper tooling (Mermaid/Puppeteer, local only)
+paper/node_modules/
+paper/package.json
+paper/package-lock.json
+paper/mermaid-puppeteer.json
+paper/icons/
+
+# LaTeX BibTeX intermediates
+paper/*.bbl
+paper/*.blg
