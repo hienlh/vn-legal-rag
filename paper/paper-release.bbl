@@ -1,0 +1,171 @@
+\begin{thebibliography}{10}
+
+\bibitem{r1}
+Patrick Lewis, Ethan Perez, Aleksandra Piktus, Fabio Petroni, Vladimir
+  Karpukhin, Naman Goyal, Heinrich K{\"u}ttler, Mike Lewis, Wen-tau Yih, Tim
+  Rockt{\"a}schel, Sebastian Riedel, and Douwe Kiela.
+\newblock Retrieval-augmented generation for knowledge-intensive {NLP} tasks.
+\newblock In {\em Advances in Neural Information Processing Systems 33
+  (NeurIPS)}, pages 9459--9474, 2020.
+
+\bibitem{r2}
+Nils Reimers and Iryna Gurevych.
+\newblock Sentence-{BERT}: Sentence embeddings using siamese {BERT}-networks.
+\newblock In {\em Proceedings of the 2019 Conference on Empirical Methods in
+  Natural Language Processing (EMNLP)}, pages 3982--3992, 2019.
+
+\bibitem{r4}
+Wenqi Fan, Yujuan Ding, Liangbo Ning, Shijie Wang, Hengyun Li, Dawei Yin,
+  Tat-Seng Chua, and Qing Li.
+\newblock A survey on {RAG} meeting {LLMs}: Towards retrieval-augmented large
+  language models.
+\newblock In {\em Proceedings of the 30th ACM SIGKDD Conference on Knowledge
+  Discovery and Data Mining (KDD)}, pages 6491--6501, 2024.
+
+\bibitem{r5}
+Zirui Guo et~al.
+\newblock {LightRAG}: Simple and fast retrieval-augmented generation.
+\newblock In {\em Proceedings of the 2025 Conference on Empirical Methods in
+  Natural Language Processing (EMNLP)}, 2025.
+
+\bibitem{r6}
+Darren Edge, Ha~Trinh, Newman Cheng, Joshua Bradley, Alex Chao, Apurva Mody,
+  Steven Truitt, and Jonathan Larson.
+\newblock From local to global: A graph {RAG} approach to query-focused
+  summarization.
+\newblock Technical report, Microsoft Research, 2024.
+
+\bibitem{r29}
+Parth Sarthi, Salman Abdullah, Aditi Tuli, Shubh Khanna, Anna Goldie, and
+  Christopher~D. Manning.
+\newblock {RAPTOR}: Recursive abstractive processing for tree-organized
+  retrieval.
+\newblock In {\em International Conference on Learning Representations (ICLR)},
+  2024.
+
+\bibitem{r7}
+Mingtian Zhang, Yu~Tang, and {PageIndex Team}.
+\newblock {PageIndex}: Next-generation vectorless, reasoning-based {RAG}.
+\newblock {\em PageIndex Blog}, September 2025.
+\newblock \url{https://pageindex.ai/blog/pageindex-intro}.
+
+\bibitem{r8}
+Thi Thanh~Sang Nguyen, Hoang~Dung Nguyen, Van~Dung Pham, Duc~Thin Tran, and Ali
+  Selamat.
+\newblock Legal-onto: An ontology-based model for representing the knowledge of
+  a legal document.
+\newblock In {\em Proceedings of the 17th International Conference on
+  Evaluation of Novel Approaches to Software Engineering (ENASE)}, pages
+  426--434, 2022.
+
+\bibitem{r9}
+Giovanni Sartor et~al.
+\newblock {\em Approaches to Legal Ontologies: Theories, Domains,
+  Methodologies}.
+\newblock Springer, Dordrecht, 2011.
+
+\bibitem{r10}
+Vladimir Karpukhin, Barlas O{\u{g}}uz, Sewon Min, Patrick Lewis, Ledell Wu,
+  Sergey Edunov, Danqi Chen, and Wen-tau Yih.
+\newblock Dense passage retrieval for open-domain question answering.
+\newblock In {\em Proceedings of the 2020 Conference on Empirical Methods in
+  Natural Language Processing (EMNLP)}, pages 6769--6781, 2020.
+
+\bibitem{r11}
+Akari Asai, Zeqiu Wu, Yizhong Wang, Avirup Sil, and Hannaneh Hajishirzi.
+\newblock Self-{RAG}: Learning to retrieve, generate, and critique through
+  self-reflection.
+\newblock In {\em Proceedings of the International Conference on Learning
+  Representations (ICLR)}, 2024.
+
+\bibitem{r13}
+Luyu Gao, Xueguang Ma, Jimmy Lin, and Jamie Callan.
+\newblock Precise zero-shot dense retrieval without relevance labels.
+\newblock In {\em Proceedings of the 61st Annual Meeting of the Association for
+  Computational Linguistics (ACL)}, pages 1762--1777, 2023.
+
+\bibitem{r16}
+David~F. Gleich.
+\newblock {PageRank} beyond the web.
+\newblock {\em SIAM Review}, 57(3):321--363, 2015.
+
+\bibitem{r17}
+Glen Jeh and Jennifer Widom.
+\newblock Scaling personalized web search.
+\newblock In {\em Proceedings of the 12th International Conference on World
+  Wide Web (WWW)}, pages 271--279. ACM, 2003.
+
+\bibitem{r18}
+Stephen Robertson and Hugo Zaragoza.
+\newblock The probabilistic relevance framework: {BM25} and beyond.
+\newblock {\em Foundations and Trends in Information Retrieval}, 3(4):333--389,
+  2009.
+
+\bibitem{r19}
+Christopher~D. Manning, Prabhakar Raghavan, and Hinrich Sch{\"u}tze.
+\newblock {\em Introduction to Information Retrieval}.
+\newblock Cambridge University Press, 2008.
+
+\bibitem{r20}
+Ilias Chalkidis, Manos Fergadiotis, Prodromos Malakasiotis, Nikolaos Aletras,
+  and Ion Androutsopoulos.
+\newblock {LEGAL-BERT}: The muppets straight out of law school.
+\newblock In {\em Findings of the Association for Computational Linguistics:
+  EMNLP 2020}, pages 2898--2904, 2020.
+
+\bibitem{r21}
+Nhon~V. Do, Hoang~Dung Nguyen, and Ali Selamat.
+\newblock Knowledge-based model of expert systems using rela-model.
+\newblock {\em International Journal of Software Engineering and Knowledge
+  Engineering}, 28(8):1047--1090, 2018.
+
+\bibitem{r22}
+Dat~Quoc Nguyen and Anh~Tuan Nguyen.
+\newblock {PhoBERT}: Pre-trained language models for {Vietnamese}.
+\newblock In {\em Findings of the Association for Computational Linguistics:
+  EMNLP 2020}, pages 1037--1042, 2020.
+
+\bibitem{r23}
+Thanh Vu, Dat~Quoc Nguyen, Dai~Quoc Nguyen, Mark Dras, and Mark Johnson.
+\newblock {VnCoreNLP}: A {Vietnamese} natural language processing toolkit.
+\newblock In {\em Proceedings of the 2018 Conference of the North American
+  Chapter of the Association for Computational Linguistics: Demonstrations
+  (NAACL)}, pages 56--60, 2018.
+
+\bibitem{r24}
+Hung Ngo, Thi Nguyen, Dung Nguyen, and Minh Pham.
+\newblock {AimeLaw} at {ALQAC} 2021: Enriching neural network models with
+  legal-domain knowledge.
+\newblock In {\em Proceedings of the 13th International Conference on Knowledge
+  and Systems Engineering (KSE)}. IEEE, 2021.
+
+\bibitem{r25}
+Jacob Devlin, Ming-Wei Chang, Kenton Lee, and Kristina Toutanova.
+\newblock {BERT}: Pre-training of deep bidirectional transformers for language
+  understanding.
+\newblock In {\em Proceedings of the 2019 Conference of the North American
+  Chapter of the Association for Computational Linguistics: Human Language
+  Technologies (NAACL-HLT)}, pages 4171--4186, 2019.
+
+\bibitem{r26}
+Haoxi Zhong, Chaojun Xiao, Cunchao Tu, Tianyang Zhang, Zhiyuan Liu, and Maosong
+  Sun.
+\newblock How does {NLP} benefit legal system: A summary of legal artificial
+  intelligence.
+\newblock In {\em Proceedings of the 58th Annual Meeting of the Association for
+  Computational Linguistics (ACL)}, pages 5218--5230, 2020.
+
+\bibitem{r27}
+Jinqi Lai, Wensheng Gan, Jiayang Wu, Zhenlian Qi, and Philip~S. Yu.
+\newblock Large language models in law: A survey.
+\newblock {\em AI Open}, 5:181--196, 2024.
+
+\bibitem{r28}
+Gordon~V. Cormack, Charles~L.A. Clarke, and Stefan Buettcher.
+\newblock Reciprocal rank fusion outperforms condorcet and individual rank
+  learning methods.
+\newblock In {\em Proceedings of the 32nd International ACM SIGIR Conference on
+  Research and Development in Information Retrieval (SIGIR)}, pages 758--759,
+  2009.
+
+\end{thebibliography}
