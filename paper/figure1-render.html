@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Times New Roman', Georgia, serif; background: white; }
+  .diagram { display: flex; gap: 60px; padding: 20px; align-items: stretch; }
+
+  .phase {
+    border: 2px dashed #999;
+    border-radius: 12px;
+    padding: 16px;
+    background: #fafafa;
+    position: relative;
+  }
+  .phase-title {
+    position: absolute;
+    top: -12px;
+    left: 20px;
+    background: #fafafa;
+    padding: 0 8px;
+    font-weight: bold;
+    font-size: 13px;
+    color: #555;
+  }
+
+  .offline { flex: 0 0 340px; }
+  .online { flex: 0 1 780px; }
+
+  .node {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 14px;
+    border-radius: 8px;
+    border: 1.5px solid;
+    font-size: 12.5px;
+    line-height: 1.3;
+    white-space: nowrap;
+  }
+  .node svg { flex-shrink: 0; width: 22px; height: 22px; }
+
+  /* Color schemes */
+  .node-input { background: #fff9c4; border-color: #f9a825; }
+  .node-process-blue { background: #e3f2fd; border-color: #42a5f5; }
+  .node-process-green { background: #e8f5e9; border-color: #66bb6a; }
+  .node-core { background: #e1bee7; border-color: #8e24aa; border-width: 2px; }
+  .node-fusion { background: #fff3e0; border-color: #ffa726; }
+  .node-output { background: #c8e6c9; border-color: #43a047; }
+
+  .tier-box {
+    border: 1.5px solid;
+    border-radius: 8px;
+    padding: 10px;
+    position: relative;
+  }
+  .tier-label {
+    position: absolute;
+    top: -10px;
+    left: 12px;
+    font-size: 11px;
+    font-weight: bold;
+    padding: 0 6px;
+  }
+  .tier1 { border-color: #66bb6a; }
+  .tier1 .tier-label { background: #e8f5e9; color: #2e7d32; }
+  .tier2 { border-color: #42a5f5; }
+  .tier2 .tier-label { background: #e3f2fd; color: #1565c0; }
+  .tier3 { border-color: #ffa726; }
+  .tier3 .tier-label { background: #fff3e0; color: #e65100; }
+
+  /* Arrows */
+  .arrow-down { display: flex; justify-content: center; padding: 4px 0; color: #666; font-size: 16px; }
+  .arrow-right { color: #666; font-size: 16px; padding: 0 6px; display: flex; align-items: center; }
+
+  /* Layout helpers */
+  .flow-col { display: flex; flex-direction: column; gap: 6px; align-items: center; }
+  .flow-row { display: flex; gap: 8px; align-items: center; justify-content: center; }
+  .split-row { display: flex; gap: 12px; justify-content: center; }
+
+  /* Dotted connector for KM to Online */
+  .connector-label {
+    font-size: 11px;
+    font-style: italic;
+    color: #8e24aa;
+    text-align: center;
+    padding: 2px 0;
+  }
+
+  .dashed-line {
+    border-left: 2px dashed #8e24aa;
+    height: 20px;
+    margin: 0 auto;
+    width: 0;
+  }
+  .dashed-line-h {
+    border-top: 2px dashed #8e24aa;
+    width: 40px;
+    height: 0;
+  }
+
+  svg.icon { fill: currentColor; }
+  .node-input svg { color: #f57f17; }
+  .node-process-blue svg { color: #1565c0; }
+  .node-process-green svg { color: #2e7d32; }
+  .node-core svg { color: #6a1b9a; }
+  .node-fusion svg { color: #e65100; }
+  .node-output svg { color: #2e7d32; }
+</style>
+</head>
+<body>
+<div class="diagram">
+  <!-- OFFLINE PHASE -->
+  <div class="phase offline">
+    <div class="phase-title">⚙ Offline Phase</div>
+    <div class="flow-col" style="padding-top: 10px;">
+
+      <div class="node node-input">
+        <svg viewBox="0 0 24 24"><path fill="currentColor" d="M6 2a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm0 2h7v5h5v11H6zm2 8v2h8v-2zm0 4v2h5v-2z"/></svg>
+        <span><b>Legal Documents</b></span>
+      </div>
+      <div class="arrow-down">▼</div>
+
+      <div class="node node-process-blue">
+        <svg viewBox="0 0 24 24"><path fill="currentColor" d="M12 13H7v5h5v2H5V10h2v1h5zM8 4v2H4V4zm2-2H2v6h8zm10 9v2h-4v-2zm2-2h-8v6h8zm-2 9v2h-4v-2zm2-2h-8v6h8z"/></svg>
+        <span>Document Parsing</span>
+      </div>
+      <div class="arrow-down">▼</div>
+
+      <div class="node node-process-blue">
+        <svg viewBox="0 0 24 24"><path fill="currentColor" d="M17.5 15.5c0 1.11-.89 2-2 2s-2-.89-2-2s.9-2 2-2s2 .9 2 2m-9-2c-1.1 0-2 .9-2 2s.9 2 2 2s2-.89 2-2s-.89-2-2-2M23 15v3c0 .55-.45 1-1 1h-1v1c0 1.11-.89 2-2 2H5a2 2 0 0 1-2-2v-1H2c-.55 0-1-.45-1-1v-3c0-.55.45-1 1-1h1c0-3.87 3.13-7 7-7h1V5.73c-.6-.34-1-.99-1-1.73c0-1.1.9-2 2-2s2 .9 2 2c0 .74-.4 1.39-1 1.73V7h1c3.87 0 7 3.13 7 7h1c.55 0 1 .45 1 1m-2 1h-2v-2c0-2.76-2.24-5-5-5h-4c-2.76 0-5 2.24-5 5v2H3v1h2v3h14v-3h2z"/></svg>
+        <span>LLM Entity &amp;<br/>Relation Extraction</span>
+      </div>
+      <div class="arrow-down">▼</div>
+
+      <div class="split-row">
+        <div class="flow-col">
+          <div class="node node-process-green" style="font-size:11.5px;">
+            <svg viewBox="0 0 24 24"><path fill="currentColor" d="M19.5 17c-.14 0-.26 0-.39.04L17.5 13.8c.45-.45.75-1.09.75-1.8a2.5 2.5 0 0 0-2.5-2.5c-.14 0-.25 0-.4.04L13.74 6.3c.47-.46.76-1.09.76-1.8a2.5 2.5 0 0 0-5 0c0 .7.29 1.34.76 1.79L8.65 9.54c-.15-.04-.26-.04-.4-.04a2.5 2.5 0 0 0-2.5 2.5c0 .71.29 1.34.75 1.79l-1.61 3.25C4.76 17 4.64 17 4.5 17a2.5 2.5 0 0 0 0 5A2.5 2.5 0 0 0 7 19.5c0-.7-.29-1.34-.76-1.79l1.62-3.25c.14.04.26.04.39.04s.25 0 .38-.04l1.63 3.25c-.47.45-.76 1.09-.76 1.79a2.5 2.5 0 0 0 5 0A2.5 2.5 0 0 0 12 17c-.13 0-.26 0-.39.04L10 13.8c.45-.45.75-1.09.75-1.8c0-.7-.29-1.33-.75-1.79l1.61-3.25c.13.04.26.04.39.04s.26 0 .39-.04L14 10.21a2.5 2.5 0 0 0 1.75 4.29c.13 0 .25 0 .38-.04l1.63 3.25c-.47.45-.76 1.09-.76 1.79a2.5 2.5 0 0 0 5 0a2.5 2.5 0 0 0-2.5-2.5"/></svg>
+            <span>Incremental<br/>KG Builder</span>
+          </div>
+        </div>
+        <div class="flow-col">
+          <div class="node node-process-green" style="font-size:11.5px;">
+            <svg viewBox="0 0 24 24"><path fill="currentColor" d="M5 3c-1.11 0-2 .89-2 2v14c0 1.11.89 2 2 2h14c1.11 0 2-.89 2-2V5c0-1.11-.89-2-2-2zm0 2h14v14H5zm2 2v2h10V7zm0 4v2h10v-2zm0 4v2h7v-2z"/></svg>
+            <span>Chapter &amp;<br/>Article Summaries</span>
+          </div>
+        </div>
+      </div>
+      <div class="arrow-down">▼</div>
+
+      <div id="km" class="node node-core" style="padding: 12px 18px;">
+        <svg viewBox="0 0 24 24"><path fill="currentColor" d="M16 9h3l-5 7m-4-7h4l-2 8M5 9h3l2 7m5-12h2l2 3h-3m-5-3h2l1 3h-4M7 4h2L8 7H5m1-5L2 8l10 14L22 8l-4-6z"/></svg>
+        <span><b>Knowledge Representations</b><br/><i>Document Forest · Knowledge Graph · Ontology</i></span>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ONLINE PHASE -->
+  <div class="phase online">
+    <div class="phase-title">🔍 Online Phase</div>
+    <div class="flow-col" style="padding-top: 10px;">
+
+      <div class="node node-input">
+        <svg viewBox="0 0 24 24"><path fill="currentColor" d="M12 3C6.5 3 2 6.6 2 11c0 2.2 1.1 4.2 2.8 5.5c0 .6-.4 2.2-2.8 4.5c2.4-.1 4.6-1 6.5-2.5c1.1.3 2.3.5 3.5.5c5.5 0 10-3.6 10-8s-4.5-8-10-8m0 14c-4.4 0-8-2.7-8-6s3.6-6 8-6s8 2.7 8 6s-3.6 6-8 6m.2-10.5c-.9 0-1.6.2-2.1.5c-.6.4-.9 1-.8 1.7h2q0-.45.3-.6c.2-.1.4-.2.7-.2s.6.1.8.3s.3.4.3.7s-.1.5-.2.7c-.2.2-.4.4-.6.5c-.5.3-.9.6-1.1.8c-.4.3-.5.6-.5 1.1h2c0-.3.1-.5.1-.7c.1-.2.3-.3.5-.5c.5-.2.8-.5 1.1-.9s.4-.8.4-1.2c0-.7-.3-1.3-.8-1.7c-.4-.3-1.2-.5-2.1-.5M11 13v2h2v-2z"/></svg>
+        <span><b>User Query</b></span>
+      </div>
+      <div class="arrow-down">▼</div>
+
+      <div class="node node-process-blue">
+        <svg viewBox="0 0 24 24"><path fill="currentColor" d="M11 2v2.07A8 8 0 0 0 4.07 11H2v2h2.07A8 8 0 0 0 11 19.93V22h2v-2.07A8 8 0 0 0 19.93 13H22v-2h-2.07A8 8 0 0 0 13 4.07V2m-2 4.08V8h2V6.09c2.5.41 4.5 2.41 4.92 4.91H16v2h1.91c-.41 2.5-2.41 4.5-4.91 4.92V16h-2v1.91C8.5 17.5 6.5 15.5 6.08 13H8v-2H6.09C6.5 8.5 8.5 6.5 11 6.08M12 11a1 1 0 0 0-1 1a1 1 0 0 0 1 1a1 1 0 0 0 1-1a1 1 0 0 0-1-1"/></svg>
+        <span><b>Stage 0:</b> Query Analyzer<br/><small style="color:#666;">Intent + Type + Abbreviation + Entity</small></span>
+      </div>
+      <div class="arrow-down">▼</div>
+
+      <!-- Tier 1 and Tier 2 side by side -->
+      <div class="flow-row" style="gap: 16px; align-items: stretch; width: 100%;">
+
+        <div class="tier-box tier1" style="flex:1; min-width: 200px;">
+          <div class="tier-label">Tier 1: Structural</div>
+          <div class="flow-col" style="padding-top: 10px;">
+            <div id="tree" class="node node-process-green">
+              <svg viewBox="0 0 24 24"><path fill="currentColor" d="M3 3h6v4H3zm12 7h6v4h-6zm0 7h6v4h-6zm-2-4H7v5h6v2H5V9h2v2h6z"/></svg>
+              <span>LLM-Guided<br/>Tree Traversal</span>
+            </div>
+            <div style="font-size:10px; color:#666; text-align:center; line-height:1.3; padding: 2px 4px;">
+              Forest → Domain → Doc<br/>
+              Doc → Chapter → Article
+            </div>
+          </div>
+        </div>
+
+        <div class="tier-box tier2" style="flex:1; min-width: 200px;">
+          <div class="tier-label">Tier 2: Semantic</div>
+          <div class="flow-col" style="padding-top: 10px;">
+            <div id="dual" class="node node-process-blue">
+              <svg viewBox="0 0 24 24"><path fill="currentColor" d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5l-1.5 1.5l-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16A6.5 6.5 0 0 1 3 9.5A6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14S14 12 14 9.5S12 5 9.5 5"/></svg>
+              <span>Dual-Level<br/>Retriever</span>
+            </div>
+            <div style="font-size:10px; color:#666; text-align:center; line-height:1.3; padding: 2px 4px;">
+              Low: keyphrase + semantic + PPR<br/>
+              High: theme + concept hierarchy
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <div class="arrow-down">▼</div>
+
+      <!-- Tier 3 -->
+      <div class="tier-box tier3" style="width: 100%;">
+        <div class="tier-label">Tier 3: Fusion</div>
+        <div style="display: flex; justify-content: center; padding-top: 8px;">
+          <div id="bridge" class="node node-fusion">
+            <svg viewBox="0 0 24 24"><path fill="currentColor" d="m8 17l4-4h3.2c.4 1.2 1.5 2 2.8 2c1.7 0 3-1.3 3-3s-1.3-3-3-3c-1.3 0-2.4.8-2.8 2H12L8 7V3H3v5h3l4.2 4L6 16H3v5h5z"/></svg>
+            <span><b>Semantic Bridge</b> — RRF + KG Expansion<br/>
+            <small style="color:#666;">w<sub>T1</sub>=1.2, w<sub>T2</sub>=0.7, w<sub>KG</sub>=1.0, k=60</small></span>
+          </div>
+        </div>
+      </div>
+      <div class="arrow-down">▼</div>
+
+      <div class="flow-row">
+        <div class="node node-core">
+          <svg viewBox="0 0 24 24"><path fill="currentColor" d="m9 4l2.5 5.5L17 12l-5.5 2.5L9 20l-2.5-5.5L1 12l5.5-2.5zm0 4.83L8 11l-2.17 1L8 13l1 2.17L10 13l2.17-1L10 11zM19 9l-1.26-2.74L15 5l2.74-1.25L19 1l1.25 2.75L23 5l-2.75 1.26zm0 14l-1.26-2.74L15 19l2.74-1.25L19 15l1.25 2.75L23 19l-2.75 1.26z"/></svg>
+          <span>Answer Generation</span>
+        </div>
+        <div class="arrow-right">▶</div>
+        <div class="node node-output">
+          <svg viewBox="0 0 24 24"><path fill="currentColor" d="m2.3 20.28l9.6-9.6l-1.4-1.42l-.72.71a.996.996 0 0 1-1.41 0l-.71-.71a.996.996 0 0 1 0-1.41l5.66-5.66a.996.996 0 0 1 1.41 0l.71.71c.39.39.39 1.02 0 1.41l-.71.69l1.42 1.43a.996.996 0 0 1 1.41 0c.39.39.39 1.03 0 1.42l1.41 1.41l.71-.71c.39-.39 1.03-.39 1.42 0l.7.71c.39.39.39 1.03 0 1.42l-5.65 5.65c-.39.39-1.03.39-1.42 0l-.7-.7a.99.99 0 0 1 0-1.42l.7-.71l-1.41-1.41l-9.61 9.61a.996.996 0 0 1-1.41 0c-.39-.39-.39-1.03 0-1.42M20 19a2 2 0 0 1 2 2v1H12v-1a2 2 0 0 1 2-2z"/></svg>
+          <span><b>Legal Answer</b></span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<svg id="connectors" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none;">
+  <defs>
+    <marker id="arrowhead" viewBox="0 0 10 6" refX="9" refY="3" markerWidth="8" markerHeight="6" orient="auto">
+      <path d="M 0 0 L 10 3 L 0 6 z" fill="#8e24aa"/>
+    </marker>
+    <marker id="arrowhead-down" viewBox="0 0 6 10" refX="3" refY="9" markerWidth="6" markerHeight="8" orient="0">
+      <path d="M 0 0 L 3 10 L 6 0 z" fill="#8e24aa"/>
+    </marker>
+  </defs>
+</svg>
+<script>
+  // Draw dashed connectors from KM to online components
+  const km = document.getElementById('km');
+  const tree = document.getElementById('tree');
+  const dual = document.getElementById('dual');
+  const bridge = document.getElementById('bridge');
+  const svg = document.getElementById('connectors');
+
+  function rect(el) { return el.getBoundingClientRect(); }
+  function cy(el) { const r = rect(el); return r.top + r.height / 2; }
+  function cx(el) { const r = rect(el); return r.left + r.width / 2; }
+
+  function drawPath(d, marker) {
+    const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+    path.setAttribute('d', d);
+    path.setAttribute('stroke', '#8e24aa');
+    path.setAttribute('stroke-width', '1.5');
+    path.setAttribute('stroke-dasharray', '6 4');
+    path.setAttribute('fill', 'none');
+    if (marker) path.setAttribute('marker-end', `url(#${marker})`);
+    svg.appendChild(path);
+    return path;
+  }
+
+  function drawLabel(x, y, text) {
+    const t = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+    t.setAttribute('x', x);
+    t.setAttribute('y', y);
+    t.setAttribute('fill', '#8e24aa');
+    t.setAttribute('font-size', '11');
+    t.setAttribute('font-style', 'italic');
+    t.setAttribute('font-family', 'serif');
+    t.setAttribute('text-anchor', 'middle');
+    t.textContent = text;
+    // Measure text and add white background
+    svg.appendChild(t);
+    const bbox = t.getBBox();
+    const bg = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+    bg.setAttribute('x', bbox.x - 2);
+    bg.setAttribute('y', bbox.y - 1);
+    bg.setAttribute('width', bbox.width + 4);
+    bg.setAttribute('height', bbox.height + 2);
+    bg.setAttribute('fill', 'white');
+    svg.insertBefore(bg, t);
+  }
+
+  const kmRect = rect(km);
+  const treeRect = rect(tree);
+  const dualRect = rect(dual);
+  const bridgeRect = rect(bridge);
+
+  // Gap center X between offline and online phases
+  const offlineRight = rect(km.closest('.phase')).right;
+  const onlineLeft = rect(tree.closest('.phase')).left;
+  const gapX = (offlineRight + onlineLeft) / 2;
+
+  // === KM → Tree (Document Forest) — horizontal arrow ===
+  const tY = cy(tree);
+  const kmStartT = { x: kmRect.right + 4, y: cy(km) - 10 };
+  drawPath(
+    `M ${kmStartT.x} ${kmStartT.y} ` +
+    `L ${gapX - 8} ${kmStartT.y} ` +
+    `L ${gapX - 8} ${tY} ` +
+    `L ${treeRect.left - 4} ${tY}`,
+    'arrowhead'
+  );
+  drawLabel((onlineLeft + treeRect.left) / 2, tY - 6, 'Document Forest');
+
+  // === KM → Dual (Knowledge Graph) — enters Dual from top, downward arrow ===
+  const dY = cy(dual);
+  const aboveTiersY = treeRect.top - 32;
+  const dualCX = cx(dual);
+  const kmStartD = { x: kmRect.right + 4, y: cy(km) - 2 };
+  const turnX = gapX + 2;
+  drawPath(
+    `M ${kmStartD.x} ${kmStartD.y} ` +
+    `L ${turnX} ${kmStartD.y} ` +
+    `L ${turnX} ${aboveTiersY} ` +
+    `L ${dualCX} ${aboveTiersY} ` +
+    `L ${dualCX} ${dualRect.top - 4}`,
+    'arrowhead-down'
+  );
+  drawLabel(onlineLeft + 50, aboveTiersY - 5, 'Knowledge Graph');
+
+  // === KM → Bridge (Knowledge Graph) — exit right, vertical turn in gap ===
+  const bY = cy(bridge);
+  const kmStartB = { x: kmRect.right + 4, y: cy(km) + 10 };
+  const bridgeTurnX = gapX + 12;
+  drawPath(
+    `M ${kmStartB.x} ${kmStartB.y} ` +
+    `L ${bridgeTurnX} ${kmStartB.y} ` +
+    `L ${bridgeTurnX} ${bY} ` +
+    `L ${bridgeRect.left - 4} ${bY}`,
+    'arrowhead'
+  );
+  // Label inside Tier 3, on the horizontal segment
+  const tier3Left = onlineLeft + 16;
+  drawLabel((tier3Left + bridgeRect.left) / 2, bY - 6, 'Knowledge Graph');
+</script>
+
+</body>
+</html>

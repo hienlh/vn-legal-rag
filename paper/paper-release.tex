@@ -49,7 +49,7 @@ and
 \address[B]{School of Computer Science, University College Dublin, Ireland}
 
 \begin{abstract}
-Accurate legal question answering demands navigating hierarchical document structures, following cross-references, and multi-hop reasoning, capabilities that standard Retrieval-Augmented Generation (RAG) systems lack. Vietnamese legal text compounds this challenge through tonal ambiguity, domain-specific abbreviations, and rigid structural hierarchies. This paper presents a three-tier knowledge graph RAG architecture built on a formal knowledge model that integrates a domain ontology, a knowledge graph, and a document tree forest. Three retrieval tiers, LLM-guided tree traversal, dual-level semantic search with intent-aware Personalized PageRank, and Reciprocal Rank Fusion with knowledge graph expansion, operate over these representations. Evaluation on 530 expert-annotated questions across enterprise law, traffic safety law, and postgraduate education regulation shows that the proposed system retrieves at least one correct article in the top~10 results for 92.2\% of queries, outperforming the strongest baseline by 7.4\%. These results hold across all three domains without domain-specific tuning. To the best of the authors' knowledge, no prior work combines ontology-enhanced knowledge graphs with multi-tier retrieval for Vietnamese legal question answering.
+Accurate legal question answering demands navigating hierarchical document structures, following cross-references, and multi-hop reasoning, capabilities that standard Retrieval-Augmented Generation (RAG) systems lack. Vietnamese legal text compounds this challenge through tonal ambiguity, domain-specific abbreviations, and rigid structural hierarchies. This paper presents a three-tier knowledge graph RAG architecture that integrates a domain ontology, a knowledge graph, and a document tree forest. Three retrieval tiers, LLM-guided tree traversal, dual-level semantic search with intent-aware Personalized PageRank, and Reciprocal Rank Fusion with knowledge graph expansion, operate over these representations. Evaluation on 530 expert-annotated questions across enterprise law, traffic safety law, and postgraduate education regulation shows that the proposed system retrieves at least one correct article in the top~10 results for 92.2\% of queries, outperforming the strongest baseline by 7.4\%. These results hold across all three domains without domain-specific tuning. To the best of the authors' knowledge, no prior work combines ontology-enhanced knowledge graphs with multi-tier retrieval for Vietnamese legal question answering.
 \end{abstract}
 
 \begin{keyword}
@@ -86,13 +86,13 @@ No existing system combines ontological knowledge, graph-based retrieval, and st
 
 \subsection{Problem Formulation}
 
-Given a legal corpus $\mathbf{D} = \{d_1, \ldots, d_m\}$ with hierarchically organized articles and a query $q$, the task is to retrieve a ranked list $A^* = [a_1^*, \ldots, a_k^*]$ of relevant articles. The retrieval is defined as $A^* = \Phi(q, \mathbf{M})$ where the knowledge model $\mathbf{M} = (\mathbf{O}, \mathbf{G}, \mathbf{T}, \Phi)$ integrates ontology $\mathbf{O}$ (terminological), knowledge graph $\mathbf{G}$ (assertional), document forest $\mathbf{T}$ (structural), and retrieval functions $\Phi$.
+Given a legal corpus of $m$ documents, each with a rigid hierarchy (Document $\to$ Chapter $\to$ Section $\to$ Article $\to$ Clause $\to$ Point), and a user query $q$, the task is to retrieve a ranked list of the $k$ most relevant articles. The retrieval must operate at \textit{article-level} granularity, as Vietnamese legal practice requires citing specific articles rather than text passages. This differs from standard passage retrieval in two aspects: (1)~the search space is a forest of hierarchical trees rather than a flat document collection, and (2)~answering a query may require multi-hop reasoning across articles in different chapters or documents linked by cross-references.
 
 \subsection{System Overview}
 
-Figure~\ref{fig:architecture} illustrates the architecture of the proposed three-tier retrieval system. The offline phase constructs the knowledge model through parsing, extraction, and summary generation. The online phase processes queries via query analysis (Stage~0) followed by three retrieval tiers leveraging the document forest and knowledge graph.
+Figure~\ref{fig:architecture} illustrates the architecture, which separates into an offline phase (left) and an online phase (right). The offline phase parses legal documents into hierarchical trees, extracts entities and relations into a knowledge graph, and generates summaries for each structural level. The online phase processes each query through four stages: query analysis (Stage~0), LLM-guided tree traversal (Tier~1), dual-level semantic retrieval over the knowledge graph (Tier~2), and fusion with knowledge graph expansion (Tier~3).
 
-% Figure 1: System Architecture (generated from figure1-architecture.mmd via mermaid-cli)
+% Figure 1: System Architecture (rendered from figure1-render.html via Puppeteer)
 \begin{figure}[H]
 \centering
 \includegraphics[width=\textwidth]{figure1-architecture.pdf}
@@ -100,57 +100,36 @@ Figure~\ref{fig:architecture} illustrates the architecture of the proposed three
 \label{fig:architecture}
 \end{figure}
 
-\subsection{Knowledge Representation Model}
+\subsection{Offline Phase: Knowledge Construction}
 
-The model extends Legal-Onto \cite{r8}, which defines $K = (C, R, \textit{RULES}) + (\textit{Key}, \textit{Rel}, \textit{weight})$ integrating the Rela-model \cite{r21} with conceptual graphs. This extension separates terminological from assertional knowledge, adds structural representation, and replaces manual rules with LLM-based retrieval.
+The offline phase builds three knowledge representations from the raw corpus, following knowledge engineering practice \cite{r9}.
 
-\begin{definition}[Legal Knowledge Model]
-Given a legal corpus $\mathbf{D}$, the knowledge model is:
-\begin{equation}
-\mathbf{M} = (\mathbf{O}, \mathbf{G}, \mathbf{T}, \Phi)
-\end{equation}
-where $\mathbf{O}$ is a domain ontology, $\mathbf{G}$ is a knowledge graph, $\mathbf{T}$ is a document forest, and $\Phi$ is a set of retrieval functions.
-\end{definition}
+\textbf{Document forest.} Each legal document is parsed into a rooted tree with six hierarchical levels. Cross-reference edges between documents are extracted, forming a forest that spans multiple legal domains. Documents are organized into domain groups (enterprise law, traffic safety, education regulation) to enable domain-aware routing during retrieval.
 
-The ontology $\mathbf{O} = (C, P, H, L)$ represents terminological knowledge: OWL classes for legal entity types ($C$), object and datatype properties ($P$), a 4-level class hierarchy ($H$), and Vietnamese label mappings ($L$). This separates the TBox from Legal-Onto's flat concept set, enabling class hierarchy traversal for query expansion.
+\textbf{Knowledge graph.} Entity-relation extraction is performed via one LLM call per article, producing evidence-grounded triples with confidence scores. The resulting graph contains 14 entity types (Action, Legal Term, Organization, Legal Reference, etc.) linked by 56 relation types (\textit{requires}, \textit{applies\_to}, \textit{has\_authority}, \textit{references}, etc.). Vietnamese slug normalization and 4-pass deduplication ensure consistency across documents. Selected predicates are declared symmetric or transitive to support inference during graph traversal. Construction is semi-automatic: after LLM extraction, evaluation on a development set revealed missing cross-document references; a domain expert then added $\sim$130 relations linking legal terms to governing articles across documents.
 
-The knowledge graph $\mathbf{G} = (E, R)$ represents assertional knowledge: entities with 14 types (Table~\ref{tab:kg-stats}) and confidence scores, linked by 56 predicate types with evidence text. Selected predicates are declared symmetric or transitive to support inference during PPR traversal. The ontology answers ``\textit{what kind of entity?}'' via taxonomy traversal, while the knowledge graph answers ``\textit{what rules apply?}'' by linking entities to governing articles.
+\textbf{Summaries.} Chapter-level and article-level summaries are generated for Tier~1 tree traversal, enabling the LLM to select relevant branches without reading full article text.
 
-\begin{definition}[Document Forest]
-The document forest $\mathbf{T} = \{T_1, \ldots, T_m\} \cup X$ represents structural knowledge. Each $T_i$ is a rooted tree with six levels (Document${}\to{}$\allowbreak Chapter${}\to{}$\allowbreak Section${}\to{}$\allowbreak Article${}\to{}$\allowbreak Clause${}\to{}$\allowbreak Point), and $X$ contains cross-reference edges between documents. The forest spans multiple legal domains, with documents organized into domain groups that enable domain-aware routing during retrieval.
-\end{definition}
-
-The retrieval functions $\Phi = \{\phi_0, \phi_1, \phi_2, \phi_3\}$ replace Legal-Onto's manual inference rules with LLM-based retrieval: $\phi_0\colon Q \to Q'$ (query analysis), $\phi_1\colon Q' \times \mathbf{T} \to 2^A$ (tree traversal), $\phi_2\colon Q' \times \mathbf{G} \to 2^A$ (semantic retrieval), and $\phi_3\colon 2^A \times 2^A \times \mathbf{G} \to A^*$ (RRF fusion). Each function is detailed in Section~\ref{sec:tiers}.
-
-\subsection{Knowledge Graph Construction}
-
-The offline phase builds the knowledge graph in four stages: (1)~document parsing into hierarchical trees forming the document forest; (2)~entity-relation extraction via one LLM call per article, producing evidence-grounded triples; (3)~incremental KG building with Vietnamese slug normalization and 4-pass deduplication across all documents; (4)~summary generation for Tier~1 traversal. Following knowledge engineering practice \cite{r9}, construction is semi-automatic: after LLM extraction, evaluation on a development set revealed missing cross-document references. A domain expert then added $\sim$130 relations (cross-document references and concept entities linking legal terms to governing articles). This evaluate-and-refine loop contributes to the accuracy reported in Section~\ref{sec:experiments}.
-
-Each query intent amplifies its most relevant relation types during PPR traversal, assigning weight 1.0 to primary relations (e.g., \textit{defines\_as} for Definition, \textit{has\_penalty} for Penalty) and 0.5 to others, with near-synonym relations receiving intermediate weights.
-
-\subsection{Three-Tier Retrieval}
+\subsection{Online Phase: Three-Tier Retrieval}
 \label{sec:tiers}
 
 \subsubsection{Stage 0: Query Analysis}
 
-The query analyzer performs: (1)~intent classification into six types (Penalty, Definition, Procedure, Requirement, Reference, General) via Vietnamese regex with LLM fallback; (2)~query type assignment among seven categories for downstream routing; (3)~abbreviation expansion (e.g., \textit{TNHH} $\to$ \textit{trach nhiem huu han}); and (4)~entity extraction of article references, law references, and legal keywords to seed retrieval.
+The query analyzer performs: (1)~intent classification into six types (Penalty, Definition, Procedure, Requirement, Reference, General) via Vietnamese regex with LLM fallback; (2)~abbreviation expansion (e.g., \textit{TNHH} $\to$ \textit{trach nhiem huu han}); and (3)~entity extraction of article references, law references, and legal keywords to seed retrieval. Each query intent amplifies its most relevant relation types during graph traversal (weight 1.0 for primary relations, 0.5 for others).
 
 \subsubsection{Tier 1: LLM-Guided Tree Traversal}
 
-Tier~1 navigates the document forest using LLM reasoning in three loops. Loop~0 (Forest$\to$Domain$\to$Document) first matches the query to a domain group using pre-computed domain keywords, then selects the top~5 documents within the matched domain. Loop~1 (Document$\to$Chapter) selects the top~8 chapters using summaries and keywords. Loop~2 (Chapter$\to$Article) identifies the top~7 articles from article summaries. General Provisions chapters are automatically included. Each loop produces a reasoning path for interpretable retrieval.
+Tier~1 navigates the document forest using LLM reasoning in three loops. Loop~0 (Forest$\to$Domain$\to$Document) matches the query to a domain group using pre-computed keywords, then selects the top~5 documents. Loop~1 (Document$\to$Chapter) selects the top~8 chapters using chapter summaries. Loop~2 (Chapter$\to$Article) identifies the top~7 articles from article summaries. General Provisions chapters are automatically included. Each loop produces a reasoning trace for interpretability.
 
 \subsubsection{Tier 2: Dual-Level Semantic Retrieval}
 
-Tier~2 performs hybrid semantic search over the knowledge graph with six scoring components at two levels. At the low level (entity-specific): keyphrase matching, query-entity cosine similarity, and intent-aware PPR. At the high level (conceptual): legal theme identification and concept hierarchy traversal, surfacing related articles even without direct entity matches. The combined score is:
-\begin{equation}
-S_{\text{T2}} = .05 S_{\text{kp}} + .20 S_{\text{con}} + .25 S_{\text{PPR}} + .20 S_{\text{sem}} + .15 S_{\text{thm}} + .15 S_{\text{hier}}
-\end{equation}
+Tier~2 performs hybrid semantic search over the knowledge graph at two levels. The \textit{low level} (entity-specific) combines keyphrase matching, query-entity cosine similarity, and intent-aware Personalized PageRank (PPR). The \textit{high level} (conceptual) identifies legal themes and traverses the ontology class hierarchy, surfacing related articles even without direct entity matches.
 
-The PPR component computes query-specific node importance on the knowledge graph:
+The PPR component computes query-specific node importance on the knowledge graph \cite{r19}:
 \begin{equation}
 \text{PPR}(v) = (1-\alpha) \sum_{u \in N(v)} \frac{w(u,v) \cdot \text{PPR}(u)}{d(u)} + \alpha \cdot p(v)
 \end{equation}
-where $\alpha=0.15$ is the teleport probability, $w(u,v)$ is the edge weight adjusted by query intent (Section~3.4), $d(u)$ is the weighted out-degree of $u$, and $p(v)$ is the personalization vector seeded from matched entities.
+where $\alpha=0.15$ is the teleport probability, $w(u,v)$ is the edge weight adjusted by query intent, $d(u)$ is the weighted out-degree, and $p(v)$ is the personalization vector seeded from matched entities.
 
 \subsubsection{Tier 3: Semantic Bridge (RRF Fusion)}
 
@@ -158,9 +137,24 @@ Tier~3 merges results from Tier~1 and Tier~2 using Reciprocal Rank Fusion \cite{
 \begin{equation}
 \text{RRF}(d) = \sum_{s \in \{T1, T2, KG\}} w_s \cdot \frac{1}{k + \text{rank}_s(d)}
 \end{equation}
-where $k=60$ and source weights are $w_{T1}=1.2$, $w_{T2}=0.7$, $w_{KG}=1.0$. Tree traversal receives the highest weight as it provides the most reliable structural signal; the gap between $w_{T1}$ and $w_{KG}$ allows dual-level retrieval and KG expansion to compensate when the LLM selects suboptimal chapters.
+where $k=60$ and source weights are $w_{T1}=1.2$, $w_{T2}=0.7$, $w_{KG}=1.0$. Tree traversal receives the highest weight as it provides the most reliable structural signal; the lower weights for Tier~2 and KG allow them to compensate when the LLM selects suboptimal chapters.
 
-After initial fusion, results are expanded through the knowledge graph's relation edges. Strong relations (\textit{references}, \textit{requires}, \textit{depends\_on}) are expanded both cross-chapter (up to 5 articles) and same-chapter (up to 2 articles), with a semantic relevance filter (cosine similarity $\geq 0.4$) to suppress noise. After RRF scoring, $\pm 2$ adjacent articles from each result are added with decay factor 0.7, as correct answers often lie in neighboring articles. Top-ranked articles are then passed to an LLM for answer generation.
+After fusion, results are expanded through the knowledge graph's relation edges. Strong relations (\textit{references}, \textit{requires}, \textit{depends\_on}) are expanded both cross-chapter (up to 5 articles) and same-chapter (up to 2 articles), with a semantic relevance filter (cosine similarity $\geq 0.4$) to suppress noise. Adjacent articles ($\pm 2$) from each result are added with decay factor 0.7, as correct answers often lie in neighboring articles. The final ranked list is passed to an LLM for answer generation.
+
+\section{Implementation}
+\label{sec:implementation}
+
+The system is implemented in Python~3.11 with the following technical choices.
+
+\textbf{Document parsing.} Custom regex parsers detect Vietnamese legal hierarchy markers (``Chuong'', ``Muc'', ``Dieu'', ``Khoan'', ``Diem'') and build the document forest. Cross-references between documents are extracted via pattern matching on article citations.
+
+\textbf{Summary generation.} Chapter-level and article-level summaries are generated via LLM (Claude~3.5~Haiku), producing keyword-rich descriptions that Tier~1 tree traversal uses for branch selection without reading full article text.
+
+\textbf{Knowledge graph construction.} Entity extraction and relation identification use Claude~3.5~Haiku\footnote{\url{https://www.anthropic.com/claude}} via the Anthropic API, with one LLM call per article. Vietnamese slug normalization handles tonal variations (e.g., ``cong ty'' with and without diacritics). Four deduplication passes merge equivalent entities across documents. The domain ontology defines 14 entity types using OWL classes with a 4-level hierarchy and Vietnamese label mappings.
+
+\textbf{Online query processing.} Tree traversal and query analysis use Claude Sonnet~4 via the Anthropic API. Sentence embeddings are computed with paraphrase-multilingual-MiniLM-L12-v2\footnote{\url{https://huggingface.co/sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2}}, a 384-dimensional multilingual model from the Sentence-Transformers library \cite{r2}. Vector similarity search uses FAISS\footnote{\url{https://github.com/facebookresearch/faiss}} for efficient dense retrieval. Personalized PageRank is computed iteratively (max~50~iterations, tolerance~$10^{-6}$).
+
+\textbf{Caching and reproducibility.} All LLM responses are cached in SQLite, ensuring identical results across runs and eliminating redundant API calls during evaluation.
 
 \section{Experiments}
 \label{sec:experiments}
@@ -190,8 +184,6 @@ Other (9 types) & 1,450 & Other (52 types) & 2,506 & & \\
 \bottomrule
 \end{tabular}
 \end{table}
-
-\textbf{Implementation.} The system is implemented in Python~3.11. Document parsing uses custom regex parsers for Vietnamese legal hierarchy detection. Entity extraction and knowledge graph construction employ Claude~3.5~Haiku\footnote{\url{https://www.anthropic.com/claude}} via the Anthropic API. Online query processing (tree traversal, query analysis) uses Claude Sonnet~4. Sentence embeddings are computed with paraphrase-multilingual-MiniLM-L12-v2\footnote{\url{https://huggingface.co/sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2}}, a 384-dimensional multilingual model from the Sentence-Transformers library \cite{r2}. Vector similarity search uses FAISS\footnote{\url{https://github.com/facebookresearch/faiss}}, a library for efficient similarity search of dense vectors. Personalized PageRank is computed iteratively (max~50~iterations, tolerance~$10^{-6}$) using NumPy. All LLM responses are cached in SQLite for reproducibility.
 
 \textbf{Metrics.} Since each query has expert-annotated relevant articles, we adopt standard retrieval metrics \cite{r19} that enable objective, reproducible evaluation against known ground truth, rather than LLM-as-judge scores used in open-ended generation benchmarks. Hit@$k = \frac{1}{|Q|}\sum_{q} \mathbf{1}[\exists\, a \in R_q : \text{rank}(a) \leq k]$ measures the fraction of queries for which at least one relevant article appears in the top-$k$ results, where $R_q$ denotes the set of relevant articles for query $q$. Mean Reciprocal Rank is defined as MRR $= \frac{1}{|Q|}\sum_q (\min_{a \in R_q} \text{rank}(a))^{-1}$, averaging the reciprocal rank of the first relevant result. Recall@$k$, Precision@$k$, and NDCG@$k$ \cite{r19} are also computed. Results are reported at $k \in \{1, 3, 5, 10, 20, 30\}$, with Hit@10 and MRR as the primary metrics. Hit@10 is prioritized because in a RAG pipeline the LLM provides an additional validation layer over retrieved context, at least one correct article among ten candidates suffices for accurate answer generation while limiting noise that could induce hallucination. MRR complements Hit@10 by rewarding higher placement of relevant articles, reducing irrelevant context that the LLM must filter.
 
@@ -266,7 +258,7 @@ Of the 31 missed queries (7.8\%), 27 involve enterprise law. Primary failure mod
 \section{Conclusion}
 \label{sec:conclusion}
 
-This paper presented a three-tier knowledge graph RAG architecture for Vietnamese legal question answering. The central contribution is a unified retrieval pipeline combining structural tree traversal, semantic graph search with intent-aware Personalized PageRank, and Reciprocal Rank Fusion, grounded in a formal knowledge model extending the Legal-Onto framework. Experiments across three domains demonstrate consistent superiority over all baselines without domain-specific tuning.
+This paper presented a three-tier knowledge graph RAG architecture for Vietnamese legal question answering. The central contribution is a unified retrieval pipeline combining structural tree traversal, semantic graph search with intent-aware Personalized PageRank, and Reciprocal Rank Fusion over a domain-specific knowledge graph. Experiments across three domains demonstrate consistent superiority over all baselines without domain-specific tuning.
 
 Limitations include Tier~1 latency (approximately 7 seconds per query due to multiple LLM calls); however, in the legal domain, retrieval accuracy takes priority over response speed. A remaining limitation is lower performance on enterprise law queries requiring multi-document cross-references. Future work includes extension to additional regulatory domains, multi-turn conversational support, and explainable retrieval traces.
 
