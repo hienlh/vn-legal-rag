@@ -1,0 +1,1078 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VNU-EPT Practice Test</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--pri:#1a56db;--pri-light:#e8edfc;--green:#059669;--red:#dc2626;--orange:#d97706;--purple:#7c3aed;--teal:#0d9488;--bg:#f8fafc;--card:#fff;--text:#1e293b;--muted:#64748b;--border:#e2e8f0;--radius:8px}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;min-height:100vh}
+.container{max-width:900px;margin:0 auto;padding:16px}
+header{background:linear-gradient(135deg,#1e3a8a,#3b82f6);color:#fff;padding:20px;text-align:center;position:sticky;top:0;z-index:100;box-shadow:0 2px 8px rgba(0,0,0,.15)}
+header h1{font-size:1.3em;margin-bottom:4px}
+header p{opacity:.85;font-size:.85em}
+.timer-bar{display:flex;align-items:center;justify-content:center;gap:8px;margin-top:8px;font-size:1.1em;font-weight:700}
+.timer-bar .time{background:rgba(255,255,255,.2);padding:4px 12px;border-radius:4px;font-variant-numeric:tabular-nums}
+.timer-bar.warning .time{background:var(--red);animation:pulse 1s infinite}
+@keyframes pulse{50%{opacity:.7}}
+.mode-select{display:flex;gap:12px;justify-content:center;padding:20px;flex-wrap:wrap}
+.mode-btn{padding:16px 32px;border:2px solid var(--pri);border-radius:var(--radius);cursor:pointer;font-size:1em;font-weight:600;transition:.2s;background:#fff}
+.mode-btn:hover{background:var(--pri-light)}
+.mode-btn.active{background:var(--pri);color:#fff}
+.tabs{display:flex;gap:4px;padding:8px 16px;background:#fff;border-bottom:1px solid var(--border);overflow-x:auto;position:sticky;top:0;z-index:90}
+.tab{padding:8px 16px;border:none;background:none;cursor:pointer;font-size:.9em;font-weight:500;border-radius:var(--radius) var(--radius) 0 0;color:var(--muted);white-space:nowrap}
+.tab:hover{background:var(--pri-light);color:var(--pri)}
+.tab.active{background:var(--pri);color:#fff}
+.tab .badge{display:inline-block;margin-left:4px;padding:1px 6px;border-radius:10px;font-size:.75em;background:rgba(255,255,255,.3)}
+.card{background:var(--card);border-radius:var(--radius);padding:20px;margin:12px 0;box-shadow:0 1px 3px rgba(0,0,0,.08);border:1px solid var(--border)}
+.passage{background:#fefce8;border-left:4px solid var(--orange);padding:16px;margin:12px 0;border-radius:0 var(--radius) var(--radius) 0;font-size:.92em;line-height:1.8;white-space:pre-wrap}
+.question{margin:16px 0;padding:16px;border-radius:var(--radius);border:1px solid var(--border);transition:.2s}
+.question:hover{border-color:var(--pri)}
+.question.correct{border-color:var(--green);background:#f0fdf4}
+.question.wrong{border-color:var(--red);background:#fef2f2}
+.question.practiced{opacity:.6}
+.question.practiced:hover{opacity:1}
+.q-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;flex-wrap:wrap;gap:4px}
+.q-num{font-weight:700;color:var(--pri);font-size:.95em}
+.q-status{font-size:.85em;font-weight:600;padding:2px 8px;border-radius:4px}
+.q-status.correct{background:#dcfce7;color:var(--green)}
+.q-status.wrong{background:#fee2e2;color:var(--red)}
+.q-text{margin-bottom:10px;font-weight:500;white-space:pre-wrap}
+.options{display:flex;flex-direction:column;gap:6px}
+.option{display:flex;align-items:flex-start;gap:8px;padding:8px 12px;border:1px solid var(--border);border-radius:6px;cursor:pointer;transition:.15s}
+.option:hover{background:var(--pri-light);border-color:var(--pri)}
+.option.selected{background:var(--pri-light);border-color:var(--pri);font-weight:500}
+.option.correct-answer{background:#dcfce7;border-color:var(--green)}
+.option.wrong-answer{background:#fee2e2;border-color:var(--red)}
+.option input{margin-top:3px;accent-color:var(--pri)}
+.option label{cursor:pointer;flex:1}
+.explanation{margin-top:8px;padding:10px;background:#eff6ff;border-radius:6px;font-size:.9em;color:#1e40af}
+.src-badge{display:inline-block;padding:1px 8px;border-radius:10px;font-size:.72em;font-weight:600;vertical-align:middle;margin-left:6px}
+.src-ept{background:#dbeafe;color:#1e40af}
+.src-bac3{background:#d1fae5;color:#065f46}
+.src-bac4{background:#fef3c7;color:#92400e}
+.src-bac5{background:#ede9fe;color:#5b21b6}
+.practiced-badge{display:inline-block;padding:1px 6px;border-radius:10px;font-size:.7em;font-weight:600;background:#e2e8f0;color:#64748b;margin-left:4px}
+.audio-player{margin:16px 0;padding:16px;background:#f0f9ff;border-radius:var(--radius);text-align:center}
+.audio-player audio{width:100%;max-width:500px;margin-top:8px}
+.audio-player .label{font-weight:600;color:var(--pri);margin-bottom:4px}
+.btn{padding:10px 24px;border:none;border-radius:var(--radius);cursor:pointer;font-size:.95em;font-weight:600;transition:.2s}
+.btn-primary{background:var(--pri);color:#fff}.btn-primary:hover{background:#1e40af}
+.btn-green{background:var(--green);color:#fff}.btn-green:hover{background:#047857}
+.btn-outline{background:#fff;border:2px solid var(--pri);color:var(--pri)}.btn-outline:hover{background:var(--pri-light)}
+.btn-sm{padding:6px 14px;font-size:.85em}
+.actions{display:flex;gap:8px;justify-content:center;margin:20px 0;flex-wrap:wrap}
+.results{text-align:center;padding:32px 20px}
+.score-circle{width:120px;height:120px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:1.8em;font-weight:700;margin:16px;border:6px solid}
+.score-circle.good{border-color:var(--green);color:var(--green);background:#f0fdf4}
+.score-circle.mid{border-color:var(--orange);color:var(--orange);background:#fffbeb}
+.score-circle.bad{border-color:var(--red);color:var(--red);background:#fef2f2}
+.score-detail{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin:20px 0;text-align:left}
+.score-item{padding:12px;border-radius:var(--radius);background:var(--bg);border:1px solid var(--border)}
+.score-item .label{font-size:.85em;color:var(--muted)}
+.score-item .value{font-size:1.3em;font-weight:700}
+.writing-area{width:100%;min-height:200px;padding:12px;border:2px solid var(--border);border-radius:var(--radius);font-family:inherit;font-size:.95em;line-height:1.6;resize:vertical}
+.writing-area:focus{outline:none;border-color:var(--pri)}
+.word-count{text-align:right;font-size:.85em;color:var(--muted);margin-top:4px}
+.sample-answer{margin-top:12px;padding:16px;background:#f0fdf4;border:1px solid #bbf7d0;border-radius:var(--radius);display:none}
+.sample-answer.show{display:block}
+.sample-answer h4{color:var(--green);margin-bottom:8px}
+.speaking-timer{font-size:3em;font-weight:700;text-align:center;margin:20px 0;font-variant-numeric:tabular-nums}
+.speaking-timer.prep{color:var(--orange)}
+.speaking-timer.response{color:var(--green)}
+.part-header{padding:12px 16px;background:var(--pri-light);border-radius:var(--radius);margin:12px 0}
+.part-header h3{color:var(--pri);font-size:1.05em}
+.part-header .dir{font-size:.88em;color:var(--muted);margin-top:4px;font-style:italic}
+.test-card{border:2px solid var(--border);border-radius:var(--radius);padding:16px;cursor:pointer;transition:.2s;background:#fff}
+.test-card:hover{border-color:var(--pri);box-shadow:0 2px 8px rgba(0,0,0,.1)}
+.test-card.selected{border-color:var(--pri);background:var(--pri-light)}
+.test-card h3{font-size:1em;margin-bottom:4px}
+.test-card .meta{font-size:.85em;color:var(--muted)}
+.test-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:12px;margin:16px 0}
+.filter-bar{display:flex;gap:8px;align-items:center;margin:12px 0;flex-wrap:wrap;padding:8px 12px;background:#fff;border-radius:var(--radius);border:1px solid var(--border)}
+.filter-bar label{font-size:.85em;cursor:pointer;display:flex;align-items:center;gap:4px}
+.stats-bar{display:flex;gap:16px;margin:8px 0;font-size:.85em;color:var(--muted);flex-wrap:wrap}
+.stats-bar span{display:flex;align-items:center;gap:4px}
+.dot{width:8px;height:8px;border-radius:50%;display:inline-block}
+.export-box{width:100%;min-height:120px;padding:12px;border:1px solid var(--border);border-radius:var(--radius);font-family:'Courier New',monospace;font-size:.8em;background:var(--bg);resize:vertical}
+.hidden{display:none!important}
+select{padding:8px 12px;border:2px solid var(--border);border-radius:var(--radius);font-size:.95em;background:#fff;cursor:pointer}
+select:focus{outline:none;border-color:var(--pri)}
+@media(max-width:600px){.container{padding:8px}.card{padding:12px}.question{padding:12px}header h1{font-size:1.1em}.test-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<header id="header">
+  <h1>VNU-EPT Practice Test</h1>
+  <p id="headerSub">Vietnam National University - English Proficiency Test</p>
+  <div class="timer-bar hidden" id="timerBar">
+    <span class="time" id="timerDisplay">00:00</span>
+    <button class="btn btn-sm" style="background:rgba(255,255,255,.2);color:#fff;border:1px solid rgba(255,255,255,.4)" onclick="togglePause()" id="pauseBtn">Pause</button>
+  </div>
+</header>
+
+<div id="modeScreen" class="container">
+  <div style="text-align:center;margin:30px 0 16px">
+    <h2>Choose Test & Mode</h2>
+  </div>
+
+  <h3 style="margin-bottom:8px">Select a test:</h3>
+  <div class="test-grid" id="testGrid"></div>
+
+  <div style="margin-top:20px">
+    <div class="mode-select">
+      <button class="mode-btn" onclick="startMode('exam')">Exam Mode<br><small style="font-weight:400;color:var(--muted)">Timed, results at end</small></button>
+      <button class="mode-btn" onclick="startMode('practice')">Practice Mode<br><small style="font-weight:400;color:var(--muted)">Untimed, instant feedback, skip practiced</small></button>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:16px">
+    <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;margin-bottom:10px">
+      <h3>Speaking Practice Audio</h3>
+      <a href="speaking/practice-audio/all-5-topics.mp3" download style="font-size:.85em;font-weight:600;color:#fff;background:var(--pri);padding:5px 14px;border-radius:6px;text-decoration:none">Download (5MB)</a>
+    </div>
+    <audio controls loop preload="none" style="width:100%;height:40px;margin-bottom:8px"><source src="speaking/practice-audio/all-5-topics.mp3" type="audio/mpeg"></audio>
+    <p style="font-size:.85em;color:var(--muted);margin-bottom:10px">5 bài mẫu VSTEP B1 (~11 phút, loop) — nghe, xem keywords, mở full text để nói theo</p>
+    <div style="display:flex;flex-direction:column;gap:10px" id="speakingPractice">
+
+      <div class="spk-item" style="background:var(--pri-light);padding:12px;border-radius:var(--radius)">
+        <strong style="font-size:.95em">1. Vietnamese Farm Products</strong>
+        <audio controls preload="none" style="width:100%;height:36px;margin-top:6px"><source src="speaking/practice-audio/topic-1-vietnamese-farm-products.mp3" type="audio/mpeg"></audio>
+        <div style="margin-top:8px;font-size:.85em;line-height:1.6;color:#334155">
+          <b>Hook:</b> Vietnam sells a lot, but price is low<br>
+          <b>1. Build strong brands</b> — ST25 rice best in world 2019, do same with coffee/dragon fruit<br>
+          <b>2. Use technology</b> — QR code on products, EU/Japan/US want safe food<br>
+          <b>3. Sell online</b> — Amazon, TikTok Shop, Bac Giang lychee to Europe<br>
+          <b>End:</b> brands + technology + online = more money
+        </div>
+        <details style="margin-top:8px"><summary style="cursor:pointer;font-size:.85em;color:var(--pri);font-weight:600">Full Text</summary>
+        <div style="margin-top:6px;font-size:.83em;line-height:1.7;color:#475569;white-space:pre-wrap;background:#fff;padding:10px;border-radius:6px">Vietnam sells a lot of rice, coffee, and fruit to many countries. But our prices are often lower than products from Thailand or Colombia. I think there are three ways to make our farm products more popular and valuable in the world market.
+
+First, we need to build strong brands for our products. Right now, many Vietnamese farmers sell raw coffee beans, and foreign companies put their name on it and sell it for a much higher price. A good example is ST25 rice. In 2019, it was named the best rice in the world. After that, many people wanted to buy it, and the price went up. If we do the same thing with coffee from Buon Ma Thuot or dragon fruit from Binh Thuan, we can earn much more money.
+
+Second, we should use technology to show where our products come from. Buyers in Europe, Japan, and America want to know if the food is safe and clean. We can put a QR code on every product. When people scan it, they can see the farm, the farmer, and the date. This builds trust. As someone who works in tech, I believe this is not difficult to do, and many young companies in Vietnam are already building these tools.
+
+Third, we should sell our products online to the world. In the past, farmers had to sell through many middlemen, so they earned very little. But now, we have Amazon, Alibaba, and even TikTok Shop. For example, during the pandemic, Bac Giang province sold lychee to Europe through online shops, and it was very successful. If the government helps farmers learn how to sell online, many more products can reach the world.
+
+In conclusion, to raise the position of Vietnamese farm products, we need three things: strong brands, modern technology, and online selling. These three steps will help our farmers earn more money and make Vietnam famous for high-quality food.</div></details>
+      </div>
+
+      <div class="spk-item" style="background:var(--pri-light);padding:12px;border-radius:var(--radius)">
+        <strong style="font-size:.95em">2. Food Waste</strong>
+        <audio controls preload="none" style="width:100%;height:36px;margin-top:6px"><source src="speaking/practice-audio/topic-2-food-waste.mp3" type="audio/mpeg"></audio>
+        <div style="margin-top:8px;font-size:.85em;line-height:1.6;color:#334155">
+          <b>Hook:</b> many hungry, but we throw food away<br>
+          <b>1. Teach children</b> — Japan: finish lunch + clean table<br>
+          <b>2. Use apps</b> — "Too Good To Go" Europe, HCMC bakeries throw bread<br>
+          <b>3. Strong laws</b> — France 2016: supermarkets must give to charity<br>
+          <b>End:</b> teach + apps + laws; buy only what we need
+        </div>
+        <details style="margin-top:8px"><summary style="cursor:pointer;font-size:.85em;color:var(--pri);font-weight:600">Full Text</summary>
+        <div style="margin-top:6px;font-size:.83em;line-height:1.7;color:#475569;white-space:pre-wrap;background:#fff;padding:10px;border-radius:6px">Food waste is a big problem today. Many people in the world do not have enough to eat, but at the same time, many countries throw away a lot of good food. I think there are three main ways to solve this problem.
+
+The first way is to teach children about food from a young age. In Vietnam, many kids do not know how hard it is to grow rice or vegetables, so they waste food easily. In Japan, students must finish their school lunch and clean the table together. This teaches them to respect food. If Vietnamese schools do the same, children will waste less food at home and at restaurants in the future.
+
+The second way is to use apps and technology to share extra food. In Europe, there is an app called Too Good To Go. Restaurants and bakeries use it to sell leftover food at a low price at the end of the day. This way, the food is not thrown away. In Ho Chi Minh City where I live, I often see bakeries throw away bread every night. If we have a similar app here, or if shops give extra food to poor people, we can save a lot of food.
+
+The third way is to make strong laws. In 2016, France made a law that stops supermarkets from throwing away food that is still good to eat. Instead, they must give it to charity. This is a strong rule, and it works very well. Vietnam can make the same kind of law for big supermarkets and hotels, because they waste the most food.
+
+In conclusion, we can reduce food waste by teaching children, using smart apps, and making strong laws. All three solutions are important. But we also need to remember that every person can help. We should only buy what we need and always finish the food on our plate.</div></details>
+      </div>
+
+      <div class="spk-item" style="background:var(--pri-light);padding:12px;border-radius:var(--radius)">
+        <strong style="font-size:.95em">3. "Men of Few Words" — AGREE</strong>
+        <audio controls preload="none" style="width:100%;height:36px;margin-top:6px"><source src="speaking/practice-audio/topic-3-men-of-few-words.mp3" type="audio/mpeg"></audio>
+        <div style="margin-top:8px;font-size:.85em;line-height:1.6;color:#334155">
+          <b>Hook:</b> agree — speak less = speak better, not stay silent<br>
+          <b>1. Think more</b> — quiet teammate, ideas always clear<br>
+          <b>2. Build trust</b> — leaders listen first, speak last<br>
+          <b>3. Safer (social media)</b> — one wrong tweet = lose job, "noi nhieu sai nhieu"<br>
+          <b>But:</b> must speak up if something is wrong<br>
+          <b>End:</b> quality, not quantity
+        </div>
+        <details style="margin-top:8px"><summary style="cursor:pointer;font-size:.85em;color:var(--pri);font-weight:600">Full Text</summary>
+        <div style="margin-top:6px;font-size:.83em;line-height:1.7;color:#475569;white-space:pre-wrap;background:#fff;padding:10px;border-radius:6px">I agree with this quote from Shakespeare. I think people who speak less are often better than people who talk too much. But I don't think it means we should be silent all the time. It means we should only speak when we have something important to say. I have three reasons for my opinion.
+
+First, people who speak less usually think more. In my job as a software developer, I have a teammate who is very quiet in meetings. But when he speaks, his ideas are always clear and useful. On the other hand, some people talk a lot but say nothing new. They just repeat what others say. This shows that speaking less is a sign of deep thinking.
+
+Second, people who speak less often build more trust. When someone is always quiet but speaks at the right time, other people listen carefully. Good leaders often do this. They listen to their team first, and then they speak last. Their words become more powerful. If a leader talks too much, people may feel that he is not confident or does not care about others.
+
+Third, in today's world, speaking less is safer. We live in the age of social media. One wrong word on Facebook or Twitter can damage a person's job or reputation. I have seen many famous people lose their career because of one bad comment online. There is a Vietnamese saying: noi nhieu sai nhieu, the more you talk, the more mistakes you make. So being careful with words is smart.
+
+However, I want to add one thing. Speaking less does not mean we should stay silent when something is wrong. If we see unfair things or dangerous things, we must speak up. The point is quality, not quantity.
+
+In conclusion, I agree with Shakespeare. The best people are not the ones who talk the most. They are the ones whose words really matter. Speaking less helps us think better, build trust, and avoid mistakes.</div></details>
+      </div>
+
+      <div class="spk-item" style="background:var(--pri-light);padding:12px;border-radius:var(--radius)">
+        <strong style="font-size:.95em">4. Smoking Ban Not Effective</strong>
+        <audio controls preload="none" style="width:100%;height:36px;margin-top:6px"><source src="speaking/practice-audio/topic-4-smoking-ban.mp3" type="audio/mpeg"></audio>
+        <div style="margin-top:8px;font-size:.85em;line-height:1.6;color:#334155">
+          <b>Hook:</b> Vietnam has law, people still smoke everywhere<br>
+          <b>1. Law is weak</b> — no fines, fine too small, not enough police<br>
+          <b>2. Culture/habits</b> — cigarette = social tool, weddings, parties<br>
+          <b>3. No help to quit</b> — AU/UK: phone lines + patches + high tax, VN: cheap cigarettes<br>
+          <b>End:</b> weak law + strong habits + no help = ban fails
+        </div>
+        <details style="margin-top:8px"><summary style="cursor:pointer;font-size:.85em;color:var(--pri);font-weight:600">Full Text</summary>
+        <div style="margin-top:6px;font-size:.83em;line-height:1.7;color:#475569;white-space:pre-wrap;background:#fff;padding:10px;border-radius:6px">Many countries, including Vietnam, have a law against smoking in public places like restaurants, hospitals, and bus stops. But we can still see people smoking in these places every day. I think the ban is not effective for three main reasons.
+
+The first reason is that the law is not strong enough. In Vietnam, I almost never see anyone get a fine for smoking in public. The fine is also very small. There are not enough police to check every park or coffee shop. When people know they will not be caught, they do not care about the law. A rule only works when people are afraid of the punishment.
+
+The second reason is our culture and habits. In Vietnam, smoking is part of social life. Many men offer each other a cigarette to start a conversation or to make a deal. At weddings and parties, older men often smoke together as a tradition. I have seen this many times at family events. So even if the law says no, people continue because it is a habit and a social behavior. To change this, we need to change how people think about smoking, not just make a law.
+
+The third reason is that the government does not help smokers quit. A ban only tells people where they cannot smoke. But it does not help them stop. In countries like Australia and the United Kingdom, the ban comes with other things: free phone lines to help people quit, nicotine patches, scary pictures on cigarette packs, and very high taxes. All of these work together. In Vietnam, cigarettes are still cheap, and there is not much support for people who want to quit. So even people who want to stop find it very hard.
+
+In conclusion, the smoking ban in public places is not effective because of weak law, strong habits, and no support for smokers. To make the ban really work, the government needs to do all three things at the same time.</div></details>
+      </div>
+
+      <div class="spk-item" style="background:var(--pri-light);padding:12px;border-radius:var(--radius)">
+        <strong style="font-size:.95em">5. Schools & Community Service</strong>
+        <audio controls preload="none" style="width:100%;height:36px;margin-top:6px"><source src="speaking/practice-audio/topic-5-community-service.mp3" type="audio/mpeg"></audio>
+        <div style="margin-top:8px;font-size:.85em;line-height:1.6;color:#334155">
+          <b>Hook:</b> schools must teach helping others<br>
+          <b>1. Make it a rule</b> — 20 hours/year, clean park, teach kids, visit old people<br>
+          <b>2. Real projects</b> — less plastic, library for poor kids, road safety<br>
+          <b>3. Work with local groups</b> — Red Cross, orphanages, <i>MY STORY: Mua He Xanh + Xuan Tinh Nguyen → changed me</i><br>
+          <b>End:</b> rules + projects + local groups = better people
+        </div>
+        <details style="margin-top:8px"><summary style="cursor:pointer;font-size:.85em;color:var(--pri);font-weight:600">Full Text</summary>
+        <div style="margin-top:6px;font-size:.83em;line-height:1.7;color:#475569;white-space:pre-wrap;background:#fff;padding:10px;border-radius:6px">Helping other people is very important for young people. But students do not learn this by themselves. Schools need to teach them. I think there are three good ways: make volunteer work a rule, use real projects, and work with local groups.
+
+The first way is to make volunteer work a rule for all students. For example, every student must do 20 hours of helping every year. When I was in school, it was not a rule, so only a few students did it. But if it is a rule, every student will try it. They can clean a park, teach small children, or visit old people. At first, they may not like it. But later, many of them will enjoy it and want to do more.
+
+The second way is to use real projects in class. Students can work in groups to fix real problems near their school. For example, they can make a plan to use less plastic, build a small library for poor children, or tell people about road safety. This helps them learn teamwork and how to plan things. Some schools in Ho Chi Minh City do this now, and the students become more kind and more confident.
+
+The third way is for schools to work with groups outside the school. Groups like the Red Cross or places that take care of children without parents can give students real work to do. I know this works because when I was in university, I joined Mua He Xanh and Xuan Tinh Nguyen. We went to poor villages. We taught children and helped build things for the people there. That experience changed me a lot. Before, I only thought about my studies. After that, I understood that helping others also helps me grow as a person.
+
+In conclusion, schools can teach students to help their community by making it a rule, using real projects, and working with local groups. These ways help students become not only smarter but also better people for the future.</div></details>
+      </div>
+
+    </div>
+
+    <details style="margin-top:12px"><summary style="cursor:pointer;font-size:.9em;color:var(--pri);font-weight:700">Useful Phrases & Prep Tips</summary>
+    <div style="margin-top:8px;font-size:.85em;line-height:1.7;color:#334155;background:#fff;padding:12px;border-radius:6px">
+      <b>Start:</b> "I think there are three main reasons/ways..." / "In my opinion..."<br>
+      <b>Connect:</b> First / Second / Third / Also / For example / A good example is...<br>
+      <b>Personal touch (higher score):</b> "From my experience..." / "I have seen that..." / "In my job..." / "In HCMC where I live..."<br>
+      <b>Finish:</b> "In conclusion..." / "To sum up..." / "So, I believe..."<br><br>
+      <b>2-min prep — write only:</b><br>
+      <code style="background:#f1f5f9;padding:6px 8px;border-radius:4px;display:block;margin-top:4px;font-size:.9em">Topic: [keyword]<br>1. [point] — [example]<br>2. [point] — [example]<br>3. [point] — [example]</code>
+    </div></details>
+  </div>
+
+  <div class="card" style="margin-top:8px">
+    <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px">
+      <h3>Practice History</h3>
+      <div>
+        <button class="btn btn-sm btn-outline" onclick="showHistory()">View Stats</button>
+        <button class="btn btn-sm" style="background:var(--red);color:#fff" onclick="clearHistory()">Clear History</button>
+      </div>
+    </div>
+    <div id="historyStats" class="stats-bar" style="margin-top:8px"></div>
+  </div>
+</div>
+
+<div id="testScreen" class="hidden">
+  <div class="tabs" id="tabsBar"></div>
+  <div class="container" id="contentArea"></div>
+</div>
+
+<div id="resultsScreen" class="hidden">
+  <div class="container results" id="resultsArea"></div>
+</div>
+
+<script>
+// ========== STORAGE ==========
+const STORAGE_KEY = 'vnu-ept-practice-v2';
+function loadHistory(){ try{return JSON.parse(localStorage.getItem(STORAGE_KEY))||{}}catch(e){return{}} }
+function saveHistory(h){ localStorage.setItem(STORAGE_KEY, JSON.stringify(h)) }
+function clearHistory(){ if(confirm('Clear all practice history?')){localStorage.removeItem(STORAGE_KEY);updateHistoryStats();alert('Cleared!')} }
+function markPracticed(globalId, correct, key){ const h=loadHistory();h[globalId]={c:correct,t:Date.now(),k:key||null};saveHistory(h) }
+function getPracticedAnswer(globalId){ const h=loadHistory();return h[globalId]&&h[globalId].k||null }
+function isPracticed(globalId){ return !!loadHistory()[globalId] }
+function wasPracticedCorrectly(globalId){ const h=loadHistory();return h[globalId]&&h[globalId].c }
+
+// ========== ALL TEST DATA ==========
+const TESTS = [
+// --- EPT 2024 ---
+{id:"ept2024",title:"VNU-EPT Sample Test 2024 (Official)",shortTitle:"EPT 2024",source:"etcvnu.edu.vn",badgeClass:"src-ept",
+sections:{
+listening:{timeLimit:2700,parts:[
+{id:"lp1",title:"Part 1: Short Conversations",points:20,direction:"In Part 1 you will hear ten conversations between two people. After the second listening, you will hear a question and there are four possible answers. Select the best answer.",
+questions:[
+{id:1,q:"(Listen to the conversation)",o:{A:"At a romantic restaurant",B:"In a law company",C:"At Tom's house",D:"At a movie theater"},a:"D",audio:"listening/sample-test-2024/Audio sample test/05. P1-1.wav"},
+{id:2,q:"(Listen to the conversation)",o:{A:"In cash",B:"By debit card",C:"By credit card",D:"By check"},a:"C",audio:"listening/sample-test-2024/Audio sample test/07. P1-2.wav"},
+{id:3,q:"(Listen to the conversation)",o:{A:"Buy some birthday cards",B:"Send some postcards",C:"Send some gifts to his six relatives",D:"Send some birthday cards to Peru"},a:"B",audio:"listening/sample-test-2024/Audio sample test/09. P1-3.wav"},
+{id:4,q:"(Listen to the conversation)",o:{A:"Japan",B:"The U.S",C:"Kuwait",D:"Austria"},a:"A",audio:"listening/sample-test-2024/Audio sample test/11. P1-4.wav"},
+{id:5,q:"(Listen to the conversation)",o:{A:"They are worried, so they cannot eat.",B:"They do not have enough time.",C:"They are working.",D:"They will leave work in ten minutes."},a:"B",audio:"listening/sample-test-2024/Audio sample test/13. P1-5.wav"},
+{id:6,q:"(Listen to the conversation)",o:{A:"$29",B:"Nearly $30",C:"$39.99",D:"$20.99"},a:"B",audio:"listening/sample-test-2024/Audio sample test/15. P1-6.wav"},
+{id:7,q:"(Listen to the conversation)",o:{A:"Interested",B:"Disappointed",C:"Annoyed",D:"Angry"},a:"C",audio:"listening/sample-test-2024/Audio sample test/17. P1-7.wav"},
+{id:8,q:"(Listen to the conversation)",o:{A:"The customer may be inexperienced.",B:"The customer sends e-mail too often.",C:"The customer has an important business e-mail.",D:"He (the technician) knows what the problem is."},a:"A",audio:"listening/sample-test-2024/Audio sample test/19. P1-8.wav"},
+{id:9,q:"(Listen to the conversation)",o:{A:"Australia",B:"Ireland",C:"Scotland",D:"America"},a:"D",audio:"listening/sample-test-2024/Audio sample test/21. P1-9.wav"},
+{id:10,q:"(Listen to the conversation)",o:{A:"It was expensive.",B:"It was cheaper.",C:"It was his girlfriend's choice.",D:"It was more interesting than the trip to Japan."},a:"B",audio:"listening/sample-test-2024/Audio sample test/23. P1-10.wav"}
+]},
+{id:"lp2",title:"Part 2: Conversation",points:20,direction:"In Part 2 you will hear a conversation. After the second listening, there are six incomplete sentences. Select the best option to complete each sentence.",audio:"listening/sample-test-2024/Audio sample test/26. P2-Q11-16.wav",
+questions:[
+{id:11,q:'The topic of the radio program probably is "___".',o:{A:"Never think about past mistakes",B:"How to be optimistic",C:"Be positive in failures",D:"Always use positive language"},a:"B"},
+{id:12,q:"For Andy, ___ is very important.",o:{A:"living for today",B:"keeping past memories",C:"arranging for the future",D:"avoiding mistakes"},a:"A"},
+{id:13,q:"Julie says people have negative thoughts ___.",o:{A:"if they fail in love",B:"every time they fail",C:"now and then",D:"when they stop working"},a:"C"},
+{id:14,q:'Julie probably tells herself "___" if she learns to ride a bicycle.',o:{A:"It will take me too much time.",B:"I'll fail again.",C:"I'll never try again if I fail now.",D:"I can ride it soon."},a:"D"},
+{id:15,q:"Miriam says that we should ___ to improve our bad feelings.",o:{A:"do good things to other people",B:"list all the things for a good future",C:"keep a list of good memories at hand",D:"try to have a good time every week"},a:"C"},
+{id:16,q:'Michael doesn\'t want to say "I\'m sorry" because he thinks ___.',o:{A:"it's not good to admit a mistake",B:"action is more important than words",C:'it\'s better to say "I know my mistake"',D:"positive language can encourage people better"},a:"D"}
+]},
+{id:"lp3",title:"Part 3: Talk",points:28,direction:"In Part 3 you will hear a talk. After the second listening, select the best answer to each question.",audio:"listening/sample-test-2024/Audio sample test/28. P3-Q17-24.wav",
+questions:[
+{id:17,q:"What is the conversation mainly about?",o:{A:"Why and how a man lost his memory",B:"Things turn worse with a loss of memory",C:"Life of a man who lost his memory",D:"A lost memory: a broken family"},a:"C"},
+{id:18,q:"Why did the man lose his memory?",o:{A:"He had an accident.",B:"He has a virulent disease.",C:"He's getting old.",D:"He has a genetic brain disease."},a:"B"},
+{id:19,q:"What is a result of his problem?",o:{A:"Everything continually gets refreshed to him.",B:"He lives a sad life in a hospital.",C:"He often gets lost and hurt.",D:"His wife left him and remarried in the U.S."},a:"A"},
+{id:20,q:"If he says hello at 8:00, when will he probably say hello again?",o:{A:"8:07",B:"8:05:07",C:"8:30",D:"8:00:07"},a:"D"},
+{id:21,q:"What did his wife do for him before she left?",o:{A:"She did charity and prayed for him.",B:"She took care of him for a long time.",C:"She worked in a new center to take care of him.",D:"She got good treatment for him in the U.S."},a:"B"},
+{id:22,q:"What happens when he meets his children?",o:{A:"Sometimes he calls their names.",B:"They talk to him about their company.",C:"He's happy to see them.",D:"He tells them they do not need to come again."},a:"C"},
+{id:23,q:"What is probably his favorite TV program?",o:{A:"A football match",B:"A game show",C:"A comedy",D:"A movie"},a:"A"},
+{id:24,q:"What will the female speaker probably do?",o:{A:"Visit the sick man",B:"Bring the sick man a piano",C:"Playing the piano for the sick man",D:"Wait to see the sick man on TV"},a:"D"}
+]},
+{id:"lp4",title:"Part 4: Lecture Summary",points:32,direction:"In Part 4 you will hear a lecture. After the second listening, select the best option for each gap to complete the summary.",audio:"listening/sample-test-2024/Audio sample test/30. P4-Q25-32.wav",
+passage:"The professor gives a/an (25) _____ of globalization, which emphasizes the acceleration and intensification of economic transactions among people, companies and (26) _____. He then cites the U.S., the IMF and the World Bank as examples of (27) _____ and two big international organizations. The professor also names Coca Cola, McDonald, popular music and (28) _____ as representatives of U.S. cultural imperialism.\n\nCritics object because poor countries are often badly (29) _____ by international organizations to adjust currency, eliminate tariffs, respect patents, privatize (30) _____, and not subsidize domestic goods. The professor gives an example of (31) _____, which suffered rather than prospered.\n\nHowever, these rules are also implemented in rich countries. Poor countries which do not follow trade rules will not receive (32) _____ from rich countries.",
+questions:[
+{id:25,q:"(25)",o:{A:"explanation",B:"definition",C:"clarification",D:"argument"},a:"B"},
+{id:26,q:"(26)",o:{A:"leaders of different continents",B:"different nations in many regions",C:"governments of various countries",D:"similar governments of some nations"},a:"C"},
+{id:27,q:"(27)",o:{A:"capitalism",B:"imperialism",C:"culturalism",D:"popularism"},a:"A"},
+{id:28,q:"(28)",o:{A:"TV celebrities",B:"computer programs",C:"advertising programs",D:"television shows"},a:"D"},
+{id:29,q:"(29)",o:{A:"supported",B:"directed",C:"advised",D:"financed"},a:"C"},
+{id:30,q:"(30)",o:{A:"large corporations",B:"all public businesses",C:"the business sector",D:"industry and banks"},a:"A"},
+{id:31,q:"(31)",o:{A:"South Korea",B:"South Africa",C:"Argentina",D:"Indonesia"},a:"C"},
+{id:32,q:"(32)",o:{A:"investments",B:"nonrefundable aids",C:"technology transfer",D:"economic counseling"},a:"A"}
+]}
+]},
+reading:{timeLimit:3600,parts:[
+{id:"rp1",title:"Part 1: Tourists in a Fragile Land",points:40,direction:"Read the passage carefully.",
+passage:"TOURISTS IN A FRAGILE LAND\n\n1. As a scientist working in Antarctica, I spend most of (33) _____ time in the lab studying ice. I am trying to find out the age of Antarctic ice. All we know for certain is that it is the oldest ice in the world. The more we understand it, the more we will understand the (34) _____ weather of the Earth. Today, I had to leave my work to greet tourists taking a vacation in this continent of ice. And even though I can appreciate their desire to experience this vast and beautiful landscape, I feel Antarctica should be closed to tourists.\n\n2. Because Antarctica is the center of important scientific research, it must (35) _____ preserved for this purpose. Astronomers have a unique view of space and are able to see it very (36) _____ from Antarctica. There are even psychologists who study how people behave in such a remote location.\n\n3. When tourist groups come here, they take us away from our research. Members of Greenpeace (37) _____ that tourists leave trash on beaches and disturb the plants and animals. It can take 100 years for a plant (38) _____ back.\n\n4. The need to protect Antarctica becomes even (39) _____ when we consider there is no government here. The number of tourists (40) _____ visit Antarctica each year is small, but these other places have local governments protecting them.\n\n5. If we don't protect Antarctica, there (41) _____ be serious consequences. These results could teach us (42) _____ about climate change. Some fragile plants and animals might disappear forever.",
+tasks:[
+{title:"Task 1: Fill in the gaps",questions:[
+{id:33,q:"(33)",o:{A:"our",B:"his",C:"her",D:"my"},a:"D"},
+{id:34,q:"(34)",o:{A:"changed",B:"change",C:"changing",D:"changes"},a:"C"},
+{id:35,q:"(35)",o:{A:"have",B:"be",C:"make",D:"do"},a:"B"},
+{id:36,q:"(36)",o:{A:"clearly",B:"clarity",C:"clear",D:"unclearly"},a:"A"},
+{id:37,q:"(37)",o:{A:"complaining",B:"complain",C:"complaint",D:"complained"},a:"B"},
+{id:38,q:"(38)",o:{A:"to grow",B:"growing",C:"grow",D:"growth"},a:"A"},
+{id:39,q:"(39)",o:{A:"great",B:"greater",C:"greatest",D:"most great"},a:"B"},
+{id:40,q:"(40)",o:{A:"which",B:"whom",C:"who",D:"where"},a:"C"},
+{id:41,q:"(41)",o:{A:"would",B:"need",C:"ought to",D:"may"},a:"D"},
+{id:42,q:"(42)",o:{A:"important thing",B:"importance",C:"importantly",D:"something important"},a:"D"}
+]},
+{title:"Task 2: Vocabulary",questions:[
+{id:43,q:'"vast" (para 1) is closest in meaning to ___.',o:{A:"very large",B:"pretty",C:"small",D:"faraway"},a:"A"},
+{id:44,q:'"landscape" (para 1) is closest in meaning to ___.',o:{A:"an area of land for living",B:"a painting",C:"an icy environment",D:"the way an area of land looks"},a:"D"},
+{id:45,q:'"preserved" (para 2) is closest in meaning to ___.',o:{A:"closed",B:"explored",C:"protected",D:"changed"},a:"C"},
+{id:46,q:'"inhabit" (para 2) is closest in meaning to ___.',o:{A:"avoid",B:"cover",C:"prefer",D:"live in"},a:"D"},
+{id:47,q:'"harsh" (para 2) is closest in meaning to ___.',o:{A:"unpleasantly difficult",B:"mild",C:"dry",D:"cold"},a:"A"},
+{id:48,q:'"remote" (para 2) is closest in meaning to ___.',o:{A:"ideal",B:"isolated",C:"hostile",D:"lonely"},a:"B"},
+{id:49,q:'"disturb" (para 3) is closest in meaning to ___.',o:{A:"make happy",B:"bring comfort",C:"annoy",D:"cause to die"},a:"C"},
+{id:50,q:'"temporary" (para 4) is closest in meaning to ___.',o:{A:"rich and adventurous",B:"careful",C:"lasting for a limited time",D:"responsible"},a:"C"},
+{id:51,q:'"consequences" (para 5) is closest in meaning to ___.',o:{A:"acquaintances",B:"effects",C:"causes",D:"disasters"},a:"B"},
+{id:52,q:'"fragile" (para 5) is closest in meaning to ___.',o:{A:"native",B:"rare",C:"useful",D:"easily damaged"},a:"D"}
+]}]},
+{id:"rp2",title:"Part 2: Geisha",points:14,direction:"Read the passage carefully.",
+passage:"The white face, dark eyes and hair, and blood red lips: both foreigners and the Japanese are fascinated by these beautiful and mysterious women.\n\nMakiko is training to be a geisha. Not many girls want to be a geisha in Japan today. Makiko's grandfather paid for her training and bought the kimonos she needed. It's very expensive to become a geisha.\n\nIt's a hard life for a trainee geisha. She has to leave her family and move to a special boarding house called a 'maiko house'. Here, she has to learn traditional Japanese arts such as playing instruments, performing the tea ceremony, arranging flowers, singing and dancing.\n\n'A geisha has to serve customers and also entertain them. She has to sing and dance, and make good conversations.'\n\nIn Japan today there are fewer than a thousand geishas, but they play an important role in preserving Japanese culture and history.",
+questions:[
+{id:53,q:"What is the main idea of the passage?",o:{A:"How to be a famous geisha",B:"Interesting life of geishas",C:"Life and work of geishas",D:"How geishas feel about their life"},a:"C"},
+{id:54,q:"Why is Makiko training to be a geisha?",o:{A:"Her parents want her to.",B:"Her grandfather supported her financially.",C:"She was lucky to be chosen.",D:"Being a geisha is Makiko's dream."},a:"B"},
+{id:55,q:"What is NOT a requirement for a geisha?",o:{A:"Pass all difficult tests and exams.",B:"Can't stay home during training.",C:"Learn music.",D:"Play modern instruments."},a:"D"},
+{id:56,q:'"She" in the passage refers to ___.',o:{A:"Makiko",B:"A trainee geisha",C:"The writer",D:"A family member"},a:"B"},
+{id:57,q:'Why does the writer mention "tea ceremony"?',o:{A:"To express he/she likes tea",B:"To indicate geishas love tea",C:"To give an example of Japanese traditional arts",D:"To show all Japanese drink tea in a special way"},a:"C"},
+{id:58,q:'"them" in the passage refers to ___.',o:{A:"geishas",B:"tests and exams",C:"customers",D:"conversations"},a:"C"}
+]},
+{id:"rp3",title:"Part 3: Climate & Global Warming",points:20,direction:"Read the passage carefully.",
+passage:"1. Climate encompasses the statistics of temperature, humidity, atmospheric pressure, wind, rainfall over a long period of time. Climate can be contrasted to weather, which is the present condition over shorter time periods.\n\n2. Climate may be inherently variable. However, in recent decades, evidence of climate warming across the globe has increased. It is a disturbing phenomenon challenging human habits responsible for greenhouse gas emissions.\n\n3. The greenhouse effect warms the planet's lower atmosphere. Human activity since the Industrial Revolution has increased greenhouse gases. CO\u2082 and methane have increased by 36% and 148% since 1750. CO\u2082 emissions continue to rise due to burning of fossil fuels and land-use change.\n\n4. Two major effects of global warming: temperature increase by 3-5\u00b0C by 2100, and sea level rise by at least 25 meters by 2100.",
+questions:[
+{id:59,q:"What is the passage mainly about?",o:{A:"Differences between weather and climate",B:"Global warming and its effects",C:"Climate warming across the globe",D:"Consequences of global warming by 2100"},a:"B"},
+{id:60,q:"What differentiates climate from weather?",o:{A:"Elements",B:"Temperatures",C:"Time periods",D:"Locations"},a:"C"},
+{id:61,q:'"It" in paragraph 2 refers to ___.',o:{A:"number",B:"evidence",C:"globe",D:"climate warming"},a:"D"},
+{id:62,q:"Inferred from paragraph 2: ___.",o:{A:"climate changes yearly",B:"scientists may not fully understand climate variability",C:"climate extremes just occurred recently",D:"humans produce more gases in greenhouses"},a:"B"},
+{id:63,q:'Why mention "fossil fuels" in paragraph 3?',o:{A:"To give an example of CO\u2082 source",B:"To indicate they burn well",C:"To confirm they are the only CO\u2082 cause",D:"To show relation to land-use change"},a:"A"},
+{id:64,q:"Inferred from paragraph 3?",o:{A:"Greenhouse gases have 33\u00b0C warming effect",B:"CO\u2082 and methane increased 36% since 1750",C:"Industrial Revolution began in 1750",D:"Population growth caused serious emissions in 19th century"},a:"C"},
+{id:65,q:"Cause of continued CO\u2082 increase?",o:{A:"Production of fuels",B:"Use of man-made fuels",C:"Changed use of land",D:"Clearing of land for living"},a:"C"}
+]},
+{id:"rp4",title:"Part 4: Columbian Exchange",points:26,direction:"Read the passage carefully.",
+passage:"COLUMBIAN EXCHANGE\n\n1. The Columbian Exchange was the exchange of plants, animals, foods, human populations, communicable diseases, and ideas between the Eastern and Western hemispheres after 1492.\n\n2. When Christopher Columbus made landfall in the Bahamas in October 1492, two worlds with separate evolutionary histories met. Europeans brought wheat and apples, as well as weeds. In the 1600s, they introduced cattle and horses.\n\n3. Devastating diseases were introduced to the American population which had no resistance to them. Between 1492 and 1650, over 90% of Native Americans died of smallpox, measles, mumps, whooping cough, influenza, chicken pox, and typhus. Malaria and yellow fever came from Africa.\n\n4. The New World's great contribution to the Old World was crop plants. Maize, potatoes, sweet potatoes, squashes, chilies, and manioc enriched European cuisine. Very few New World creatures traversed the ocean.\n\n5-6. Diseases from New World to Old World had insignificant effect. Crosby emphasized the encounter was fundamentally an exchange, neither world inferior or superior.",
+questions:[
+{id:66,q:"What is the passage mainly about?",o:{A:"Exchanged things between Columbus and Native Americans",B:"Social and ecological development of Americas after 1492",C:"Inferiority of New World to Old World",D:"Exchanges between Americas and other continents since 1492"},a:"D"},
+{id:67,q:"Which best restates the highlighted sentence in paragraph 2?",o:{A:"Columbus fell on the land.",B:"Columbus's group set foot; Old and New World encountered.",C:"Columbus claimed the honor of discovering two evolutionary histories.",D:"Bahamas was where Columbus met inhabitants."},a:"B"},
+{id:68,q:'Why mention "wheat and apples" in paragraph 2?',o:{A:"To show familiar crops in Americas",B:"More familiar than weeds and cattle",C:"To give examples of European crops brought to America",D:"To explain which crops Americans chose"},a:"C"},
+{id:69,q:'"them" in paragraph 3 refers to ___.',o:{A:"inhabitants",B:"Americans",C:"the Americas",D:"diseases"},a:"D"},
+{id:70,q:"Between 1492-1650, Native Americans died of the following EXCEPT ___.",o:{A:"mumps",B:"influenza",C:"malaria",D:"chicken pox"},a:"C"},
+{id:71,q:"Inferred from paragraph 4: ___.",o:{A:"Columbian Exchange had more impact on Americas than Europe",B:"More Europeans liked Old World's crops",C:"New World animals didn't change Old World ecosystems",D:"Muskrat and gray squirrel were Old World creatures"},a:"A"},
+{id:72,q:"Which best demonstrates the Columbian Exchange?",o:{A:"malaria and yellow fever",B:"crops, weeds, cattle and horses",C:"disease-causing agents",D:"smallpox and measles"},a:"B"}
+]}
+]},
+writing:{timeLimit:3600,parts:[
+{id:"wp1",title:"Part 1: Summary Writing",points:40,direction:"Read the passage and write a ~100-word summary.",
+passage:"CHILDREN AND TELEVISION\n\nTelevision has been changing the way people live for thirty years. Programs with little educational value are shown more often. Experts are concerned about the view youngsters are learning from television. Televised violence may cause children to become more aggressive. Clever advertising of sugar-rich products puts their dental health at risk. Improvements were noticed after parents limited viewing to one hour daily.",
+prompt:"Write a paragraph of about 100 words to summarize the above passage.",
+sampleAnswer:"Television may play an important role in educating children, but its negative influences are really worrying. First, children's attitudes and behavior have been changed due to strong influence from television. Second, children may become more aggressive owing to the violent scenes they watch. Third, children are susceptible to unhealthy foods as a result of advertising on TV. Fortunately, these drawbacks can be prevented if parents limit their children's daily watching time to one hour."},
+{id:"wp2",title:"Part 2: Essay Writing",points:60,direction:"Write an essay of about 300 words.",
+prompt:"What is your view on the idea that it takes failure to achieve success?\n\nSupport your position with reasoning and examples.",
+sampleAnswer:"To me, it is not failures themselves that lead to success, but rather a combination of natural ability, persistence, and even luck. First, success often comes from natural ability. Persistence has also been a factor. Luck is also a factor. In conclusion, failures are just one factor; the more important factors are natural ability, persistence, and luck."}
+]},
+speaking:{timeLimit:600,parts:[
+{id:"sp1",title:"Part 1: Visual Prompt",points:20,direction:"1 min prep, 1 min response. Include at least 3 main points.",
+prompt:"Look at the picture of John's family. Where are John's family members and what are they doing?",image:"speaking/speaking-part1-img1.jpg",prepTime:60,responseTime:60,
+sampleResponse:"All of John's family members are at home doing different things. His mother is vacuuming the floor. His father is ironing clothes. His grandparents are watching TV together. John is studying."},
+{id:"sp2",title:"Part 2: Personal Experience",points:30,direction:"1.5 min prep, 1.5 min response. Include reasons and examples.",
+prompt:"What is the most memorable event that you have ever attended? Why is it memorable to you?",prepTime:90,responseTime:90,
+sampleResponse:"The most memorable event I attended is the Cultural Festival in my hometown. First, it was the biggest exchange of cultures. Second, my hometown was beautifully decorated. Third, it brought many visitors."},
+{id:"sp3",title:"Part 3: Argumentative Presentation",points:50,direction:"2 min prep, 3 min response. Include at least 3 main points.",
+prompt:'"A good friend sees the first tear, catches the second and stops the third."\n\nDo you agree or disagree?',prepTime:120,responseTime:180,
+sampleResponse:"I totally agree. First, we tend to share problems with best friends. Second, a good friend is a shoulder to lean on. Third, sharing problems removes a heavy burden. In conclusion, a true friend is all we need in difficulty."}
+]}
+}},
+
+// --- ULIS Bac 3 ---
+{id:"bac3",title:"VNU-ULIS \u0110\u1ec1 Minh H\u1ecda B\u1eadc 3",shortTitle:"ULIS B\u1eadc 3",source:"VNU-ULIS",badgeClass:"src-bac3",
+sections:{
+listening:{timeLimit:1500,parts:[
+{id:"lp1",title:"Part 1: Monologues",points:7,direction:"7 questions. Hear each monologue TWICE. Choose A, B, or C.",
+questions:[
+{id:1,q:"Which topic is new this week?",o:{A:"Art",B:"Languages",C:"Transport"},a:"A"},
+{id:2,q:"What is the coming stop?",o:{A:"Rockport",B:"Bedford",C:"Glenfield"},a:"C"},
+{id:3,q:"How many members should be there in each group now?",o:{A:"3",B:"4",C:"5"},a:"A"},
+{id:4,q:"When will the Science Centre close?",o:{A:"6 p.m.",B:"7 p.m.",C:"11 p.m."},a:"C"},
+{id:5,q:"Where can shoppers find fruit in the store?",o:{A:"At the front",B:"In the middle",C:"At the back"},a:"A"},
+{id:6,q:"Unattended luggage will be ___.",o:{A:"moved to second floor",B:"taken away by staff",C:"left at information desk"},a:"B"},
+{id:7,q:"What is the announcement for?",o:{A:"To remind about boarding time",B:"To inform about boarding gate change",C:"To find some missing passengers"},a:"A"}
+]},
+{id:"lp2",title:"Part 2: Short Conversations",points:7,direction:"7 short conversations. Hear each TWICE. Choose A, B, or C.",
+questions:[
+{id:8,q:"What did Jennifer pay for the bag?",o:{A:"$80",B:"$90",C:"$100"},a:"A"},
+{id:9,q:"What has the weather been like this week?",o:{A:"Cloudy",B:"Sunny",C:"Rainy"},a:"C"},
+{id:10,q:"Which color does the woman choose?",o:{A:"Blue",B:"Green",C:"Orange"},a:"C"},
+{id:11,q:"What does the woman like most about the movie?",o:{A:"The music",B:"The outfits",C:"The ending"},a:"B"},
+{id:12,q:"Where is the main gate of the college?",o:{A:"On King Street",B:"On Carr Street",C:"On Dell Street"},a:"C"},
+{id:13,q:"What does the woman think about her secretary?",o:{A:"Unreliable in her job",B:"Inactive while at work",C:"Untidy at her office"},a:"B"},
+{id:14,q:"What happened to Jane's flight?",o:{A:"It took longer than expected.",B:"It took off at an earlier time.",C:"It was cancelled due to a storm."},a:"A"}
+]},
+{id:"lp3",title:"Part 3: True/False",points:6,direction:"2 longer recordings. Hear each TWICE. Decide if correct (A) or incorrect (B).",
+questions:[
+{id:15,q:"Ashley wants to take an intermediate swimming class.",o:{A:"Correct",B:"Incorrect"},a:"B"},
+{id:16,q:"Each swimming class is 60 minutes in total.",o:{A:"Correct",B:"Incorrect"},a:"B"},
+{id:17,q:"The course will start on July 21st.",o:{A:"Correct",B:"Incorrect"},a:"A"},
+{id:18,q:"The exam takes place on July 22nd.",o:{A:"Correct",B:"Incorrect"},a:"B"},
+{id:19,q:"The exam is 15 minutes longer than the mid-term one.",o:{A:"Correct",B:"Incorrect"},a:"A"},
+{id:20,q:"Revising the first three chapters is advised.",o:{A:"Correct",B:"Incorrect"},a:"B"}
+]}
+]},
+reading:{timeLimit:2400,parts:[
+{id:"rp1",title:"Part 1: Signs & Notices",points:7,direction:"Choose the best meaning (A, B, or C) for each sign/notice.",
+questions:[
+{id:1,q:"CHILDREN'S PLAY AREA\nNO PETS HERE!",o:{A:"Pets are expected to stay out of this area.",B:"Pets are required to play in this area only.",C:"Kids should be kept away from pets here."},a:"A"},
+{id:2,q:"NO ENTRY WITHOUT PERMISSION",o:{A:"People can come in here if they are allowed.",B:"No one should go in without being requested.",C:"Entrance is prohibited for everyone."},a:"A"},
+{id:3,q:"First Monday every month\nFREE 2nd pizza of any size",o:{A:"You are offered a free pizza on Mondays.",B:"You can get an extra pizza at no cost monthly.",C:"You should buy two pizzas every first Monday."},a:"B"},
+{id:4,q:"DISCOUNT AVAILABLE\nFor online shopping only",o:{A:"Online shoppers can register for a discount.",B:"The usable discount can only be found online.",C:"Customers can buy online at discounted prices."},a:"C"},
+{id:5,q:"NATIONAL CINEMA DAY\nFREE WATCHING\n- One kid per paying adult\n- To be qualified: 3 years or below",o:{A:"Any 3-year-old kid can watch free movies.",B:"Tickets for kids are free on national cinema day.",C:"One paying adult can bring a 2-year-old kid here for free."},a:"C"},
+{id:6,q:"VNU Campus JOB FAIR 2024\nCall 024 367 5588",o:{A:"The event may provide you a job opportunity.",B:"Email us if you want to book a spot.",C:"You should make a call to the event holder."},a:"A"},
+{id:7,q:"PERMIT PARKING\nfor RESIDENTS ONLY\nVehicles without permits will be towed",o:{A:"Unpermitted parking comes with expenses.",B:"This parking space is limited to those living here.",C:"Visitors can park here if residents agree."},a:"B"}
+]},
+{id:"rp2",title:"Part 2: Gap Fill - Temperature",points:8,direction:"Choose the best answer (A, B, or C) to fill in each blank.",
+passage:"Temperature refers to the degree of hotness or coldness. To check temperature, we use a thermometer \u2013 a long thin tube (8) _____ with liquid mercury. It has a (9) _____ which shows how hot or cold things are. Most of the world uses Celsius but some (10) _____ places use Fahrenheit. Scientists use Kelvin (11) _____ it starts from absolute zero.\n\nIn science, temperature is about how fast molecules move in (12) _____ material. For gases, temperature, pressure, and volume are connected (13) _____ the laws of physics. It helps us study and (14) _____ weather patterns. For students, (15) _____ thermometers is a useful skill.",
+questions:[
+{id:8,q:"(8)",o:{A:"filled",B:"filling",C:"to fill"},a:"A"},
+{id:9,q:"(9)",o:{A:"measurement",B:"scale",C:"ruler"},a:"B"},
+{id:10,q:"(10)",o:{A:"another",B:"extra",C:"other"},a:"C"},
+{id:11,q:"(11)",o:{A:"since",B:"although",C:"whether"},a:"A"},
+{id:12,q:"(12)",o:{A:"a",B:"the",C:"\u2205"},a:"A"},
+{id:13,q:"(13)",o:{A:"in",B:"through",C:"by"},a:"C"},
+{id:14,q:"(14)",o:{A:"control",B:"follow",C:"predict"},a:"C"},
+{id:15,q:"(15)",o:{A:"reading",B:"viewing",C:"operating"},a:"A"}
+]},
+{id:"rp3",title:"Part 3: True/False - Five Star Fitness",points:5,direction:"Choose A (True) or B (False).",
+passage:"Five Star Fitness Center is dedicated to a holistic approach to health, with emphasis on Yoga guided by Indian Yoga Masters. Classes include Hot Yoga, Power Yoga, Ashtanga, and Hatha Flow, catering to all levels. Tailored wellness programs include personalized workout plans and nutritional guidance. VND50,000/day, two-week plan VND400,000, one-month plan VND500,000.",
+questions:[
+{id:16,q:"The center employs an age-old method to promote wellness.",o:{A:"True",B:"False"},a:"A"},
+{id:17,q:"Classes are organized separately according to the members' levels.",o:{A:"True",B:"False"},a:"B"},
+{id:18,q:"Practice sessions can change to meet members' specific goals.",o:{A:"True",B:"False"},a:"A"},
+{id:19,q:"The center is particularly for persons who need nutritional guidance.",o:{A:"True",B:"False"},a:"B"},
+{id:20,q:"The one-month membership offers cost savings compared to the others.",o:{A:"True",B:"False"},a:"B"}
+]},
+{id:"rp4",title:"Part 4: Exercise for Elderly",points:5,direction:"Choose the best answer (A, B, or C).",
+passage:"We all know we should exercise often. Studies found improving fitness for older people led to 19% lower heart disease and 15% drop in death rates. Exercise can reduce obesity, type-2 diabetes, high blood pressure. Experts recommend gentle exercise: walking, swimming, yoga, dancing.",
+questions:[
+{id:21,q:'"slide" in paragraph 1 is closest in meaning to ___.',o:{A:"increase gradually",B:"decline easily",C:"change constantly"},a:"B"},
+{id:22,q:"What is mentioned in paragraph 2?",o:{A:"It takes over six years to improve fitness.",B:"There was a decrease in death rates in 2011's report.",C:"Health problems in older age are far from easy to address."},a:"C"},
+{id:23,q:"What does Chris Zaremba say about the elderly?",o:{A:"They are encouraged to get involved in fitness.",B:"They possibly face a lot of fitness challenges.",C:"They should visit his website."},a:"A"},
+{id:24,q:"What is NOT mentioned about swimming?",o:{A:"It helps people become flexible.",B:"Regular swimming reduces muscle pain.",C:"It helps strengthen the muscles."},a:"B"},
+{id:25,q:"What is the main purpose of the passage?",o:{A:"To urge office workers to exercise before retirement",B:"To stress the importance of staying active for a healthy retirement",C:"To suggest a variety of fitness activities for retirees"},a:"B"}
+]}
+]},
+writing:{timeLimit:2400,parts:[
+{id:"wp1",title:"Task 1: Description",points:0,direction:"Write at least 80 words.",
+prompt:"BEST EMPLOYEE OF THE YEAR\nName: Nguyen Thuy Ha\nPosition: Project manager\nYears of experience: 10\nAchievements: Led 3 successful projects, Won an office improvement contest\n\nWrite a paragraph about her on your company's website.",sampleAnswer:""},
+{id:"wp2",title:"Task 2: Paragraph Writing",points:0,direction:"Write at least 100 words. Choose ONE topic.",
+prompt:"Task 2.1: Write a paragraph about the effects of air pollution on people's lives.\nOR\nTask 2.2: Write a paragraph about the benefits of learning about the history of a country.",sampleAnswer:""}
+]},
+speaking:{timeLimit:480,parts:[
+{id:"sp1",title:"Part 1: Social Interaction",points:0,direction:"Answer the following questions.",
+prompt:"- Do you study or work?\n- How far is it from your house to school? / Do you like your job?\n- What animals do you like?\n- What TV programs do you often watch?\n- How often do you visit your relatives?",prepTime:0,responseTime:180,sampleResponse:""},
+{id:"sp2",title:"Part 2: Cue-based Description",points:0,direction:"Choose ONE card. 1 min prep, 4 min response.",
+prompt:"Card 1: Describe a time you saw a wild animal.\n- what animal you saw\n- where you saw it\n- how you felt\n\nCard 2: Describe an activity to keep fit.\n- what the activity was\n- how often you did it\n- how you felt",prepTime:60,responseTime:240,sampleResponse:""}
+]}
+}},
+
+// --- ULIS Bac 4 ---
+{id:"bac4",title:"VNU-ULIS \u0110\u1ec1 Minh H\u1ecda B\u1eadc 4",shortTitle:"ULIS B\u1eadc 4",source:"VNU-ULIS",badgeClass:"src-bac4",
+sections:{
+listening:{timeLimit:1800,parts:[
+{id:"lp1",title:"Part 1: Short Recordings",points:7,direction:"7 questions. Hear each ONCE. Choose A, B, C or D.",
+questions:[
+{id:1,q:"When will they arrive at Straddie?",o:{A:"In 15 minutes",B:"In 20 minutes",C:"In 40 minutes",D:"In 45 minutes"},a:"D"},
+{id:2,q:"How much did the burger cost?",o:{A:"$4.45",B:"$4.55",C:"$5.45",D:"$5.55"},a:"A"},
+{id:3,q:"What is the woman's project partner like?",o:{A:"He is punctual.",B:"He is bright.",C:"He is studious.",D:"He is good-looking."},a:"B"},
+{id:4,q:"What time can John and Peter meet?",o:{A:"7.00",B:"7.30",C:"7.45",D:"8.15"},a:"C"},
+{id:5,q:"What dissatisfied Uncle Martin about India?",o:{A:"The scenery",B:"The cuisine",C:"The people",D:"The transport"},a:"D"},
+{id:6,q:"What does Kate's group need to prepare?",o:{A:"Drinks",B:"Rice",C:"Bacon",D:"Fruits"},a:"C"},
+{id:7,q:"Where is the speaker?",o:{A:"At the checkout",B:"At customer service",C:"At the police station",D:"At the sportswear department"},a:"B"}
+]},
+{id:"lp2",title:"Part 2: True/False",points:9,direction:"3 longer recordings. Hear each ONCE. A = Correct, B = Incorrect.",
+questions:[
+{id:8,q:"The boat tour provides a chance to see crocodiles and turtles.",o:{A:"Correct",B:"Incorrect"},a:"A"},
+{id:9,q:"Bird World now possesses more than 80 types of birds.",o:{A:"Correct",B:"Incorrect"},a:"A"},
+{id:10,q:"If visitors cannot find their way, they can call 079 094 9311.",o:{A:"Correct",B:"Incorrect"},a:"B"},
+{id:11,q:"Recycled bottles are cleaned before being gathered at the centre.",o:{A:"Correct",B:"Incorrect"},a:"B"},
+{id:12,q:"The recycling process involves high temperature.",o:{A:"Correct",B:"Incorrect"},a:"A"},
+{id:13,q:"The talk focuses on describing some methods of recycling bottles.",o:{A:"Correct",B:"Incorrect"},a:"B"},
+{id:14,q:"Sharing aims in life is a must for married couples.",o:{A:"Correct",B:"Incorrect"},a:"A"},
+{id:15,q:"Honesty is more important than money in a marriage.",o:{A:"Correct",B:"Incorrect"},a:"B"},
+{id:16,q:"Marriages are badly affected by lying about money.",o:{A:"Correct",B:"Incorrect"},a:"A"}
+]},
+{id:"lp3",title:"Part 3: Longer Recordings",points:9,direction:"3 recordings. Hear each ONCE. Choose A, B, C or D.",
+questions:[
+{id:17,q:"What is true about registry items?",o:{A:"Things we want to give newlyweds.",B:"They suggest what the newlyweds need.",C:"Must-have presents for a wedding.",D:"Required to suit the couple's style."},a:"B"},
+{id:18,q:"Best time to offer the gift?",o:{A:"A couple of weeks before the wedding",B:"Right before the wedding party",C:"Two weeks after the wedding",D:"Within one year after the wedding"},a:"A"},
+{id:19,q:"Why is it tricky to give cash?",o:{A:"Depends on how close you are.",B:"Causes confusion.",C:"May trigger discomfort.",D:"Hard to choose the amount."},a:"D"},
+{id:20,q:"Foods/drinks that help overcome flu EXCEPT ___.",o:{A:"yogurt",B:"lemon juice",C:"vegetables",D:"mineral water"},a:"D"},
+{id:21,q:"Which is true about garlic?",o:{A:"One-fifth as effective as penicillin.",B:"Eating it raw makes the best use against flu.",C:"As powerful as penicillin.",D:"Considered the best natural antibiotic."},a:"B"},
+{id:22,q:"What is the conversation mainly about?",o:{A:"Medicine-free methods to fight flu",B:"Foods and drinks to avoid flu",C:"Key role of natural substances",D:"Amount of liquid to drink during flu"},a:"A"},
+{id:23,q:"How did the man learn Polish?",o:{A:"Bilingual translation method",B:"Weekly Polish learning group",C:"Language exchange with a local man",D:"Comparing Polish to a similar language"},a:"C"},
+{id:24,q:"What about Russian?",o:{A:"Knowing its structure strongly helped learn Polish.",B:"Its contribution was modest.",C:"Speaking it enabled fluency in Polish.",D:"Learning it showed a way to learn Polish faster."},a:"A"},
+{id:25,q:"Lesson gained when learning Polish?",o:{A:"Communication brings people together.",B:"Having a technique is crucial.",C:"Learning should come from internal motivation.",D:"Travelling can be a driving force."},a:"D"}
+]}
+]},
+reading:{timeLimit:2700,parts:[
+{id:"rp1",title:"Part 1: Gap Fill - Brazil",points:10,direction:"Choose A, B, C, or D to fill in each blank.",
+passage:"Brazil, the largest country in South America, is respected (1) _____ bright colors and diverse cultures. Coming to this country, people are drawn to Carnival celebrations, (2) _____ music and dance bring happiness. The celebrations let visitors experience Brazil's lively life and (3) _____ the richness of its culture.\n\nThe Amazon Rainforest (4) _____ a crucial role in producing oxygen. (5) _____ Brazil is the tall Christ the Redeemer statue, opening wide as to (6) _____ welcome visitors.\n\nAt Copacabana and Ipanema, visitors (7) _____ enjoy a nice walk along the beaches. (8) _____, Brazilians are friendly. They love to share their (9) _____ food, such as feijoada.\n\nBrazil really (10) _____ a unique experience for travelers.",
+questions:[
+{id:1,q:"(1)",o:{A:"by",B:"for",C:"of",D:"to"},a:"B"},
+{id:2,q:"(2)",o:{A:"where",B:"which",C:"how",D:"when"},a:"A"},
+{id:3,q:"(3)",o:{A:"seek out",B:"sort out",C:"dig into",D:"look into"},a:"C"},
+{id:4,q:"(4)",o:{A:"could play",B:"may play",C:"has played",D:"had been playing"},a:"C"},
+{id:5,q:"(5)",o:{A:"Another attraction in",B:"Attracted by",C:"What attracts",D:"As attractive as"},a:"A"},
+{id:6,q:"(6)",o:{A:"doubly",B:"broadly",C:"warmly",D:"officially"},a:"C"},
+{id:7,q:"(7)",o:{A:"should",B:"must",C:"might",D:"can"},a:"D"},
+{id:8,q:"(8)",o:{A:"Fortunately",B:"Consequently",C:"Contradictorily",D:"Additionally"},a:"D"},
+{id:9,q:"(9)",o:{A:"safe",B:"tasty",C:"natural",D:"convenient"},a:"B"},
+{id:10,q:"(10)",o:{A:"offers",B:"gives",C:"proposes",D:"builds"},a:"A"}
+]},
+{id:"rp2",title:"Part 2: True/False - Job Ad",points:7,direction:"Choose A (True) or B (False).",
+passage:"DreamTech Innovations (DTI) offers sales training with a competitive hourly rate. Help getting professional license. Top performers may get salaried positions. Welcome candidates from all backgrounds. 24/7 customer service with flexible shifts. Extra 10% pay for late-night and early-morning shifts.",
+questions:[
+{id:11,q:"DTI is holding a course for career growth.",o:{A:"True",B:"False"},a:"B"},
+{id:12,q:"Employees at DTI receive payment on an hourly basis.",o:{A:"True",B:"False"},a:"A"},
+{id:13,q:"DTI is highlighting its favorable conditions to potential candidates.",o:{A:"True",B:"False"},a:"A"},
+{id:14,q:"DTI rarely recruits graduates from high schools.",o:{A:"True",B:"False"},a:"B"},
+{id:15,q:"Employees at DTI are encouraged to work in fixed shifts.",o:{A:"True",B:"False"},a:"B"},
+{id:16,q:"Additional payment is granted for those who start work early.",o:{A:"True",B:"False"},a:"A"},
+{id:17,q:"Applicants must visit the DTI website for the application process.",o:{A:"True",B:"False"},a:"B"}
+]},
+{id:"rp3",title:"Part 3: Telescope",points:5,direction:"Choose A, B, C, or D.",
+passage:"The telescope allows us to see distant objects closer. Invented by Dutch eyeglass maker Hans Lippershey. Two lenses in a tube, magnified 3 times. Galileo Galilei made improved versions (8x, 20x, 100x) and proved Earth revolves around the Sun.",
+questions:[
+{id:18,q:"What is NOT true about the telescope (para 1)?",o:{A:"It extends our vision.",B:"It's a tool for space exploration.",C:"It proved the geocentric concept.",D:"It altered our beliefs about the universe."},a:"C"},
+{id:19,q:"What is paragraph 2 mainly about?",o:{A:"The telescope inventor",B:"How the first telescope was created",C:"A problematic telescope",D:"Why the patent was rejected"},a:"B"},
+{id:20,q:"First telescope by Galilei?",o:{A:"Developed based on a Dutchman's telescope.",B:"Its magnifying capacity was more than Lippershey's.",C:"It allowed viewing planets and moons.",D:"It had problems with field of view."},a:"B"},
+{id:21,q:'"prompted" in paragraph 3 is closest to ___.',o:{A:"stimulated",B:"heightened",C:"acknowledged",D:"reflected"},a:"A"},
+{id:22,q:"Writer's attitude toward telescopes?",o:{A:"Indifferent",B:"Amazed",C:"Supportive",D:"Judgmental"},a:"C"}
+]},
+{id:"rp4",title:"Part 4: Music",points:8,direction:"Choose A, B, C, or D.",
+passage:"Music is a special way people communicate. Playing music improves the brain more than just listening. The auditory system processes sound more effectively after musical training. Brain areas controlling instrument-related muscles grow in size. Better musical ability relates to higher reading scores. Playing music together fosters social connections. Music also expresses our identities.",
+questions:[
+{id:23,q:"What is mentioned about music in paragraph 1?",o:{A:"Music in dances produces emotions.",B:"Music is a means of expressing thoughts.",C:"Music has a lifelong impact.",D:"Music is primarily entertainment."},a:"B"},
+{id:24,q:'Why mention "playing sports"?',o:{A:"To emphasize physical activities for development",B:"To suggest similar effects as playing music",C:"To highlight drawbacks of physical activities",D:"To illustrate the degree of impact from different ways to enjoy music"},a:"D"},
+{id:25,q:"Main purpose of paragraph 2?",o:{A:"Highlight many ways musical training benefits the brain",B:"Discuss factors influencing brain activities",C:"Showcase brain development from musical practices",D:"Promote musical training"},a:"C"},
+{id:26,q:'"exercise" in paragraph 2 is closest to ___.',o:{A:"Polish",B:"Perform",C:"Engage",D:"Train"},a:"C"},
+{id:27,q:"What happens to brain area controlling fingers?",o:{A:"Remains unchanged.",B:"More active.",C:"Works more efficiently.",D:"Becomes larger."},a:"D"},
+{id:28,q:'"this" in paragraph 2 refers to ___.',o:{A:"Playing music together",B:"Fostering social connections",C:"Enhancing socio-emotional awareness",D:"Expressing emotions constructively"},a:"C"},
+{id:29,q:"Which is mentioned in the passage?",o:{A:"Musical effects on education",B:"Advantages of musical events",C:"Personal lifestyles mirrored in music",D:"Advice for young music learners"},a:"C"},
+{id:30,q:"Main idea of the passage?",o:{A:"Multifaceted role of music in expression and development",B:"Link between playing music and academic achievements",C:"Relationship between listening and emotional intelligence",D:"Impacts of music-related activities in multiple aspects"},a:"A"}
+]}
+]},
+writing:{timeLimit:3000,parts:[
+{id:"wp1",title:"Task 1",points:0,direction:"Write at least 100 words. Choose ONE task.",
+prompt:"Task 1.1: Summarize the bar chart showing female/male staff in 4 departments of IDEAK company (2016).\nOR\nTask 1.2: Write a letter to local authority complaining about an environmental problem.",sampleAnswer:""},
+{id:"wp2",title:"Task 2: Essay",points:0,direction:"Write at least 180 words.",
+prompt:"Some people think that a strict dress code should be required in the workplace. What is your opinion?",sampleAnswer:""}
+]},
+speaking:{timeLimit:600,parts:[
+{id:"sp1",title:"Part 1: Social Interaction",points:0,direction:"Answer the following questions.",
+prompt:"- Do you study or work?\n- What is your major? / What do you do in your job?\n- Are you good at taking photos?\n- How can you save energy at home?\n- What are common natural disasters in your country?",prepTime:0,responseTime:120,sampleResponse:""},
+{id:"sp2",title:"Part 2: Cue-based Talk",points:0,direction:"1 min prep, 2 min response.",
+prompt:"Describe one time you worked in a team.\n- who you worked with\n- what task(s) your team did\n- how you felt when doing teamwork",prepTime:60,responseTime:120,sampleResponse:""},
+{id:"sp3",title:"Part 3: Topic Discussion",points:0,direction:"Choose ONE topic. 1 min prep, 4 min response.",
+prompt:"Topic 1: Technology has a negative impact on social interaction. Agree or disagree?\n\nTopic 2: Students should delay university study a year after high school. Agree or disagree?",prepTime:60,responseTime:240,sampleResponse:""}
+]}
+}},
+
+// --- ULIS Bac 5 ---
+{id:"bac5",title:"VNU-ULIS \u0110\u1ec1 Minh H\u1ecda B\u1eadc 5",shortTitle:"ULIS B\u1eadc 5",source:"VNU-ULIS",badgeClass:"src-bac5",
+sections:{
+listening:{timeLimit:2100,parts:[
+{id:"lp1",title:"Part 1: Short Recordings",points:9,direction:"9 questions. Hear each ONCE. Choose A, B, C or D.",
+questions:[
+{id:1,q:"Which class takes place on Tuesday?",o:{A:"Dance",B:"Singing",C:"Fashion",D:"Painting"},a:"B"},
+{id:2,q:"What must the man's father stop eating?",o:{A:"Ice cream",B:"Sugar",C:"Sausage",D:"Salmon"},a:"C"},
+{id:3,q:"What language does the speaker wish to learn?",o:{A:"French",B:"German",C:"Italian",D:"Japanese"},a:"D"},
+{id:4,q:"Which area is NOT convenient to reach from residence halls?",o:{A:"The library",B:"The lecture halls",C:"The cinemas",D:"The student centres"},a:"C"},
+{id:5,q:"What changes in public transport during Labor Day?",o:{A:"Only night buses.",B:"Train travel lasts longer.",C:"Fewer trains.",D:"Night buses leave earlier."},a:"C"},
+{id:6,q:"Why was the photocopy machine NOT working?",o:{A:"No paper left.",B:"Set on wrong function.",C:"Paper jam.",D:"Cover was opened."},a:"B"},
+{id:7,q:"Speaker's opinion about eating?",o:{A:"Follow our body's signals",B:"Listen to experts' advice",C:"Ignore all kinds of pressure",D:"Be strict about what we eat"},a:"A"},
+{id:8,q:"What is the speaker doing?",o:{A:"Introducing a TV program",B:"Responding to viewers' questions",C:"Setting up a live program",D:"Encouraging viewers to contribute"},a:"D"},
+{id:9,q:"Who is probably speaking?",o:{A:"A flight attendant",B:"A hospital officer",C:"An airport manager",D:"An emergency assistant"},a:"A"}
+]},
+{id:"lp2",title:"Part 2: True/False",points:9,direction:"3 longer recordings. Hear each ONCE. A = Correct, B = Incorrect.",
+questions:[
+{id:10,q:"Dr. Weitzman has worked as an animal doctor for more than 20 years.",o:{A:"Correct",B:"Incorrect"},a:"A"},
+{id:11,q:"Men's deep tones trigger immediate responses from cats.",o:{A:"Correct",B:"Incorrect"},a:"B"},
+{id:12,q:"What excites Dr. Weitzman is cats' vision capacity.",o:{A:"Correct",B:"Incorrect"},a:"B"},
+{id:13,q:"The ultimate key to a good sleep is a favorable bedroom environment.",o:{A:"Correct",B:"Incorrect"},a:"A"},
+{id:14,q:"Keeping away from electronic gadgets is a must to sleep well.",o:{A:"Correct",B:"Incorrect"},a:"A"},
+{id:15,q:"Skipping breakfast lessens stored calories.",o:{A:"Correct",B:"Incorrect"},a:"B"},
+{id:16,q:"Blended learning is specially designed for digital experience lovers.",o:{A:"Correct",B:"Incorrect"},a:"B"},
+{id:17,q:"One-size-fits-all technology is required in blended learning.",o:{A:"Correct",B:"Incorrect"},a:"B"},
+{id:18,q:"Computer literacy is a popularly known concept like regular literacy.",o:{A:"Correct",B:"Incorrect"},a:"A"}
+]},
+{id:"lp3",title:"Part 3: Longer Recordings",points:12,direction:"3 recordings. Hear each ONCE. 4 questions each. Choose A, B, C or D.",
+questions:[
+{id:19,q:"What is true about Suzanne's new book?",o:{A:"Used in an environmental campaign.",B:"Helped discover a talented author.",C:"Well-recognized on a global scale.",D:"Teaches readers to solve problems."},a:"C"},
+{id:20,q:"What inspired Suzanne to say no to cars?",o:{A:"Overdevelopment of automobile industry",B:"Long-lasting stress from cars",C:"Negative impacts on goods delivery",D:"Time spent stuck in traffic"},a:"D"},
+{id:21,q:"Benefit of shopping at local stores?",o:{A:"More confident about product quality",B:"More reasonable prices",C:"Feeling secure about product sources",D:"Avoiding low-quality products"},a:"A"},
+{id:22,q:"What does the conversation mainly cover?",o:{A:"What triggered a car-free life",B:"How cars positively and negatively impact life",C:"How shopping without cars betters product choice",D:"What to consider when living without cars"},a:"B"},
+{id:23,q:"Way to optimize children's brain power?",o:{A:"Good physical preparation",B:"Well-prepared with learning tools",C:"Eat more the previous night",D:"Retake a test when feeling sick"},a:"B"},
+{id:24,q:"What is more essential than reviewing test-taking strategies?",o:{A:"Encouraging children to read extensively",B:"Keeping in contact with teachers",C:"Motivating children to raise voices to teachers",D:"Training children to read under time pressure"},a:"B"},
+{id:25,q:"Why should parents look at previous performance?",o:{A:"To identify and help overcome weaknesses",B:"To inspire with good past results",C:"To compare with test standards",D:"To maintain patience"},a:"A"},
+{id:26,q:"What is the talk mainly about?",o:{A:"What parents do to accompany children in testing",B:"Role of parents in building testing skills",C:"How parents optimize test-taking strategies",D:"Parental supports to develop test-taking ability"},a:"D"},
+{id:27,q:"What do scientists claim about stress?",o:{A:"Various sources may lead to stress.",B:"More people are suffering from stress.",C:"Majority of stress sources are avoidable.",D:"Knowing how to avoid stress is key."},a:"C"},
+{id:28,q:"How does technology affect our life?",o:{A:"Heavier workloads required.",B:"Managers control work more tightly.",C:"Job productivity defined differently.",D:"Tasks become more complex."},a:"A"},
+{id:29,q:"What can be inferred about losing work-life balance?",o:{A:"Root cause of being stressed.",B:"Results in loosened social relationships.",C:"Causes social distance in workplaces.",D:"Leads to family break-ups."},a:"B"},
+{id:30,q:"Topic of the talk?",o:{A:"Stress and its evident effects",B:"How technology causes stress",C:"Where stress in our lives originates from",D:"Relationships under the impact of stress"},a:"C"}
+]}
+]},
+reading:{timeLimit:3000,parts:[
+{id:"rp1",title:"Part 1: Gap Fill - Serenity Oasis",points:10,direction:"Choose A, B, C, or D to fill in each blank.",
+passage:"I've (1) _____ the Serenity Oasis Holiday Haven, which opens June to November. The indoor Aqua Adventure Park, (3) _____ both young and old can enjoy various pools. Some of these, (4) _____, are for serious swimmers only. Serenity Oasis is excellent for families (6) _____ it is entirely car-free. Some might find this (7) _____, but I found it delightful. Accommodations include a (8) _____ of cottages. Despite my concerns about space, I was (9) _____. Why don't you give it (10) _____?",
+questions:[
+{id:1,q:"(1)",o:{A:"come across",B:"put forward",C:"got into",D:"drawn upon"},a:"A"},
+{id:2,q:"(2) - perfect escape ___ the weather",o:{A:"no matter how",B:"from whatever",C:"independent of",D:"on condition of"},a:"C"},
+{id:3,q:"(3)",o:{A:"for what",B:"from what",C:"through which",D:"at which"},a:"D"},
+{id:4,q:"(4)",o:{A:"alternatively",B:"definitely",C:"accordingly",D:"simultaneously"},a:"B"},
+{id:5,q:"(5) - not yet ready to ___ in activities",o:{A:"engage",B:"absorb",C:"tie",D:"enroll"},a:"A"},
+{id:6,q:"(6)",o:{A:"supposing that",B:"despite that",C:"as though",D:"inasmuch as"},a:"D"},
+{id:7,q:"(7)",o:{A:"inappropriate",B:"embarrassing",C:"inconvenient",D:"thrilling"},a:"C"},
+{id:8,q:"(8)",o:{A:"diversity",B:"variation",C:"diversification",D:"variance"},a:"A"},
+{id:9,q:"(9)",o:{A:"mind-blowing",B:"mind-blowingly",C:"mind-blown",D:"mind-blow"},a:"C"},
+{id:10,q:"(10)",o:{A:"an attempt",B:"a go",C:"a rest",D:"a call"},a:"B"}
+]},
+{id:"rp2",title:"Part 2: True/False - Math & Funland",points:11,direction:"Choose A (True) or B (False).",
+questions:[
+{id:11,q:"Math is challenging yet beneficial to children's development.",o:{A:"True",B:"False"},a:"A"},
+{id:12,q:"Making math more concrete and engaging is mandatory.",o:{A:"True",B:"False"},a:"B"},
+{id:13,q:"Assisting kids with math requires effort and persistence from teachers and parents.",o:{A:"True",B:"False"},a:"B"},
+{id:14,q:"Solid foundational knowledge is a prerequisite for solving math problems.",o:{A:"True",B:"False"},a:"A"},
+{id:15,q:"It is vital to foster a favorable mindset toward learning math among kids.",o:{A:"True",B:"False"},a:"A"},
+{id:16,q:"Families are welcome to bring their children to the event until 5 p.m.",o:{A:"True",B:"False"},a:"B"},
+{id:17,q:"The treasure hunt activity promises an intriguing expedition.",o:{A:"True",B:"False"},a:"A"},
+{id:18,q:"The Creative corner includes DIY crafts and face painting.",o:{A:"True",B:"False"},a:"B"},
+{id:19,q:"Children will get chances to engage with some figures that they adore.",o:{A:"True",B:"False"},a:"A"},
+{id:20,q:"Snacks like cotton candy and popcorn are provided for free.",o:{A:"True",B:"False"},a:"B"},
+{id:21,q:"Ticket purchases can be made online through the website.",o:{A:"True",B:"False"},a:"B"}
+]},
+{id:"rp3",title:"Part 3: Jenny's Ukulele & Lab Technicians",points:14,direction:"Choose A, B, C, or D.",
+questions:[
+{id:22,q:"What sparked Jenny's dedication to the ukulele?",o:{A:"Her childhood musical adventure",B:"Her granny's musical instrument",C:"Her curiosity about strings and chords",D:"Her genuine passion for music"},a:"B"},
+{id:23,q:'"foreign" in paragraph 2 is closest to ___.',o:{A:"alien",B:"unrelated",C:"abnormal",D:"distracted"},a:"A"},
+{id:24,q:'Best paraphrase of "the ukulele became Jenny\'s companion through the highs and lows of adolescence"?',o:{A:"More and more by Jenny's side in good and bad moments.",B:"Witnessed any emotional change in her adolescence.",C:"Became indispensable at the time she entered adolescence.",D:"Accompanied Jenny on various occasions."},a:"A"},
+{id:25,q:"What is NOT an obstacle when acquiring ukulele skills?",o:{A:"Positioning fingers",B:"Encountering mixed emotions",C:"Strumming the ukulele",D:"Grasping musical notes"},a:"B"},
+{id:26,q:"Jenny's thought on her musical journey as a young adult?",o:{A:"She cherishes every challenging moment.",B:"She controls her feelings via music.",C:"She equals it with the feeling of struggle.",D:"She thrives through her playing."},a:"D"},
+{id:27,q:"Which is true according to the passage?",o:{A:"Jenny was skillful from a young age.",B:"Jenny's growth was attributed to communal assistance.",C:"Her tunes brought comfort to family gatherings.",D:"She had unique strategies for negative encounters."},a:"B"},
+{id:28,q:"Main purpose of paragraph 1 (Text 2)?",o:{A:"Introduce a role in research",B:"Illustrate various research tasks",C:"Outline a research procedure",D:"Stress the significance of research"},a:"A"},
+{id:29,q:"What does a lab tech primarily do?",o:{A:"Plans experimental research",B:"Manages administrative tasks",C:"Conducts a quest for knowledge",D:"Supports researchers in their studies"},a:"D"},
+{id:30,q:'"meticulously" in paragraph 3 is closest to ___.',o:{A:"precisely",B:"thoroughly",C:"intensively",D:"cautiously"},a:"B"},
+{id:31,q:"What is NOT a requirement for a lab tech?",o:{A:"Conforming to security guidelines",B:"Supervising experimental processes",C:"Clearly expressing thoughts",D:"Adjusting to unexpected situations"},a:"B"},
+{id:32,q:'"This" in paragraph 4 refers to ___.',o:{A:"Undergoing specialized training",B:"Pursuing academic excellence",C:"Gaining hands-on experience",D:"Cooperating with other technicians"},a:"C"},
+{id:33,q:"Main topic of paragraph 4?",o:{A:"Significance of educational qualifications",B:"Strategies for career advancements",C:"Factors influencing success in the career",D:"Aspects to ponder before commencing"},a:"C"},
+{id:34,q:"Which is implied from the passage?",o:{A:"Lab techs are companions of all researchers.",B:"Lab techs regulate scientific principles.",C:"A lab tech specializes in various fields.",D:"A lab tech is quite a demanding job."},a:"D"},
+{id:35,q:"Where might this passage be found?",o:{A:"A job advert",B:"A scientific article",C:"A career book",D:"An occupational report"},a:"C"}
+]}
+]},
+writing:{timeLimit:3600,parts:[
+{id:"wp1",title:"Task 1",points:0,direction:"Write at least 120 words. Choose ONE task.",
+prompt:"Task 1.1: Summarize the pie chart showing % of people working in different sectors (2000 vs 2010).\nOR\nTask 1.2: Write a proposal on how to advertise your company's new technological product.",sampleAnswer:""},
+{id:"wp2",title:"Task 2: Essay",points:0,direction:"Write at least 200 words.",
+prompt:"It is widely held that online education can substitute for traditional learning. Meanwhile, others believe it should not be promoted. Discuss both views.",sampleAnswer:""}
+]},
+speaking:{timeLimit:600,parts:[
+{id:"sp1",title:"Part 1: Social Interaction",points:0,direction:"Answer the following questions.",
+prompt:"- Do you study or work?\n- What do you like studying? / Do you work on weekends?\n- What can you do to stay healthy?\n- How do your parents spend their free time?\n- Do young people like to follow fashion trends?",prepTime:0,responseTime:120,sampleResponse:""},
+{id:"sp2",title:"Part 2: Cue-based Talk",points:0,direction:"1 min prep, 2 min response.",
+prompt:"Describe a person who has a successful start-up.\n- who he/she is\n- what start-up he/she has\n- how you know him/her",prepTime:60,responseTime:120,sampleResponse:""},
+{id:"sp3",title:"Part 3: Topic Discussion",points:0,direction:"Choose ONE topic. 1 min prep, 4 min response.",
+prompt:"Topic 1: Space exploration is always worthwhile due to its long-term benefits. Agree or disagree?\n\nTopic 2: The media should not report the private lives of famous people. Agree or disagree?",prepTime:60,responseTime:240,sampleResponse:""}
+]}
+}}
+];
+
+// ========== APP STATE ==========
+let selectedTestIdx = 0;
+let mode = null;
+let currentSection = 'listening';
+let answers = {};
+let writingTexts = {};
+let timer = null;
+let timeLeft = 0;
+let paused = false;
+let speakingTimers = {};
+let hideCompleted = false;
+let retryWrongOnly = false;
+const sectionKeys = ['listening','reading','writing','speaking'];
+const sectionLabels = {listening:'Listening',reading:'Reading',writing:'Writing',speaking:'Speaking'};
+
+// ========== HELPERS ==========
+function $(id){return document.getElementById(id)}
+function esc(s){if(s==null)return '';const d=document.createElement('div');d.textContent=s;return d.innerHTML}
+function fmtTime(s){const m=Math.floor(s/60),sec=s%60;return `${String(m).padStart(2,'0')}:${String(sec).padStart(2,'0')}`}
+function getTest(){return TESTS[selectedTestIdx]}
+function globalQId(qId,sec){return `${getTest().id}:${sec}:${qId}`}
+
+function getAllQuestions(sec){
+  const parts=getTest().sections[sec]?.parts||[];
+  let qs=[];
+  parts.forEach(p=>{
+    if(p.tasks) p.tasks.forEach(t=>qs.push(...t.questions));
+    else if(p.questions) qs.push(...p.questions);
+  });
+  return qs;
+}
+
+// ========== INIT ==========
+function syncTabsTop(){
+  const h=$('header');const t=$('tabsBar');
+  if(h&&t)t.style.top=h.offsetHeight+'px';
+}
+function init(){
+  renderTestGrid();
+  updateHistoryStats();
+  syncTabsTop();
+  window.addEventListener('resize',syncTabsTop);
+}
+
+function renderTestGrid(){
+  let html='';
+  TESTS.forEach((t,i)=>{
+    const lqs=getAllQuestionsForTest(t,'listening'), rqs=getAllQuestionsForTest(t,'reading');
+    const total=lqs+rqs;
+    const h=loadHistory();
+    const practiced=Object.keys(h).filter(k=>k.startsWith(t.id+':')).length;
+    html+=`<div class="test-card ${i===selectedTestIdx?'selected':''}" onclick="selectTest(${i})">
+      <h3><span class="${t.badgeClass} src-badge">${esc(t.shortTitle)}</span> ${esc(t.title)}</h3>
+      <div class="meta">${total} MC questions | ${practiced}/${total} practiced</div>
+    </div>`;
+  });
+  $('testGrid').innerHTML=html;
+}
+
+function getAllQuestionsForTest(t,sec){
+  const parts=t.sections[sec]?.parts||[];
+  let c=0;
+  parts.forEach(p=>{
+    if(p.tasks) p.tasks.forEach(tk=>c+=tk.questions.length);
+    else if(p.questions) c+=p.questions.length;
+  });
+  return c;
+}
+
+function selectTest(i){selectedTestIdx=i;renderTestGrid()}
+
+function updateHistoryStats(){
+  const h=loadHistory();
+  const total=Object.keys(h).length;
+  const correct=Object.values(h).filter(v=>v.c).length;
+  const wrong=total-correct;
+  $('historyStats').innerHTML=`<span><span class="dot" style="background:var(--green)"></span> ${correct} correct</span>
+    <span><span class="dot" style="background:var(--red)"></span> ${wrong} wrong</span>
+    <span><span class="dot" style="background:var(--muted)"></span> ${total} total practiced</span>`;
+}
+
+function showHistory(){
+  const h=loadHistory();
+  let byTest={};
+  Object.entries(h).forEach(([k,v])=>{
+    const tid=k.split(':')[0];
+    if(!byTest[tid])byTest[tid]={correct:0,wrong:0};
+    v.c?byTest[tid].correct++:byTest[tid].wrong++;
+  });
+  let msg='Practice History:\n\n';
+  TESTS.forEach(t=>{
+    const s=byTest[t.id]||{correct:0,wrong:0};
+    const total=s.correct+s.wrong;
+    const allQ=getAllQuestionsForTest(t,'listening')+getAllQuestionsForTest(t,'reading');
+    msg+=`${t.shortTitle}: ${total}/${allQ} (${s.correct} correct, ${s.wrong} wrong)\n`;
+  });
+  alert(msg);
+}
+
+// ========== MODE START ==========
+function startMode(m){
+  mode=m;
+  answers={};writingTexts={};
+  $('modeScreen').classList.add('hidden');
+  $('testScreen').classList.remove('hidden');
+  $('headerSub').textContent=getTest().title;
+  currentSection='listening';
+  retryWrongOnly=false;
+  renderTabs();
+  renderSection('listening');
+  if(mode==='exam'){
+    const t=getTest().sections;
+    const total=(t.listening?.timeLimit||0)+(t.reading?.timeLimit||0)+(t.writing?.timeLimit||0)+(t.speaking?.timeLimit||0);
+    startTimer(total);
+  } else {
+    $('timerBar').classList.add('hidden');
+  }
+  setTimeout(syncTabsTop,50);
+}
+
+// ========== TIMER ==========
+function startTimer(seconds){
+  timeLeft=seconds;$('timerBar').classList.remove('hidden');updateTimerDisplay();
+  timer=setInterval(()=>{if(!paused){timeLeft--;updateTimerDisplay();if(timeLeft<=0){clearInterval(timer);finishExam()}}},1000);
+}
+function updateTimerDisplay(){$('timerDisplay').textContent=fmtTime(Math.max(0,timeLeft));$('timerBar').classList.toggle('warning',timeLeft<=300&&timeLeft>0)}
+function togglePause(){paused=!paused;$('pauseBtn').textContent=paused?'Resume':'Pause'}
+
+// ========== TABS ==========
+function renderTabs(){
+  let html='';
+  sectionKeys.forEach(s=>{
+    const isW=s==='writing'||s==='speaking';
+    const total=isW?'':getAllQuestions(s).length;
+    const answered=isW?0:getAllQuestions(s).filter(q=>answers[q.id]).length;
+    const badge=isW?'':`<span class="badge">${answered}/${total}</span>`;
+    html+=`<button class="tab ${s===currentSection?'active':''}" onclick="renderSection('${s}')">${sectionLabels[s]}${badge}</button>`;
+  });
+  if(mode==='exam') html+=`<button class="tab" style="margin-left:auto;color:var(--green);font-weight:700" onclick="finishExam()">Finish</button>`;
+  else html+=`<button class="tab" style="margin-left:auto" onclick="backToMenu()">Back</button>`;
+  $('tabsBar').innerHTML=html;
+}
+
+function backToMenu(){
+  clearInterval(timer);Object.values(speakingTimers).forEach(t=>clearInterval(t));
+  $('testScreen').classList.add('hidden');$('modeScreen').classList.remove('hidden');
+  $('timerBar').classList.add('hidden');$('headerSub').textContent='Vietnam National University - English Proficiency Test';
+  renderTestGrid();updateHistoryStats();
+}
+
+// ========== RENDER ==========
+function renderSection(sec){
+  currentSection=sec;renderTabs();
+  const test=getTest();
+  const parts=test.sections[sec]?.parts||[];
+  let html='';
+
+  if(mode==='practice'&&(sec==='listening'||sec==='reading')){
+    html+=`<div class="filter-bar" style="display:flex;flex-wrap:wrap;gap:12px;align-items:center">
+      <label><input type="checkbox" ${hideCompleted?'checked':''} onchange="hideCompleted=this.checked;renderSection('${sec}')"> Hide correct</label>
+      <button onclick="startRetryWrong('${sec}')" style="padding:4px 12px;border-radius:6px;border:1.5px solid var(--red);background:${retryWrongOnly?'var(--red)':'#fff'};color:${retryWrongOnly?'#fff':'var(--red)'};font-weight:600;font-size:.85em;cursor:pointer">Retry wrong</button>
+    </div>`;
+  }
+
+  const hasAudio=sec==='listening'&&parts.some(p=>p.audio||p.questions?.some(q=>q.audio)||p.tasks?.some(t=>t.questions?.some(q=>q.audio)));
+  if(sec==='listening'&&!hasAudio){
+    html+=`<div style="padding:12px 16px;background:#fef3c7;border:1px solid #f59e0b;border-radius:var(--radius);margin-bottom:12px;font-size:.9em;color:#92400e"><strong>No audio available.</strong> This test was extracted from PDF only. You can still practice the questions based on the text.</div>`;
+  }
+
+  if(sec==='listening'||sec==='reading'){
+    parts.forEach(part=>{
+      html+=`<div class="card"><div class="part-header"><h3>${esc(part.title)} ${part.points?'('+part.points+' pts)':''}</h3><div class="dir">${esc(part.direction)}</div></div>`;
+      if(part.audio) html+=`<div class="audio-player"><div class="label">Audio</div><audio controls preload="none"><source src="${esc(part.audio)}" type="audio/wav"></audio></div>`;
+      if(part.passage) html+=`<div class="passage">${esc(part.passage)}</div>`;
+      if(part.passages) part.passages.forEach(p=>html+=`<div class="passage"><strong>${esc(p.title||'')}</strong>\n${esc(p.passage)}</div>`);
+      if(part.tasks) part.tasks.forEach(t=>{html+=`<h4 style="margin:12px 0 8px;color:var(--pri)">${esc(t.title)}</h4>`;t.questions.forEach(q=>{if(q.audio&&!part.audio)html+=`<div class="audio-player" style="padding:8px"><audio controls preload="none" style="height:32px"><source src="${esc(q.audio)}" type="audio/wav"></audio> Q${q.id}</div>`;html+=renderQuestion(q,sec)})});
+      else if(part.questions) part.questions.forEach(q=>{if(q.audio&&!part.audio)html+=`<div class="audio-player" style="padding:8px"><audio controls preload="none" style="height:32px"><source src="${esc(q.audio)}" type="audio/wav"></audio> Q${q.id}</div>`;html+=renderQuestion(q,sec)});
+      html+='</div>';
+    });
+  } else if(sec==='writing'){
+    parts.forEach(part=>{
+      html+=`<div class="card"><div class="part-header"><h3>${esc(part.title)}</h3><div class="dir">${esc(part.direction)}</div></div>`;
+      if(part.passage) html+=`<div class="passage">${esc(part.passage)}</div>`;
+      html+=`<div style="margin:12px 0;padding:12px;background:#eff6ff;border-radius:var(--radius)"><strong>Task:</strong><br>${esc(part.prompt).replace(/\n/g,'<br>')}</div>`;
+      const k=part.id;
+      html+=`<textarea class="writing-area" id="w_${k}" oninput="onWritingInput('${k}')" placeholder="Write your answer here...">${esc(writingTexts[k]||'')}</textarea>`;
+      html+=`<div class="word-count" id="wc_${k}">${countWords(writingTexts[k]||'')} words</div>`;
+      if(part.sampleAnswer){
+        html+=`<button class="btn btn-sm btn-outline" style="margin-top:8px" onclick="toggleSample('${k}')">Show Sample</button>`;
+        html+=`<div class="sample-answer" id="sa_${k}"><h4>Sample Answer</h4><p>${esc(part.sampleAnswer)}</p></div>`;
+      }
+      html+='</div>';
+    });
+  } else if(sec==='speaking'){
+    parts.forEach(part=>{
+      html+=`<div class="card"><div class="part-header"><h3>${esc(part.title)}</h3><div class="dir">${esc(part.direction)}</div></div>`;
+      if(part.image) html+=`<div style="margin:12px 0;text-align:center"><img src="${esc(part.image)}" style="max-width:100%;max-height:400px;border-radius:var(--radius);border:1px solid var(--border)" alt="Visual prompt"></div>`;
+      html+=`<div style="margin:12px 0;padding:16px;background:#fefce8;border-radius:var(--radius);line-height:1.7;white-space:pre-wrap">${esc(part.prompt)}</div>`;
+      html+=`<div style="text-align:center;margin:16px 0"><div class="speaking-timer" id="st_${part.id}">--:--</div>`;
+      html+=`<div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap">`;
+      if(part.prepTime) html+=`<button class="btn btn-outline btn-sm" onclick="startSpeakingPrep('${part.id}',${part.prepTime})">Prep (${part.prepTime}s)</button>`;
+      html+=`<button class="btn btn-primary btn-sm" onclick="startSpeakingResponse('${part.id}',${part.responseTime})">Respond (${part.responseTime}s)</button>`;
+      html+=`<button class="btn btn-sm" style="background:var(--muted);color:#fff" onclick="stopSpeakingTimer('${part.id}')">Stop</button>`;
+      html+=`</div></div>`;
+      if(part.sampleResponse){
+        html+=`<button class="btn btn-sm btn-outline" style="margin-top:8px" onclick="toggleSample('${part.id}')">Show Sample</button>`;
+        html+=`<div class="sample-answer" id="sa_${part.id}"><h4>Sample Response</h4><p style="white-space:pre-wrap">${esc(part.sampleResponse)}</p></div>`;
+      }
+      html+='</div>';
+    });
+  }
+  $('contentArea').innerHTML=html;
+  window.scrollTo(0,0);
+}
+
+function renderQuestion(q,sec){
+  const gid=globalQId(q.id,sec);
+  const practiced=isPracticed(gid);
+  const wasCorrect=wasPracticedCorrectly(gid);
+  if(hideCompleted&&practiced&&wasCorrect) return '';
+  if(retryWrongOnly&&practiced&&wasCorrect) return '';
+  if(retryWrongOnly&&!practiced) return '';
+
+  const userAns=answers[q.id];
+  const prevAns=practiced&&!userAns?getPracticedAnswer(gid):null;
+  const activeAns=userAns||prevAns;
+  const showFeedback=mode==='practice'&&activeAns;
+  const isCorrect=activeAns===q.a;
+  let cls='question';
+  if(showFeedback) cls+=isCorrect?' correct':' wrong';
+  if(practiced&&!userAns) cls+=' practiced';
+
+  let html=`<div class="${cls}" id="q_${q.id}"><div class="q-header"><span class="q-num">Q${q.id} <span class="${getTest().badgeClass} src-badge">${getTest().shortTitle}</span>`;
+  if(practiced&&!userAns) html+=`<span class="practiced-badge">${wasCorrect?'done':'retry'}</span>`;
+  html+=`</span>`;
+  if(showFeedback) html+=`<span class="q-status ${isCorrect?'correct':'wrong'}">${isCorrect?'Correct':'Answer: '+q.a}</span>`;
+  html+=`</div><div class="q-text">${esc(q.q)}</div><div class="options">`;
+
+  Object.entries(q.o).forEach(([key,val])=>{
+    let oc='option';
+    if(activeAns===key) oc+=' selected';
+    if(showFeedback&&key===q.a) oc+=' correct-answer';
+    if(showFeedback&&activeAns===key&&key!==q.a) oc+=' wrong-answer';
+    const disabled=practiced&&!userAns?'disabled':'';
+    html+=`<label class="${oc}" ${disabled?'':'onclick="selectAnswer('+q.id+',\''+key+'\',\''+sec+'\')"'}><input type="radio" name="q${q.id}" value="${key}" ${activeAns===key?'checked':''} ${disabled}><span>(${key}) ${esc(val)}</span></label>`;
+  });
+  html+=`</div>`;
+  if(showFeedback&&!isCorrect) html+=`<div class="explanation">Correct answer: <strong>(${q.a}) ${esc(q.o[q.a])}</strong></div>`;
+  html+=`</div>`;
+  return html;
+}
+
+// ========== INTERACTIONS ==========
+function startRetryWrong(sec){
+  retryWrongOnly=!retryWrongOnly;
+  if(retryWrongOnly){
+    // Clear current answers for wrong questions so user can re-answer
+    getAllQuestions(sec).forEach(q=>{
+      const gid=globalQId(q.id,sec);
+      if(isPracticed(gid)&&!wasPracticedCorrectly(gid)) delete answers[q.id];
+    });
+  }
+  renderSection(sec);
+}
+
+function selectAnswer(qId,key,sec){
+  const allQs=getAllQuestions(sec);
+  const q=allQs.find(x=>x.id===qId);
+  if(!q)return;
+  if(mode==='practice'&&answers[qId]===q.a)return;
+  answers[qId]=key;
+  if(mode==='practice'){
+    markPracticed(globalQId(qId,sec),key===q.a,key);
+    const el=$('q_'+qId);
+    if(el){const tmp=document.createElement('div');tmp.innerHTML=renderQuestion(q,sec);if(tmp.firstElementChild)el.replaceWith(tmp.firstElementChild);else el.remove()}
+  }
+  renderTabs();
+}
+
+function onWritingInput(k){const el=$('w_'+k);if(el){writingTexts[k]=el.value;const wc=$('wc_'+k);if(wc)wc.textContent=countWords(el.value)+' words'}}
+function countWords(t){return t.trim()?t.trim().split(/\s+/).length:0}
+function toggleSample(k){const el=$('sa_'+k);if(el)el.classList.toggle('show')}
+
+function startSpeakingPrep(id,s){stopSpeakingTimer(id);const el=$('st_'+id);el.className='speaking-timer prep';let t=s;el.textContent=fmtTime(t);speakingTimers[id]=setInterval(()=>{t--;el.textContent=fmtTime(Math.max(0,t));if(t<=0){clearInterval(speakingTimers[id]);el.textContent='READY!'}},1000)}
+function startSpeakingResponse(id,s){stopSpeakingTimer(id);const el=$('st_'+id);el.className='speaking-timer response';let t=s;el.textContent=fmtTime(t);speakingTimers[id]=setInterval(()=>{t--;el.textContent=fmtTime(Math.max(0,t));if(t<=5)el.style.color='var(--red)';if(t<=0){clearInterval(speakingTimers[id]);el.textContent='TIME UP'}},1000)}
+function stopSpeakingTimer(id){if(speakingTimers[id])clearInterval(speakingTimers[id]);const el=$('st_'+id);if(el){el.textContent='--:--';el.className='speaking-timer';el.style.color=''}}
+
+// ========== RESULTS ==========
+function finishExam(){
+  if(mode==='exam'&&!confirm('Finish the exam?'))return;
+  clearInterval(timer);Object.values(speakingTimers).forEach(t=>clearInterval(t));
+  // Save all answers to history
+  ['listening','reading'].forEach(sec=>{
+    getAllQuestions(sec).forEach(q=>{if(answers[q.id])markPracticed(globalQId(q.id,sec),answers[q.id]===q.a,answers[q.id])});
+  });
+  showResults();
+}
+
+function showResults(){
+  $('testScreen').classList.add('hidden');$('timerBar').classList.add('hidden');$('resultsScreen').classList.remove('hidden');
+  const lqs=getAllQuestions('listening'),rqs=getAllQuestions('reading');
+  const allMC=[...lqs,...rqs];
+  const lc=lqs.filter(q=>answers[q.id]===q.a).length;
+  const rc=rqs.filter(q=>answers[q.id]===q.a).length;
+  const tc=allMC.filter(q=>answers[q.id]===q.a).length;
+  const pct=allMC.length?Math.round(tc/allMC.length*100):0;
+  const sc=pct>=70?'good':pct>=50?'mid':'bad';
+
+  let html=`<h2>${esc(getTest().title)} - Results</h2>`;
+  html+=`<div class="score-circle ${sc}">${pct}%</div><p style="font-size:1.1em">${tc}/${allMC.length} correct</p>`;
+  html+=`<div class="score-detail">`;
+  html+=`<div class="score-item"><div class="label">Listening</div><div class="value">${lc}/${lqs.length}</div></div>`;
+  html+=`<div class="score-item"><div class="label">Reading</div><div class="value">${rc}/${rqs.length}</div></div>`;
+  html+=`<div class="score-item"><div class="label">Writing</div><div class="value">${writingTexts[getTest().sections.writing?.parts[0]?.id]?countWords(writingTexts[getTest().sections.writing.parts[0].id])+' words':'--'}</div></div>`;
+  html+=`</div>`;
+
+  // Q grid
+  html+=`<div style="text-align:left;margin-top:24px"><h3>Answer Map</h3>`;
+  ['listening','reading'].forEach(sec=>{
+    html+=`<div class="card"><h4>${sectionLabels[sec]}</h4><div style="display:flex;flex-wrap:wrap;gap:4px;margin-top:8px">`;
+    getAllQuestions(sec).forEach(q=>{
+      const ua=answers[q.id],ok=ua===q.a;
+      const bg=!ua?'#e2e8f0':ok?'#dcfce7':'#fee2e2';
+      const c=!ua?'#64748b':ok?'#059669':'#dc2626';
+      html+=`<span title="Q${q.id}: ${ua?(ok?'OK':'Your:'+ua+' Ans:'+q.a):'skipped'}" style="display:inline-block;width:30px;height:30px;line-height:30px;text-align:center;border-radius:4px;font-size:.75em;font-weight:600;background:${bg};color:${c}">${q.id}</span>`;
+    });
+    html+=`</div></div>`;
+  });
+
+  // AI Export
+  const exportData={test:getTest().title,mode,score:{total:`${tc}/${allMC.length}`,pct:pct+'%',listening:`${lc}/${lqs.length}`,reading:`${rc}/${rqs.length}`},
+    wrong:allMC.filter(q=>answers[q.id]&&answers[q.id]!==q.a).map(q=>({qid:q.id,yours:answers[q.id],correct:q.a,text:q.q,options:q.o})),
+    skipped:allMC.filter(q=>!answers[q.id]).map(q=>q.id),
+    writing:{summary:writingTexts[getTest().sections.writing?.parts[0]?.id]||'',essay:writingTexts[getTest().sections.writing?.parts[1]?.id]||''}};
+  html+=`<h3 style="margin-top:24px">AI Review Export</h3><p style="color:var(--muted);font-size:.9em">Copy and paste to ChatGPT/Claude for personalized feedback.</p>`;
+  html+=`<textarea class="export-box" id="expBox" readonly>${JSON.stringify(exportData,null,2)}</textarea>`;
+  html+=`<div style="margin-top:8px;display:flex;gap:8px"><button class="btn btn-primary" onclick="navigator.clipboard.writeText($('expBox').value);this.textContent='Copied!';setTimeout(()=>this.textContent='Copy',2000)">Copy</button>`;
+  html+=`<button class="btn btn-outline" onclick="$('resultsScreen').classList.add('hidden');$('modeScreen').classList.remove('hidden');renderTestGrid();updateHistoryStats()">Back to Menu</button></div></div>`;
+  $('resultsArea').innerHTML=html;
+}
+
+init();
+</script>
+</body>
+</html>

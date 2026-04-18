@@ -1,0 +1,392 @@
+{
+  "id": "ulis-bac-3",
+  "title": "VNU-ULIS De Minh Hoa Bac 3",
+  "source": "VNU-ULIS",
+  "sections": {
+    "listening": {
+      "timeLimit": 1500,
+      "parts": [
+        {
+          "id": "listening-part1",
+          "title": "Part 1",
+          "points": 7,
+          "direction": "There are 7 questions in this part. For each question, you will hear one monologue TWICE. While you listen, choose the right answer A, B, or C. Then, on the answer sheet, find the number of the question and fill in the space that corresponds to the letter of the answer that you have chosen.",
+          "questions": [
+            {
+              "id": 1,
+              "question": "Which topic is new this week?",
+              "options": {"A": "Art", "B": "Languages", "C": "Transport"},
+              "answer": "A"
+            },
+            {
+              "id": 2,
+              "question": "What is the coming stop?",
+              "options": {"A": "Rockport", "B": "Bedford", "C": "Glenfield"},
+              "answer": "C"
+            },
+            {
+              "id": 3,
+              "question": "How many members should be there in each group now?",
+              "options": {"A": "3", "B": "4", "C": "5"},
+              "answer": "A"
+            },
+            {
+              "id": 4,
+              "question": "When will the Science Centre close?",
+              "options": {"A": "6 p.m.", "B": "7 p.m.", "C": "11 p.m."},
+              "answer": "C"
+            },
+            {
+              "id": 5,
+              "question": "Where can shoppers find fruit in the store?",
+              "options": {"A": "At the front", "B": "In the middle", "C": "At the back"},
+              "answer": "A"
+            },
+            {
+              "id": 6,
+              "question": "Unattended luggage will be ___________.",
+              "options": {"A": "moved to second floor", "B": "taken away by staff", "C": "left at information desk"},
+              "answer": "B"
+            },
+            {
+              "id": 7,
+              "question": "What is the announcement for?",
+              "options": {"A": "To remind about boarding time", "B": "To inform about boarding gate change", "C": "To find some missing passengers"},
+              "answer": "A"
+            }
+          ]
+        },
+        {
+          "id": "listening-part2",
+          "title": "Part 2",
+          "points": 7,
+          "direction": "In this part, you will hear SEVEN short conversations. You will hear each conversation TWICE. There is one question following each recording. For each question, choose the right answer A, B, or C. Then, on the answer sheet, find the number of the question and fill in the space that corresponds to the letter of the answer that you have chosen.",
+          "questions": [
+            {
+              "id": 8,
+              "question": "What did Jennifer pay for the bag?",
+              "options": {"A": "$80", "B": "$90", "C": "$100"},
+              "answer": "A"
+            },
+            {
+              "id": 9,
+              "question": "What has the weather been like this week?",
+              "options": {"A": "Cloudy", "B": "Sunny", "C": "Rainy"},
+              "answer": "C"
+            },
+            {
+              "id": 10,
+              "question": "Which color does the woman choose?",
+              "options": {"A": "Blue", "B": "Green", "C": "Orange"},
+              "answer": "C"
+            },
+            {
+              "id": 11,
+              "question": "What does the woman like most about the movie?",
+              "options": {"A": "The music", "B": "The outfits", "C": "The ending"},
+              "answer": "B"
+            },
+            {
+              "id": 12,
+              "question": "Where is the main gate of the college?",
+              "options": {"A": "On King Street", "B": "On Carr Street", "C": "On Dell Street"},
+              "answer": "C"
+            },
+            {
+              "id": 13,
+              "question": "What does the woman think about her secretary?",
+              "options": {"A": "Unreliable in her job", "B": "Inactive while at work", "C": "Untidy at her office"},
+              "answer": "B"
+            },
+            {
+              "id": 14,
+              "question": "What happened to Jane's flight?",
+              "options": {"A": "It took longer than expected.", "B": "It took off at an earlier time.", "C": "It was cancelled due to a storm."},
+              "answer": "A"
+            }
+          ]
+        },
+        {
+          "id": "listening-part3",
+          "title": "Part 3",
+          "points": 6,
+          "direction": "In this part, you will hear TWO longer recordings. You will hear each recording TWICE. There are THREE questions for each recording. While you listen, decide if each sentence is correct or incorrect. Then, on the answer sheet, find the number of the question and fill in the space of A if it's correct and B if it's incorrect.",
+          "questions": [
+            {
+              "id": 15,
+              "question": "Ashley wants to take an intermediate swimming class.",
+              "options": {"A": "Correct", "B": "Incorrect"},
+              "answer": "B"
+            },
+            {
+              "id": 16,
+              "question": "Each swimming class is 60 minutes in total.",
+              "options": {"A": "Correct", "B": "Incorrect"},
+              "answer": "B"
+            },
+            {
+              "id": 17,
+              "question": "The course will start on July 21st.",
+              "options": {"A": "Correct", "B": "Incorrect"},
+              "answer": "A"
+            },
+            {
+              "id": 18,
+              "question": "The exam takes place on July 22nd.",
+              "options": {"A": "Correct", "B": "Incorrect"},
+              "answer": "B"
+            },
+            {
+              "id": 19,
+              "question": "The exam is 15 minutes longer than the mid-term one.",
+              "options": {"A": "Correct", "B": "Incorrect"},
+              "answer": "A"
+            },
+            {
+              "id": 20,
+              "question": "Revising the first three chapters is advised.",
+              "options": {"A": "Correct", "B": "Incorrect"},
+              "answer": "B"
+            }
+          ]
+        }
+      ]
+    },
+    "reading": {
+      "timeLimit": 2400,
+      "parts": [
+        {
+          "id": "reading-part1",
+          "title": "Part 1. Questions 1 - 7",
+          "points": 7,
+          "direction": "Choose the best meaning (A, B, or C) for each sign/notice.",
+          "questions": [
+            {
+              "id": 1,
+              "question": "CHILDREN'S PLAY AREA\nNO PETS HERE!",
+              "options": {"A": "Pets are expected to stay out of this area.", "B": "Pets are required to play in this area only.", "C": "Kids should be kept away from pets here."},
+              "answer": "A"
+            },
+            {
+              "id": 2,
+              "question": "NO ENTRY\nWITHOUT PERMISSION",
+              "options": {"A": "People can come in here if they are allowed.", "B": "No one should go in without being requested.", "C": "Entrance to this area is prohibited for everyone."},
+              "answer": "A"
+            },
+            {
+              "id": 3,
+              "question": "First Monday every month\nFREE 2nd pizza of any size",
+              "options": {"A": "You are offered a free pizza on Mondays.", "B": "You can get an extra pizza at no cost monthly.", "C": "You should buy two pizzas every first Monday."},
+              "answer": "B"
+            },
+            {
+              "id": 4,
+              "question": "DISCOUNT AVAILABLE\nFor online shopping only",
+              "options": {"A": "Online shoppers can register for a discount.", "B": "The usable discount can only be found online.", "C": "Customers can buy online at discounted prices."},
+              "answer": "C"
+            },
+            {
+              "id": 5,
+              "question": "* NATIONAL CINEMA DAY *\nFREE WATCHING\n- One kid per paying adult\n- To be qualified: 3 years or below",
+              "options": {"A": "Any 3-year-old kid can watch free movies at this place.", "B": "Tickets for kids are free on national cinema day.", "C": "One paying adult can bring a 2-year-old kid here for free."},
+              "answer": "C"
+            },
+            {
+              "id": 6,
+              "question": "VNU Campus\nJOB FAIR 2024\nFor more information\nCall 024 367 5588, or\nEmail at jobfair.vnu@gmail.com",
+              "options": {"A": "The event may provide you a job opportunity.", "B": "Email us if you want to book a spot at the event.", "C": "You should make a call to the event holder."},
+              "answer": "A"
+            },
+            {
+              "id": 7,
+              "question": "PERMIT PARKING\nfor\nRESIDENTS ONLY\nVehicles without valid parking permits will be towed at vehicle owner's expense",
+              "options": {"A": "Unpermitted parking comes with expenses.", "B": "This parking space is limited to those living here.", "C": "Visitors can park here if residents agree."},
+              "answer": "B"
+            }
+          ]
+        },
+        {
+          "id": "reading-part2",
+          "title": "Part 2. Questions 8 - 15",
+          "points": 8,
+          "direction": "Choose the best answer (A, B, or C) to fill in each blank.",
+          "passage": "Temperature refers to the degree of hotness or coldness, and we can feel it in our bodies. To check temperature, we use a thermometer \u2013 a long thin tube (8) ________ with liquid mercury or alcohol. It has a (9) ________ which shows how hot or cold things are. Most of the world uses Celsius degrees but, in the USA and some (10) ________ places, they use Fahrenheit degrees. Scientists like to use Kelvin degrees (11) ________ it starts from absolute zero and never goes below zero.\n\nIn science, temperature is about how fast molecules move in (12) ________ material. In solids and liquids, molecules stay in one place, but in gases, they move freely and bounce off each other. For gases, temperature, pressure, and volume are connected (13) ________ the laws of physics. Understanding temperature is not just about how we feel \u2013 it's important in science, technology, and everyday activities. It helps us study and (14) ________ weather patterns. For students, (15) ________ thermometers is a useful skill as they can explore changes in temperature in a simple way.",
+          "questions": [
+            {
+              "id": 8,
+              "question": "(8)",
+              "options": {"A": "filled", "B": "filling", "C": "to fill"},
+              "answer": "A"
+            },
+            {
+              "id": 9,
+              "question": "(9)",
+              "options": {"A": "measurement", "B": "scale", "C": "ruler"},
+              "answer": "B"
+            },
+            {
+              "id": 10,
+              "question": "(10)",
+              "options": {"A": "another", "B": "extra", "C": "other"},
+              "answer": "C"
+            },
+            {
+              "id": 11,
+              "question": "(11)",
+              "options": {"A": "since", "B": "although", "C": "whether"},
+              "answer": "A"
+            },
+            {
+              "id": 12,
+              "question": "(12)",
+              "options": {"A": "a", "B": "the", "C": "\u2205"},
+              "answer": "A"
+            },
+            {
+              "id": 13,
+              "question": "(13)",
+              "options": {"A": "in", "B": "through", "C": "by"},
+              "answer": "C"
+            },
+            {
+              "id": 14,
+              "question": "(14)",
+              "options": {"A": "control", "B": "follow", "C": "predict"},
+              "answer": "C"
+            },
+            {
+              "id": 15,
+              "question": "(15)",
+              "options": {"A": "reading", "B": "viewing", "C": "operating"},
+              "answer": "A"
+            }
+          ]
+        },
+        {
+          "id": "reading-part3",
+          "title": "Part 3. Questions 16 - 20",
+          "points": 5,
+          "direction": "Choose A (True) or B (False) for each statement.",
+          "passage": "http://www.five-star-fitness.com\n\nEmbrace your health!\n\nFive Star Fitness Center\n\nThe Five Star Fitness Centre is dedicated to fostering a holistic approach to health, with a special emphasis on the ancient practice of Yoga guided by Indian Yoga Masters. Our Yoga Masters have a lot of knowledge and experience. They create a space where members can explore their well-being in a meaningful way during each session.\n\nYoga focuses on breath, movement, and mindfulness. It is not just a physical exercise but a journey towards balance, strength, and inner peace. Whether you are a beginner or an experienced practitioner, our diverse classes, including Hot Yoga, Power Yoga, Ashtanga, and Hatha Flow, cater to all levels and preferences.\n\nAt Five Star Fitness, we also offer tailored wellness programs to meet individual needs. From personalized workout plans to nutritional guidance, our aim is to support you in achieving your health and fitness goals.\n\nYou can join us on a daily basis at VND50,000 per day. For those seeking an extended commitment, we offer a two-week full access plan at VND400,000 or a one-month full access plan at VND500,000. Take the first step towards a healthier lifestyle by signing up today. For additional information or inquiries, feel free to contact us at 032659812 or via email at five-star-fitness@gmail.com.",
+          "questions": [
+            {
+              "id": 16,
+              "question": "The center employs an age-old method to promote wellness.",
+              "options": {"A": "True", "B": "False"},
+              "answer": "A"
+            },
+            {
+              "id": 17,
+              "question": "Classes are organized separately according to the members' levels.",
+              "options": {"A": "True", "B": "False"},
+              "answer": "B"
+            },
+            {
+              "id": 18,
+              "question": "Practice sessions can change to meet the members' specific goals.",
+              "options": {"A": "True", "B": "False"},
+              "answer": "A"
+            },
+            {
+              "id": 19,
+              "question": "The center is particularly for persons who need nutritional guidance.",
+              "options": {"A": "True", "B": "False"},
+              "answer": "B"
+            },
+            {
+              "id": 20,
+              "question": "The one-month membership offers cost savings compared to the others.",
+              "options": {"A": "True", "B": "False"},
+              "answer": "B"
+            }
+          ]
+        },
+        {
+          "id": "reading-part4",
+          "title": "Part 4. Questions 21 - 25",
+          "points": 5,
+          "direction": "Choose the best answer (A, B, or C) to each question.",
+          "passage": "We all know we should exercise often, but as the years go by, it is easy to let activity levels slide. Yet for a fit and healthy retirement, staying active is important. And even if your main sport now is watching TV, it is never too late to begin. That is also what many researchers suggest in their studies.\n\nStudies published in the heart journal Circulation in 2011 found that improving fitness over six years for older people led to a 19 percent lower chance of heart disease and a 15 percent drop in death rates. \"It is extremely important for people in their fifties and beyond to take an interest in fitness\", says personal trainer Chris Zaremba, who runs FitnessOverFifty.co.uk. \"Health problems can happen in mid-life, and as we grow older, these conditions are harder to solve.\"\n\nExercise can reduce health problems such as obesity, type-2 diabetes, high blood pressure and the gradual loss of muscle mass and strength. But driving to the gym probably is not attractive to many, and running seems either impossible or likely to cause injury. Increasingly, fitness experts recommend gentle exercise such as regular walking, swimming, yoga and dancing. Swimming is one of the best exercises for strength and flexibility. A daily or even weekly swim puts no pain on muscles, while increasing fitness levels.",
+          "questions": [
+            {
+              "id": 21,
+              "question": "What is \"slide\" in paragraph 1 closest in meaning to?",
+              "options": {"A": "increase gradually", "B": "decline easily", "C": "change constantly"},
+              "answer": "B"
+            },
+            {
+              "id": 22,
+              "question": "What is mentioned in paragraph 2?",
+              "options": {"A": "It takes an old person over six years to improve their fitness.", "B": "There was a decrease in death rates according to 2011's report.", "C": "Health problems in older age are far from easy to address."},
+              "answer": "C"
+            },
+            {
+              "id": 23,
+              "question": "What does Chris Zaremba say about the elderly?",
+              "options": {"A": "They are encouraged to get involved in fitness.", "B": "They possibly face a lot of fitness challenges.", "C": "They should visit his website for fitness advice."},
+              "answer": "A"
+            },
+            {
+              "id": 24,
+              "question": "What is NOT mentioned about swimming in paragraph 3?",
+              "options": {"A": "Swimming helps people become flexible.", "B": "Regular swimming reduces muscle pain.", "C": "Swimming helps strengthen the muscles."},
+              "answer": "B"
+            },
+            {
+              "id": 25,
+              "question": "What is the main purpose of the passage?",
+              "options": {"A": "To urge office workers to do more exercising before they retire", "B": "To stress the importance of staying active for a healthy retirement", "C": "To suggest a variety of fitness activities for people in retirement"},
+              "answer": "B"
+            }
+          ]
+        }
+      ]
+    },
+    "writing": {
+      "timeLimit": 2400,
+      "parts": [
+        {
+          "id": "writing-task1",
+          "title": "Task 1",
+          "points": 0,
+          "direction": "You should spend about 20 minutes on this task.\nA staff of your company has won the title \"Best employee of the year\".\nUse the prompts given to write a paragraph about her on your company's website.",
+          "prompt": "BEST EMPLOYEE OF THE YEAR\nName: Nguyen Thuy Ha\nPosition: Project manager\nYears of work experience: 10\nAchievement:\n+ Led 3 successful projects\n+ Won an office improvement contest\n\nWrite at least 80 words.",
+          "sampleAnswer": ""
+        },
+        {
+          "id": "writing-task2",
+          "title": "Task 2",
+          "points": 0,
+          "direction": "You should spend about 20 minutes on ONE of the following tasks.",
+          "prompt": "Task 2.1: Write a paragraph about the effects of air pollution on people's lives.\nOR\nTask 2.2: Write a paragraph about the benefits of learning about the history of a country.\n\nWrite at least 100 words.",
+          "sampleAnswer": ""
+        }
+      ]
+    },
+    "speaking": {
+      "timeLimit": 480,
+      "parts": [
+        {
+          "id": "speaking-part1",
+          "title": "Part 1: Social Interaction (3')",
+          "points": 0,
+          "direction": "Answer the following questions.",
+          "prompt": "- Do you study or work?\n- [If study] How far is it from your house to school?\n  [If work] Do you like your job? Why (not)?\n- What animals do you like?\n- What TV programs do you often watch?\n- How often do you visit your relatives?",
+          "prepTime": 0,
+          "responseTime": 180,
+          "sampleResponse": ""
+        },
+        {
+          "id": "speaking-part2",
+          "title": "Part 2: Cue-based description (5')",
+          "points": 0,
+          "direction": "Choose ONE of the given cards.",
+          "prompt": "Card 1:\nDescribe a time you saw a wild animal.\nYou should talk about:\n- what animal you saw;\n- where you saw the animal;\n- how you felt at that time.\n\nFurther questions:\n- Do you often see wild animals in your neighborhood? Why (not)?\n- What can you do to protect wild animals?\n\nCard 2:\nDescribe an activity that you did to keep fit.\nYou should talk about:\n- what the activity was;\n- how often you did it;\n- how you felt when doing it.\n\nFurther questions:\n- Is it easy to stay fit in modern life? Why (not)?\n- What can people do to have a healthy lifestyle?",
+          "prepTime": 60,
+          "responseTime": 240,
+          "sampleResponse": ""
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,463 @@
+{
+  "id": "ulis-bac-4",
+  "title": "VNU-ULIS De Minh Hoa Bac 4",
+  "source": "VNU-ULIS",
+  "sections": {
+    "listening": {
+      "timeLimit": 1800,
+      "parts": [
+        {
+          "id": "listening-part1",
+          "title": "Part 1",
+          "points": 7,
+          "direction": "There are 7 questions in this part. For each question, you will hear one short recording ONCE only. While you listen, choose the correct answer A, B, C or D. Then, on the answer sheet, find the number of the question and fill in the space that corresponds to the letter of the answer that you have chosen.",
+          "questions": [
+            {
+              "id": 1,
+              "question": "When will they arrive at Straddie?",
+              "options": {"A": "In 15 minutes", "B": "In 20 minutes", "C": "In 40 minutes", "D": "In 45 minutes"},
+              "answer": "D"
+            },
+            {
+              "id": 2,
+              "question": "How much did the burger cost?",
+              "options": {"A": "$4.45", "B": "$4.55", "C": "$5.45", "D": "$5.55"},
+              "answer": "A"
+            },
+            {
+              "id": 3,
+              "question": "What is the woman's project partner like?",
+              "options": {"A": "He is punctual.", "B": "He is bright.", "C": "He is studious.", "D": "He is good-looking."},
+              "answer": "B"
+            },
+            {
+              "id": 4,
+              "question": "What time can John and Peter meet?",
+              "options": {"A": "7.00", "B": "7.30", "C": "7.45", "D": "8.15"},
+              "answer": "C"
+            },
+            {
+              "id": 5,
+              "question": "What dissatisfied Uncle Martin about his trip to India?",
+              "options": {"A": "The scenery", "B": "The cuisine", "C": "The people", "D": "The transport"},
+              "answer": "D"
+            },
+            {
+              "id": 6,
+              "question": "What does Kate's group need to prepare?",
+              "options": {"A": "Drinks", "B": "Rice", "C": "Bacon", "D": "Fruits"},
+              "answer": "C"
+            },
+            {
+              "id": 7,
+              "question": "Where is the speaker?",
+              "options": {"A": "At the checkout", "B": "At customer service", "C": "At the police station", "D": "At the sportswear department"},
+              "answer": "B"
+            }
+          ]
+        },
+        {
+          "id": "listening-part2",
+          "title": "Part 2",
+          "points": 9,
+          "direction": "In this part, you will hear THREE longer recordings. You will hear each recording ONCE only. There are THREE questions following each recording. While you listen, decide if each sentence is correct or incorrect. Then, on the answer sheet, find the number of the question and fill in the space of A if it's correct and B if it's incorrect.",
+          "questions": [
+            {
+              "id": 8,
+              "question": "The boat tour provides a chance to see crocodiles and turtles.",
+              "options": {"A": "Correct", "B": "Incorrect"},
+              "answer": "A"
+            },
+            {
+              "id": 9,
+              "question": "Bird World now possesses more than 80 types of birds.",
+              "options": {"A": "Correct", "B": "Incorrect"},
+              "answer": "A"
+            },
+            {
+              "id": 10,
+              "question": "If visitors cannot find their way, they can call 079 094 9311.",
+              "options": {"A": "Correct", "B": "Incorrect"},
+              "answer": "B"
+            },
+            {
+              "id": 11,
+              "question": "Recycled bottles are cleaned before being gathered at the centre.",
+              "options": {"A": "Correct", "B": "Incorrect"},
+              "answer": "B"
+            },
+            {
+              "id": 12,
+              "question": "The recycling process involves high temperature.",
+              "options": {"A": "Correct", "B": "Incorrect"},
+              "answer": "A"
+            },
+            {
+              "id": 13,
+              "question": "The talk focuses on describing some methods of recycling bottles.",
+              "options": {"A": "Correct", "B": "Incorrect"},
+              "answer": "B"
+            },
+            {
+              "id": 14,
+              "question": "Sharing aims in life is a must for married couples.",
+              "options": {"A": "Correct", "B": "Incorrect"},
+              "answer": "A"
+            },
+            {
+              "id": 15,
+              "question": "Honesty is more important than money in a marriage.",
+              "options": {"A": "Correct", "B": "Incorrect"},
+              "answer": "B"
+            },
+            {
+              "id": 16,
+              "question": "Marriages are badly affected by lying about money.",
+              "options": {"A": "Correct", "B": "Incorrect"},
+              "answer": "A"
+            }
+          ]
+        },
+        {
+          "id": "listening-part3",
+          "title": "Part 3",
+          "points": 9,
+          "direction": "In this part, you will hear THREE longer recordings. You will hear each recording ONCE only. There are THREE questions for each recording. For each question, choose the correct answer A, B, C or D. Then, on the answer sheet, find the number of the question and fill in the space with the letter of the answer that you have chosen.",
+          "questions": [
+            {
+              "id": 17,
+              "question": "What is true about registry items?",
+              "options": {"A": "They are things we want to give newlyweds.", "B": "They suggest what the newlyweds need.", "C": "They are must-have presents for a wedding.", "D": "They are required to suit the couple's style."},
+              "answer": "B"
+            },
+            {
+              "id": 18,
+              "question": "What is the best time to offer the gift to the couple?",
+              "options": {"A": "A couple of weeks before the wedding", "B": "Right before the wedding party", "C": "Two weeks after the wedding", "D": "Within one year after the wedding"},
+              "answer": "A"
+            },
+            {
+              "id": 19,
+              "question": "Why is it tricky to give cash to the wedding couple?",
+              "options": {"A": "It depends on how close you and the couple are.", "B": "It causes confusion to whom should receive it.", "C": "It may trigger discomfort to the couple.", "D": "It is hard to choose the amount of money."},
+              "answer": "D"
+            },
+            {
+              "id": 20,
+              "question": "Some foods or drinks help overcome the flu promptly except for _________.",
+              "options": {"A": "yogurt", "B": "lemon juice", "C": "vegetables", "D": "mineral water"},
+              "answer": "D"
+            },
+            {
+              "id": 21,
+              "question": "Which of the following is true about garlic?",
+              "options": {"A": "It is one-fifth as effective as penicillin in treating the flu.", "B": "Eating it raw makes the best use of it against the flu.", "C": "It is as powerful as penicillin in treating the flu.", "D": "People consider it the best natural antibiotic."},
+              "answer": "B"
+            },
+            {
+              "id": 22,
+              "question": "What is the conversation mainly about?",
+              "options": {"A": "Some medicine-free methods to fight the flu", "B": "Types of foods and drinks to avoid the flu", "C": "The key role of natural substances in treating the flu", "D": "The amount of liquid to drink during a flu"},
+              "answer": "A"
+            },
+            {
+              "id": 23,
+              "question": "How did the man learn Polish?",
+              "options": {"A": "By applying the bilingual translation method", "B": "By joining a weekly Polish learning group", "C": "By doing language exchange practice with a local man", "D": "By comparing Polish to a similar language"},
+              "answer": "C"
+            },
+            {
+              "id": 24,
+              "question": "What does he mention about Russian?",
+              "options": {"A": "Knowing its structure strongly helped him in learning Polish.", "B": "Its contribution to helping him learn Polish was modest.", "C": "Speaking it definitely enabled him to be fluent in Polish.", "D": "Learning it showed him a way to learn Polish faster."},
+              "answer": "A"
+            },
+            {
+              "id": 25,
+              "question": "What lesson did he gain when learning Polish?",
+              "options": {"A": "Communication is the key that brings people together.", "B": "Having a technique to learn foreign languages is crucial.", "C": "Language learning should come from internal motivation.", "D": "Travelling can be a driving force to learn languages."},
+              "answer": "D"
+            }
+          ]
+        }
+      ]
+    },
+    "reading": {
+      "timeLimit": 2700,
+      "parts": [
+        {
+          "id": "reading-part1",
+          "title": "Part 1. Questions 1 - 10",
+          "points": 10,
+          "direction": "Choose the best answer (A, B, C, or D) to fill in each blank.",
+          "passage": "Brazil, the largest country in South America, is respected (1) ________ bright colors, diverse cultures, and stunning views. Coming to this country, people are drawn to exciting Carnival celebrations, (2) ________ music and dance bring happiness to everyone. The celebrations also let visitors experience Brazil's lively life and (3) ________ the richness of its culture.\n\nOne famous place in Brazil is the Amazon Rainforest. Often called the \"lungs of the Earth,\" it is well-known for its amazing wildlife and plants. This biodiverse ecosystem (4) ________ a crucial role in producing oxygen and regulating the Earth's climate. (5) ________ Brazil is the tall Christ the Redeemer statue in Rio de Janeiro. Its arms open wide as to (6) ________ welcome visitors to the city.\n\nWhen visiting Copacabana and Ipanema, visitors (7) ________ enjoy a nice walk along the golden-sand beaches and feel the refreshing atmosphere. (8) ________, Brazilians are friendly and welcoming. They love to share their rich traditions and (9) ________ food, such as feijoada, a hearty black bean stew.\n\nWith a mix of busy cities and peaceful natural wonders, Brazil really (10) ________ a unique experience for travelers.",
+          "questions": [
+            {
+              "id": 1,
+              "question": "(1)",
+              "options": {"A": "by", "B": "for", "C": "of", "D": "to"},
+              "answer": "B"
+            },
+            {
+              "id": 2,
+              "question": "(2)",
+              "options": {"A": "where", "B": "which", "C": "how", "D": "when"},
+              "answer": "A"
+            },
+            {
+              "id": 3,
+              "question": "(3)",
+              "options": {"A": "seek out", "B": "sort out", "C": "dig into", "D": "look into"},
+              "answer": "C"
+            },
+            {
+              "id": 4,
+              "question": "(4)",
+              "options": {"A": "could play", "B": "may play", "C": "has played", "D": "had been playing"},
+              "answer": "C"
+            },
+            {
+              "id": 5,
+              "question": "(5)",
+              "options": {"A": "Another attraction in", "B": "Attracted by", "C": "What attracts", "D": "As attractive as"},
+              "answer": "A"
+            },
+            {
+              "id": 6,
+              "question": "(6)",
+              "options": {"A": "doubly", "B": "broadly", "C": "warmly", "D": "officially"},
+              "answer": "C"
+            },
+            {
+              "id": 7,
+              "question": "(7)",
+              "options": {"A": "should", "B": "must", "C": "might", "D": "can"},
+              "answer": "D"
+            },
+            {
+              "id": 8,
+              "question": "(8)",
+              "options": {"A": "Fortunately", "B": "Consequently", "C": "Contradictorily", "D": "Additionally"},
+              "answer": "D"
+            },
+            {
+              "id": 9,
+              "question": "(9)",
+              "options": {"A": "safe", "B": "tasty", "C": "natural", "D": "convenient"},
+              "answer": "B"
+            },
+            {
+              "id": 10,
+              "question": "(10)",
+              "options": {"A": "offers", "B": "gives", "C": "proposes", "D": "builds"},
+              "answer": "A"
+            }
+          ]
+        },
+        {
+          "id": "reading-part2",
+          "title": "Part 2. Questions 11 - 17",
+          "points": 7,
+          "direction": "Choose A (True) or B (False) for each statement.",
+          "passage": "http://www.yourjobfinder.com\n\nYour Job Finder\n\nDiscover Your Future with DreamTech Innovations!\n\nElevate your career with us! At DreamTech Innovations (DTI), we're not just offering a job; we're providing a platform for success and growth. Unlike the traditional cold calls, our unique approach lets customers seek us out for cutting-edge solutions, making your role more rewarding.\n\nWhat awaits you at DTI?\n- Dive into our comprehensive sales training while enjoying a competitive hourly rate.\n- Work towards getting your professional license with our dedicated help.\n- Top performers may find themselves stepping into coveted salaried positions.\n\nAt DTI, we welcome candidates from all backgrounds, whether you're a recent high school graduate or have university experience. We believe in diversity, both you and the company will achieve maximum potential. Your unique skills and background contribute to our dynamic team, ensuring a collaborative and innovative work environment.\n\nAs a company committed to 24/7 customer service, we offer flexibility in shifts, including an extra 10% pay for those late-night and early-morning heroes. Your convenience matters to us!\n\nReady for an exciting journey? Click \"Apply Now\" and grab the opportunity at DTI. Ensure a smooth application process with an active e-mail address and phone number. Successful candidates will receive prompt communication. For any queries, dial 409-555-0123. Before applying, explore more on our website at http://DreamTechInnovations.com.\n\nApply now!",
+          "questions": [
+            {
+              "id": 11,
+              "question": "DTI is holding a course for career growth.",
+              "options": {"A": "True", "B": "False"},
+              "answer": "B"
+            },
+            {
+              "id": 12,
+              "question": "Employees at DTI receive payment on an hourly basis.",
+              "options": {"A": "True", "B": "False"},
+              "answer": "A"
+            },
+            {
+              "id": 13,
+              "question": "DTI is highlighting its favorable conditions to potential candidates.",
+              "options": {"A": "True", "B": "False"},
+              "answer": "A"
+            },
+            {
+              "id": 14,
+              "question": "DTI rarely recruits graduates from high schools.",
+              "options": {"A": "True", "B": "False"},
+              "answer": "B"
+            },
+            {
+              "id": 15,
+              "question": "Employees at DTI are encouraged to work in fixed shifts.",
+              "options": {"A": "True", "B": "False"},
+              "answer": "B"
+            },
+            {
+              "id": 16,
+              "question": "Additional payment is granted for those who start work early.",
+              "options": {"A": "True", "B": "False"},
+              "answer": "A"
+            },
+            {
+              "id": 17,
+              "question": "Applicants must visit the DTI website for the application process.",
+              "options": {"A": "True", "B": "False"},
+              "answer": "B"
+            }
+          ]
+        },
+        {
+          "id": "reading-part3",
+          "title": "Part 3. Questions 18 - 22",
+          "points": 5,
+          "direction": "Choose the best answer (A, B, C, or D) to each question.",
+          "passage": "The telescope is an instrument that allows us to see distant objects closer. We can view objects that are far beyond the range of our eyes. This instrument has opened a new door for us to study space from the Earth and changed our understanding of the universe. With the help of a telescope, it was proved that the Earth revolves around the Sun, and the old geocentric concept was dropped.\n\nThe telescope is one of the instruments that was not invented by a scientist. Instead, it was invented by a Dutch eyeglass maker Hans Lippershey. While working with lenses, he brought two lenses in front of each other and found that distant objects were seen closer through them. Then he fitted two lenses (a convex and a concave) in a tube and made the first working telescope. His telescope magnified the distant objects about three times. He applied for the patent, but officials said to him that this instrument was too simple to copy, and they didn't issue the patent.\n\nA great scientist Galileo Galilei heard about this new invention. He started to build his own telescope, without ever seeing the Dutchman's instrument. He made an improved version of the telescope which magnified the distant object eight times. With further improvements, he made another telescope with a power of 20. He turned his telescope to the sky and watched the planets, and their moons. He proved that the Earth and other planets in the solar system revolve around the Sun. Galileo continued to improve his telescopes and made one with the power of 100, which helped him to study the sky further. There was a limit in further increasing the magnification because it decreased the field of view, combined with spherical and chromatic aberrations. This prompted a need for an entirely new telescope design that could eliminate these problems.",
+          "questions": [
+            {
+              "id": 18,
+              "question": "What is NOT true about the telescope according to paragraph 1?",
+              "options": {"A": "It extends the scope of our vision.", "B": "It is a tool for space exploration.", "C": "It proved the geocentric concept.", "D": "It altered our beliefs about the universe."},
+              "answer": "C"
+            },
+            {
+              "id": 19,
+              "question": "What is paragraph 2 mainly about?",
+              "options": {"A": "The telescope inventor", "B": "How the first telescope was created", "C": "A problematic telescope", "D": "Why the patent application was rejected"},
+              "answer": "B"
+            },
+            {
+              "id": 20,
+              "question": "What is mentioned about the first telescope by Galileo Galilei?",
+              "options": {"A": "It was developed based on a Dutchman's telescope.", "B": "Its magnifying capacity was more than that by Lippershey.", "C": "It allowed Galilei to view the planets and their moons.", "D": "It had a significant problem with the field of view."},
+              "answer": "B"
+            },
+            {
+              "id": 21,
+              "question": "What is \"prompted\" in paragraph 3 closest in meaning to?",
+              "options": {"A": "stimulated", "B": "heightened", "C": "acknowledged", "D": "reflected"},
+              "answer": "A"
+            },
+            {
+              "id": 22,
+              "question": "What is the writer's attitude toward telescopes?",
+              "options": {"A": "Indifferent", "B": "Amazed", "C": "Supportive", "D": "Judgmental"},
+              "answer": "C"
+            }
+          ]
+        },
+        {
+          "id": "reading-part4",
+          "title": "Part 4. Questions 23 - 30",
+          "points": 8,
+          "direction": "Choose the best answer (A, B, C, or D) to each question.",
+          "passage": "Music is a special way people talk to each other, often when they dance or tell stories. Even though it can make us feel strong emotions, it doesn't need words to make sense. Music can be considered as a form of communication through sound. It is so much more than just a source of entertainment; it is an important part of our lifetime learning. However, just listening to music may have a smaller effect than actually playing music. This is much the same as the way that playing sports will improve your physical condition more than simply watching sports.\n\nJust like your muscles, your brain gets stronger the more you exercise it. There are some important things that happen in the brain when we play music. Firstly, the auditory system processes sound more effectively after musical training. People can detect smaller differences in frequency (the number of sound waves per second), making both speech and music easier to hear. Brain areas that control instrument-related muscles and body parts (such as the fingers, the mouth, etc.) grow in size. More neurons in the brain are devoted to fine-tuning muscle movement in these areas. Studies also show that better musical ability is related to higher reading scores, suggesting a link between how well we hear speech and how well we can map speech sounds to letters. Moreover, playing music together can foster social connections among the participants. It can also enhance socio-emotional awareness, which is the ability to identify, manage, and express emotions constructively. A good example of this is that very young children are more likely to interact positively with people they play music with.\n\nThe function of music extends beyond fostering personal development. It can be a way that we express our identities: the music we play, or even listen to, can be a way of telling the world, our peers, our parents, and our friends something about who we are. For example, imagine someone who loves listening to fast and energetic beats. They might be someone who enjoys excitement and being active. On the other hand, someone who prefers calm and soothing melodies might appreciate peace and tranquility. The music we connect with often reflects our emotions, interests, and the things that make us happy.",
+          "questions": [
+            {
+              "id": 23,
+              "question": "What is mentioned about music in paragraph 1?",
+              "options": {"A": "Music in dances produces emotions.", "B": "Music is a means of expressing thoughts.", "C": "Music has a lifelong impact on individuals.", "D": "Music is primarily a form of entertainment."},
+              "answer": "B"
+            },
+            {
+              "id": 24,
+              "question": "Why does the author mention \"playing sports\" in paragraph 1?",
+              "options": {"A": "To emphasize the importance of physical activities for personal development", "B": "To suggest that playing sports has similar effects on the brain as playing music", "C": "To highlight the drawbacks of physical activities compared to intellectual ones", "D": "To illustrate the degree of impact resulting from different ways to enjoy music"},
+              "answer": "D"
+            },
+            {
+              "id": 25,
+              "question": "What is main purpose of paragraph 2?",
+              "options": {"A": "To highlight many ways musical training benefits the brain's cognitive system", "B": "To discuss various factors influencing the brain's activities in musical practices", "C": "To showcase the brain's development thanks to engaging in musical practices", "D": "To promote the involvement in musical training due to its benefits to the brain"},
+              "answer": "C"
+            },
+            {
+              "id": 26,
+              "question": "What is the word \"exercise\" in paragraph 2 closest in meaning to?",
+              "options": {"A": "Polish", "B": "Perform", "C": "Engage", "D": "Train"},
+              "answer": "C"
+            },
+            {
+              "id": 27,
+              "question": "What happens to the brain area that controls the fingers thanks to playing music?",
+              "options": {"A": "It remains unchanged.", "B": "It is more active.", "C": "It works more efficiently.", "D": "It becomes larger."},
+              "answer": "D"
+            },
+            {
+              "id": 28,
+              "question": "What does \"this\" in paragraph 2 refer to?",
+              "options": {"A": "Playing music together", "B": "Fostering social connections", "C": "Enhancing socio-emotional awareness", "D": "Expressing emotions constructively"},
+              "answer": "C"
+            },
+            {
+              "id": 29,
+              "question": "Which of the following is mentioned in the passage?",
+              "options": {"A": "Musical effects on educational development", "B": "Advantages of joining musical events", "C": "Personal lifestyles mirrored in music", "D": "Advice for young music learners"},
+              "answer": "C"
+            },
+            {
+              "id": 30,
+              "question": "What is the main idea of the passage?",
+              "options": {"A": "The multifaceted role of music in personal expression and development", "B": "The link between playing music and improved academic achievements", "C": "The relationship between listening to music and emotional intelligence", "D": "The impacts of music-related activities in multiple aspects of life"},
+              "answer": "A"
+            }
+          ]
+        }
+      ]
+    },
+    "writing": {
+      "timeLimit": 3000,
+      "parts": [
+        {
+          "id": "writing-task1",
+          "title": "Task 1",
+          "points": 0,
+          "direction": "You should spend about 20 minutes on ONE of the following tasks.",
+          "prompt": "Task 1.1:\nThe bar chart below shows the number of female and male staff in four departments of IDEAK company in 2016. Summarize the information in the chart, including an introduction, an overview and comparisons where relevant.\n\nChart data:\n- Human Resources Department: Females ~22, Males ~3\n- Marketing Department: Females ~15, Males ~18\n- Sales Department: Females ~10, Males ~30\n- Finance Department: Females ~5, Males ~2\n\nWrite at least 100 words.\n\nOR\n\nTask 1.2:\nWrite a letter to the local authority to complain about an environmental problem in your area. In your letter, you should:\n- describe what the problem is;\n- explain how the problem affects your area;\n- and suggest solutions to the problem.\n\nDO NOT include your name in your response. Write at least 100 words.",
+          "sampleAnswer": ""
+        },
+        {
+          "id": "writing-task2",
+          "title": "Task 2",
+          "points": 0,
+          "direction": "You should spend about 30 minutes on this task. Write an essay about the following topic.",
+          "prompt": "Some people think that a strict dress code should be required in the workplace. What is your opinion?\n\nWrite at least 180 words.",
+          "sampleAnswer": ""
+        }
+      ]
+    },
+    "speaking": {
+      "timeLimit": 600,
+      "parts": [
+        {
+          "id": "speaking-part1",
+          "title": "Part 1: Social Interaction (2')",
+          "points": 0,
+          "direction": "Answer the following questions.",
+          "prompt": "- Do you study or work?\n- [If study] What is your major?\n  [If work] What do you do in your job?\n- Are you good at taking photos? Why (not)?\n- How can you save energy at home?\n- What are some common natural disasters in your country?",
+          "prepTime": 0,
+          "responseTime": 120,
+          "sampleResponse": ""
+        },
+        {
+          "id": "speaking-part2",
+          "title": "Part 2: Cue-based talk (3')",
+          "points": 0,
+          "direction": "Describe one time you worked in a team.",
+          "prompt": "Describe one time you worked in a team.\nYou should talk about:\n- who you worked with;\n- what task(s) your team did;\n- how you felt when doing teamwork.",
+          "prepTime": 60,
+          "responseTime": 120,
+          "sampleResponse": ""
+        },
+        {
+          "id": "speaking-part3",
+          "title": "Part 3: Topic discussion (5')",
+          "points": 0,
+          "direction": "Choose ONE of the given topics.",
+          "prompt": "Topic 1:\nTechnology has a negative impact on social interaction. Do you agree or disagree? Why (not)?\n\nFurther questions:\n- Technology allows people to connect across long distances. What do you think about this opinion?\n- Technological communication may reduce face-to-face skills. What do you think about this opinion?\n\nTopic 2:\nStudents should delay their university study a year after finishing high school. Do you agree or disagree? Why (not)?\n\nFurther questions:\n- If not planned carefully, a year off can be a waste. What do you think about this opinion?\n- Students can use this year to discover career interests. What do you think about this opinion?",
+          "prepTime": 60,
+          "responseTime": 240,
+          "sampleResponse": ""
+        }
+      ]
+    }
+  }
+}

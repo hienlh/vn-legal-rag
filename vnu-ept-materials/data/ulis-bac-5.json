@@ -1,0 +1,536 @@
+{
+  "id": "ulis-bac-5",
+  "title": "VNU-ULIS De Minh Hoa Bac 5",
+  "source": "VNU-ULIS",
+  "sections": {
+    "listening": {
+      "timeLimit": 2100,
+      "parts": [
+        {
+          "id": "listening-part1",
+          "title": "Part 1",
+          "points": 9,
+          "direction": "There are 9 questions in this part. For each question, you will hear one short recording ONCE only. While you listen, choose the correct answer A, B, C or D. Then, on the answer sheet, find the number of the question and fill in the space with the letter of the answer that you have chosen.",
+          "questions": [
+            {
+              "id": 1,
+              "question": "Which class takes place on Tuesday?",
+              "options": {"A": "Dance", "B": "Singing", "C": "Fashion", "D": "Painting"},
+              "answer": "B"
+            },
+            {
+              "id": 2,
+              "question": "What must the man's father stop eating?",
+              "options": {"A": "Ice cream", "B": "Sugar", "C": "Sausage", "D": "Salmon"},
+              "answer": "C"
+            },
+            {
+              "id": 3,
+              "question": "What language does the speaker wish to learn?",
+              "options": {"A": "French", "B": "German", "C": "Italian", "D": "Japanese"},
+              "answer": "D"
+            },
+            {
+              "id": 4,
+              "question": "Which area is NOT convenient to reach from the residence halls?",
+              "options": {"A": "The library", "B": "The lecture halls", "C": "The cinemas", "D": "The student centres"},
+              "answer": "C"
+            },
+            {
+              "id": 5,
+              "question": "What changes will happen in public transport during Labor Day?",
+              "options": {"A": "There are only night buses.", "B": "Train travel will last longer.", "C": "There are fewer trains.", "D": "Night buses will leave earlier."},
+              "answer": "C"
+            },
+            {
+              "id": 6,
+              "question": "Why was the photocopy machine NOT working?",
+              "options": {"A": "There was no paper left.", "B": "It was set on the wrong function.", "C": "A paper jam happened.", "D": "One of the covers was opened."},
+              "answer": "B"
+            },
+            {
+              "id": 7,
+              "question": "What is the speaker's opinion about eating?",
+              "options": {"A": "Follow our body's signals", "B": "Listen to experts' advice", "C": "Ignore all kinds of pressure", "D": "Be strict about what we eat"},
+              "answer": "A"
+            },
+            {
+              "id": 8,
+              "question": "What is the speaker doing?",
+              "options": {"A": "Introducing a TV program", "B": "Responding to viewers' questions", "C": "Setting up a live program", "D": "Encouraging viewers to contribute"},
+              "answer": "D"
+            },
+            {
+              "id": 9,
+              "question": "Who is probably speaking?",
+              "options": {"A": "A flight attendant", "B": "A hospital officer", "C": "An airport manager", "D": "An emergency assistant"},
+              "answer": "A"
+            }
+          ]
+        },
+        {
+          "id": "listening-part2",
+          "title": "Part 2",
+          "points": 9,
+          "direction": "In this part, you will hear THREE longer recordings. You will hear each recording ONCE only. There are THREE questions following each recording. While you listen, decide if each sentence is correct or incorrect. Then, on the answer sheet, find the number of the question and fill in the space of A if it's correct and B if it's incorrect.",
+          "questions": [
+            {
+              "id": 10,
+              "question": "Dr. Weitzman has worked as an animal doctor for more than 20 years.",
+              "options": {"A": "Correct", "B": "Incorrect"},
+              "answer": "A"
+            },
+            {
+              "id": 11,
+              "question": "Men's deep tones trigger immediate responses from cats.",
+              "options": {"A": "Correct", "B": "Incorrect"},
+              "answer": "B"
+            },
+            {
+              "id": 12,
+              "question": "What excites Dr. Weitzman is cats' vision capacity compared to humans'.",
+              "options": {"A": "Correct", "B": "Incorrect"},
+              "answer": "B"
+            },
+            {
+              "id": 13,
+              "question": "The ultimate key to a good sleep is a favorable bedroom environment.",
+              "options": {"A": "Correct", "B": "Incorrect"},
+              "answer": "A"
+            },
+            {
+              "id": 14,
+              "question": "Keeping away from electronic gadgets is a must to sleep well.",
+              "options": {"A": "Correct", "B": "Incorrect"},
+              "answer": "A"
+            },
+            {
+              "id": 15,
+              "question": "Skipping breakfast lessens the number of stored calories.",
+              "options": {"A": "Correct", "B": "Incorrect"},
+              "answer": "B"
+            },
+            {
+              "id": 16,
+              "question": "Blended learning is specially designed for those who love digital experiences.",
+              "options": {"A": "Correct", "B": "Incorrect"},
+              "answer": "B"
+            },
+            {
+              "id": 17,
+              "question": "One-size-fits-all technology is required in blended learning.",
+              "options": {"A": "Correct", "B": "Incorrect"},
+              "answer": "B"
+            },
+            {
+              "id": 18,
+              "question": "Computer literacy is a popularly known concept like regular literacy.",
+              "options": {"A": "Correct", "B": "Incorrect"},
+              "answer": "A"
+            }
+          ]
+        },
+        {
+          "id": "listening-part3",
+          "title": "Part 3",
+          "points": 12,
+          "direction": "In this part, you will hear THREE longer recordings. You will hear each recording ONCE only. There are FOUR questions for each recording. For each question, choose the correct answer A, B, C or D. Then, on the answer sheet, find the number of the question and fill in the space with the letter of the answer that you have chosen.",
+          "questions": [
+            {
+              "id": 19,
+              "question": "What is true about Suzanne's new book?",
+              "options": {"A": "It has been used in an environmental campaign.", "B": "It helped discover a new talented author.", "C": "It is well-recognized on a global scale.", "D": "It teaches readers how to solve life problems."},
+              "answer": "C"
+            },
+            {
+              "id": 20,
+              "question": "What inspired Suzanne to say no to cars?",
+              "options": {"A": "The overdevelopment of the automobile industry", "B": "The long-lasting stress cars can bring", "C": "The negative impacts of cars on goods delivery", "D": "The time spent stuck in traffic jams"},
+              "answer": "D"
+            },
+            {
+              "id": 21,
+              "question": "What is mentioned as a benefit of shopping at local stores?",
+              "options": {"A": "Being more confident about the quality of products", "B": "Buying things at more reasonable prices", "C": "Feeling secure when knowing products' sources", "D": "Avoiding buying low-quality products from strangers"},
+              "answer": "A"
+            },
+            {
+              "id": 22,
+              "question": "What does the conversation mainly cover?",
+              "options": {"A": "What triggered the author to pursue a car-free life", "B": "How cars positively and negatively impact our life", "C": "How shopping without cars betters our product choice", "D": "What to consider when living without cars"},
+              "answer": "B"
+            },
+            {
+              "id": 23,
+              "question": "What is mentioned as a way to optimize children's brain power?",
+              "options": {"A": "Parents should consider good physical preparation for them.", "B": "Children are advised to be well-prepared with learning tools.", "C": "Parents can have their children eat more the previous night.", "D": "Children should retake a test whenever they feel sick."},
+              "answer": "B"
+            },
+            {
+              "id": 24,
+              "question": "What is more essential than reviewing test-taking strategies?",
+              "options": {"A": "Encouraging children to read extensively", "B": "Keeping in contact with teachers about students' progress", "C": "Motivating children to raise their voices to teachers", "D": "Training children to read under time pressure"},
+              "answer": "B"
+            },
+            {
+              "id": 25,
+              "question": "Why should parents look at their children's previous performance?",
+              "options": {"A": "To identify and help children overcome their weaknesses", "B": "To inspire children with good past test results", "C": "To compare such performance with test standards", "D": "To maintain children's patience with test preparation"},
+              "answer": "A"
+            },
+            {
+              "id": 26,
+              "question": "What is the talk mainly about?",
+              "options": {"A": "What parents do to accompany their children in testing", "B": "The role of parents in building children's good testing skills", "C": "How parents optimize children's test-taking strategies", "D": "Parental supports to develop students' test-taking ability"},
+              "answer": "D"
+            },
+            {
+              "id": 27,
+              "question": "What do scientists claim about stress?",
+              "options": {"A": "A variety of sources may lead to stress.", "B": "More and more people are suffering from stress.", "C": "The majority of stress sources are avoidable.", "D": "Knowing how to avoid stress plays a key role."},
+              "answer": "C"
+            },
+            {
+              "id": 28,
+              "question": "How does technology affect our life according to the speaker?",
+              "options": {"A": "People are required to manage heavier workloads.", "B": "Managers can control the staff's work more tightly.", "C": "Job productivity is defined differently than in the past.", "D": "The types of required tasks become more complex."},
+              "answer": "A"
+            },
+            {
+              "id": 29,
+              "question": "What can be inferred about losing one's work-life balance?",
+              "options": {"A": "It is the root cause of being stressed.", "B": "It results in loosened social relationships.", "C": "It causes social distance in workplaces.", "D": "It leads to family break-ups and friends' separation."},
+              "answer": "B"
+            },
+            {
+              "id": 30,
+              "question": "What is the topic of the talk?",
+              "options": {"A": "Stress and its evident effects", "B": "How technology causes stress in our life", "C": "Where stress in our lives originates from", "D": "Relationships under the impact of stress"},
+              "answer": "C"
+            }
+          ]
+        }
+      ]
+    },
+    "reading": {
+      "timeLimit": 3000,
+      "parts": [
+        {
+          "id": "reading-part1",
+          "title": "Part 1. Questions 1 - 10",
+          "points": 10,
+          "direction": "Choose the best answer (A, B, C, or D) to fill in each blank.",
+          "passage": "Serenity Oasis Holiday Haven\n\nWhen looking for an ideal family retreat where everyone can find joy, I've (1) ________ the Serenity Oasis Holiday Haven, which opens its doors to guests from June to November.\n\nNestled in the heart of a verdant forest, Serenity Oasis offers a perfect escape (2) ________ the weather. The main attraction for families is the indoor Aqua Adventure Park, (3) ________ both young and old can enjoy their time in various pools. Some of these, (4) ________, are for serious swimmers only. For sports enthusiasts, the Sports Pavilion provides facilities for tennis, squash, and badminton. If your little ones are not yet ready to (5) ________ in these activities, there are specialized clubs designed for them. Serenity Oasis is an excellent choice for families (6) ________ it is entirely car-free \u2013 exploration is done on foot or by bike. Some might find this (7) ________, but I found it delightful to be outdoors in the fresh air. For evening entertainment, there are captivating shows and cinemas. Accommodations include a (8) ________ of cottages with varying sizes. These boast up to three bedrooms, a well-equipped kitchen, a bathroom, and a dining area. Despite my initial concerns about space, I was (9) ________ \u2013 it wasn't overcrowded at all.\n\nI'll surely go back to Serenity Oasis next year. Why don't you give it (10) ________? Take a break and come enjoy the slow peaceful life here! For more details, you can visit their website.",
+          "questions": [
+            {
+              "id": 1,
+              "question": "(1)",
+              "options": {"A": "come across", "B": "put forward", "C": "got into", "D": "drawn upon"},
+              "answer": "A"
+            },
+            {
+              "id": 2,
+              "question": "(2)",
+              "options": {"A": "no matter how", "B": "from whatever", "C": "independent of", "D": "on condition of"},
+              "answer": "C"
+            },
+            {
+              "id": 3,
+              "question": "(3)",
+              "options": {"A": "for what", "B": "from what", "C": "through which", "D": "at which"},
+              "answer": "D"
+            },
+            {
+              "id": 4,
+              "question": "(4)",
+              "options": {"A": "alternatively", "B": "definitely", "C": "accordingly", "D": "simultaneously"},
+              "answer": "B"
+            },
+            {
+              "id": 5,
+              "question": "(5)",
+              "options": {"A": "engage", "B": "absorb", "C": "tie", "D": "enroll"},
+              "answer": "A"
+            },
+            {
+              "id": 6,
+              "question": "(6)",
+              "options": {"A": "supposing that", "B": "despite that", "C": "as though", "D": "inasmuch as"},
+              "answer": "D"
+            },
+            {
+              "id": 7,
+              "question": "(7)",
+              "options": {"A": "inappropriate", "B": "embarrassing", "C": "inconvenient", "D": "thrilling"},
+              "answer": "C"
+            },
+            {
+              "id": 8,
+              "question": "(8)",
+              "options": {"A": "diversity", "B": "variation", "C": "diversification", "D": "variance"},
+              "answer": "A"
+            },
+            {
+              "id": 9,
+              "question": "(9)",
+              "options": {"A": "mind-blowing", "B": "mind-blowingly", "C": "mind-blown", "D": "mind-blow"},
+              "answer": "C"
+            },
+            {
+              "id": 10,
+              "question": "(10)",
+              "options": {"A": "an attempt", "B": "a go", "C": "a rest", "D": "a call"},
+              "answer": "B"
+            }
+          ]
+        },
+        {
+          "id": "reading-part2",
+          "title": "Part 2. Questions 11 - 21",
+          "points": 11,
+          "direction": "Choose A (True) or B (False) for each statement.",
+          "passages": [
+            {
+              "id": "reading-part2-text1",
+              "title": "Text 1",
+              "passage": "Math may seem tricky, but it can be exciting for kids if we approach it the right way. Solving math problems not only makes kids smarter but also helps them think logically and solve problems, which is useful throughout life.\n\nTo make math fun, we can turn learning into a game. Using colorful blocks can make math less abstract and more interesting. This hands-on approach helps kids understand math ideas better. Using technology in math education can make learning more fun. Educational websites and math apps with interactive lessons and animated characters support different learning styles. Creating a positive learning environment is also crucial. Encouraging questions and celebrating small successes boosts a child's confidence. By showing that effort and persistence matter, parents and teachers teach kids that they can get better at math with practice.\n\nMoreover, connecting math to real-life situations makes it more relevant. Whether counting groceries or sharing cookies, relating math to everyday experiences helps kids see how it works in real life. Before tackling harder math, it's essential to master basic arithmetic like addition, subtraction, multiplication, and division. These basic skills give kids the tools to handle more challenging problems later.\n\nMaking math more fun for kids is not just a creative idea but a crucial approach to nurturing a positive attitude toward learning. When kids enjoy the process of solving math problems, they become more engaged, curious, and willing to explore mathematical concepts. It transforms the perception of math from a daunting task into an exciting adventure. By incorporating games, interactive activities, and real-world examples, we not only make learning enjoyable but also lay the foundation for lifelong skills like problem-solving and critical thinking. This positive experience sets the stage for a future where children view math as a friend rather than a foe, fostering a love for learning that extends beyond the realm of numbers."
+            },
+            {
+              "id": "reading-part2-text2",
+              "title": "Text 2",
+              "passage": "http://www.funlandforkids.com\n\nEvent announcement\n\nExciting kids' adventure awaits at Funland Festival!\n\nGet ready for a day of non-stop fun and laughter at Funland Festival, the kids' event that promises to bring joy to children from 5 to 12. Join us for a thrilling adventure on March 20 from 3:00 p.m. at No. 5, ABC Street.\n\nActivities for every little explorer:\nEmbark on a magical journey with a wide array of activities designed to capture the imagination of your little ones. From interactive games, face painting, and creative craft stations to a bouncy castle and thrilling treasure hunts, there's something for every adventurer!\n\nCreative corner:\nLet your child's creativity shine at our Creative corner! Engage in hands-on arts and crafts activities that encourage self-expression and artistic exploration. From painting to DIY crafts, your little ones will leave with their masterpieces and beaming smiles.\n\nMeet & greet with characters:\nMeet beloved characters that will bring enchantment to your child's day! Capture magical moments with photo opportunities and interactive sessions with some of your child's favorite characters.\n\nDelicious treats:\nRecharge with delicious snacks and treats available throughout the festival, from cotton candy to popcorn. Don't forget to check out our affordable options at the food stalls to keep your energy level up for all the excitement!\n\nTickets and information:\nSecure your tickets now for an unforgettable day of family fun! Visit our website http://www.funlandforkids.com for ticket details, event schedule, and additional information.\n\nDon't miss out on the Funland Festival \u2013 where every moment is an adventure waiting to happen! See you there for a day filled with laughter, play, and cherished memories."
+            }
+          ],
+          "questions": [
+            {
+              "id": 11,
+              "question": "Math is challenging yet beneficial to children's development.",
+              "options": {"A": "True", "B": "False"},
+              "answer": "A"
+            },
+            {
+              "id": 12,
+              "question": "Making math more concrete and engaging is mandatory.",
+              "options": {"A": "True", "B": "False"},
+              "answer": "B"
+            },
+            {
+              "id": 13,
+              "question": "Assisting kids with math requires effort and persistence from teachers and parents.",
+              "options": {"A": "True", "B": "False"},
+              "answer": "B"
+            },
+            {
+              "id": 14,
+              "question": "Solid foundational knowledge is a prerequisite for solving math problems.",
+              "options": {"A": "True", "B": "False"},
+              "answer": "A"
+            },
+            {
+              "id": 15,
+              "question": "It is vital to foster a favorable mindset toward learning math among kids.",
+              "options": {"A": "True", "B": "False"},
+              "answer": "A"
+            },
+            {
+              "id": 16,
+              "question": "Families are welcome to bring their children to the event until 5 p.m.",
+              "options": {"A": "True", "B": "False"},
+              "answer": "B"
+            },
+            {
+              "id": 17,
+              "question": "The treasure hunt activity promises an intriguing expedition.",
+              "options": {"A": "True", "B": "False"},
+              "answer": "A"
+            },
+            {
+              "id": 18,
+              "question": "The Creative corner includes activities such as DIY crafts and face painting.",
+              "options": {"A": "True", "B": "False"},
+              "answer": "B"
+            },
+            {
+              "id": 19,
+              "question": "Children will get chances to engage with some figures that they adore.",
+              "options": {"A": "True", "B": "False"},
+              "answer": "A"
+            },
+            {
+              "id": 20,
+              "question": "Snacks like cotton candy and popcorn are provided for free at the festival.",
+              "options": {"A": "True", "B": "False"},
+              "answer": "B"
+            },
+            {
+              "id": 21,
+              "question": "Ticket purchases can be made online through the website.",
+              "options": {"A": "True", "B": "False"},
+              "answer": "B"
+            }
+          ]
+        },
+        {
+          "id": "reading-part3",
+          "title": "Part 3. Questions 22 - 35",
+          "points": 14,
+          "direction": "Choose the best answer (A, B, C, or D) to each question.",
+          "passages": [
+            {
+              "id": "reading-part3-text1",
+              "title": "Text 1",
+              "passage": "From the age of six, Jenny began a musical adventure that would shape her childhood and beyond. Fascinated by the sweet and melodic tunes of her grandmother's ukulele, Jenny found herself drawn to the enchanting world of strings and chords. Her small hands delicately held the miniature instrument, and as the first notes echoed in the air, a lifelong passion was born.\n\nHowever, the path to ukulele mastery was not without its challenges. At first, Jenny struggled with the finger placements required to produce harmonious sounds. The strings felt foreign beneath her fingertips, and the seemingly simple task of strumming proved to be a test of patience. Yet, Jenny kept going with a strong determination to master the instrument she loved. Over the years, the ukulele became Jenny's companion through the highs and lows of adolescence. From the jubilant chords that accompanied family gatherings to the soulful melodies that provided solace during quiet evenings, the ukulele became an extension of Jenny's emotions.\n\nTrying to understand musical notes and chords, Jenny faced moments of frustration and self-doubt. Yet, each obstacle became a stepping stone, pushing her to refine her technique and deepen her understanding of the instrument. Her hard work paid off, and she became more confident, playing a variety of happy and emotional songs. Jenny's musical endeavors extended beyond the confines of her room. She joined a local ukulele club, where she made friends with other enthusiasts and was supported by skilled mentors. They played music together, and Jenny's skills flourished in this supportive community.\n\nJenny's success story unfolded as she consistently participated in local and regional ukulele contests. Jenny's dedication to the ukulele, coupled with her success in various contests, elevated her status for her exceptional musical abilities. Her achievements became a testament to the transformative power of music and the rewards that accompany unwavering commitment.\n\nNow, as a young adult, Jenny reflects on her musical journey with a sense of fulfillment. The challenges she overcame and the melodies she mastered have woven a rich tapestry of experiences. Jenny's musical journey is more than just learning to play; it's about her feelings and personal growth. The ukulele became a way for her to express herself and overcome challenges. It went from being something she was curious about to a companion that reflected her emotions through the chapters of her life."
+            },
+            {
+              "id": "reading-part3-text2",
+              "title": "Text 2",
+              "passage": "Laboratory technicians, or lab techs, play an important role in researchers' quests for knowledge. They are central to various scientific fields, including chemistry, biology, physics, and more. Their tasks include preparing equipment, setting up experiments, and ensuring that all instruments are calibrated and ready for use. In addition, lab techs assist in the collection, measurement, and recording of data, which forms the backbone of any scientific study.\n\nThe origins of laboratory work can be linked to the late 19th century when the field of experimental science gained prominence. However, the role of specific laboratory technicians as a distinct profession began to take shape more prominently in the early 20th century. Over the years, people working in this career have to adapt to changing technological landscapes and societal needs, while the fundamental requirements for being a laboratory technician have remained unchanged.\n\nThe job of a laboratory technician requires a keen attention to detail. They must meticulously follow experimental protocols to ensure accuracy and reliability of results. This attention to detail extends to maintaining a clean and safe working environment, especially when dealing with the materials and substances that are potentially harmful. Therefore, adhering to safety protocols is also a requirement for them to prevent accidents and ensure the well-being of the whole scientific community. Communication skills are another vital aspect of the job. Lab techs collaborate closely with researchers, scientists, and colleagues to discuss procedures, report findings, and solve any problems that may arise during experiments. Clear and effective communication ensures that the research process remains smooth and that any unexpected challenges are addressed promptly. Furthermore, adaptability is a hallmark of a skilled laboratory technician. Scientific research often involves unexpected challenges or changes in experimental conditions. Lab techs must be prepared to adjust their approaches quickly, demonstrating problem-solving skills and a grasp of scientific principles.\n\nTo pursue a career as a laboratory technician, a person needs to study in a relevant field, such as biology, chemistry, or physics. Many technicians hold associate or bachelor's degrees. Some also undergo specialized training to gain practical experience with lab equipment and procedures. In addition, they gain hands-on experience through internships or cooperative education programs during their academic pursuits. This allows them to develop crucial skills in conducting experiments, utilizing advanced instrumentation, and following safety protocols. Continuing to learn by attending workshops and scientific conferences help them stay updated on advancements in laboratory practices. All of these surely contribute to the success of a lab technician."
+            }
+          ],
+          "questions": [
+            {
+              "id": 22,
+              "question": "What sparked Jenny's dedication to the ukulele?",
+              "options": {"A": "Her childhood's musical adventure", "B": "Her granny's musical instrument", "C": "Her curiosity about strings and chords", "D": "Her genuine passion for music"},
+              "answer": "B"
+            },
+            {
+              "id": 23,
+              "question": "What is \"foreign\" in paragraph 2 closest in meaning to?",
+              "options": {"A": "alien", "B": "unrelated", "C": "abnormal", "D": "distracted"},
+              "answer": "A"
+            },
+            {
+              "id": 24,
+              "question": "Which of the following best paraphrases this sentence?\nOver the years, the ukulele became Jenny's companion through the highs and lows of adolescence.",
+              "options": {"A": "The ukulele was more and more by Jenny's side in the good and bad moments of her adolescence.", "B": "The ukulele witnessed any emotional change that Jenny went through in her adolescence.", "C": "The ukulele became Jenny's indispensable friend at the time when she entered adolescence.", "D": "The ukulele accompanied Jenny on various occasions, no matter how important, in her adolescence."},
+              "answer": "A"
+            },
+            {
+              "id": 25,
+              "question": "What is NOT specified as one of Jenny's obstacles when acquiring ukulele skills?",
+              "options": {"A": "Positioning fingers", "B": "Encountering mixed emotions", "C": "Strumming the ukulele", "D": "Grasping the sets of musical notes"},
+              "answer": "B"
+            },
+            {
+              "id": 26,
+              "question": "What is Jenny's thought on her musical journey as a young adult?",
+              "options": {"A": "She cherishes every challenging moment.", "B": "She controls her feelings via music.", "C": "She equals it with the feeling of struggle.", "D": "She thrives through her playing."},
+              "answer": "D"
+            },
+            {
+              "id": 27,
+              "question": "Which of the following is true according to the passage?",
+              "options": {"A": "Jenny demonstrated to be a skillful ukulele player from a young age.", "B": "Jenny's growth in musical skills was attributed to communal assistance.", "C": "Jenny's ukulele tunes brought a sense of comfort to her family gatherings.", "D": "Jenny had unique effective strategies to overcome her negative encounters."},
+              "answer": "B"
+            },
+            {
+              "id": 28,
+              "question": "What is the main purpose of paragraph 1? (Text 2)",
+              "options": {"A": "To introduce a role in research", "B": "To illustrate various research tasks", "C": "To outline a research procedure", "D": "To stress the significance of research"},
+              "answer": "A"
+            },
+            {
+              "id": 29,
+              "question": "What does a lab tech primarily do?",
+              "options": {"A": "Plans experimental research", "B": "Manages administrative tasks", "C": "Conducts a quest for knowledge", "D": "Supports researchers in their studies"},
+              "answer": "D"
+            },
+            {
+              "id": 30,
+              "question": "What is \"meticulously\" in paragraph 3 closest in meaning to?",
+              "options": {"A": "precisely", "B": "thoroughly", "C": "intensively", "D": "cautiously"},
+              "answer": "B"
+            },
+            {
+              "id": 31,
+              "question": "What is NOT mentioned as a requirement for a lab tech?",
+              "options": {"A": "Strictly conforming to security guidelines", "B": "Carefully supervising experimental processes", "C": "Clearly expressing thoughts and viewpoints", "D": "Swiftly adjusting to unexpected situations"},
+              "answer": "B"
+            },
+            {
+              "id": 32,
+              "question": "What does \"This\" in paragraph 4 refer to?",
+              "options": {"A": "Undergoing specialized training", "B": "Pursuing academic excellence", "C": "Gaining hands-on experience", "D": "Cooperating with other technicians"},
+              "answer": "C"
+            },
+            {
+              "id": 33,
+              "question": "What is paragraph 4 mainly about?",
+              "options": {"A": "The significance of educational qualifications for a lab tech", "B": "Strategies for a lab tech to pursue career advancements", "C": "Factors influencing the success in the career of a lab tech", "D": "Aspects to ponder before commencing a lab tech career"},
+              "answer": "C"
+            },
+            {
+              "id": 34,
+              "question": "Which of the following is implied from the passage?",
+              "options": {"A": "Lab techs are companions of all researchers.", "B": "Lab techs regulate scientific principles in a lab.", "C": "A laboratory technician specializes in various fields.", "D": "A laboratory technician is quite a demanding job."},
+              "answer": "D"
+            },
+            {
+              "id": 35,
+              "question": "Where might this passage be found?",
+              "options": {"A": "A job advert", "B": "A scientific article", "C": "A career book", "D": "An occupational report"},
+              "answer": "C"
+            }
+          ]
+        }
+      ]
+    },
+    "writing": {
+      "timeLimit": 3600,
+      "parts": [
+        {
+          "id": "writing-task1",
+          "title": "Task 1",
+          "points": 0,
+          "direction": "You should spend about 20 minutes on ONE of the following tasks.",
+          "prompt": "Task 1.1:\nThe pie chart below shows the percentage of people working in different sectors of a country between 2000 and 2010. Summarize the information in the chart, including an introduction, an overview, and comparisons where relevant.\n\nChart data (2000): Services 30%, Manufacturing 36%, Sales 14%, Other 20%\nChart data (2010): Services 35%, Manufacturing 22%, Sales 26%, Other 17%\n\nWrite at least 120 words.\n\nOR\n\nTask 1.2:\nYour company is going to launch a new technological product. The manager asks you to write a proposal on how to advertise the product. In your proposal, you should:\n- describe the product and its function(s)\n- outline the potential customers\n- mention pre-launch marketing strategies\n- suggest ideas for the launch event\n\nWrite at least 120 words.",
+          "sampleAnswer": ""
+        },
+        {
+          "id": "writing-task2",
+          "title": "Task 2",
+          "points": 0,
+          "direction": "You should spend about 40 minutes on this task. Write an essay about the following topic.",
+          "prompt": "It is widely held that online education can substitute for traditional learning due to its enormous advantages. Meanwhile, others believe that it should not be promoted for its potential problems.\nDiscuss both views.\n\nWrite at least 200 words.",
+          "sampleAnswer": ""
+        }
+      ]
+    },
+    "speaking": {
+      "timeLimit": 600,
+      "parts": [
+        {
+          "id": "speaking-part1",
+          "title": "Part 1: Social Interaction (2')",
+          "points": 0,
+          "direction": "Answer the following questions.",
+          "prompt": "- Do you study or work?\n- [If study] What do you like studying?\n  [If work] Do you work on weekends? Why (not)?\n- What can you do to stay healthy?\n- How do your parents spend their free time?\n- Do young people in your country like to follow fashion trends? Why (not)?",
+          "prepTime": 0,
+          "responseTime": 120,
+          "sampleResponse": ""
+        },
+        {
+          "id": "speaking-part2",
+          "title": "Part 2: Cue-based talk (3')",
+          "points": 0,
+          "direction": "Describe a person who has a successful start-up.",
+          "prompt": "Describe a person who has a successful start-up.\nYou should talk about:\n- who he/she is;\n- what start-up he/she has;\n- how you know him/her.",
+          "prepTime": 60,
+          "responseTime": 120,
+          "sampleResponse": ""
+        },
+        {
+          "id": "speaking-part3",
+          "title": "Part 3: Topic discussion (5')",
+          "points": 0,
+          "direction": "Choose ONE of the given topics.",
+          "prompt": "Topic 1:\nSpace exploration is always worthwhile due to its long-term benefits. Do you agree or disagree? Why (not)?\n\nFurther questions:\n- Space exploration can help people understand more about the universe. What do you think about this opinion?\n- Spending on space exploration should be used to address poverty. What do you think about this opinion?\n\nTopic 2:\nThe media should not report the private lives of famous people. Do you agree or disagree? Why (not)?\n\nFurther questions:\n- Some celebrities want to appear in the media to draw public attention. What do you think about this opinion?\n- The privacy of famous people should be respected. What do you think about this opinion?",
+          "prepTime": 60,
+          "responseTime": 240,
+          "sampleResponse": ""
+        }
+      ]
+    }
+  }
+}
