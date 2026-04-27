@@ -1,0 +1,395 @@
+% Setting up document structure
+\documentclass[a4paper,12pt]{article}
+\usepackage[utf8]{vietnam}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{geometry}
+\usepackage{parskip}
+\usepackage{enumitem}
+% \usepackage{hyperref}
+\usepackage{graphicx}
+\usepackage{caption}
+\usepackage{xcolor}
+\usepackage{tocloft}
+\usepackage{titling}
+\usepackage{minted}
+\usepackage{tikz}
+\usepackage{fourier-orns}
+\usepackage{fancyhdr}
+\usepackage{pifont}
+\usepackage{tikz}
+\usepackage[table]{xcolor}
+\usepackage[normalem]{ulem}
+% \usepackage[colorlinks=true, urlcolor=blue]{hyperref}
+\PassOptionsToPackage{hyphens}{url}\usepackage[colorlinks=true,allcolors=black]{hyperref}
+
+
+
+% Vẽ border cho từng trang
+% \usepackage{everypage}
+% \AddEverypageHook{
+%   \ifnum\value{page}>1
+%     \begin{tikzpicture}[remember picture,overlay]
+%       \draw[line width=1pt,black]
+%         ([xshift=1cm,yshift=-1cm]current page.north west)
+%           rectangle
+%         ([xshift=-1cm,yshift=1cm]current page.south east);
+%     \end{tikzpicture}
+%   \fi
+% }
+
+
+% Đánh chỉ mục section bằng số La Mã
+\renewcommand{\thesection}{\Roman{section}}
+% Đánh chỉ mục subsection chỉ bằng số Ả Rập
+\renewcommand{\thesubsection}{\arabic{subsection}}
+
+\renewcommand{\footrule}{%
+\vspace{-8pt}\hrulefill
+\raisebox{-2.1pt}{\quad\decofourleft\decotwo\decofourright\quad}\hrulefill}
+
+% Configuring page margins
+\geometry{a4paper, margin=1in}
+
+% Setting up font
+\usepackage{times}
+
+% Customizing table of contents
+\renewcommand{\cftsecleader}{\cftdotfill{\cftdotsep}}
+\setlength{\cftsecindent}{0em}
+\setlength{\cftsubsecindent}{2em}
+
+\begin{document}
+
+% \pagestyle{fancy}
+% \fancyhf{}
+% \fancyhead[R]{\thepage}
+% % Footer
+% \fancyfoot[LO]{PGS.TS Nguyễn Đình Hiển}
+% \fancyfoot[RO]{Học viên: Lê Hồng Hiển}
+
+% Creating title page
+\begin{titlepage}
+    \thispagestyle{empty}
+    \newgeometry{left=2.75cm, right=2cm, top=0cm, bottom=0cm}
+    \begin{tikzpicture}[remember picture, overlay]
+        \draw[thick, black] ([xshift=2cm,yshift=-1cm]current page.north west) rectangle ([xshift=-1cm,yshift=1cm]current page.south east);
+    \end{tikzpicture}
+    \vspace*{1cm}
+    \begin{center}
+        {\scshape\LARGE đại học quốc gia tp hcm \par}
+        \vspace{-0.5em}
+        {\bfseries\scshape\LARGE trường đại học công nghệ thông tin \par}
+        \vspace{-0.5em}
+        {\Large \decofourleft\ding{72}\decofourright}
+        \vspace{2cm}
+
+        % logo
+        \begin{center}
+            \includegraphics[width=0.2\textwidth]{logo.jpg}
+        \end{center}
+
+        \vspace{2cm}
+        {\bfseries\scshape\Large lê hồng hiển \\ mshv: 210101006 \par}
+        \vspace{1cm}
+        
+        {\Large\bfseries\scshape tên đề tài: giải pháp kết hợp ontology và mô hình ngôn ngữ lớn để thiết kế hệ thống tư vấn kiến thức về quy định đào tạo sau đại học\par}
+        
+        \vspace{2cm}
+        {\bfseries\Large\scshape đề cương luận văn thạc sĩ \par}
+        {\Large\scshape ngành khoa học máy tính \par}
+
+        \vspace{1cm}
+        {\large Mã số: 8480101 \par}
+        \vspace{1cm}
+        {\Large\scshape người hướng đẫn khoa học: \par}
+        {\Large\scshape pgs.ts nguyễn đình hiển \\ ts. ngô quốc hưng \par}
+
+        \vspace{1cm}
+        {\bfseries\scshape\large tp hồ chí minh - năm 2025 \par}
+    \end{center}
+    \restoregeometry
+\end{titlepage}
+
+\newpage
+\thispagestyle{empty}
+
+\vspace*{-1.5cm}
+
+
+\begin{center}
+    \begin{minipage}{0.46\textwidth}
+        \raggedright
+        \centering
+        ĐẠI HỌC QUỐC GIA TP. HỒ CHÍ MINH\\
+        \textbf{TRƯỜNG ĐẠI HỌC CÔNG NGHỆ THÔNG TIN}
+    \end{minipage}
+    \hfill
+    \begin{minipage}{0.46\textwidth}
+        \raggedleft
+        \centering
+        \textbf{CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM}\\
+        \textbf{Độc Lập - Tự Do - Hạnh Phúc}
+    \end{minipage}
+\end{center}
+
+% \vspace{1em}
+
+\begin{center}
+    {\Large \textbf{THÔNG TIN ĐĂNG KÝ ĐỀ TÀI LUẬN VĂN THẠC SĨ}}
+\end{center}
+
+\begin{enumerate}[leftmargin=1.5em]
+    \item \textbf{Tên đề tài (ghi IN HOA):}
+    \begin{itemize}
+        \item Tên tiếng Việt: {\scshape\large giải pháp kết hợp ontology và mô hình ngôn ngữ lớn để thiết kế hệ thống tư vấn kiến thức về quy định đào tạo sau đại học}
+        \item Tên tiếng Anh: {\scshape\large integrating ontology and large language models to design an advisory system for postgraduate education regulations}
+        \item Hướng đề tài luận văn: \textbf{Định hướng nghiên cứu} \ding{51}
+        \item Số tín chỉ: 18
+    \end{itemize}
+    \item \textbf{Ngành học và Mã ngành:}
+    \begin{itemize}
+        \item Khoa học máy tính: 8480101 \ding{51}
+    \end{itemize}
+    \item \textbf{Cán bộ hướng dẫn:}
+    \begin{itemize}
+        \item \textbf{Cán bộ hướng dẫn 1:}
+        \begin{itemize}
+            \item Họ tên: PGS.TS Nguyễn Đình Hiển
+            \item Email: hiennd@uit.edu.vn
+            \item Điện thoại: 0918735299
+            \item Đơn vị công tác: Trường Đại học Công nghệ thông tin, ĐHQG-HCM
+        \end{itemize}
+        \item \textbf{Cán bộ hướng dẫn 2:}
+        \begin{itemize}
+            \item Họ tên: TS. Ngô Quốc Hưng
+            \item Email: hung.ngo@ucd.ie
+            % \item Điện thoại: [Số điện thoại của TS. Ngô Quốc Hưng] % TODO: xin sđt thầy Ngô Quốc Hứng
+            \item Đơn vị công tác: University College Dublin
+        \end{itemize}
+    \end{itemize}
+    \item \textbf{Thời gian thực hiện:} 6 tháng. Từ tháng 9/2025.
+    \item \textbf{Học viên thực hiện:}
+    \begin{itemize}
+        \item Họ tên: Lê Hồng Hiển
+        \item Mã số: 210101006 \hspace{1em} Khóa: 16 \hspace{1em} Đợt: 1
+        \item Email: hienlh.16@grad.uit.edu.vn \hspace{1em} Điện thoại: 0971963707
+    \end{itemize}
+\end{enumerate}
+
+\begin{center}
+    \begin{minipage}{0.46\textwidth}
+        \raggedright
+        \centering
+        \vspace{1.1em}
+        \textbf{XÁC NHẬN CỦA CBHD} \\
+        (Ký tên và ghi rõ họ tên) \\
+        \vspace{5em}
+        Nguyễn Đình Hiển \\
+    \end{minipage}
+    \hfill
+    \begin{minipage}{0.46\textwidth}
+        \raggedleft
+        \centering
+        TP. HCM, ngày 28 tháng 6 năm 2025 \\
+        \textbf{HỌC VIÊN} \\
+        (Ký tên và ghi rõ họ tên) \\
+        \vspace{5em}
+        Lê Hồng Hiển \\
+    \end{minipage}
+\end{center}
+
+% \newpage
+% \tableofcontents
+
+\newpage
+% Starting main content
+
+\begin{center}
+    \section*{ĐỀ CƯƠNG ĐỀ TÀI LUẬN VĂN THẠC SĨ}
+\end{center}
+
+\section{Nội dung}
+
+\subsection{Giới thiệu đề tài}
+
+Tại các trường đại học ở Việt Nam, nhiều phòng ban chức năng đã được thành lập để hỗ trợ sinh viên trong học tập, rèn luyện và giải quyết các thủ tục hành chính.
+Tuy nhiên, do thông tin bị phân tán giữa nhiều phòng ban và các quy định thường khó hiểu, sinh viên gặp nhiều trở ngại trong việc tra cứu, tiếp cận và nắm bắt đầy đủ các quy định đào tạo, nhất là đối với những quy chế mới hoặc có tính chất phức tạp.
+Sinh viên thường phải liên hệ với nhiều nơi khác nhau cho từng vấn đề, dẫn đến mất thời gian, chờ đợi kéo dài và đôi khi không nhận được thông tin chính xác, kịp thời.
+Ngoài ra, các nhu cầu tư vấn về học tập, tâm lý, nghiên cứu khoa học, lựa chọn ngành nghề, điều kiện sống cũng ngày càng đa dạng, trong khi nguồn lực cán bộ tư vấn còn hạn chế.
+Việc giải thích các quy định đào tạo phức tạp thường đòi hỏi sự tương tác trực tiếp, gây áp lực lớn cho đội ngũ cán bộ và không đáp ứng được nhu cầu hỗ trợ 24/7.
+Do đó, việc xây dựng một hệ thống tư vấn tự động, thông minh, đóng vai trò là điểm kết nối duy nhất để tổng hợp và cung cấp thông tin một cách liền mạch sẽ giúp giảm tải cho cán bộ, tiết kiệm chi phí vận hành, đồng thời nâng cao trải nghiệm và sự hài lòng của sinh viên.
+
+Trong bối cảnh đó, việc ứng dụng trí tuệ nhân tạo (AI) vào các hệ thống tư vấn tự động mang lại nhiều tiềm năng đột phá.
+AI có thể giúp tự động hóa việc trả lời các câu hỏi thường gặp, phân tích và tổng hợp thông tin từ nhiều nguồn, đồng thời cung cấp hỗ trợ liên tục 24/7 với độ chính xác và cá nhân hóa cao.
+Nhờ đó, sinh viên có thể dễ dàng tiếp cận thông tin về quy định đào tạo cũng như các vấn đề khác một cách nhanh chóng, thuận tiện, góp phần hỗ trợ cho sinh viên một cách toàn diện và hiện đại.
+
+Chính phủ và các cơ sở giáo dục đại học tại Việt Nam cũng đang ngày càng nhận thức rõ tiềm năng to lớn của AI trong việc nâng cao chất lượng giáo dục, dù vẫn còn những thách thức nhất định trong quá trình triển khai.
+Để cho thấy tầm quan trọng của AI trong giáo dục đại học tại Việt Nam, bài viết của Nguyen và Hoang (2024) \cite{Nguyen2024AI} trên Tạp chí Công Thương đã chỉ ra nhiều thách thức và cơ hội trong việc ứng dụng AI vào các hệ thống tư vấn tự động.
+
+Gần đây, nhiều trường đại học tại Việt Nam đã tiên phong ứng dụng trí tuệ nhân tạo vào các hệ thống hỗ trợ sinh viên, mang lại những trải nghiệm hiện đại và tiện ích vượt trội.
+Đơn cử, trường Đại học Kinh tế Quốc dân (UEB) đã triển khai Chatbot UEB\footnote{Chatbot UEB: \url{https://ueb.edu.vn/Tin-Tuc/UEB/chatbot-ho-tro-sinh-vien-24-7-\%E2\%80\%93-giai-phap-tu-van-nhanh-chong-hieu-qua/43253}} dựa trên nền tảng ChatGPT, giúp sinh viên dễ dàng tra cứu thông tin và giải đáp thắc mắc mọi lúc, mọi nơi.
+Đại học Kinh tế Thành phố Hồ Chí Minh (UEH) cũng không nằm ngoài xu hướng khi ra mắt Trợ lý ảo UEH AI Chatbot \footnote{UEH AI Chatbot: \url{https://tuyensinh.ueh.edu.vn/bai-viet/ra-mat-tro-ly-ao-ueh-ai-chatbot-ung-dung-tri-tue-nhan-tao-tu-van-tuyen-sinh-huong-nghiep-danh-cho-phu-huynh-hoc-sinh/}}, hỗ trợ tư vấn tuyển sinh, hướng nghiệp.
+Bên cạnh đó, Trường Đại học Tài nguyên và Môi trường Hà Nội (HUNRE) đã phát triển HUNRE AI Chatbot \footnote{HUNRE AI Chatbot: \url{https://hunre.edu.vn/hunre-ai-tro-ly-ao-thong-minh-dong-hanh-cung-sinh-vien-va-thi-sinh.html}}, góp phần nâng cao chất lượng phục vụ sinh viên và tối ưu hóa quy trình quản lý đào tạo.
+Những mô hình này cho thấy tiềm năng to lớn của AI trong việc đổi mới hoạt động tư vấn, hỗ trợ sinh viên tại các cơ sở giáo dục đại học ở Việt Nam.
+
+Các ứng dụng chatbot này chủ yếu dựa trên nền tảng các mô hình ngôn ngữ lớn (LLM), đã được triển khai rộng rãi và bước đầu mang lại nhiều tiện ích cho sinh viên trong thực tế.
+Tuy nhiên, hiện vẫn còn thiếu các nghiên cứu đánh giá định lượng về mức độ chính xác và hiệu quả thực sự của các hệ thống này khi áp dụng vào việc giải đáp các quy định đào tạo cụ thể.
+Bên cạnh đó, các LLM hiện nay vẫn gặp nhiều hạn chế trong việc xử lý các câu hỏi phức tạp đòi hỏi suy luận logic sâu.
+Đặc biệt, hiện tượng "ảo giác" (hallucination) - khi mô hình tạo ra câu trả lời không chính xác hoặc không sát với thực tế - vẫn là một rào cản lớn, có thể dẫn đến việc cung cấp thông tin sai lệch dẫn tới hậu quả nghiêm trọng đối với sinh viên.
+
+Các nghiên cứu gần đây như của Zhu và cộng sự (2025) \cite{Knowledge_Graph} hay Xu và cộng sự (2024) \cite{Knowledge_Graph_Customer_Service} đã chỉ ra rằng việc kết hợp Knowledge Graph với mô hình RAG \cite{RAG} vào mô hình ngôn ngữ lớn LLM có thể cải thiện đáng kể độ chính xác trong câu trả lời và khả năng suy luận, cung cấp dẫn chứng cho câu trả lời.
+Knowledge Graph biểu diễn tri thức dưới dạng cấu trúc đồ thị có quan hệ, cho phép truy xuất thông tin một cách có hệ thống và hiệu quả, từ đó cung cấp ngữ cảnh chính xác và tri thức có cấu trúc cho LLM, giúp giảm thiểu đáng kể hiện tượng "ảo giác" trong quá trình sinh câu trả lời.
+Tuy nhiên, đây chính là khoảng trống nghiên cứu mà đề tài này nhắm đến: Mặc dù ý tưởng kết hợp RAG và KG mang lại nhiều hứa hẹn, nhưng các nghiên cứu hiện tại vẫn còn mang tính tổng quát và chưa có một công trình hoàn chỉnh nào xây dựng một ontology chuyên biệt cùng với quy trình rút trích tri thức tự động để tạo ra đồ thị tri thức cho lĩnh vực đặc thù là các quy định đào tạo của các trường đại học tại Việt Nam.
+Việc thiết kế và xây dựng một ontology như vậy cho lĩnh vực đào tạo của các trường đại học tại Việt Nam là một thách thức nghiên cứu quan trọng chưa được giải quyết một cách toàn diện.
+
+Trong luận văn này, chúng tôi đề xuất một kiến trúc nhằm tăng cường khả năng của mô hình LLM trong việc xử lý các câu hỏi phức tạp, đòi hỏi suy luận logic phức tạp, độ chính xác cao và giảm hiện tượng ảo giác.
+Đề tài tập trung nghiên cứu phương pháp xây dựng một Ontology \cite{Legal_Ontology} tối ưu, đóng vai trò làm nền tảng (Schema) cho đồ thị tri thức (Knowledge Graph) về các quy định đào tạo, nhằm đảm bảo khả năng biểu diễn linh hoạt, chính xác, khả năng suy luận và dễ mở rộng cho hệ thống.
+Trên cơ sở đó, chúng tôi phát triển một chatbot dựa trên Knowledge Graph, kết hợp cùng sức mạnh của các mô hình ngôn ngữ lớn (LLM) và kỹ thuật RAG (Retrieval-Augmented Generation) \cite{RAG}. 
+Hệ thống này giúp LLM tự động truy xuất thông tin từ Knowledge Graph thông qua cơ chế RAG, từ đó phân tích và đưa ra câu trả lời chính xác, đáng tin cậy cho các câu hỏi của sinh viên.
+
+Để làm nổi bật tính hiệu quả và khả năng ứng dụng thực tiễn của hệ thống, chúng tôi sẽ tiến hành đánh giá trên bộ dữ liệu thực tế lấy từ trường Đại học Công nghệ Thông tin, với phạm vi nghiên cứu tập trung vào các quy định về đào tạo trình độ Thạc sĩ.
+Cụ thể, hệ thống sẽ được kiểm thử với các bộ quy chế, quy định đào tạo thạc sĩ bao gồm: 
+\begin{itemize}
+    \item Quy chế đào tạo trình độ thạc sĩ của trường Đại học Công nghệ Thông tin (UIT) số 270/QĐ-ĐHCNTT ngày 25/04/2022.
+    \item Quy chế đào tạo trình độ thạc sĩ cho khoá 2021 số 160/QĐ- ĐHQG, ngày 24/03/2017 của Đại học Quốc gia Thành phố Hồ Chí Minh (ĐHQG-HCM) - cơ quan chủ quản của UIT.
+    \item Quy chế đào tạo trình độ thạc sĩ cho khoá từ năm 2022 trở về sau số 1393/QĐ-ĐHQG ngày 03/11/2021 của ĐHQG-HCM.
+    \item Quy chế  sửa đổi bổ sung 218/QĐ-ĐHQG, ngày 15/03/2024 về Quy định Giáo viên hướng dẫn của ĐHQG-HCM.
+    \item Quy định về liêm chính học thuật áp dụng cho học viên cao học số 851/QĐ-ĐHCNTT ngày 14/08/2024 của UIT, nhằm chứng minh khả năng xử lý linh hoạt, chính xác các tình huống thực tế mà học viên cao học thường gặp phải trong quá trình học tập, nghiên cứu và thực hiện luận văn thạc sĩ.
+\end{itemize}
+
+Việc giới hạn phạm vi nghiên cứu vào các quy định đào tạo thạc sĩ sẽ cho phép chúng tôi tập trung xây dựng một ontology chuyên sâu và chi tiết, đồng thời đảm bảo độ chính xác cao trong việc xử lý các câu hỏi phức tạp liên quan đến quy trình đào tạo, điều kiện tốt nghiệp, yêu cầu luận văn, và các vấn đề về liêm chính học thuật mà học viên cao học thường quan tâm.
+Ngoài ra, chúng tôi cũng sẽ thu thập các câu hỏi phức tạp và đòi hỏi suy luận sâu từ học viên cao học để đánh giá khả năng xử lý của hệ thống trong việc giải đáp các thắc mắc về quy định đào tạo thạc sĩ một cách toàn diện và chính xác.
+
+\subsection{Mục tiêu của đề tài}
+
+Trong luận văn này, chúng tôi sẽ nghiên cứu và giải quyết các vấn đề sau:
+
+\begin{itemize}
+    \item Xây dựng Ontology và Knowledge Graph (KG) về các quy định đào tạo, làm nền tảng cho hệ thống tư vấn tự động. Ontology sẽ xác định các thực thể, thuộc tính và mối quan hệ quan trọng trong lĩnh vực đào tạo, đảm bảo khả năng biểu diễn linh hoạt và hỗ trợ suy luận logic. Knowledge Graph được xây dựng dựa trên Ontology này, giúp tổ chức, lưu trữ và truy xuất thông tin một cách hiệu quả, phục vụ cho việc trả lời các câu hỏi phức tạp của sinh viên liên quan đến quy chế, điều kiện học tập, xét tốt nghiệp, đăng ký môn học, v.v.
+
+    \item Nghiên cứu và ứng dụng các công nghệ hiện đại như mô hình ngôn ngữ lớn (LLM) kết hợp với kỹ thuật RAG (Retrieval-Augmented Generation) \cite{RAG}, tích hợp các mô hình ngôn ngữ tiếng Việt như PhoBERT, và khai thác sức mạnh của Graph Neural Networks (GNN) trong truy xuất tri thức từ Knowledge Graph, nhằm tăng cường khả năng truy xuất, tổng hợp và cập nhật thông tin từ các nguồn dữ liệu khác nhau, đặc biệt là các quy định đào tạo. Hệ thống được thiết kế để có thể cập nhật dữ liệu một cách linh hoạt, dễ dàng mở rộng mà không cần phải huấn luyện lại mô hình từ đầu, đảm bảo tính thích nghi và tiết kiệm chi phí vận hành. Việc tận dụng sức mạnh của LLM, PhoBERT, RAG và GNN còn giúp nâng cao độ chính xác, giảm hiện tượng ảo giác (hallucination) và khả năng trả lời các câu hỏi phức tạp, nhiều bước, cần sự tổng hợp kiến thức.
+
+    \item Xây dựng bộ kiểm thử và thực hiện đánh giá định lượng cho hệ thống tư vấn tự động. Thiết kế các tập dữ liệu kiểm thử bao gồm các câu hỏi thực tế, đặc biệt chú trọng đến các câu hỏi phức tạp, yêu cầu suy luận logic liên quan đến quy định đào tạo. Ngoài ra, có thể sử dụng thêm các bộ dữ liệu sẵn có về các lĩnh vực liên quan như quy định pháp lý, luật pháp (ví dụ: VNLegalEase \cite{VNLegalEase}) để đánh giá hệ thống.
+\end{itemize}
+
+\subsection{Đóng góp khoa học và tính mới (dự kiến)}
+
+\begin{itemize}
+    \item \textbf{Ontology chuyên biệt cho quy định đào tạo thạc sĩ tại Việt Nam}: Đề xuất và xây dựng một ontology miền chuyên sâu cho các quy chế/điều khoản đào tạo thạc sĩ, cho phép biểu diễn thực thể, quan hệ và ràng buộc hình thức một cách nhất quán và mở rộng. Bộ ontology/Knowledge Graph kèm tài liệu sẽ được công bố mở để tái sử dụng.
+
+    \item \textbf{Quy trình rút trích tri thức bán–tự động từ văn bản pháp quy}: Phát triển pipeline chuẩn hoá điều khoản, chuẩn hoá tham chiếu, nhận diện thực thể/quan hệ theo ontology và căn chỉnh vào KG với \emph{human-in-the-loop}, đảm bảo khả năng truy vết nguồn gốc (provenance).
+
+    \item \textbf{Kiến trúc RAG định hướng tri thức (KG-guided)}: Thiết kế cơ chế truy xuất từ KG để cung cấp ngữ cảnh có cấu trúc cho LLM, bắt buộc trích dẫn nguồn trong câu trả lời nhằm giảm ảo giác. Đánh giá hiệu quả của kiến trúc này bằng cách so sánh có kiểm soát với hai phương pháp đối chứng: (1) chỉ sử dụng LLM (LLM-only, không có truy xuất tri thức), và (2) sử dụng RAG với tìm kiếm vector thông thường (Vector-RAG, không sử dụng Knowledge Graph), nhằm làm rõ đóng góp của từng thành phần trong hệ thống.
+
+    \item \textbf{Bộ kiểm thử tiếng Việt cho các câu hỏi suy luận nhiều bước}: Xây dựng bộ câu hỏi kiểm thử gồm các tình huống phức tạp như: xung đột giữa các điều khoản, các trường hợp đặc biệt, hoặc yêu cầu suy luận về thời hạn, điều kiện đi kèm,... Dữ liệu này được xây dựng dựa trên các quy định đào tạo của UIT/ĐHQG-HCM và sẽ được công bố mở.
+
+    \item \textbf{Khả năng công bố khoa học}: Các đóng góp trên phù hợp với hướng công bố tại các hội nghị/tạp chí quốc tế thuộc Springer/IEEE/ACM (ví dụ: ACIIDS, KSE, SoICT, IEA/AIE).
+\end{itemize}
+
+\subsection{Nội dung nghiên cứu của đề tài}
+
+\textbf{\uline{Nội dung 1}: Thu thập dữ liệu và phân loại:}
+
+\textbf{Phương pháp:} Thu thập quy chế đào tạo và các thông báo liên quan từ trường Đại học Công nghệ Thông tin thông qua website, tài liệu chính thức và phỏng vấn cán bộ đào tạo; đồng thời thu thập các câu hỏi phức tạp, đòi hỏi suy luận logic liên quan đến quy định đào tạo từ sinh viên. Sau đó, tiến hành phân tích, phân loại các câu hỏi này thành các nhóm chủ đề như quy định đào tạo, điều kiện tốt nghiệp, đăng ký môn học, xét tốt nghiệp,... nhằm phục vụ cho quá trình xây dựng Ontology và đồ trị tri thức.
+    
+\textbf{\uline{Nội dung 2}: Nghiên cứu và xây dựng Knowledge Graph dựa trên Ontology:}
+
+\textbf{Phương pháp:} Đầu tiên, tiến hành nghiên cứu và xây dựng một Ontology phù hợp với các quy định đào tạo, xác định rõ các thực thể quan trọng như môn học, điểm số, thời hạn, cùng các mối quan hệ như điều kiện tốt nghiệp, yêu cầu luận văn, v.v. Trên cơ sở Ontology này, hệ thống Knowledge Graph (KG) sẽ được xây dựng bằng Neo4j, cho phép tổ chức và lưu trữ tri thức. 
+
+Đồng thời nghiên cứu phương pháp truy xuất thông tin hiệu quả KG để đảm bảo nhanh chóng, chính xác và đầy đủ.
+
+KG được thiết kế đảm bảo khả năng cập nhật dễ dàng khi có thêm các quy định mới, giúp hệ thống luôn thích nghi với sự thay đổi của môi trường đào tạo.
+    
+\textbf{\uline{Nội dung 3}: Nghiên cứu mô hình tích hợp LLM + RAG + Knowledge Graph với GNN Retrieval:}
+
+\textbf{Phương pháp:} Nghiên cứu một mô hình tích hợp gồm (i) bộ xử lý truy vấn dựa trên KG và Embedding; (ii) bộ truy xuất kết quả kết hợp giữa vector search và bộ truy xuất đồ thị dựa trên \emph{Graph Neural Networks} (GNN) để khai thác cấu trúc KG (tham khảo GNN-RAG \cite{GNN_RAG}); (iii) cơ chế cung cấp ngữ cảnh có cấu trúc và ràng buộc trích dẫn nguồn cho LLM; (iv) xây dựng demo tối thiểu phục vụ thực nghiệm, tập trung đánh giá ảnh hưởng của thành phần GNN Retrieval đến độ chính xác và giảm ảo giác.
+
+\textbf{\uline{Nội dung 4}: Thử nghiệm và đánh giá hệ thống:}
+
+\textbf{Phương pháp:} 
+
+Thực hiện thử nghiệm và đánh giá định lượng bằng các chỉ số BLEU, ROUGE, BERTScore, và độ chính xác trên bộ dữ liệu kiểm thử được xây dựng ở nội dung 1.
+Đồng thời, thu thập ý kiến sinh viên, cán bộ đào tạo về tính dễ hiểu, hữu ích, và khả năng ứng dụng thực tế của hệ thống.
+
+\subsection{Kết quả, sản phẩm dự kiến}
+
+\begin{itemize}
+    \item Một Ontology chuyên về quy định đào tạo cùng với Knowledge Graph được xây dựng trên Neo4j, cho phép biểu diễn linh hoạt các thực thể, thuộc tính và mối quan hệ trong lĩnh vực đào tạo, hỗ trợ truy xuất thông tin hiệu quả và suy luận.
+
+    \item Quy trình rút trích tri thức bán–tự động từ văn bản pháp quy sang KG cùng mã nguồn và tài liệu hướng dẫn để tái lập.
+
+    \item Một demo hỏi–đáp dựa trên LLM + RAG + Knowledge Graph \textit{phục vụ đánh giá và minh hoạ}.
+
+    \item Bộ dữ liệu kiểm thử bao gồm các quy chế, quy định đào tạo và các câu hỏi thực tế từ sinh viên, đặc biệt chú trọng đến các câu hỏi phức tạp yêu cầu suy luận logic liên quan đến quy định đào tạo, phục vụ cho việc đánh giá định lượng hệ thống.
+
+    \item Một bài báo khoa học tại một hội nghị quốc tế được xuất bản bởi các nhà xuất bản uy tín như IEEE, ACM, Springer, hoặc Elsevier, trình bày các kết quả nghiên cứu.
+\end{itemize}
+
+\subsection*{Tài liệu tham khảo}
+\vspace{-2em}
+\renewcommand{\refname}{}
+\begin{thebibliography}{99}
+
+\bibitem{Nguyen2024AI}
+Nguyen, Gia Trung Quan and Hoang, To Thu Dung. (2024). Artificial Intelligence in Vietnamese Higher Education: Challenges and Opportunities. Tạp chí Công Thương. \url{https://tapchicongthuong.vn/artificial-intelligence-in-vietnamese-higher-education-challenges-and-opportunities-124436.htm}
+
+\bibitem{VNLegalEase}
+Nguyen, T. H., Nguyen, T. T., Nguyen, T. T., \& Nguyen, M. T. VNLegalEase: A Vietnamese Legal Query Chatbot. Intelligent Systems and Data Science (2025). \url{https://www.springerprofessional.de/en/vnlegalease-a-vietnamese-legal-query-chatbot/50187858}
+
+
+% \bibitem{R2GQA}
+% Do, T.P.P., Cao, N.D.D., Tran, K.Q. et al. R2GQA: retriever-reader-generator question answering system to support students understanding legal regulations in higher education. Artif Intell Law (2025). \url{https://doi.org/10.1007/s10506-025-09457-7}
+
+% \bibitem{UITHelper_QAS}
+% Nguyen, N. V. (2020). UITHelper\_QAS: Question Answering System for Regulations of University of Information Technology. \url{https://github.com/namnv1113/UITHelper_QAS}
+
+\bibitem{Legal_Ontology}
+Dang, D.V., Nguyen, H.D., Ngo, H., Pham, V.T., Nguyen, D. (2023). Information Retrieval from Legal Documents with Ontology and Graph Embeddings Approach. In: Fujita, H., Wang, Y., Xiao, Y., Moonis, A. (eds) Advances and Trends in Artificial Intelligence. Theory and Applications. IEA/AIE 2023. Lecture Notes in Computer Science(), vol 13925. Springer, Cham. \url{https://doi.org/10.1007/978-3-031-36819-6_27}
+
+\bibitem{Knowledge_Graph}
+Zhu, Xiangrong \& Xie, Yuexiang \& Liu, Yi \& Li, Yaliang \& Hu, Wei. (2025). Knowledge Graph-Guided Retrieval Augmented Generation. \url{https://doi.org/10.18653/v1/2025.naacl-long.449}
+
+\bibitem{Knowledge_Graph_Customer_Service}
+Xu, Z., Cruz, M.J., Guevara, M., Wang, T., Deshpande, M., Wang, X., Li, Z. (2024). Retrieval-Augmented Generation with Knowledge Graphs for Customer Service Question Answering. In Proceedings of the 47th International ACM SIGIR Conference on Research and Development in Information Retrieval (SIGIR '24). Association for Computing Machinery, New York, NY, USA, 2905-2909. \url{https://doi.org/10.1145/3626772.3661370}
+
+% \bibitem{Knowledge_Graph_Zep}
+% Rasmussen, Preston \& Paliychuk, Pavlo \& Beauvais, Travis \& Ryan, Jack \& Chalef, Daniel. (2025). Zep: A Temporal Knowledge Graph Architecture for Agent Memory. \url{https://doi.org/10.48550/arXiv.2501.13956}
+
+\bibitem{GNN_RAG}
+Mavromatis, C., Karypis, G. (2024). GNN-RAG: Graph Neural Retrieval for Large Language Model Reasoning. \url{https://doi.org/10.48550/arXiv.2405.20139}
+
+% \bibitem{KG_IRAG}
+% Yang, Ruiyi \& Xue, Hao \& Razzak, Imran \& Hacid, Hakim \& Salim, Flora. (2025). KG-IRAG: A Knowledge Graph-Based Iterative Retrieval-Augmented Generation Framework for Temporal Reasoning. \url{https://doi.org/10.48550/arXiv.2503.14234}
+
+\bibitem{RAG}
+Weaviate. (2024). Introduction to RAG (Retrieval-Augmented Generation). \url{https://weaviate.io/blog/introduction-to-rag}
+
+\end{thebibliography}
+
+\newpage
+\section{KẾ HOẠCH THỰC HIỆN}
+
+\begin{table}[h!]
+\centering
+\renewcommand{\arraystretch}{1.5}
+\setlength{\tabcolsep}{6pt}
+\begin{tabular}{|c|p{8cm}|*{6}{c|}}
+\hline
+\textbf{TT} & \textbf{Nội dung công việc} & \textbf{9} & \textbf{10} & \textbf{11} & \textbf{12} & \textbf{1} & \textbf{2} \\
+\hline
+1 & Nghiên cứu tổng quan, phân tích yêu cầu, thiết kế hệ thống & \cellcolor[HTML]{6CABDD} & & & & & \\
+\hline
+2 & Thu thập và xây dựng bộ dữ liệu về quy định đào tạo và các câu hỏi của sinh viên & & \cellcolor[HTML]{6CABDD} & & & & \\
+\hline
+3 & Phát triển mô hình ontology và xây dựng Knowledge Graph & & & \cellcolor[HTML]{6CABDD} & \cellcolor[HTML]{6CABDD} & & \\
+\hline
+4 & Nghiên cứu mô hình LLM+RAG+KG với GNN Retrieval & & & & & \cellcolor[HTML]{6CABDD} & \\
+\hline
+5 & Kiểm thử, tổng kết, hoàn thiện và viết báo cáo luận văn & & & & & & \cellcolor[HTML]{6CABDD} \\
+\hline
+\end{tabular}
+\caption{Kế hoạch thực hiện các giai đoạn của luận văn}
+\end{table}
+
+\end{document}

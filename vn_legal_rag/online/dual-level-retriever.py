@@ -273,6 +273,10 @@ class DualLevelRetriever:
             except Exception:
                 pass
 
+        # 4. Concept matching (entity-type propagation)
+        if self.config.enable_concept and result.keyphrase_scores:
+            self._concept_match(result)
+
         # 5. Combine scores
         self._combine_low_level_scores(result)
 
@@ -325,6 +329,35 @@ class DualLevelRetriever:
             if score > 0:
                 result.keyphrase_scores[eid] = min(1.0, score)
                 result.entities.append(entity)
+
+    def _concept_match(self, result: LowLevelResult) -> None:
+        """Score articles by entity-type overlap with keyphrase-matched entities.
+
+        Keyphrase matching finds specific entities by name; concept matching
+        broadens to other articles that contain the same *types* of entities,
+        capturing topical similarity at the ontology-class level.
+        """
+        type_weights: Dict[str, float] = {}
+        for eid, kp_score in result.keyphrase_scores.items():
+            etype = self._entity_index.get(eid, {}).get("type", "")
+            if etype:
+                type_weights[etype] = max(type_weights.get(etype, 0), kp_score)
+
+        if not type_weights:
+            return
+
+        for article_id, entity_ids in self._article_entities.items():
+            if not entity_ids:
+                continue
+            type_score_sum = 0.0
+            for eid in entity_ids:
+                etype = self._entity_index.get(eid, {}).get("type", "")
+                if etype in type_weights:
+                    type_score_sum += type_weights[etype]
+            if type_score_sum > 0:
+                result.concept_scores[article_id] = min(
+                    1.0, type_score_sum / len(entity_ids)
+                )
 
     def _combine_low_level_scores(self, result: LowLevelResult) -> None:
         """Combine keyphrase, semantic, PPR, concept scores into article scores."""
@@ -405,9 +438,48 @@ class DualLevelRetriever:
             except Exception:
                 pass
 
+        # Hierarchy expansion (entity-type broadening)
+        if self.config.enable_hierarchy and result.theme_scores:
+            self._hierarchy_expand(result)
+
         result.articles = {**result.theme_scores}
+        for aid in result.concept_hierarchy_scores:
+            if aid not in result.articles:
+                result.articles[aid] = result.concept_hierarchy_scores[aid]
 
         return result
+
+    def _hierarchy_expand(self, result: HighLevelResult) -> None:
+        """Expand theme results to articles sharing entity types.
+
+        When theme matching surfaces articles about a certain entity type
+        (e.g., CHẾ_TÀI/sanctions), hierarchy expansion finds other articles
+        that also contain that type, acting as ontology-class broadening.
+        """
+        type_scores: Dict[str, float] = {}
+        for article_id, theme_score in result.theme_scores.items():
+            for eid in self._article_entities.get(article_id, []):
+                etype = self._entity_index.get(eid, {}).get("type", "")
+                if etype:
+                    type_scores[etype] = max(
+                        type_scores.get(etype, 0), theme_score
+                    )
+
+        if not type_scores:
+            return
+
+        for article_id, entity_ids in self._article_entities.items():
+            if article_id in result.theme_scores:
+                continue
+            best = 0.0
+            for eid in entity_ids:
+                etype = self._entity_index.get(eid, {}).get("type", "")
+                if etype in type_scores:
+                    best = max(best, type_scores[etype])
+            if best > 0:
+                # Decay: hierarchy-expanded articles score lower than
+                # direct theme matches to avoid flooding top results
+                result.concept_hierarchy_scores[article_id] = best * 0.5
 
     def _fuse_scores(
         self,
