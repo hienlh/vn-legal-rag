@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Figure 3.3 – End-to-End Processing Flow</title>
+<style>
+  @page { size: 300mm 220mm; margin: 0; }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html, body {
+    width: 300mm;
+    height: 220mm;
+    font-family: "Times New Roman", Times, serif;
+    font-size: 9pt;
+    background: #ffffff;
+    color: #111;
+    overflow: hidden;
+  }
+
+  .page {
+    width: 300mm;
+    height: 220mm;
+    padding: 6mm 8mm 5mm 8mm;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+
+  /* ── Query header ──────────────────────────────── */
+  .query-box {
+    align-self: center;
+    background: #e3f2fd;
+    border: 1.5px solid #1565c0;
+    border-radius: 6px;
+    padding: 4px 14px;
+    text-align: center;
+    max-width: 220mm;
+  }
+  .query-label {
+    font-size: 7.5pt;
+    color: #1565c0;
+    font-style: italic;
+    margin-bottom: 1px;
+  }
+  .query-text {
+    font-size: 9.5pt;
+    font-weight: bold;
+    color: #0d47a1;
+  }
+
+  /* ── Arrow between sections ─────────────────────── */
+  .arrow-down {
+    text-align: center;
+    font-size: 14pt;
+    line-height: 1;
+    color: #555;
+    flex-shrink: 0;
+  }
+
+  /* ── Tier containers ─────────────────────────────── */
+  .tier {
+    border-radius: 7px;
+    padding: 4px 7px 5px 7px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    flex-shrink: 0;
+  }
+  .tier-1 { border: 1.5px solid #2e7d32; background: #f9fff9; }
+  .tier-2 { border: 1.5px solid #1565c0; background: #f5f9ff; }
+  .tier-3 { border: 1.5px solid #e65100; background: #fffaf5; }
+
+  .tier-label {
+    display: inline-block;
+    font-size: 8.5pt;
+    font-weight: bold;
+    border-radius: 4px;
+    padding: 1px 8px;
+    align-self: flex-start;
+    margin-bottom: 1px;
+  }
+  .tier-1 .tier-label { background: #2e7d32; color: #fff; }
+  .tier-2 .tier-label { background: #1565c0; color: #fff; }
+  .tier-3 .tier-label { background: #e65100; color: #fff; }
+
+  .tier-body {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  /* ── Tier 1 internals ─────────────────────────────── */
+  .tree-flow {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    flex: 1;
+  }
+  .tree-row {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 8pt;
+  }
+  .tree-node {
+    background: #e8f5e9;
+    border: 1px solid #66bb6a;
+    border-radius: 4px;
+    padding: 1px 6px;
+    white-space: nowrap;
+    font-size: 7.5pt;
+  }
+  .tree-node.root { background: #c8e6c9; font-weight: bold; }
+  .tree-node.selected { background: #a5d6a7; border-color: #2e7d32; font-weight: bold; }
+  .tree-node.leaf { background: #dcedc8; border-color: #558b2f; }
+  .arrow-r { color: #2e7d32; font-size: 10pt; }
+  .tree-indent { padding-left: 10px; }
+  .tree-indent2 { padding-left: 20px; }
+
+  /* ── Tier 2 internals ─────────────────────────────── */
+  .score-signals {
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+    flex-wrap: nowrap;
+    align-items: flex-start;
+    flex: 1;
+  }
+  .signal-box {
+    background: #e3f2fd;
+    border: 1px solid #90caf9;
+    border-radius: 4px;
+    padding: 2px 6px;
+    text-align: center;
+    min-width: 46px;
+  }
+  .signal-name {
+    font-size: 7pt;
+    color: #1565c0;
+    font-style: italic;
+  }
+  .signal-val {
+    font-family: "Courier New", monospace;
+    font-size: 8pt;
+    font-weight: bold;
+    color: #0d47a1;
+  }
+  .combined-scores {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    justify-content: center;
+    font-size: 7.5pt;
+  }
+  .combined-scores span {
+    font-family: "Courier New", monospace;
+    color: #1a237e;
+  }
+
+  /* ── Tier 3 internals ─────────────────────────────── */
+  .tier3-body {
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
+    align-items: flex-start;
+    flex: 1;
+  }
+  .kg-expand {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    min-width: 80px;
+  }
+  .kg-label {
+    font-size: 7.5pt;
+    font-weight: bold;
+    color: #bf360c;
+  }
+  .kg-graph {
+    background: #fff3e0;
+    border: 1px solid #ffb74d;
+    border-radius: 4px;
+    padding: 3px 6px;
+    font-size: 7.5pt;
+    white-space: nowrap;
+  }
+  .kg-node {
+    display: inline-block;
+    background: #ffe0b2;
+    border: 1px solid #e65100;
+    border-radius: 3px;
+    padding: 0 4px;
+    font-size: 7.5pt;
+    font-weight: bold;
+  }
+  .kg-edge {
+    font-size: 7pt;
+    color: #bf360c;
+    font-style: italic;
+  }
+
+  /* ── RRF table ─────────────────────────────────────── */
+  .rrf-wrap {
+    flex: 1;
+  }
+  .rrf-label {
+    font-size: 7.5pt;
+    font-weight: bold;
+    color: #bf360c;
+    margin-bottom: 2px;
+  }
+  table.rrf {
+    border-collapse: collapse;
+    font-size: 7.5pt;
+    width: 100%;
+  }
+  table.rrf th {
+    background: #ffe0b2;
+    border: 1px solid #ffb74d;
+    padding: 1px 5px;
+    text-align: center;
+    font-weight: bold;
+    color: #bf360c;
+  }
+  table.rrf td {
+    border: 1px solid #ffd180;
+    padding: 1px 5px;
+    text-align: center;
+    background: #fff8f2;
+  }
+  table.rrf td:first-child { text-align: left; font-weight: bold; }
+  table.rrf td.score { font-family: "Courier New", monospace; font-weight: bold; color: #e65100; }
+  table.rrf tr:nth-child(odd) td { background: #fff3e0; }
+
+  /* ── Result boxes ──────────────────────────────────── */
+  .result-box {
+    border: 1.5px dashed #555;
+    border-radius: 5px;
+    padding: 2px 8px;
+    font-size: 7.5pt;
+    background: #fafafa;
+    white-space: nowrap;
+    align-self: center;
+  }
+  .result-label {
+    font-size: 7pt;
+    color: #555;
+    font-style: italic;
+  }
+  .result-val {
+    font-family: "Courier New", monospace;
+    font-weight: bold;
+    color: #333;
+  }
+
+  /* ── Final output ──────────────────────────────────── */
+  .final-box {
+    align-self: center;
+    background: #e8f5e9;
+    border: 2px solid #2e7d32;
+    border-radius: 7px;
+    padding: 4px 16px;
+    text-align: center;
+  }
+  .final-label {
+    font-size: 7.5pt;
+    color: #2e7d32;
+    font-style: italic;
+  }
+  .final-val {
+    font-size: 9.5pt;
+    font-weight: bold;
+    color: #1b5e20;
+  }
+
+  /* ── Dividers inside tiers ─────────────────────────── */
+  .vsep {
+    width: 1px;
+    background: #ccc;
+    align-self: stretch;
+    flex-shrink: 0;
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- ── Query ─────────────────────────────────────────── -->
+  <div class="query-box">
+    <div class="query-label">Truy vấn người dùng</div>
+    <div class="query-text">"Học viên cần đáp ứng điều kiện gì về ngoại ngữ để tốt nghiệp?"</div>
+  </div>
+
+  <div class="arrow-down">▼</div>
+
+  <!-- ── Tier 1 ──────────────────────────────────────────── -->
+  <div class="tier tier-1">
+    <div class="tier-label">Tầng 1: Duyệt cây cấu trúc</div>
+    <div class="tier-body">
+
+      <div class="tree-flow">
+        <!-- Row 1: forest → LLM → docs -->
+        <div class="tree-row">
+          <div class="tree-node root">Rừng cây (5 văn bản)</div>
+          <span class="arrow-r">→ LLM →</span>
+          <div class="tree-node selected">QĐ 270</div>
+          <span style="font-size:8pt;color:#2e7d32;">,</span>
+          <div class="tree-node selected">QĐ 1393</div>
+        </div>
+        <!-- Row 2: QD270 path -->
+        <div class="tree-row tree-indent">
+          <span style="color:#2e7d32; font-size:8pt;">QĐ 270:</span>
+          <div class="tree-node">Chương V</div>
+          <span class="arrow-r">→</span>
+          <div class="tree-node leaf">Điều 25 <span style="font-size:7pt;font-style:italic;">(chuẩn ngoại ngữ)</span></div>
+        </div>
+        <!-- Row 3: QD1393 path -->
+        <div class="tree-row tree-indent">
+          <span style="color:#2e7d32; font-size:8pt;">QĐ 1393:</span>
+          <div class="tree-node">Chương VI</div>
+          <span class="arrow-r">→</span>
+          <div class="tree-node leaf">Điều 25 <span style="font-size:7pt;font-style:italic;">(điều kiện tốt nghiệp)</span></div>
+        </div>
+      </div>
+
+      <div class="vsep"></div>
+
+      <div class="result-box">
+        <div class="result-label">Đầu ra C₁</div>
+        <div class="result-val">C₁ = {Đ25‑270, Đ25‑1393, Đ24‑270}</div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="arrow-down">▼</div>
+
+  <!-- ── Tier 2 ──────────────────────────────────────────── -->
+  <div class="tier tier-2">
+    <div class="tier-label">Tầng 2: Truy xuất ngữ nghĩa</div>
+    <div class="tier-body">
+
+      <div class="score-signals">
+        <div class="signal-box">
+          <div class="signal-name">Keyphrase</div>
+          <div class="signal-val">s_kp = 0.82</div>
+        </div>
+        <div class="signal-box">
+          <div class="signal-name">Semantic</div>
+          <div class="signal-val">s_sem = 0.91</div>
+        </div>
+        <div class="signal-box">
+          <div class="signal-name">PPR</div>
+          <div class="signal-val">s_ppr = 0.76</div>
+        </div>
+        <div class="signal-box">
+          <div class="signal-name">Concept</div>
+          <div class="signal-val">s_con = 0.88</div>
+        </div>
+
+        <div class="vsep"></div>
+
+        <div class="combined-scores">
+          <div><span>s_low &nbsp;= 0.85</span></div>
+          <div><span>s_theme = 0.79</span></div>
+          <div><span>s_hier &nbsp;= 0.72</span></div>
+        </div>
+      </div>
+
+      <div class="vsep"></div>
+
+      <div class="result-box">
+        <div class="result-label">Đầu ra C₂</div>
+        <div class="result-val">C₂ = {Đ25‑1393, Đ25‑270, Đ12‑270}</div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="arrow-down">▼</div>
+
+  <!-- ── Tier 3 ──────────────────────────────────────────── -->
+  <div class="tier tier-3">
+    <div class="tier-label">Tầng 3: Hợp nhất RRF + KG</div>
+    <div class="tier-body">
+
+      <!-- KG Expansion -->
+      <div class="kg-expand">
+        <div class="kg-label">① Mở rộng KG</div>
+        <div class="kg-graph">
+          <span class="kg-node">Đ25‑1393</span>
+          <span class="kg-edge"> → references → </span>
+          <span class="kg-node">Đ24‑270</span>
+        </div>
+      </div>
+
+      <div class="vsep"></div>
+
+      <!-- RRF table -->
+      <div class="rrf-wrap">
+        <div class="rrf-label">② RRF Fusion</div>
+        <table class="rrf">
+          <thead>
+            <tr>
+              <th>Điều khoản</th>
+              <th>Rank T1</th>
+              <th>Rank T2</th>
+              <th>Rank KG</th>
+              <th>RRF Score</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Đ25 QĐ 1393</td>
+              <td>1</td>
+              <td>1</td>
+              <td>1</td>
+              <td class="score">0.0523</td>
+            </tr>
+            <tr>
+              <td>Đ25 QĐ 270</td>
+              <td>2</td>
+              <td>2</td>
+              <td>—</td>
+              <td class="score">0.0387</td>
+            </tr>
+            <tr>
+              <td>Đ24 QĐ 270</td>
+              <td>3</td>
+              <td>3</td>
+              <td>2</td>
+              <td class="score">0.0341</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="arrow-down">▼</div>
+
+  <!-- ── Final Output ─────────────────────────────────────── -->
+  <div class="final-box">
+    <div class="final-label">Kết quả trả về</div>
+    <div class="final-val">Top-3 kết quả: Đ25 QĐ 1393&emsp;·&emsp;Đ25 QĐ 270&emsp;·&emsp;Đ24 QĐ 270</div>
+  </div>
+
+</div>
+</body>
+</html>

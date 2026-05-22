@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hình 2.1 – Cây tài liệu QĐ 270/QĐ-ĐHCNTT</title>
+<style>
+  @page {
+    size: 260mm 180mm;
+    margin: 0;
+  }
+
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  html, body {
+    width: 260mm;
+    height: 180mm;
+    background: #ffffff;
+    font-family: "Times New Roman", Times, serif;
+    overflow: hidden;
+  }
+
+  #diagram-container {
+    position: relative;
+    width: 260mm;
+    height: 180mm;
+    background: #ffffff;
+  }
+
+  /* SVG overlay for connection lines */
+  #svg-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  /* Level labels on the left */
+  .level-label {
+    position: absolute;
+    left: 2mm;
+    font-size: 8.5px;
+    color: #555555;
+    font-style: italic;
+    white-space: nowrap;
+    z-index: 3;
+  }
+
+  /* Level guide lines */
+  .level-line {
+    position: absolute;
+    left: 22mm;
+    right: 0;
+    height: 1px;
+    background: #e8e8e8;
+    z-index: 0;
+  }
+
+  /* Tree nodes */
+  .node {
+    position: absolute;
+    border-radius: 5px;
+    background: #e3f2fd;
+    border: 1.5px solid #42a5f5;
+    font-size: 10px;
+    font-family: "Times New Roman", Times, serif;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2;
+    line-height: 1.25;
+    padding: 2px 4px;
+  }
+
+  /* Root node – slightly larger and bolder border */
+  .node.root {
+    font-size: 10.5px;
+    font-weight: bold;
+    border-color: #1976d2;
+    background: #bbdefb;
+    border-width: 2px;
+  }
+
+  /* Ellipsis placeholder */
+  .node.ellipsis {
+    background: transparent;
+    border: none;
+    color: #888;
+    font-size: 13px;
+    font-weight: bold;
+  }
+
+  /* Cross-reference node */
+  .node.xref {
+    background: #ffebee;
+    border: 1.5px dashed #e53935;
+    color: #c62828;
+    font-size: 8.5px;
+    font-style: italic;
+  }
+
+  /* Figure caption */
+  #caption {
+    position: absolute;
+    bottom: 3mm;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 9.5px;
+    color: #333;
+    white-space: nowrap;
+    z-index: 4;
+    font-style: italic;
+  }
+</style>
+</head>
+<body>
+<div id="diagram-container">
+
+  <!-- SVG for all connection lines drawn by JS -->
+  <svg id="svg-overlay" xmlns="http://www.w3.org/2000/svg"></svg>
+
+  <!-- Level guide lines (horizontal bands) drawn at each level's vertical center -->
+  <!-- Rendered dynamically by JS after node positions are known -->
+
+  <!-- =========================================================
+       LEVEL LABELS (left margin)
+  ========================================================== -->
+  <div class="level-label" id="lbl-0">Văn bản</div>
+  <div class="level-label" id="lbl-1">Chương</div>
+  <div class="level-label" id="lbl-2">(Mục)</div>
+  <div class="level-label" id="lbl-3">Điều</div>
+  <div class="level-label" id="lbl-4">Khoản</div>
+  <div class="level-label" id="lbl-5">Điểm</div>
+
+  <!-- =========================================================
+       NODES  — id, class, data attributes carry position info
+       Actual pixel positions are calculated in JS below.
+  ========================================================== -->
+
+  <!-- Level 0: Root -->
+  <div class="node root" id="n-root">QĐ 270<br>(Văn bản)</div>
+
+  <!-- Level 1: Chapters -->
+  <div class="node" id="n-ch1">Chương I:<br>Quy định chung</div>
+  <div class="node ellipsis" id="n-ellipsis">· · ·</div>
+  <div class="node" id="n-ch4">Chương IV:<br>Luận văn</div>
+  <div class="node ellipsis" id="n-ellipsis2">· · ·</div>
+  <div class="node" id="n-ch8">Chương VIII:<br>Điều khoản thi hành</div>
+
+  <!-- Level 2: Articles under Chương I -->
+  <div class="node" id="n-d1">Điều 1:<br>Phạm vi</div>
+  <div class="node" id="n-d2">Điều 2:<br>Đối tượng</div>
+
+  <!-- Level 2: Articles under Chương IV -->
+  <div class="node" id="n-d24">Điều 24:<br>Điều kiện bảo vệ</div>
+  <div class="node" id="n-d25">Điều 25:<br>Hội đồng bảo vệ</div>
+
+  <!-- Level 2: Article under Chương VIII -->
+  <div class="node" id="n-d35">Điều 35:<br>Hiệu lực</div>
+
+  <!-- Level 3: Clauses under Điều 24 -->
+  <div class="node" id="n-k1">Khoản 1</div>
+  <div class="node" id="n-k2">Khoản 2</div>
+
+  <!-- Level 4: Point under Khoản 2 -->
+  <div class="node" id="n-da">Điểm a</div>
+
+  <!-- Cross-reference label (near Điều 25, red dashed) -->
+  <div class="node xref" id="n-xref">ref: QĐ 1393,<br>Điều 25</div>
+
+  <!-- Figure caption -->
+  <div id="caption">Hình 2.1. Cây tài liệu của QĐ 270/QĐ-ĐHCNTT (6 cấp cấu trúc)</div>
+
+</div><!-- end #diagram-container -->
+
+<script>
+(function () {
+  "use strict";
+
+  /* ------------------------------------------------------------------ *
+   *  UNIT CONVERSION: 1 mm = 3.7795275591 px  (at 96 dpi)             *
+   * ------------------------------------------------------------------ */
+  const MM = 3.7795275591;
+
+  /* ------------------------------------------------------------------ *
+   *  PAGE DIMENSIONS                                                     *
+   * ------------------------------------------------------------------ */
+  const PAGE_W = 260 * MM;   // ~982 px
+  const PAGE_H = 180 * MM;   // ~680 px
+
+  /* ------------------------------------------------------------------ *
+   *  NODE DIMENSIONS                                                     *
+   * ------------------------------------------------------------------ */
+  const NODE_W  = 82;   // px – standard node width
+  const NODE_H  = 34;   // px – standard node height (2-line nodes)
+  const ROOT_W  = 90;
+  const ROOT_H  = 34;
+  const ELLW    = 28;   // ellipsis width
+  const ELLH    = 20;
+  const XREF_W  = 78;
+  const XREF_H  = 30;
+
+  /* ------------------------------------------------------------------ *
+   *  VERTICAL POSITIONS (centre of each level row)                      *
+   *  Level 0 = root, …, Level 5 = Điểm                                *
+   * ------------------------------------------------------------------ */
+  const LEFT_LABEL_RIGHT = 22 * MM;  // right edge of the label column
+  const USABLE_W = PAGE_W - LEFT_LABEL_RIGHT - 6; // usable width for nodes
+  const USABLE_LEFT = LEFT_LABEL_RIGHT + 3;
+
+  const CAPTION_H = 12; // reserve space at bottom for caption
+
+  // Distribute 6 rows evenly within usable vertical space
+  const TOP_PAD  = 10;
+  const BOT_PAD  = CAPTION_H + 14;
+  const ROW_ZONE = PAGE_H - TOP_PAD - BOT_PAD;   // available for 6 rows
+  const ROW_H    = ROW_ZONE / 6;                 // height per row
+
+  // Row centre Y coordinates
+  function rowY(level) {
+    return TOP_PAD + (level + 0.5) * ROW_H;
+  }
+
+  /* ------------------------------------------------------------------ *
+   *  HORIZONTAL POSITIONS                                               *
+   *  We divide the usable horizontal space into columns for each        *
+   *  visible Level-1 node and stack their subtrees beneath them.        *
+   * ------------------------------------------------------------------ */
+
+  // Level 1 visible nodes: ch1, ellipsis, ch4, ellipsis2, ch8
+  // We'll assign 5 columns of equal width
+  const COL_COUNT = 5;
+  const COL_W = USABLE_W / COL_COUNT;
+
+  function colCentreX(colIndex) {
+    return USABLE_LEFT + (colIndex + 0.5) * COL_W;
+  }
+
+  // Column assignments for Level-1 items
+  const COL_CH1  = 0;
+  const COL_ELL  = 1;
+  const COL_CH4  = 2;
+  const COL_ELL2 = 3;
+  const COL_CH8  = 4;
+
+  // Level-2 sub-columns  (within the column of each parent)
+  // Chương I (col 0)  → Điều 1 left, Điều 2 right  → sub-cols 0, 1
+  // Chương IV (col 2) → Điều 24 left, Điều 25 right → sub-cols 2.left, 2.right
+  // Chương VIII (col 4) → Điều 35 centred          → col 4
+
+  // For Chương I: split col 0 into two equal halves
+  function ch1SubX(subIdx) {
+    const base = USABLE_LEFT + COL_W * COL_CH1;
+    return base + (subIdx + 0.5) * (COL_W / 2);
+  }
+
+  // For Chương IV: split col 2 into two halves
+  function ch4SubX(subIdx) {
+    const base = USABLE_LEFT + COL_W * COL_CH4;
+    return base + (subIdx + 0.5) * (COL_W / 2);
+  }
+
+  // ---- Node centre coordinates ----
+  const nodes = {
+    "n-root"     : { cx: PAGE_W / 2, cy: rowY(0), w: ROOT_W, h: ROOT_H },
+
+    "n-ch1"      : { cx: colCentreX(COL_CH1),  cy: rowY(1), w: NODE_W, h: NODE_H },
+    "n-ellipsis" : { cx: colCentreX(COL_ELL),  cy: rowY(1), w: ELLW,   h: ELLH   },
+    "n-ch4"      : { cx: colCentreX(COL_CH4),  cy: rowY(1), w: NODE_W, h: NODE_H },
+    "n-ellipsis2": { cx: colCentreX(COL_ELL2), cy: rowY(1), w: ELLW,   h: ELLH   },
+    "n-ch8"      : { cx: colCentreX(COL_CH8),  cy: rowY(1), w: NODE_W, h: NODE_H },
+
+    "n-d1"       : { cx: ch1SubX(0), cy: rowY(2), w: NODE_W, h: NODE_H },
+    "n-d2"       : { cx: ch1SubX(1), cy: rowY(2), w: NODE_W, h: NODE_H },
+    "n-d24"      : { cx: ch4SubX(0), cy: rowY(2), w: NODE_W, h: NODE_H },
+    "n-d25"      : { cx: ch4SubX(1), cy: rowY(2), w: NODE_W, h: NODE_H },
+    "n-d35"      : { cx: colCentreX(COL_CH8), cy: rowY(2), w: NODE_W, h: NODE_H },
+
+    // Level 3 (Khoản) – under Điều 24, offset=22px each side, w=40px
+    // Gives 4px gap between k1/k2 and 6px gap to Điều 25's left edge
+    "n-k1"       : { cx: ch4SubX(0) - 22, cy: rowY(3), w: 40, h: 26 },
+    "n-k2"       : { cx: ch4SubX(0) + 22, cy: rowY(3), w: 40, h: 26 },
+
+    // Level 4 (Điểm a) – under Khoản 2, same cx as k2
+    "n-da"       : { cx: ch4SubX(0) + 22, cy: rowY(4), w: 44, h: 24 },
+
+    // Cross-reference label – right of Điều 25 with 8px clear gap
+    // xref-left = D25-right + 8 => xrefCx = ch4SubX(1) + NODE_W/2 + 8 + XREF_W/2 ≈ ch4SubX(1)+88
+    "n-xref"     : { cx: ch4SubX(1) + 88, cy: rowY(2), w: XREF_W, h: XREF_H },
+  };
+
+  /* ------------------------------------------------------------------ *
+   *  APPLY POSITIONS TO DOM ELEMENTS                                    *
+   * ------------------------------------------------------------------ */
+  Object.entries(nodes).forEach(([id, pos]) => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.style.width  = pos.w + "px";
+    el.style.height = pos.h + "px";
+    el.style.left   = (pos.cx - pos.w / 2) + "px";
+    el.style.top    = (pos.cy - pos.h / 2) + "px";
+  });
+
+  /* ------------------------------------------------------------------ *
+   *  POSITION LEVEL LABELS                                              *
+   * ------------------------------------------------------------------ */
+  const labelIds = ["lbl-0","lbl-1","lbl-2","lbl-3","lbl-4","lbl-5"];
+  labelIds.forEach((id, level) => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.style.top = (rowY(level) - 8) + "px";
+  });
+
+  /* ------------------------------------------------------------------ *
+   *  HELPER: node top/bottom/left/right                                 *
+   * ------------------------------------------------------------------ */
+  function top(id)    { const n = nodes[id]; return n.cy - n.h / 2; }
+  function bot(id)    { const n = nodes[id]; return n.cy + n.h / 2; }
+  function left(id)   { const n = nodes[id]; return n.cx - n.w / 2; }
+  function right(id)  { const n = nodes[id]; return n.cx + n.w / 2; }
+  function cx(id)     { return nodes[id].cx; }
+  function cy(id)     { return nodes[id].cy; }
+
+  /* ------------------------------------------------------------------ *
+   *  SVG LINE DRAWING                                                    *
+   * ------------------------------------------------------------------ */
+  const svg = document.getElementById("svg-overlay");
+
+  function makeLine(x1, y1, x2, y2, opts = {}) {
+    const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
+    line.setAttribute("x1", x1);
+    line.setAttribute("y1", y1);
+    line.setAttribute("x2", x2);
+    line.setAttribute("y2", y2);
+    line.setAttribute("stroke",       opts.stroke       || "#9e9e9e");
+    line.setAttribute("stroke-width", opts.strokeWidth  || "1.4");
+    if (opts.dash) line.setAttribute("stroke-dasharray", opts.dash);
+    svg.appendChild(line);
+  }
+
+  function makePath(d, opts = {}) {
+    const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
+    path.setAttribute("d", d);
+    path.setAttribute("stroke",       opts.stroke       || "#9e9e9e");
+    path.setAttribute("stroke-width", opts.strokeWidth  || "1.4");
+    path.setAttribute("fill",         "none");
+    if (opts.dash) path.setAttribute("stroke-dasharray", opts.dash);
+    if (opts.marker) path.setAttribute("marker-end", opts.marker);
+    svg.appendChild(path);
+  }
+
+  // Arrow marker for cross-reference
+  const defs = document.createElementNS("http://www.w3.org/2000/svg", "defs");
+  const marker = document.createElementNS("http://www.w3.org/2000/svg", "marker");
+  marker.setAttribute("id", "arrow-red");
+  marker.setAttribute("markerWidth", "8");
+  marker.setAttribute("markerHeight", "8");
+  marker.setAttribute("refX", "7");
+  marker.setAttribute("refY", "3");
+  marker.setAttribute("orient", "auto");
+  const arrowPath = document.createElementNS("http://www.w3.org/2000/svg", "path");
+  arrowPath.setAttribute("d", "M0,0 L0,6 L8,3 z");
+  arrowPath.setAttribute("fill", "#e53935");
+  marker.appendChild(arrowPath);
+  defs.appendChild(marker);
+
+  // Grey arrow marker for normal parent-child lines
+  const markerGrey = document.createElementNS("http://www.w3.org/2000/svg", "marker");
+  markerGrey.setAttribute("id", "arrow-grey");
+  markerGrey.setAttribute("markerWidth", "7");
+  markerGrey.setAttribute("markerHeight", "7");
+  markerGrey.setAttribute("refX", "6");
+  markerGrey.setAttribute("refY", "3");
+  markerGrey.setAttribute("orient", "auto");
+  const arrowPathGrey = document.createElementNS("http://www.w3.org/2000/svg", "path");
+  arrowPathGrey.setAttribute("d", "M0,0 L0,6 L7,3 z");
+  arrowPathGrey.setAttribute("fill", "#9e9e9e");
+  markerGrey.appendChild(arrowPathGrey);
+  defs.appendChild(markerGrey);
+
+  svg.appendChild(defs);
+
+  /* ------------------------------------------------------------------ *
+   *  DRAW PARENT-CHILD EDGES                                            *
+   *  Style: elbow route — vertical drop from parent bottom, then        *
+   *  horizontal branch to child top.                                    *
+   * ------------------------------------------------------------------ */
+
+  // Draw a straight-elbow connector: parent bottom → midpoint → child top
+  function drawEdge(parentId, childId) {
+    const px = cx(parentId);
+    const py = bot(parentId);
+    const chx = cx(childId);
+    const chy = top(childId);
+    const midY = (py + chy) / 2;
+
+    const d = `M ${px} ${py} L ${px} ${midY} L ${chx} ${midY} L ${chx} ${chy}`;
+    makePath(d, { marker: "url(#arrow-grey)" });
+  }
+
+  // Root → Level 1 chapters
+  ["n-ch1", "n-ch4", "n-ch8"].forEach(child => drawEdge("n-root", child));
+
+  // Root → ellipsis dots (simple vertical short line, no arrowhead)
+  ["n-ellipsis", "n-ellipsis2"].forEach(ellId => {
+    const px = cx("n-root");
+    const py = bot("n-root");
+    const ey = top(ellId) + 4;
+    const midY = (py + rowY(1)) / 2;
+    const d = `M ${px} ${py} L ${px} ${midY} L ${cx(ellId)} ${midY} L ${cx(ellId)} ${ey}`;
+    makePath(d, { stroke: "#bdbdbd", strokeWidth: "1" });
+  });
+
+  // Chương I → Điều 1, Điều 2
+  drawEdge("n-ch1", "n-d1");
+  drawEdge("n-ch1", "n-d2");
+
+  // Chương IV → Điều 24, Điều 25
+  drawEdge("n-ch4", "n-d24");
+  drawEdge("n-ch4", "n-d25");
+
+  // Chương VIII → Điều 35
+  drawEdge("n-ch8", "n-d35");
+
+  // Điều 24 → Khoản 1, Khoản 2
+  drawEdge("n-d24", "n-k1");
+  drawEdge("n-d24", "n-k2");
+
+  // Khoản 2 → Điểm a
+  drawEdge("n-k2", "n-da");
+
+  /* ------------------------------------------------------------------ *
+   *  CROSS-REFERENCE ARROW: Điều 24  →  xref label                     *
+   *  Red dashed curved arrow                                            *
+   * ------------------------------------------------------------------ */
+  (function drawXRef() {
+    const sx = right("n-d24");
+    const sy = cy("n-d24");
+    const tx = left("n-xref");
+    const ty = cy("n-xref");
+
+    // Simple cubic bezier curving slightly upward then into xref
+    const cpx1 = sx + 22;
+    const cpy1 = sy - 18;
+    const cpx2 = tx - 22;
+    const cpy2 = ty - 18;
+
+    const d = `M ${sx} ${sy} C ${cpx1} ${cpy1}, ${cpx2} ${cpy2}, ${tx} ${ty}`;
+    makePath(d, {
+      stroke: "#e53935",
+      strokeWidth: "1.5",
+      dash: "5,3",
+      marker: "url(#arrow-red)"
+    });
+  })();
+
+  /* ------------------------------------------------------------------ *
+   *  DRAW LEVEL GUIDE LINES (subtle horizontal dashes per row)          *
+   * ------------------------------------------------------------------ */
+  for (let level = 0; level < 6; level++) {
+    const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
+    line.setAttribute("x1", LEFT_LABEL_RIGHT);
+    line.setAttribute("y1", rowY(level));
+    line.setAttribute("x2", PAGE_W - 4);
+    line.setAttribute("y2", rowY(level));
+    line.setAttribute("stroke", "#eeeeee");
+    line.setAttribute("stroke-width", "1");
+    line.setAttribute("stroke-dasharray", "4,6");
+    svg.appendChild(line);
+  }
+
+  /* ------------------------------------------------------------------ *
+   *  LEVEL SEPARATOR (vertical line between label area and diagram)     *
+   * ------------------------------------------------------------------ */
+  (function drawSeparator() {
+    const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
+    line.setAttribute("x1", LEFT_LABEL_RIGHT - 1);
+    line.setAttribute("y1", TOP_PAD);
+    line.setAttribute("x2", LEFT_LABEL_RIGHT - 1);
+    line.setAttribute("y2", PAGE_H - BOT_PAD + 4);
+    line.setAttribute("stroke", "#cccccc");
+    line.setAttribute("stroke-width", "1");
+    svg.appendChild(line);
+  })();
+
+})();
+</script>
+</body>
+</html>

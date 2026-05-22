@@ -1,0 +1,63 @@
+\documentclass[final]{hcmuitthesis}
+% Config reference source file
+\addbibresource{references/references.bib}
+
+
+% Define metadata
+% =========== Thay đổi thông tin tại phần này ===========
+\upperuniname{ĐẠI HỌC QUỐC GIA THÀNH PHỐ HỒ CHÍ MINH}
+\uniname{TRƯỜNG ĐẠI HỌC CÔNG NGHỆ THÔNG TIN}
+\deptname{KHOA KHOA HỌC MÁY TÍNH}
+\stumajor{THẠC SĨ NGÀNH KHOA HỌC MÁY TÍNH}
+\title{GIẢI PHÁP KẾT HỢP ONTOLOGY VÀ MÔ HÌNH NGÔN NGỮ LỚN ĐỂ THIẾT KẾ HỆ THỐNG TƯ VẤN KIẾN THỨC VỀ QUY ĐỊNH ĐÀO TẠO SAU ĐẠI HỌC}
+\titleen{INTEGRATING ONTOLOGY AND LARGE LANGUAGE MODELS TO DESIGN AN ADVISORY SYSTEM FOR POSTGRADUATE EDUCATION REGULATIONS}
+\supervisor{GIẢNG VIÊN HƯỚNG DẪN}
+\supervisorname{PGS. TS. NGUYỄN ĐÌNH HIỂN \\ TS. NGÔ QUỐC HƯNG}
+\stuname{LÊ HỒNG HIỂN}
+\stunamewithid{LÊ HỒNG HIỂN - 210101006}
+\reporttype{LUẬN VĂN THẠC SĨ}
+\instruction{GIẢNG VIÊN HƯỚNG DẪN}
+\reportplace{TP. HỒ CHÍ MINH, NĂM }
+
+% =========== Hết phần thay đổi thông tin ===========
+
+\input{chapters/front/glossaries.tex}
+\makeglossaries
+% Begin thesis
+\begin{document}
+
+\coverpage%
+\secondcoverpage%
+
+% Begin above main thesis
+\frontmatter
+\include{chapters/front/decision.tex}
+\include{chapters/front/cam-doan.tex}
+\include{chapters/front/thanks.tex}
+\tableofcontents
+\clearpage
+\listoffigures
+\clearpage
+\listoftables
+\clearpage
+\include{chapters/front/translate.tex}
+\clearpage
+\mainthesis
+
+% Main chapter in thesis
+\include{chapters/main/chapter1.tex}
+\include{chapters/main/chapter2.tex}
+\include{chapters/main/chapter3.tex}
+\include{chapters/main/chapter4.tex}
+\include{chapters/main/chapter5.tex}
+
+% Appendix chapter in thesis
+\appendix
+\include{chapters/back/appendixA.tex}
+\include{chapters/back/appendixB.tex}
+\include{chapters/back/appendixC.tex}
+\include{chapters/back/appendixD.tex}
+
+% Print references
+\printbibliography[heading=bibintoc, title = {Tài liệu tham khảo}]
+\end{document}

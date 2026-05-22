@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<title>Hình 3.1 – Kiến trúc hệ thống KG-RAG 3 tầng</title>
+<style>
+  @page {
+    size: 300mm 180mm;
+    margin: 0;
+  }
+
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    font-family: "Times New Roman", Times, serif;
+    font-size: 12.5px;
+    background: #fff;
+    width: 300mm;
+    min-height: 180mm;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px 14px 12px 14px;
+  }
+
+  /* ── Figure caption ─────────────────────────────────── */
+  .figure-caption {
+    font-size: 12px;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 8px;
+    color: #222;
+    letter-spacing: 0.01em;
+  }
+
+  /* ── Two-column wrapper ─────────────────────────────── */
+  .diagram-wrapper {
+    position: relative;
+    display: flex;
+    gap: 0;
+    width: 100%;
+    align-items: flex-start;
+  }
+
+  /* ── Phase columns ──────────────────────────────────── */
+  .phase-col {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0 6px 10px 6px;
+    border-radius: 8px;
+    position: relative;
+  }
+
+  .phase-col-offline {
+    width: 36%;
+    background: #f8f6ff;
+    border: 1.5px solid #b39ddb;
+    margin-right: 8px;
+  }
+
+  .phase-col-online {
+    width: 64%;
+    background: #f0f7ff;
+    border: 1.5px solid #90caf9;
+  }
+
+  .phase-header {
+    font-size: 12px;
+    font-weight: bold;
+    text-align: center;
+    padding: 5px 4px 4px 4px;
+    margin-bottom: 6px;
+    border-radius: 4px 4px 0 0;
+    width: 100%;
+    letter-spacing: 0.02em;
+  }
+
+  .phase-header-offline {
+    background: #ede7f6;
+    color: #4527a0;
+    border-bottom: 1.5px solid #b39ddb;
+  }
+
+  .phase-header-online {
+    background: #e3f2fd;
+    color: #0d47a1;
+    border-bottom: 1.5px solid #90caf9;
+  }
+
+  /* ── Generic node base ──────────────────────────────── */
+  .node {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    border-radius: 5px;
+    padding: 5px 7px;
+    margin: 0 0 2px 0;
+    gap: 5px;
+    line-height: 1.35;
+  }
+
+  .node-icon {
+    flex-shrink: 0;
+    width: 18px;
+    height: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .node-text {
+    flex: 1;
+  }
+
+  .node-label {
+    font-weight: bold;
+    font-size: 11.5px;
+  }
+
+  .node-sub {
+    font-size: 10px;
+    color: #555;
+    margin-top: 1px;
+    font-style: italic;
+  }
+
+  /* ── Color variants ─────────────────────────────────── */
+  .node-input {
+    background: #fff9c4;
+    border: 1.5px solid #f9a825;
+    color: #5d4037;
+  }
+
+  .node-process-blue {
+    background: #e3f2fd;
+    border: 1.5px solid #1976d2;
+    color: #0d47a1;
+  }
+
+  .node-process-green {
+    background: #e8f5e9;
+    border: 1.5px solid #388e3c;
+    color: #1b5e20;
+  }
+
+  .node-core {
+    background: #f3e5f5;
+    border: 2px solid #7b1fa2;
+    color: #4a148c;
+    font-size: 12px;
+  }
+
+  .node-fusion {
+    background: #fff3e0;
+    border: 2px solid #e65100;
+    color: #bf360c;
+  }
+
+  .node-output {
+    background: #e8f5e9;
+    border: 2px solid #2e7d32;
+    color: #1b5e20;
+  }
+
+  /* ── Arrow connector ────────────────────────────────── */
+  .arrow-down {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 18px;
+    width: 100%;
+    color: #555;
+    font-size: 15px;
+    line-height: 1;
+    flex-shrink: 0;
+  }
+
+  /* ── Two-node row ───────────────────────────────────── */
+  .node-row {
+    display: flex;
+    gap: 5px;
+    width: 100%;
+    align-items: stretch;
+  }
+
+  .node-row .node {
+    flex: 1;
+    margin: 0;
+  }
+
+  /* ── Tier boxes ─────────────────────────────────────── */
+  .tier-box {
+    width: 100%;
+    border-radius: 5px;
+    padding: 5px 7px;
+    margin: 0 0 2px 0;
+    position: relative;
+  }
+
+  .tier-box-label {
+    font-size: 9.5px;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    position: absolute;
+    top: -8px;
+    left: 7px;
+    background: #fff;
+    padding: 0 3px;
+    border-radius: 2px;
+  }
+
+  .tier-1 {
+    border: 2px solid #388e3c;
+    background: #f1f8e9;
+    color: #1b5e20;
+  }
+
+  .tier-1 .tier-box-label { color: #388e3c; }
+
+  .tier-2 {
+    border: 2px solid #1976d2;
+    background: #e8f4fd;
+    color: #0d47a1;
+  }
+
+  .tier-2 .tier-box-label { color: #1976d2; }
+
+  .tier-3 {
+    border: 2px solid #e65100;
+    background: #fff3e0;
+    color: #bf360c;
+  }
+
+  .tier-3 .tier-box-label { color: #e65100; }
+
+  .tier-title {
+    font-weight: bold;
+    font-size: 11.5px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+
+  .tier-sub {
+    font-size: 10px;
+    margin-top: 2px;
+    font-style: italic;
+    color: #555;
+  }
+
+  .tier-row {
+    display: flex;
+    gap: 6px;
+    width: 100%;
+    margin-top: 10px;
+  }
+
+  .tier-row .tier-box {
+    flex: 1;
+  }
+
+  /* ── Answer output row ───────────────────────────────── */
+  .answer-row {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    width: 100%;
+    margin-top: 2px;
+  }
+
+  .answer-row .node {
+    flex: 1;
+    margin: 0;
+  }
+
+  .arrow-right {
+    font-size: 16px;
+    color: #555;
+    flex-shrink: 0;
+  }
+
+  /* ── SVG overlay layer ──────────────────────────────── */
+  .svg-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    overflow: visible;
+  }
+</style>
+</head>
+<body>
+
+<p class="figure-caption">Hình 3.1: Kiến trúc tổng thể hệ thống KG-RAG 3 tầng</p>
+
+<div class="diagram-wrapper" id="diagramWrapper">
+
+  <!-- ════════════════════════════════════════════════════
+       OFFLINE PHASE
+  ═══════════════════════════════════════════════════════ -->
+  <div class="phase-col phase-col-offline" id="colOffline">
+    <div class="phase-header phase-header-offline">⚙ Pha ngoại tuyến</div>
+
+    <!-- Legal Docs input -->
+    <div class="node node-input" id="nodeDocInput">
+      <div class="node-icon">
+        <svg viewBox="0 0 18 18" width="16" height="16" fill="none">
+          <rect x="2" y="1" width="11" height="14" rx="1.5" stroke="#f9a825" stroke-width="1.5" fill="#fff9c4"/>
+          <line x1="5" y1="5" x2="11" y2="5" stroke="#f9a825" stroke-width="1.2"/>
+          <line x1="5" y1="8" x2="11" y2="8" stroke="#f9a825" stroke-width="1.2"/>
+          <line x1="5" y1="11" x2="9" y2="11" stroke="#f9a825" stroke-width="1.2"/>
+          <polygon points="13,4 16,7 13,7" fill="#f9a825"/>
+        </svg>
+      </div>
+      <div class="node-text">
+        <div class="node-label">Văn bản pháp lý</div>
+        <div class="node-sub">Legal Documents</div>
+      </div>
+    </div>
+
+    <div class="arrow-down">▼</div>
+
+    <!-- Document Parsing -->
+    <div class="node node-process-blue" id="nodeParsing">
+      <div class="node-icon">
+        <svg viewBox="0 0 18 18" width="16" height="16" fill="none">
+          <rect x="2" y="2" width="14" height="14" rx="2" stroke="#1976d2" stroke-width="1.5" fill="#e3f2fd"/>
+          <polyline points="5,9 8,12 13,6" stroke="#1976d2" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <div class="node-text">
+        <div class="node-label">Phân tích cú pháp tài liệu</div>
+        <div class="node-sub">Document Parsing</div>
+      </div>
+    </div>
+
+    <div class="arrow-down">▼</div>
+
+    <!-- LLM Entity & Relation Extraction -->
+    <div class="node node-process-blue" id="nodeExtract">
+      <div class="node-icon">
+        <svg viewBox="0 0 18 18" width="16" height="16" fill="none">
+          <circle cx="9" cy="9" r="7" stroke="#1976d2" stroke-width="1.5" fill="#e3f2fd"/>
+          <circle cx="9" cy="9" r="2.5" fill="#1976d2"/>
+          <line x1="9" y1="2" x2="9" y2="5" stroke="#1976d2" stroke-width="1.2"/>
+          <line x1="9" y1="13" x2="9" y2="16" stroke="#1976d2" stroke-width="1.2"/>
+          <line x1="2" y1="9" x2="5" y2="9" stroke="#1976d2" stroke-width="1.2"/>
+          <line x1="13" y1="9" x2="16" y2="9" stroke="#1976d2" stroke-width="1.2"/>
+        </svg>
+      </div>
+      <div class="node-text">
+        <div class="node-label">Trích xuất thực thể &amp; quan hệ bằng LLM</div>
+        <div class="node-sub">Entity &amp; Relation Extraction</div>
+      </div>
+    </div>
+
+    <div class="arrow-down">▼</div>
+
+    <!-- KG Builder + Summaries row -->
+    <div class="node-row" id="rowBuildSumm">
+      <div class="node node-process-green" id="nodeKGBuild">
+        <div class="node-icon">
+          <svg viewBox="0 0 18 18" width="14" height="14" fill="none">
+            <circle cx="9" cy="4" r="2.5" stroke="#388e3c" stroke-width="1.4" fill="#e8f5e9"/>
+            <circle cx="3" cy="14" r="2.5" stroke="#388e3c" stroke-width="1.4" fill="#e8f5e9"/>
+            <circle cx="15" cy="14" r="2.5" stroke="#388e3c" stroke-width="1.4" fill="#e8f5e9"/>
+            <line x1="9" y1="6.5" x2="3" y2="11.5" stroke="#388e3c" stroke-width="1.2"/>
+            <line x1="9" y1="6.5" x2="15" y2="11.5" stroke="#388e3c" stroke-width="1.2"/>
+          </svg>
+        </div>
+        <div class="node-text">
+          <div class="node-label" style="font-size:10.5px">Xây dựng KG tăng dần</div>
+          <div class="node-sub">Incremental KG Builder</div>
+        </div>
+      </div>
+      <div class="node node-process-green" id="nodeSumm">
+        <div class="node-icon">
+          <svg viewBox="0 0 18 18" width="14" height="14" fill="none">
+            <rect x="2" y="2" width="14" height="14" rx="2" stroke="#388e3c" stroke-width="1.4" fill="#e8f5e9"/>
+            <line x1="5" y1="6" x2="13" y2="6" stroke="#388e3c" stroke-width="1.2"/>
+            <line x1="5" y1="9" x2="13" y2="9" stroke="#388e3c" stroke-width="1.2"/>
+            <line x1="5" y1="12" x2="10" y2="12" stroke="#388e3c" stroke-width="1.2"/>
+          </svg>
+        </div>
+        <div class="node-text">
+          <div class="node-label" style="font-size:10.5px">Tóm tắt chương &amp; điều</div>
+          <div class="node-sub">Chapter &amp; Article Summaries</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="arrow-down">▼</div>
+
+    <!-- Knowledge Representations core node -->
+    <div class="node node-core" id="nodeKR" style="flex-direction:column; align-items:flex-start; padding: 7px 9px;">
+      <div style="display:flex; align-items:center; gap:6px; width:100%">
+        <div class="node-icon">
+          <svg viewBox="0 0 18 18" width="17" height="17" fill="none">
+            <polygon points="9,2 16,6 16,12 9,16 2,12 2,6" stroke="#7b1fa2" stroke-width="1.6" fill="#f3e5f5"/>
+            <circle cx="9" cy="9" r="2.5" fill="#7b1fa2"/>
+          </svg>
+        </div>
+        <div class="node-label" style="font-size:12px;">Biểu diễn tri thức</div>
+      </div>
+      <div class="node-sub" style="margin-top:3px; margin-left:23px; font-size:10.5px; font-style:normal; color:#4a148c; font-weight:bold;">
+        Document Forest · Knowledge Graph · Ontology
+      </div>
+    </div>
+  </div><!-- /phase-col-offline -->
+
+
+  <!-- ════════════════════════════════════════════════════
+       ONLINE PHASE
+  ═══════════════════════════════════════════════════════ -->
+  <div class="phase-col phase-col-online" id="colOnline">
+    <div class="phase-header phase-header-online">🔍 Pha trực tuyến</div>
+
+    <!-- User Query input -->
+    <div class="node node-input" id="nodeQueryInput">
+      <div class="node-icon">
+        <svg viewBox="0 0 18 18" width="16" height="16" fill="none">
+          <circle cx="8" cy="8" r="6" stroke="#f9a825" stroke-width="1.5" fill="#fff9c4"/>
+          <line x1="13" y1="13" x2="16" y2="16" stroke="#f9a825" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <div class="node-text">
+        <div class="node-label">Truy vấn người dùng</div>
+        <div class="node-sub">User Query</div>
+      </div>
+    </div>
+
+    <div class="arrow-down">▼</div>
+
+    <!-- Stage 0: Query Analysis -->
+    <div class="node node-process-blue" id="nodeQueryAnalysis">
+      <div class="node-icon">
+        <svg viewBox="0 0 18 18" width="16" height="16" fill="none">
+          <rect x="2" y="3" width="14" height="12" rx="2" stroke="#1976d2" stroke-width="1.5" fill="#e3f2fd"/>
+          <line x1="5" y1="7" x2="13" y2="7" stroke="#1976d2" stroke-width="1.2"/>
+          <line x1="5" y1="10" x2="10" y2="10" stroke="#1976d2" stroke-width="1.2"/>
+          <circle cx="13" cy="4.5" r="1.5" fill="#1976d2"/>
+        </svg>
+      </div>
+      <div class="node-text">
+        <div class="node-label">Giai đoạn 0: Phân tích truy vấn</div>
+        <div class="node-sub">Ý định · Loại · Viết tắt · Thực thể</div>
+      </div>
+    </div>
+
+    <div class="arrow-down">▼</div>
+
+    <!-- Tier 1 + Tier 2 row -->
+    <div class="tier-row" id="rowTier12">
+      <!-- Tier 1 -->
+      <div class="tier-box tier-1" id="nodeTier1">
+        <span class="tier-box-label">Tầng 1</span>
+        <div class="tier-title">
+          <svg viewBox="0 0 16 16" width="14" height="14" fill="none">
+            <rect x="1" y="8" width="4" height="6" rx="1" stroke="#388e3c" stroke-width="1.3" fill="#e8f5e9"/>
+            <rect x="6" y="5" width="4" height="9" rx="1" stroke="#388e3c" stroke-width="1.3" fill="#e8f5e9"/>
+            <rect x="11" y="2" width="4" height="12" rx="1" stroke="#388e3c" stroke-width="1.3" fill="#e8f5e9"/>
+          </svg>
+          Duyệt cây hướng dẫn bởi LLM
+        </div>
+        <div class="tier-sub">Forest → Domain → Doc<br>Doc → Chapter → Article</div>
+      </div>
+
+      <!-- Tier 2 -->
+      <div class="tier-box tier-2" id="nodeTier2">
+        <span class="tier-box-label">Tầng 2</span>
+        <div class="tier-title">
+          <svg viewBox="0 0 16 16" width="14" height="14" fill="none">
+            <circle cx="5" cy="5" r="3.5" stroke="#1976d2" stroke-width="1.3" fill="#e3f2fd"/>
+            <circle cx="11" cy="11" r="3.5" stroke="#1976d2" stroke-width="1.3" fill="#e3f2fd"/>
+            <line x1="7.5" y1="7.5" x2="8.5" y2="8.5" stroke="#1976d2" stroke-width="1.3"/>
+          </svg>
+          Truy xuất ngữ nghĩa hai cấp
+        </div>
+        <div class="tier-sub">Thấp: keyphrase + semantic + PPR + concept<br>Cao: theme + hierarchy expansion</div>
+      </div>
+    </div>
+
+    <div class="arrow-down">▼</div>
+
+    <!-- Tier 3: Semantic Bridge -->
+    <div class="tier-box tier-3" id="nodeTier3" style="margin-top:0;">
+      <span class="tier-box-label">Tầng 3 — Hợp nhất</span>
+      <div class="tier-title">
+        <svg viewBox="0 0 16 16" width="14" height="14" fill="none">
+          <path d="M2,8 Q5,3 8,8 Q11,13 14,8" stroke="#e65100" stroke-width="1.5" fill="none"/>
+          <circle cx="2" cy="8" r="1.5" fill="#e65100"/>
+          <circle cx="14" cy="8" r="1.5" fill="#e65100"/>
+        </svg>
+        Semantic Bridge — RRF + KG Expansion
+      </div>
+      <div class="tier-sub">w<sub>T1</sub>=1.2 &nbsp;·&nbsp; w<sub>T2</sub>=0.7 &nbsp;·&nbsp; w<sub>KG</sub>=1.0 &nbsp;·&nbsp; k=60</div>
+    </div>
+
+    <div class="arrow-down">▼</div>
+
+    <!-- Answer Generation + Answer output row -->
+    <div class="answer-row" id="rowAnswer">
+      <div class="node node-core" id="nodeGenerate">
+        <div class="node-icon">
+          <svg viewBox="0 0 18 18" width="16" height="16" fill="none">
+            <rect x="2" y="2" width="14" height="14" rx="3" stroke="#7b1fa2" stroke-width="1.5" fill="#f3e5f5"/>
+            <text x="9" y="12" text-anchor="middle" font-size="9" fill="#7b1fa2" font-family="Times New Roman" font-weight="bold">LLM</text>
+          </svg>
+        </div>
+        <div class="node-text">
+          <div class="node-label">Sinh câu trả lời</div>
+          <div class="node-sub">Answer Generation</div>
+        </div>
+      </div>
+      <div class="arrow-right">▶</div>
+      <div class="node node-output" id="nodeAnswer">
+        <div class="node-icon">
+          <svg viewBox="0 0 18 18" width="16" height="16" fill="none">
+            <rect x="2" y="2" width="14" height="14" rx="2" stroke="#2e7d32" stroke-width="1.5" fill="#e8f5e9"/>
+            <polyline points="5,9 8,12 13,6" stroke="#2e7d32" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div class="node-text">
+          <div class="node-label">Câu trả lời pháp lý</div>
+          <div class="node-sub">Legal Answer</div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /phase-col-online -->
+
+  <!-- SVG overlay for dashed purple connectors -->
+  <svg class="svg-overlay" id="svgOverlay" xmlns="http://www.w3.org/2000/svg"></svg>
+
+</div><!-- /diagram-wrapper -->
+
+<script>
+// Draw dashed purple arrows from "Biểu diễn tri thức" → Tier 1, Tier 2, Tier 3
+// All coordinates computed relative to the diagram-wrapper div.
+
+function getRelRect(el, container) {
+  const er = el.getBoundingClientRect();
+  const cr = container.getBoundingClientRect();
+  return {
+    left:   er.left   - cr.left,
+    right:  er.right  - cr.left,
+    top:    er.top    - cr.top,
+    bottom: er.bottom - cr.top,
+    midX:   (er.left + er.right)  / 2 - cr.left,
+    midY:   (er.top  + er.bottom) / 2 - cr.top,
+    width:  er.width,
+    height: er.height,
+  };
+}
+
+function makeDashedArrow(svg, x1, y1, x2, y2, label, color) {
+  const ns = "http://www.w3.org/2000/svg";
+  const markerId = "arr-" + Math.random().toString(36).slice(2, 7);
+
+  // arrowhead marker
+  const defs = svg.querySelector("defs") || svg.appendChild(document.createElementNS(ns, "defs"));
+  const marker = document.createElementNS(ns, "marker");
+  marker.setAttribute("id", markerId);
+  marker.setAttribute("markerWidth", "6");
+  marker.setAttribute("markerHeight", "6");
+  marker.setAttribute("refX", "5");
+  marker.setAttribute("refY", "3");
+  marker.setAttribute("orient", "auto");
+  const poly = document.createElementNS(ns, "polygon");
+  poly.setAttribute("points", "0 0, 6 3, 0 6");
+  poly.setAttribute("fill", color);
+  marker.appendChild(poly);
+  defs.appendChild(marker);
+
+  // curved path using cubic bezier
+  const dx = x2 - x1;
+  const dy = y2 - y1;
+  const cx1 = x1 + dx * 0.5;
+  const cy1 = y1;
+  const cx2 = x1 + dx * 0.5;
+  const cy2 = y2;
+
+  const path = document.createElementNS(ns, "path");
+  path.setAttribute("d", `M${x1},${y1} C${cx1},${cy1} ${cx2},${cy2} ${x2},${y2}`);
+  path.setAttribute("stroke", color);
+  path.setAttribute("stroke-width", "1.6");
+  path.setAttribute("stroke-dasharray", "5,3");
+  path.setAttribute("fill", "none");
+  path.setAttribute("marker-end", `url(#${markerId})`);
+  svg.appendChild(path);
+
+  // label at midpoint
+  if (label) {
+    const mx = (x1 + x2) / 2 + 3;
+    const my = (y1 + y2) / 2 - 4;
+    const txt = document.createElementNS(ns, "text");
+    txt.setAttribute("x", mx);
+    txt.setAttribute("y", my);
+    txt.setAttribute("font-size", "9.5");
+    txt.setAttribute("font-family", "Times New Roman, serif");
+    txt.setAttribute("font-style", "italic");
+    txt.setAttribute("fill", color);
+    txt.setAttribute("text-anchor", "middle");
+    txt.textContent = label;
+    svg.appendChild(txt);
+  }
+}
+
+function drawConnectors() {
+  const wrapper = document.getElementById("diagramWrapper");
+  const svg = document.getElementById("svgOverlay");
+
+  // Set SVG size to match wrapper
+  const wr = wrapper.getBoundingClientRect();
+  svg.setAttribute("viewBox", `0 0 ${wr.width} ${wr.height}`);
+  svg.setAttribute("width", wr.width);
+  svg.setAttribute("height", wr.height);
+
+  // Clear previous
+  while (svg.firstChild) svg.removeChild(svg.firstChild);
+
+  const kr    = getRelRect(document.getElementById("nodeKR"),     wrapper);
+  const t1    = getRelRect(document.getElementById("nodeTier1"),  wrapper);
+  const t2    = getRelRect(document.getElementById("nodeTier2"),  wrapper);
+  const t3    = getRelRect(document.getElementById("nodeTier3"),  wrapper);
+
+  const color = "#7b1fa2";
+
+  // Source: right-center of nodeKR
+  const srcX = kr.right;
+  const srcY = kr.midY;
+
+  // Target 1: left-center of Tier 1
+  makeDashedArrow(svg, srcX, srcY, t1.left, t1.midY, "Document Forest", color);
+
+  // Target 2: left-center of Tier 2
+  makeDashedArrow(svg, srcX, srcY, t2.left, t2.midY, "Knowledge Graph", color);
+
+  // Target 3: left-center of Tier 3
+  makeDashedArrow(svg, srcX, srcY, t3.left, t3.midY, "Knowledge Graph", color);
+}
+
+// Draw after layout settles
+window.addEventListener("load", () => {
+  // Small delay so font metrics are stable
+  requestAnimationFrame(() => requestAnimationFrame(drawConnectors));
+});
+window.addEventListener("resize", drawConnectors);
+</script>
+</body>
+</html>

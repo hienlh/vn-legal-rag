@@ -1,0 +1,140 @@
+% ============================================================
+%  Chương 1: Tổng quan
+% ============================================================
+\chapter{Tổng quan}
+\label{chap:chapter1}
+
+Chương này trình bày tổng quan về đề tài nghiên cứu, bao gồm giới thiệu bối cảnh và động lực nghiên cứu, tổng quan các công trình liên quan, mục tiêu và phạm vi nghiên cứu, cũng như bố cục của luận văn.
+
+% ============================================================
+\section{Giới thiệu đề tài}
+\label{sec:gioithieu}
+
+% ------------------------------------------------------------
+\subsection{Bối cảnh và động lực nghiên cứu}
+\label{subsec:boicanh}
+
+Tại các trường đại học ở Việt Nam, nhiều phòng ban chức năng đã được thành lập để hỗ trợ sinh viên trong học tập, rèn luyện và giải quyết các thủ tục hành chính. Tuy nhiên, do thông tin bị phân tán giữa nhiều phòng ban và các quy định thường khó hiểu, sinh viên gặp nhiều trở ngại trong việc tra cứu, tiếp cận và nắm bắt đầy đủ các quy định đào tạo, nhất là đối với những quy chế mới hoặc có tính chất phức tạp. Sinh viên thường phải liên hệ với nhiều nơi khác nhau cho từng vấn đề, dẫn đến mất thời gian, chờ đợi kéo dài và đôi khi không nhận được thông tin chính xác, kịp thời.
+
+Ngoài ra, các nhu cầu tư vấn về học tập, nghiên cứu khoa học, lựa chọn ngành nghề, điều kiện tốt nghiệp cũng ngày càng đa dạng, trong khi nguồn lực cán bộ tư vấn còn hạn chế. Việc giải thích các quy định đào tạo phức tạp thường đòi hỏi sự tương tác trực tiếp, gây áp lực lớn cho đội ngũ cán bộ và không đáp ứng được nhu cầu hỗ trợ 24/7. Do đó, việc xây dựng một hệ thống tư vấn tự động, thông minh sẽ giúp giảm tải cho cán bộ, tiết kiệm chi phí vận hành, đồng thời nâng cao trải nghiệm và sự hài lòng của sinh viên.
+
+% ------------------------------------------------------------
+\subsection{Hiện trạng các hệ thống chatbot giáo dục tại Việt Nam}
+\label{subsec:hientrang}
+
+Gần đây, nhiều trường đại học tại Việt Nam đã tiên phong ứng dụng trí tuệ nhân tạo vào các hệ thống hỗ trợ sinh viên:
+\begin{itemize}
+    \item \textbf{Chatbot UEB} (Đại học Kinh tế Quốc dân): triển khai dựa trên nền tảng ChatGPT, giúp sinh viên tra cứu thông tin và giải đáp thắc mắc mọi lúc, mọi nơi.
+    \item \textbf{UEH AI Chatbot} (Đại học Kinh tế TP.HCM): hỗ trợ tư vấn tuyển sinh, hướng nghiệp cho phụ huynh và học sinh.
+    \item \textbf{HUNRE AI Chatbot} (Đại học Tài nguyên và Môi trường Hà Nội): góp phần nâng cao chất lượng phục vụ sinh viên và tối ưu hóa quy trình quản lý đào tạo.
+\end{itemize}
+
+Các ứng dụng chatbot này chủ yếu dựa trên mô hình ngôn ngữ lớn (LLM), đã được triển khai rộng rãi và bước đầu mang lại nhiều tiện ích cho sinh viên. Tuy nhiên, hiện vẫn còn thiếu các nghiên cứu đánh giá định lượng về mức độ chính xác và hiệu quả thực sự của các hệ thống này. Bên cạnh đó, các LLM hiện nay vẫn gặp nhiều hạn chế trong việc xử lý các câu hỏi phức tạp đòi hỏi suy luận logic sâu. Đặc biệt, hiện tượng \textit{``ảo giác''} (hallucination), tức khi mô hình tạo ra câu trả lời không chính xác hoặc không sát với thực tế, vẫn là một rào cản lớn, có thể dẫn đến việc cung cấp thông tin sai lệch với hậu quả nghiêm trọng đối với sinh viên.
+
+% ------------------------------------------------------------
+\subsection{Thách thức trong truy xuất thông tin văn bản quy phạm}
+\label{subsec:thachchuc}
+
+Các văn bản quy chế đào tạo tại Việt Nam có cấu trúc phân cấp phức tạp: một quy chế tổ chức nội dung theo các cấp Chương, Điều, Khoản và Điểm, mỗi cấp mang phạm vi quy định riêng biệt. Ngoài ra, các văn bản còn chứa nhiều tham chiếu chéo (cross-reference): để trả lời câu hỏi \textit{``Học viên cao học cần đáp ứng điều kiện gì để được bảo vệ luận văn?''} cần kết nối Điều~24 (điều kiện bảo vệ) trong QĐ~270 của UIT với Điều~25 (yêu cầu ngoại ngữ) trong QĐ~1393 của ĐHQG-HCM, vốn là hai văn bản khác nhau ở hai tầng quản lý.
+
+Tiếng Việt còn tạo thêm thách thức qua sự đa nghĩa thanh điệu, các viết tắt chuyên ngành (GVHD, ThS, NCS, ĐHQG) và hệ thống phân cấp văn bản quy phạm đa tầng (Bộ GD\&ĐT, ĐHQG-HCM, trường thành viên). Các phương pháp truy xuất thông tin hiện tại gặp ba hạn chế chính cho văn bản quy phạm có cấu trúc: embedding mờ đi ý nghĩa chính xác của thuật ngữ chuyên ngành (\textit{semantic gap}), truy xuất phẳng bỏ qua cấu trúc phân cấp tài liệu, và tìm kiếm dày đặc không thể kết nối các tham chiếu chéo giữa các quy chế. Các thách thức tương tự cũng xuất hiện trong lĩnh vực pháp luật Việt Nam, nơi hệ thống được mở rộng đánh giá (Chương~\ref{chap:chapter4}).
+
+% ============================================================
+\section{Các nghiên cứu liên quan}
+\label{sec:lienquan}
+
+% ------------------------------------------------------------
+\subsection{Từ truy xuất từ vựng đến truy xuất neural}
+\label{subsec:truyxuat_tuvung}
+
+Truy xuất thông tin pháp lý ban đầu dựa vào đối sánh từ vựng: BM25~\cite{robertson2009bm25} và TF-IDF~\cite{manning2008ir} xếp hạng tài liệu theo mức độ trùng khớp thuật ngữ, nhưng thất bại khi người dùng diễn đạt lại các khái niệm pháp lý bằng ngôn ngữ tự nhiên. Truy xuất dày đặc (dense retrieval) chuyển sang các biểu diễn học được với Sentence-BERT~\cite{reimers2019sbert} và DPR~\cite{karpukhin2020dpr}; các công trình tiếp theo bổ sung cơ chế tự phản ánh~\cite{asai2024selfrag} và sinh tài liệu giả thuyết~\cite{gao2023hyde} (được tổng quan bởi Fan và cộng sự~\cite{fan2024ragsurvey}). Các mô hình chuyên biệt miền như LEGAL-BERT~\cite{chalkidis2020legalbert} nắm bắt ngôn ngữ pháp lý nhưng vẫn hoạt động trên các đoạn văn bản phẳng.
+
+Đối với tiếng Việt, PhoBERT~\cite{nguyen2020phobert} và VnCoreNLP~\cite{vu2018vncore} cung cấp các mô hình nền tảng, và Ngo cùng cộng sự~\cite{ngo2021aimelaw} đã kết hợp BM25 với BERT~\cite{devlin2019bert} cho cuộc thi ALQAC~2021. Một hạn chế chung xuyên suốt các phương pháp này: việc coi tài liệu như tập hợp phẳng đã loại bỏ cấu trúc phân cấp quan trọng cho văn bản pháp lý.
+
+% ------------------------------------------------------------
+\subsection{Truy xuất tăng cường tri thức}
+\label{subsec:truyxuat_trithuc}
+
+Để phục hồi thông tin có cấu trúc và quan hệ, các nhà nghiên cứu đã chuyển sang các mô hình biểu diễn tri thức. Legal-Onto~\cite{nguyen2022legalonto} kết hợp mô hình Rela~\cite{do2018rela} với đồ thị khái niệm cho Luật Đất đai Việt Nam nhưng dựa vào luật thủ công, không có khả năng mở rộng. GraphRAG~\cite{edge2024graphrag} phân vùng đồ thị thực thể thành các cộng đồng với tóm tắt LLM, và LightRAG~\cite{guo2025lightrag} kết hợp tìm kiếm vector với duyệt đồ thị. Cả hai cho phép suy luận đa bước nhưng coi tài liệu như tập hợp thực thể mà không bảo toàn cấu trúc phân cấp; trong thử nghiệm của chúng tôi, chất lượng trích xuất thực thể của LightRAG khá thấp (74\% thực thể chỉ xuất hiện một lần).
+
+RAG~\cite{lewis2020rag} nền tảng hóa việc sinh văn bản dựa trên bằng chứng truy xuất nhưng vẫn bị giới hạn bởi chất lượng truy xuất. Các khảo sát~\cite{zhong2020nlplaw,lai2024llmlaw} xác nhận rằng việc kết nối tri thức pháp lý với truy xuất có khả năng mở rộng vẫn là một vấn đề mở.
+
+% ------------------------------------------------------------
+\subsection{Truy xuất phân cấp nhận biết cấu trúc}
+\label{subsec:truyxuat_phancap}
+
+RAPTOR~\cite{sarthi2024raptor} xây dựng Summary Tree qua phân cụm đệ quy và tóm tắt LLM, nắm bắt chủ đề đa mức chi tiết; tuy nhiên, nó loại bỏ cấu trúc phân cấp gốc của tài liệu và chỉ dựa vào truy xuất embedding tại thời điểm truy vấn, chỉ đạt 41,0\% tỷ lệ Hit@10 trên bộ đánh giá pháp lý có cấu trúc của chúng tôi.
+
+PageIndex~\cite{zhang2025pageindex} duyệt qua cây theo hướng dẫn bởi LLM để tìm kiếm tài liệu đã phân cấp, đạt độ chính xác cao khi mô hình chọn đúng nhánh nhưng bỏ sót nội dung ngoài đường duyệt. Đặc biệt, cả hai hệ thống đều không tích hợp Knowledge Graph cho suy luận liên tài liệu; các truy vấn đa bước xuyên các luật hoặc nghị định khác nhau chưa được giải quyết.
+
+% ------------------------------------------------------------
+\subsection{Định vị nghiên cứu}
+\label{subsec:dinhvi}
+
+Chưa có hệ thống nào kết hợp tri thức ontology, truy xuất dựa trên đồ thị và duyệt cây cấu trúc cho văn bản pháp lý Việt Nam. Hệ thống được đề xuất trong luận văn này tích hợp cả ba khả năng thông qua kiến trúc ba tầng với suy luận nhận biết ý định và tổng hợp, xếp hạng. Bảng~\ref{tab:comparison} tóm tắt so sánh các phương pháp liên quan.
+
+\begin{table}[htbp]
+    \centering
+    \caption{So sánh các hệ thống liên quan}
+    \label{tab:comparison}
+    \begin{tabular}{lcccc}
+        \toprule
+        \textbf{Hệ thống} & \textbf{Cấu trúc} & \textbf{KG} & \textbf{Ngữ nghĩa} & \textbf{Đa tài liệu} \\
+        \midrule
+        BM25/TF-IDF                  & --             & --  & --  & \checkmark \\
+        NaiveRAG                     & --             & --  & \checkmark & \checkmark \\
+        LightRAG~\cite{guo2025lightrag}  & --         & \checkmark & \checkmark & \checkmark \\
+        RAPTOR~\cite{sarthi2024raptor}   & Summary Tree & --  & \checkmark & \checkmark \\
+        PageIndex~\cite{zhang2025pageindex} & Document Tree & -- & -- & \checkmark \\
+        Legal-Onto~\cite{nguyen2022legalonto} & --    & \checkmark & -- & -- \\
+        \textbf{3-Tier (ours)}       & Document Tree  & \checkmark & \checkmark & \checkmark \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+% ============================================================
+\section{Mục tiêu và phạm vi nghiên cứu}
+\label{sec:muctieu}
+
+% ------------------------------------------------------------
+\subsection{Mục tiêu nghiên cứu}
+\label{subsec:muctieu_nc}
+
+Luận văn này nghiên cứu và giải quyết các vấn đề sau:
+\begin{enumerate}
+    \item Xây dựng Knowledge Graph và Ontology cho văn bản quy phạm.
+    \item Đề xuất kiến trúc truy xuất 3-Tier KG-RAG.
+    \item Xây dựng bộ đánh giá và so sánh định lượng.
+\end{enumerate}
+
+% ------------------------------------------------------------
+\subsection{Đối tượng}
+\label{subsec:doituong}
+
+Đề tài này nghiên cứu việc tổ chức và truy xuất thông tin từ các văn bản quy phạm có cấu trúc phân cấp để xây dựng một hệ thống hỏi đáp tự động dựa trên đồ thị tri thức và mô hình ngôn ngữ lớn. Hệ thống hướng đến đối tượng là học viên cao học, sinh viên sau đại học tại UIT và các trường thuộc ĐHQG-HCM có nhu cầu tra cứu các quy định đào tạo, cũng như cán bộ phòng đào tạo cần hỗ trợ giải đáp thắc mắc cho học viên. Hệ thống cũng có thể mở rộng ra cho người dùng có nhu cầu muốn tra cứu thông tin pháp luật.
+
+% ------------------------------------------------------------
+\subsection{Phạm vi nghiên cứu}
+\label{subsec:phamvi}
+
+Hệ thống được kiểm thử trên 5 bộ quy chế, quy định đào tạo thạc sĩ:
+\begin{enumerate}
+    \item Quy chế đào tạo trình độ thạc sĩ của UIT số 270/QĐ-ĐHCNTT ngày 25/04/2022.
+    \item Quy chế đào tạo trình độ thạc sĩ cho khóa 2021 số 160/QĐ-ĐHQG ngày 24/03/2017 của ĐHQG-HCM.
+    \item Quy chế đào tạo trình độ thạc sĩ cho khóa từ năm 2022 số 1393/QĐ-ĐHQG ngày 03/11/2021 của ĐHQG-HCM.
+    \item Quy chế sửa đổi bổ sung số 218/QĐ-ĐHQG ngày 15/03/2024 của ĐHQG-HCM.
+    \item Quy định về liêm chính học thuật số 851/QĐ-ĐHCNTT ngày 14/08/2024 của UIT.
+\end{enumerate}
+
+Ngoài ra, hệ thống còn được đánh giá trên bộ dữ liệu pháp luật Việt Nam gồm 12 văn bản thuộc lĩnh vực luật doanh nghiệp và luật giao thông để chứng minh tính tổng quát của phương pháp.
+
+% ============================================================
+\section{Bố cục luận văn}
+\label{sec:bocuc}
+
+\begin{itemize}
+    \item \textbf{Chương~\ref{chap:chapter2}}: Thu thập kiến thức về quy định đào tạo.
+    \item \textbf{Chương~\ref{chap:chapter3}}: Thiết kế giải thuật.
+    \item \textbf{Chương~\ref{chap:chapter4}}: Thiết kế hệ thống và thử nghiệm.
+    \item \textbf{Chương~\ref{chap:chapter5}}: Kết luận và hướng phát triển.
+\end{itemize}

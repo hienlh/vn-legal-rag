@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hình 3.2 – Quá trình duyệt cây 3 vòng lặp</title>
+<style>
+  @page {
+    size: 300mm 200mm;
+    margin: 0;
+  }
+
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  html, body {
+    width: 300mm;
+    height: 200mm;
+    font-family: "Times New Roman", Times, serif;
+    background: #ffffff;
+    overflow: hidden;
+  }
+
+  .page {
+    width: 300mm;
+    height: 200mm;
+    position: relative;
+    padding: 6mm 6mm 4mm 6mm;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* ── Figure caption ── */
+  .figure-caption {
+    text-align: center;
+    font-size: 9.5pt;
+    font-weight: bold;
+    margin-bottom: 4mm;
+    color: #111;
+    letter-spacing: 0.01em;
+  }
+
+  /* ── Main content area with SVG overlay ── */
+  .diagram-wrapper {
+    position: relative;
+    flex: 1;
+    display: flex;
+    flex-direction: row;
+  }
+
+  /* SVG overlay for cross-loop connector lines */
+  .svg-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    overflow: visible;
+  }
+
+  /* ── 3 column loops ── */
+  .loops-row {
+    display: flex;
+    flex-direction: row;
+    gap: 0;
+    width: 100%;
+    height: 100%;
+    position: relative;
+  }
+
+  .loop-col {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0 4mm;
+    position: relative;
+  }
+
+  .loop-col-0 { width: 28%; border-right: 1.5px dashed #90a4ae; }
+  .loop-col-1 { width: 37%; border-right: 1.5px dashed #90a4ae; }
+  .loop-col-2 { width: 35%; }
+
+  /* ── Loop header ── */
+  .loop-header {
+    text-align: center;
+    margin-bottom: 3mm;
+    width: 100%;
+  }
+
+  .loop-label {
+    display: inline-block;
+    background: #37474f;
+    color: #fff;
+    font-size: 8pt;
+    font-weight: bold;
+    padding: 1mm 3mm;
+    border-radius: 3px;
+    letter-spacing: 0.05em;
+    margin-bottom: 1mm;
+  }
+
+  .loop-subtitle {
+    font-size: 8pt;
+    color: #455a64;
+    font-style: italic;
+    display: block;
+    margin-top: 1mm;
+  }
+
+  .loop-arrow {
+    position: absolute;
+    right: -5mm;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 14pt;
+    color: #546e7a;
+    z-index: 10;
+  }
+
+  /* ── Query box ── */
+  .query-box {
+    background: #e3f2fd;
+    border: 1.5px solid #1565c0;
+    border-radius: 4px;
+    padding: 2mm 3mm;
+    text-align: center;
+    font-size: 7.5pt;
+    font-weight: bold;
+    color: #0d47a1;
+    width: 100%;
+    margin-bottom: 3mm;
+    line-height: 1.35;
+  }
+
+  /* ── Tree layout containers ── */
+  .tree-root {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5mm;
+    flex: 1;
+  }
+
+  /* ── Node styles ── */
+  .node {
+    border-radius: 3px;
+    padding: 1.2mm 2.5mm;
+    font-size: 7.5pt;
+    line-height: 1.3;
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    gap: 1.5mm;
+  }
+
+  .node-selected {
+    background: #e8f5e9;
+    border: 1.5px solid #2e7d32;
+    color: #1b5e20;
+    font-weight: bold;
+  }
+
+  .node-rejected {
+    background: #f5f5f5;
+    border: 1.5px solid #bdbdbd;
+    color: #9e9e9e;
+    text-decoration: line-through;
+    font-weight: normal;
+  }
+
+  .node-ellipsis {
+    background: #f5f5f5;
+    border: 1px dashed #bdbdbd;
+    color: #bdbdbd;
+    font-style: italic;
+    font-size: 7pt;
+  }
+
+  /* icon column fixed width */
+  .node-icon {
+    width: 3.5mm;
+    text-decoration: none !important;
+    flex-shrink: 0;
+  }
+
+  /* ── Loop 0: document list ── */
+  .doc-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.8mm;
+    width: 100%;
+  }
+
+  .doc-label {
+    text-align: center;
+    font-size: 7pt;
+    color: #2e7d32;
+    font-style: italic;
+    margin-top: 2mm;
+  }
+
+  /* ── Loop 1 & 2: grouped subtrees ── */
+  .group {
+    width: 100%;
+    margin-bottom: 1.5mm;
+  }
+
+  .group-header {
+    font-size: 7pt;
+    color: #546e7a;
+    font-weight: bold;
+    margin-bottom: 1mm;
+    padding-left: 1mm;
+    border-left: 2.5px solid #90a4ae;
+    padding-top: 0.5mm;
+    padding-bottom: 0.5mm;
+    font-style: italic;
+  }
+
+  .group-children {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2mm;
+    padding-left: 4mm;
+    border-left: 1px solid #cfd8dc;
+    margin-left: 1mm;
+  }
+
+  /* connector dot on selected node for SVG line anchoring */
+  .node[data-id] {
+    position: relative;
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="figure-caption">
+    Hình 3.2. Quá trình duyệt cây 3 vòng lặp cho truy vấn về điều kiện bảo vệ luận văn thạc sĩ
+  </div>
+
+  <div class="diagram-wrapper">
+    <!-- SVG overlay for cross-loop arrows drawn after layout -->
+    <svg class="svg-overlay" id="svgOverlay"></svg>
+
+    <div class="loops-row" id="loopsRow">
+
+      <!-- ═══════════════════════════════════
+           LOOP 0 — Chọn tài liệu
+           ═══════════════════════════════════ -->
+      <div class="loop-col loop-col-0" id="col0">
+
+        <div class="loop-header">
+          <span class="loop-label">Loop 0</span>
+          <span class="loop-subtitle">Chọn tài liệu</span>
+        </div>
+
+        <div class="query-box">
+          "Điều kiện để được bảo<br>vệ luận văn thạc sĩ?"
+        </div>
+
+        <div class="doc-list">
+          <div class="node node-selected" id="d-qd270">
+            <span class="node-icon">✅</span> QĐ 270
+          </div>
+          <div class="node node-selected" id="d-qd1393">
+            <span class="node-icon">✅</span> QĐ 1393
+          </div>
+          <div class="node node-selected" id="d-qd218">
+            <span class="node-icon">✅</span> QĐ 218
+          </div>
+          <div class="node node-rejected">
+            <span class="node-icon" style="text-decoration:none">❌</span> QĐ 160
+          </div>
+          <div class="node node-rejected">
+            <span class="node-icon" style="text-decoration:none">❌</span> QĐ 851
+          </div>
+        </div>
+
+        <div class="doc-label">3 / 5 tài liệu được chọn</div>
+      </div>
+
+      <!-- ═══════════════════════════════════
+           LOOP 1 — Chọn chương
+           ═══════════════════════════════════ -->
+      <div class="loop-col loop-col-1" id="col1">
+
+        <div class="loop-header">
+          <span class="loop-label">Loop 1</span>
+          <span class="loop-subtitle">Chọn chương</span>
+        </div>
+
+        <!-- QĐ 270 chapters -->
+        <div class="group">
+          <div class="group-header">QĐ 270</div>
+          <div class="group-children">
+            <div class="node node-selected" id="c-iv-270">
+              <span class="node-icon">✅</span> Chương IV: Luận văn
+            </div>
+            <div class="node node-selected" id="c-v-270">
+              <span class="node-icon">✅</span> Chương V: Bảo vệ
+            </div>
+            <div class="node node-rejected">
+              <span class="node-icon" style="text-decoration:none">❌</span> Chương I: Quy định chung
+            </div>
+            <div class="node node-ellipsis node-rejected">
+              <span class="node-icon" style="text-decoration:none">❌</span> …
+            </div>
+          </div>
+        </div>
+
+        <!-- QĐ 1393 chapters -->
+        <div class="group">
+          <div class="group-header">QĐ 1393</div>
+          <div class="group-children">
+            <div class="node node-selected" id="c-vi-1393">
+              <span class="node-icon">✅</span> Chương VI: Bảo vệ và TN
+            </div>
+            <div class="node node-rejected">
+              <span class="node-icon" style="text-decoration:none">❌</span> Chương I
+            </div>
+            <div class="node node-ellipsis node-rejected">
+              <span class="node-icon" style="text-decoration:none">❌</span> …
+            </div>
+          </div>
+        </div>
+
+        <!-- QĐ 218 chapters -->
+        <div class="group">
+          <div class="group-header">QĐ 218</div>
+          <div class="group-children">
+            <div class="node node-selected" id="c-ii-218">
+              <span class="node-icon">✅</span> Chương II: GVHD
+            </div>
+            <div class="node node-rejected">
+              <span class="node-icon" style="text-decoration:none">❌</span> Chương I
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- ═══════════════════════════════════
+           LOOP 2 — Chọn điều
+           ═══════════════════════════════════ -->
+      <div class="loop-col loop-col-2" id="col2">
+
+        <div class="loop-header">
+          <span class="loop-label">Loop 2</span>
+          <span class="loop-subtitle">Chọn điều</span>
+        </div>
+
+        <!-- From Chương IV (QĐ 270) -->
+        <div class="group">
+          <div class="group-header">Chương IV – QĐ 270</div>
+          <div class="group-children">
+            <div class="node node-selected" id="a-24-270" style="background:#c8e6c9; border-color:#1b5e20;">
+              <span class="node-icon">✅</span> Điều 24: Điều kiện bảo vệ
+            </div>
+            <div class="node node-rejected">
+              <span class="node-icon" style="text-decoration:none">❌</span> Điều 22
+            </div>
+            <div class="node node-rejected">
+              <span class="node-icon" style="text-decoration:none">❌</span> Điều 23
+            </div>
+          </div>
+        </div>
+
+        <!-- From Chương V (QĐ 270) -->
+        <div class="group">
+          <div class="group-header">Chương V – QĐ 270</div>
+          <div class="group-children">
+            <div class="node node-selected" id="a-25-270">
+              <span class="node-icon">✅</span> Điều 25: Hội đồng bảo vệ
+            </div>
+          </div>
+        </div>
+
+        <!-- From Chương VI (QĐ 1393) -->
+        <div class="group">
+          <div class="group-header">Chương VI – QĐ 1393</div>
+          <div class="group-children">
+            <div class="node node-selected" id="a-25-1393">
+              <span class="node-icon">✅</span> Điều 25: Điều kiện bảo vệ
+            </div>
+            <div class="node node-rejected">
+              <span class="node-icon" style="text-decoration:none">❌</span> Điều 26
+            </div>
+          </div>
+        </div>
+
+        <!-- From Chương II (QĐ 218) -->
+        <div class="group">
+          <div class="group-header">Chương II – QĐ 218</div>
+          <div class="group-children">
+            <div class="node node-selected" id="a-3-218">
+              <span class="node-icon">✅</span> Điều 3: Trách nhiệm GVHD
+            </div>
+          </div>
+        </div>
+
+      </div><!-- end loop-col-2 -->
+
+    </div><!-- end loops-row -->
+  </div><!-- end diagram-wrapper -->
+
+</div><!-- end page -->
+
+<script>
+/**
+ * Draws SVG connector lines between selected nodes in adjacent loops.
+ * Source node (Loop N) right-edge → Target node (Loop N+1) left-edge.
+ *
+ * Mapping:
+ *   d-qd270  → c-iv-270, c-v-270
+ *   d-qd1393 → c-vi-1393
+ *   d-qd218  → c-ii-218
+ *   c-iv-270 → a-24-270, (Điều 22 rejected, Điều 23 rejected)
+ *   c-v-270  → a-25-270
+ *   c-vi-1393→ a-25-1393
+ *   c-ii-218 → a-3-218
+ */
+(function drawConnectors() {
+  const svg = document.getElementById('svgOverlay');
+  const wrapper = svg.parentElement;
+
+  function midY(el) {
+    const r = el.getBoundingClientRect();
+    const wr = wrapper.getBoundingClientRect();
+    return r.top + r.height / 2 - wr.top;
+  }
+  function rightX(el) {
+    const r = el.getBoundingClientRect();
+    const wr = wrapper.getBoundingClientRect();
+    return r.right - wr.left;
+  }
+  function leftX(el) {
+    const r = el.getBoundingClientRect();
+    const wr = wrapper.getBoundingClientRect();
+    return r.left - wr.left;
+  }
+
+  function makePath(x1, y1, x2, y2, color) {
+    const cx1 = x1 + (x2 - x1) * 0.45;
+    const cx2 = x1 + (x2 - x1) * 0.55;
+    const d = `M ${x1} ${y1} C ${cx1} ${y1}, ${cx2} ${y2}, ${x2} ${y2}`;
+    const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+    path.setAttribute('d', d);
+    path.setAttribute('stroke', color || '#78909c');
+    path.setAttribute('stroke-width', '1.2');
+    path.setAttribute('fill', 'none');
+    path.setAttribute('marker-end', 'url(#arrowhead)');
+    path.setAttribute('opacity', '0.75');
+    return path;
+  }
+
+  function connect(fromId, toId, color) {
+    const from = document.getElementById(fromId);
+    const to   = document.getElementById(toId);
+    if (!from || !to) return;
+    svg.appendChild(makePath(
+      rightX(from), midY(from),
+      leftX(to),    midY(to),
+      color
+    ));
+  }
+
+  // Define arrowhead marker
+  const defs = document.createElementNS('http://www.w3.org/2000/svg', 'defs');
+  defs.innerHTML = `
+    <marker id="arrowhead" markerWidth="6" markerHeight="4"
+            refX="5" refY="2" orient="auto">
+      <polygon points="0 0, 6 2, 0 4" fill="#78909c" />
+    </marker>
+  `;
+  svg.appendChild(defs);
+
+  // Loop 0 → Loop 1
+  connect('d-qd270',  'c-iv-270',  '#2e7d32');
+  connect('d-qd270',  'c-v-270',   '#2e7d32');
+  connect('d-qd1393', 'c-vi-1393', '#2e7d32');
+  connect('d-qd218',  'c-ii-218',  '#2e7d32');
+
+  // Loop 1 → Loop 2
+  connect('c-iv-270',  'a-24-270',  '#1b5e20');
+  connect('c-v-270',   'a-25-270',  '#2e7d32');
+  connect('c-vi-1393', 'a-25-1393', '#2e7d32');
+  connect('c-ii-218',  'a-3-218',   '#2e7d32');
+})();
+</script>
+</body>
+</html>

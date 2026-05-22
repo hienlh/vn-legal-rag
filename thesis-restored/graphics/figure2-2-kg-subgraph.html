@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Figure 2.2 – Knowledge Graph Subgraph</title>
+<style>
+  @page {
+    size: 280mm 200mm;
+    margin: 0;
+  }
+
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  html, body {
+    width: 280mm;
+    height: 200mm;
+    overflow: hidden;
+    background: #ffffff;
+    font-family: "Times New Roman", Times, serif;
+  }
+
+  .page {
+    width: 280mm;
+    height: 200mm;
+    position: relative;
+    background: #ffffff;
+  }
+
+  /* SVG overlay covers the full diagram area */
+  .svg-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    overflow: visible;
+  }
+
+  /* ── Node base ── */
+  .node {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    font-family: "Times New Roman", Times, serif;
+    font-size: 10.5pt;
+    line-height: 1.25;
+    z-index: 10;
+  }
+
+  /* Action – blue ellipse */
+  .node-action {
+    background: #e3f2fd;
+    border: 2px solid #1565c0;
+    border-radius: 50%;
+    font-weight: bold;
+    color: #0d47a1;
+  }
+
+  /* Condition – green rounded rect */
+  .node-condition {
+    background: #e8f5e9;
+    border: 2px solid #2e7d32;
+    border-radius: 8px;
+    color: #1b5e20;
+  }
+
+  /* Organization – orange trapezoid-like (clip-path) */
+  .node-org {
+    background: #fff3e0;
+    border: 2px solid #e65100;
+    border-radius: 4px;
+    color: #bf360c;
+  }
+  .node-org-inner {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    clip-path: polygon(8% 0%, 92% 0%, 100% 100%, 0% 100%);
+    background: #fff3e0;
+    border: 2px solid #e65100;
+    border-radius: 4px;
+    color: #bf360c;
+    font-family: "Times New Roman", Times, serif;
+    font-size: 10.5pt;
+    text-align: center;
+    padding: 6px 10px;
+  }
+
+  /* Person – purple diamond */
+  .node-person {
+    background: transparent;
+    border: none;
+    color: #4a148c;
+  }
+  .node-person-inner {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f3e5f5;
+    border: 2px solid #7b1fa2;
+    transform: rotate(45deg);
+  }
+  .node-person-text {
+    transform: rotate(-45deg);
+    font-family: "Times New Roman", Times, serif;
+    font-size: 10.5pt;
+    color: #4a148c;
+    text-align: center;
+    white-space: nowrap;
+  }
+
+  /* Legal Reference – red rect */
+  .node-legal {
+    background: #ffebee;
+    border: 2px solid #c62828;
+    border-radius: 3px;
+    color: #b71c1c;
+    font-size: 10pt;
+  }
+
+  /* Edge labels */
+  .edge-label {
+    font-family: "Times New Roman", Times, serif;
+    font-size: 8.5pt;
+    fill: #333333;
+  }
+  .edge-label-bg {
+    fill: #ffffff;
+    stroke: none;
+  }
+
+  /* Caption */
+  .figure-caption {
+    position: absolute;
+    bottom: 6mm;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    font-family: "Times New Roman", Times, serif;
+    font-size: 10.5pt;
+    color: #222222;
+  }
+
+  /* Legend */
+  .legend {
+    position: absolute;
+    bottom: 13mm;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 14px;
+    align-items: center;
+  }
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-family: "Times New Roman", Times, serif;
+    font-size: 8.5pt;
+    color: #333;
+  }
+  .legend-swatch {
+    width: 22px;
+    height: 14px;
+    border-radius: 3px;
+    border: 1.5px solid;
+    flex-shrink: 0;
+  }
+  .legend-action   { background:#e3f2fd; border-color:#1565c0; border-radius:50%; }
+  .legend-cond     { background:#e8f5e9; border-color:#2e7d32; border-radius:4px; }
+  .legend-org      { background:#fff3e0; border-color:#e65100; }
+  .legend-person   { background:#f3e5f5; border-color:#7b1fa2; transform:rotate(45deg); width:12px; height:12px; }
+  .legend-legal    { background:#ffebee; border-color:#c62828; border-radius:2px; }
+  .legend-person-wrap { width:22px; height:14px; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+</style>
+</head>
+<body>
+<div class="page" id="page">
+
+  <!-- ══════════════════════════════════════════════
+       NODES  (positions in px; page = 1058 × 755 px at 96dpi)
+       Layout reference (mm → px  @96dpi, 1mm≈3.779px):
+         page width  = 280mm ≈ 1058px
+         page height = 200mm ≈  755px
+       ══════════════════════════════════════════════ -->
+
+  <!-- CENTER: bảo vệ luận văn ThS  (w=160 h=72)  cx≈529 cy≈330 -->
+  <div id="n-center" class="node node-action"
+       style="width:164px; height:72px; left:447px; top:294px; padding:6px 12px;">
+    bảo vệ luận văn ThS
+  </div>
+
+  <!-- TOP-LEFT: hoàn thành tín chỉ  (w=150 h=48)  cx≈195 cy≈140 -->
+  <div id="n-htc" class="node node-condition"
+       style="width:152px; height:48px; left:119px; top:116px; padding:5px 10px;">
+    hoàn thành tín chỉ
+  </div>
+
+  <!-- TOP-CENTER: đạt chuẩn ngoại ngữ  (w=158 h=48)  cx≈529 cy≈120 -->
+  <div id="n-dcnn" class="node node-condition"
+       style="width:162px; height:48px; left:448px; top:96px; padding:5px 10px;">
+    đạt chuẩn ngoại ngữ
+  </div>
+
+  <!-- TOP-RIGHT: nộp luận văn đúng hạn  (w=162 h=48)  cx≈870 cy≈140 -->
+  <div id="n-nlv" class="node node-condition"
+       style="width:164px; height:48px; left:788px; top:116px; padding:5px 10px;">
+    nộp luận văn đúng hạn
+  </div>
+
+  <!-- BOTTOM-CENTER: xét tốt nghiệp  (w=140 h=52)  cx≈529 cy≈550 -->
+  <div id="n-xtn" class="node node-action"
+       style="width:144px; height:52px; left:457px; top:524px; padding:6px 12px;">
+    xét tốt nghiệp
+  </div>
+
+  <!-- RIGHT: Hội đồng bảo vệ  (w=144 h=52)  cx≈870 cy≈330 -->
+  <div id="n-hdv" class="node"
+       style="width:148px; height:52px; left:793px; top:304px; padding:0;">
+    <div class="node-org-inner">Hội đồng bảo vệ</div>
+  </div>
+
+  <!-- LEFT: GVHD  (w=80 h=80)  cx≈180 cy≈330 -->
+  <div id="n-gvhd" class="node node-person"
+       style="width:80px; height:80px; left:140px; top:290px;">
+    <div class="node-person-inner">
+      <span class="node-person-text">GVHD</span>
+    </div>
+  </div>
+
+  <!-- BOTTOM-LEFT: Điều 24, QĐ 270  (w=148 h=44)  cx≈195 cy≈540 -->
+  <div id="n-d24" class="node node-legal"
+       style="width:150px; height:44px; left:120px; top:518px; padding:5px 8px;">
+    Điều 24, QĐ 270
+  </div>
+
+  <!-- BOTTOM-RIGHT: Điều 25, QĐ 1393  (w=158 h=44)  cx≈870 cy≈540 -->
+  <div id="n-d25" class="node node-legal"
+       style="width:162px; height:44px; left:789px; top:518px; padding:5px 8px;">
+    Điều 25, QĐ 1393
+  </div>
+
+  <!-- ══════════════════════════════════════════════
+       SVG OVERLAY — edges
+       Arrow markers defined in <defs>
+       All coordinates reference node centres derived
+       from the absolute positions above.
+       ══════════════════════════════════════════════ -->
+  <svg class="svg-overlay" id="svg-edges"
+       xmlns="http://www.w3.org/2000/svg"
+       width="1058" height="755">
+    <defs>
+      <!-- standard black arrowhead -->
+      <marker id="arrow-black" markerWidth="8" markerHeight="8"
+              refX="7" refY="3" orient="auto">
+        <path d="M0,0 L0,6 L8,3 z" fill="#444"/>
+      </marker>
+      <!-- red arrowhead for dashed edge -->
+      <marker id="arrow-red" markerWidth="8" markerHeight="8"
+              refX="7" refY="3" orient="auto">
+        <path d="M0,0 L0,6 L8,3 z" fill="#c62828"/>
+      </marker>
+    </defs>
+
+    <!-- helper: all cx/cy computed as left + width/2, top + height/2 -->
+    <!--
+      n-center : cx=529  cy=330   (447+82,  294+36)
+      n-htc    : cx=195  cy=140   (119+76,  116+24)
+      n-dcnn   : cx=529  cy=120   (448+81,   96+24)
+      n-nlv    : cx=870  cy=140   (788+82,  116+24)
+      n-xtn    : cx=529  cy=550   (457+72,  524+26)
+      n-hdv    : cx=867  cy=330   (793+74,  304+26)
+      n-gvhd   : cx=180  cy=330   (140+40,  290+40)
+      n-d24    : cx=195  cy=540   (120+75,  518+22)
+      n-d25    : cx=870  cy=540   (789+81,  518+22)
+    -->
+
+    <!-- ── 1. hoàn thành tín chỉ → bảo vệ luận văn ThS  (requires) ── -->
+    <!-- from bottom-right of n-htc to top-left of n-center -->
+    <!-- htc bottom-center: (195,164)  center top-left edge -->
+    <line x1="227" y1="164" x2="466" y2="304"
+          stroke="#444" stroke-width="1.6"
+          marker-end="url(#arrow-black)"/>
+    <rect x="305" y="214" width="50" height="16" rx="2" class="edge-label-bg"/>
+    <text x="330" y="226" text-anchor="middle" class="edge-label">requires</text>
+
+    <!-- ── 2. đạt chuẩn ngoại ngữ → bảo vệ luận văn ThS  (requires) ── -->
+    <!-- dcnn bottom: (529,144)  center top: (529,294) -->
+    <line x1="529" y1="144" x2="529" y2="290"
+          stroke="#444" stroke-width="1.6"
+          marker-end="url(#arrow-black)"/>
+    <rect x="480" y="196" width="50" height="16" rx="2" class="edge-label-bg"/>
+    <text x="505" y="208" text-anchor="middle" class="edge-label">requires</text>
+
+    <!-- ── 3. nộp luận văn đúng hạn → bảo vệ luận văn ThS  (requires) ── -->
+    <!-- nlv bottom-left: (788,164)  center top-right -->
+    <line x1="837" y1="164" x2="604" y2="300"
+          stroke="#444" stroke-width="1.6"
+          marker-end="url(#arrow-black)"/>
+    <rect x="688" y="204" width="50" height="16" rx="2" class="edge-label-bg"/>
+    <text x="713" y="216" text-anchor="middle" class="edge-label">requires</text>
+
+    <!-- ── 4. bảo vệ luận văn ThS → xét tốt nghiệp  (leads_to) ── -->
+    <!-- center bottom: (529,366)  xtn top: (529,524) -->
+    <line x1="529" y1="366" x2="529" y2="520"
+          stroke="#444" stroke-width="1.6"
+          marker-end="url(#arrow-black)"/>
+    <rect x="480" y="422" width="50" height="16" rx="2" class="edge-label-bg"/>
+    <text x="505" y="434" text-anchor="middle" class="edge-label">leads_to</text>
+
+    <!-- ── 5. bảo vệ luận văn ThS → Hội đồng bảo vệ  (involves) ── -->
+    <!-- center right: (611,330)  hdv left: (793,330) -->
+    <line x1="611" y1="330" x2="789" y2="330"
+          stroke="#444" stroke-width="1.6"
+          marker-end="url(#arrow-black)"/>
+    <rect x="664" y="320" width="46" height="16" rx="2" class="edge-label-bg"/>
+    <text x="687" y="332" text-anchor="middle" class="edge-label">involves</text>
+
+    <!-- ── 6. GVHD → bảo vệ luận văn ThS  (involves) ── -->
+    <!-- gvhd right: (220,330)  center left: (447,330) -->
+    <line x1="220" y1="330" x2="443" y2="330"
+          stroke="#444" stroke-width="1.6"
+          marker-end="url(#arrow-black)"/>
+    <rect x="288" y="320" width="46" height="16" rx="2" class="edge-label-bg"/>
+    <text x="311" y="332" text-anchor="middle" class="edge-label">involves</text>
+
+    <!-- ── 7. Điều 24 → bảo vệ luận văn ThS  (regulates) ── -->
+    <!-- d24 top: (195,518)  center bottom-left -->
+    <line x1="215" y1="518" x2="466" y2="368"
+          stroke="#444" stroke-width="1.6"
+          marker-end="url(#arrow-black)"/>
+    <rect x="291" y="420" width="54" height="16" rx="2" class="edge-label-bg"/>
+    <text x="318" y="432" text-anchor="middle" class="edge-label">regulates</text>
+
+    <!-- ── 8. Điều 24 → Điều 25  (references — RED DASHED) ── -->
+    <!-- d24 right: (270,540)  d25 left: (789,540) -->
+    <!-- arc slightly below to avoid overlap with other edges -->
+    <path d="M270,548 Q529,590 789,548"
+          fill="none" stroke="#c62828" stroke-width="1.8"
+          stroke-dasharray="6,4"
+          marker-end="url(#arrow-red)"/>
+    <rect x="503" y="575" width="58" height="16" rx="2" class="edge-label-bg"/>
+    <text x="532" y="587" text-anchor="middle" class="edge-label" fill="#c62828">references</text>
+
+    <!-- ── 9. Điều 25 → đạt chuẩn ngoại ngữ  (regulates) ── -->
+    <!-- d25 top: (870,518)  dcnn right-bottom: (610,144) -->
+    <path d="M870,518 Q920,320 870,200 Q840,160 610,144"
+          fill="none" stroke="#444" stroke-width="1.6"
+          marker-end="url(#arrow-black)"/>
+    <rect x="893" y="316" width="54" height="16" rx="2" class="edge-label-bg"/>
+    <text x="920" y="328" text-anchor="middle" class="edge-label">regulates</text>
+
+  </svg>
+
+  <!-- ══════════════════════════════════════════════
+       LEGEND
+       ══════════════════════════════════════════════ -->
+  <div class="legend">
+    <div class="legend-item">
+      <div class="legend-swatch legend-action" style="border-radius:50%;"></div>
+      <span>Action</span>
+    </div>
+    <div class="legend-item">
+      <div class="legend-swatch legend-cond"></div>
+      <span>Condition</span>
+    </div>
+    <div class="legend-item">
+      <div class="legend-swatch legend-org"></div>
+      <span>Organization</span>
+    </div>
+    <div class="legend-item">
+      <div class="legend-person-wrap">
+        <div class="legend-swatch legend-person"></div>
+      </div>
+      <span>Person</span>
+    </div>
+    <div class="legend-item">
+      <div class="legend-swatch legend-legal"></div>
+      <span>Legal Reference</span>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════
+       CAPTION
+       ══════════════════════════════════════════════ -->
+  <div class="figure-caption">
+    <em>Hình 2.2: Đồ thị tri thức con xoay quanh khái niệm "bảo vệ luận văn ThS"</em>
+  </div>
+
+</div>
+</body>
+</html>

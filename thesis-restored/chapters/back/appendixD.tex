@@ -1,0 +1,232 @@
+\chapter{Prompt LLM sử dụng trong hệ thống}
+\label{app:prompt-llm}
+
+Phụ lục này liệt kê toàn bộ các prompt được sử dụng để tương tác với LLM (Claude 3.5 Haiku) trong pipeline của hệ thống KG-RAG ba tầng. Mỗi prompt được trình bày trong một bảng riêng, kèm mô tả mục đích sử dụng và vị trí trong pipeline. Các biến thay thế được ký hiệu bằng dấu ngoặc nhọn, ví dụ \texttt{\{document\_text\}}.
+
+% -------------------------------------------------------------------
+\section{Trích xuất thực thể và quan hệ}
+\label{sec:app-prompt-entity}
+
+Prompt này được sử dụng trong giai đoạn tiền xử lý để xây dựng đồ thị tri thức. Với mỗi điều khoản văn bản đầu vào, LLM được yêu cầu trích xuất các thực thể và quan hệ theo schema ontology đã định nghĩa.
+
+\begin{table}[htbp]
+  \centering
+  \caption{Prompt trích xuất thực thể và quan hệ (D.1)}
+  \label{tab:prompt-entity}
+  \begin{tabular}{p{0.95\linewidth}}
+    \toprule
+    \textbf{Mục đích:} Trích xuất thực thể và quan hệ từ điều khoản văn bản để xây dựng đồ thị tri thức. \\
+    \midrule
+    \textbf{Prompt:} \\[4pt]
+    Bạn là chuyên gia phân tích văn bản pháp luật Việt Nam. Nhiệm vụ của bạn là trích xuất các thực thể và quan hệ từ đoạn văn bản pháp luật sau đây để xây dựng đồ thị tri thức. \\[6pt]
+    \textbf{Văn bản đầu vào:} \\
+    \texttt{\{article\_text\}} \\[6pt]
+    \textbf{Mã điều khoản:} \texttt{\{article\_id\}} \\[6pt]
+    Hãy trích xuất theo định dạng JSON sau: \\[4pt]
+    \texttt{\{} \\
+    \quad \texttt{"entities": [} \\
+    \quad\quad \texttt{\{"id": "...", "type": "ARTICLE|CHAPTER|CONCEPT|SUBJECT|PENALTY", "name": "...", "description": "..."\}} \\
+    \quad \texttt{],} \\
+    \quad \texttt{"relations": [} \\
+    \quad\quad \texttt{\{"source": "...", "type": "REQUIRES|REFERENCES|APPLIES\_TO|DEFINES|HAS\_PENALTY|...", "target": "...", "weight": 0.0--1.0\}} \\
+    \quad \texttt{]} \\
+    \texttt{\}} \\[6pt]
+    Lưu ý: \\
+    - Chỉ trích xuất thực thể và quan hệ được đề cập tường minh trong văn bản. \\
+    - Trọng số quan hệ (weight) phản ánh mức độ liên kết ngữ nghĩa (0.5 = trung bình, 1.0 = rất chặt). \\
+    - Sử dụng đúng mã định danh \texttt{\{article\_id\}} cho thực thể điều khoản chính. \\
+    - Trả về JSON hợp lệ, không thêm giải thích bên ngoài JSON. \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+% -------------------------------------------------------------------
+\section{Sinh tóm tắt chương}
+\label{sec:app-prompt-chapter-summary}
+
+Prompt này được sử dụng để tạo tóm tắt ngữ nghĩa cho từng chương văn bản. Các tóm tắt chương được sử dụng trong Tầng~1 để lọc phạm vi tìm kiếm theo cấu trúc phân cấp.
+
+\begin{table}[htbp]
+  \centering
+  \caption{Prompt sinh tóm tắt chương (D.2)}
+  \label{tab:prompt-chapter-summary}
+  \begin{tabular}{p{0.95\linewidth}}
+    \toprule
+    \textbf{Mục đích:} Tạo tóm tắt ngữ nghĩa súc tích cho một chương văn bản pháp luật hoặc quy chế, phục vụ lọc chương trong Tầng~1. \\
+    \midrule
+    \textbf{Prompt:} \\[4pt]
+    Bạn là chuyên gia tóm tắt văn bản pháp luật Việt Nam. Hãy tạo một đoạn tóm tắt ngắn gọn (tối đa 150 từ) cho chương văn bản sau đây. \\[6pt]
+    \textbf{Tên chương:} \texttt{\{chapter\_title\}} \\[6pt]
+    \textbf{Nội dung chương (các điều khoản):} \\
+    \texttt{\{chapter\_content\}} \\[6pt]
+    Yêu cầu tóm tắt: \\
+    1. Nêu rõ chủ đề chính và phạm vi điều chỉnh của chương. \\
+    2. Liệt kê các khái niệm, chủ thể và loại hành vi quan trọng được quy định. \\
+    3. Nêu các điều kiện hoặc chế tài nổi bật nếu có. \\
+    4. Viết bằng tiếng Việt, rõ ràng, súc tích, phù hợp để so sánh với câu hỏi của người dùng. \\
+    5. Không thêm tiêu đề hay định dạng đặc biệt -- chỉ trả về đoạn văn thuần. \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+% -------------------------------------------------------------------
+\section{Sinh tóm tắt điều khoản}
+\label{sec:app-prompt-article-summary}
+
+Prompt này tạo tóm tắt ngữ nghĩa cho từng điều khoản riêng lẻ. Các tóm tắt điều khoản được nhúng (embed) và lưu vào FAISS để phục vụ truy xuất semantic search trong Tầng~2.
+
+\begin{table}[htbp]
+  \centering
+  \caption{Prompt sinh tóm tắt điều khoản (D.3)}
+  \label{tab:prompt-article-summary}
+  \begin{tabular}{p{0.95\linewidth}}
+    \toprule
+    \textbf{Mục đích:} Tạo tóm tắt ngữ nghĩa cho một điều khoản để phục vụ nhúng vector và tìm kiếm ngữ nghĩa trong Tầng~2. \\
+    \midrule
+    \textbf{Prompt:} \\[4pt]
+    Hãy tóm tắt nội dung điều khoản pháp luật sau đây trong tối đa 80 từ bằng tiếng Việt. Tóm tắt cần: \\[6pt]
+    (1) nêu rõ đối tượng áp dụng (ai/cái gì), \\
+    (2) quy định cụ thể (được làm gì / phải làm gì / không được làm gì), \\
+    (3) điều kiện áp dụng (nếu có), \\
+    (4) hậu quả pháp lý hoặc chế tài (nếu có). \\[6pt]
+    \textbf{Mã điều khoản:} \texttt{\{article\_id\}} \\[6pt]
+    \textbf{Nội dung điều khoản:} \\
+    \texttt{\{article\_text\}} \\[6pt]
+    Trả về chỉ đoạn tóm tắt thuần, không thêm tiêu đề, không thêm mã điều khoản vào đầu. \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+% -------------------------------------------------------------------
+\section{Loop 1 --- Chọn chương liên quan}
+\label{sec:app-prompt-loop1}
+
+Prompt Vòng lặp~1 là thành phần cốt lõi của Tầng~1. LLM nhận câu hỏi người dùng và danh sách tóm tắt chương, sau đó chọn ra các chương có khả năng chứa câu trả lời cao nhất.
+
+\begin{table}[htbp]
+  \centering
+  \caption{Prompt Loop 1 -- Chọn chương liên quan (D.4)}
+  \label{tab:prompt-loop1}
+  \begin{tabular}{p{0.95\linewidth}}
+    \toprule
+    \textbf{Mục đích:} Xác định tập chương văn bản liên quan đến câu hỏi người dùng để thu hẹp không gian tìm kiếm trong Tầng~1. \\
+    \midrule
+    \textbf{Prompt:} \\[4pt]
+    Bạn là hệ thống tư vấn pháp luật Việt Nam. Nhiệm vụ của bạn là xác định những chương văn bản nào có nhiều khả năng chứa thông tin trả lời cho câu hỏi của người dùng. \\[6pt]
+    \textbf{Câu hỏi người dùng:} \\
+    \texttt{\{user\_query\}} \\[6pt]
+    \textbf{Danh sách các chương và tóm tắt:} \\
+    \texttt{\{chapter\_summaries\_list\}} \\[6pt]
+    Dựa trên nội dung câu hỏi, hãy chọn tối đa \texttt{\{max\_chapters\}} chương liên quan nhất. \\[6pt]
+    Trả về JSON theo định dạng: \\
+    \texttt{\{"selected\_chapters": ["chapter\_id\_1", "chapter\_id\_2", ...], "reasoning": "giải thích ngắn gọn"\}} \\[6pt]
+    Lưu ý: \\
+    - Ưu tiên chọn chương có tóm tắt khớp trực tiếp với chủ đề câu hỏi. \\
+    - Nếu câu hỏi liên quan đến nhiều chủ đề, chọn tất cả chương có liên quan. \\
+    - Nếu không chương nào rõ ràng liên quan, chọn các chương tổng quát nhất. \\
+    - Trả về JSON hợp lệ, không thêm nội dung ngoài JSON. \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+% -------------------------------------------------------------------
+\section{Loop 2 --- Chọn điều khoản liên quan}
+\label{sec:app-prompt-loop2}
+
+Prompt Vòng lặp~2 hoạt động bên trong Tầng~2, sau khi đã có danh sách ứng viên từ BM25 và FAISS. LLM đánh giá lại mức độ liên quan của từng điều khoản ứng viên theo ngữ nghĩa của câu hỏi.
+
+\begin{table}[htbp]
+  \centering
+  \caption{Prompt Loop 2 -- Chọn điều khoản liên quan (D.5)}
+  \label{tab:prompt-loop2}
+  \begin{tabular}{p{0.95\linewidth}}
+    \toprule
+    \textbf{Mục đích:} Đánh giá lại và xếp hạng các điều khoản ứng viên từ BM25 và FAISS theo mức độ liên quan ngữ nghĩa với câu hỏi. \\
+    \midrule
+    \textbf{Prompt:} \\[4pt]
+    Bạn là chuyên gia pháp luật Việt Nam. Hãy đánh giá mức độ liên quan của các điều khoản sau đây với câu hỏi của người dùng. \\[6pt]
+    \textbf{Câu hỏi người dùng:} \\
+    \texttt{\{user\_query\}} \\[6pt]
+    \textbf{Danh sách điều khoản ứng viên:} \\
+    \texttt{\{candidate\_articles\}} \\[6pt]
+    Với mỗi điều khoản, hãy cho điểm liên quan từ 0.0 đến 1.0 theo tiêu chí: \\
+    - \textbf{1.0}: Điều khoản trả lời trực tiếp và đầy đủ câu hỏi. \\
+    - \textbf{0.7--0.9}: Điều khoản liên quan chặt chẽ, cung cấp thông tin hỗ trợ quan trọng. \\
+    - \textbf{0.4--0.6}: Điều khoản liên quan gián tiếp, cung cấp bối cảnh hữu ích. \\
+    - \textbf{0.0--0.3}: Điều khoản ít hoặc không liên quan. \\[6pt]
+    Trả về JSON theo định dạng: \\
+    \texttt{\{"scores": \{"article\_id\_1": 0.95, "article\_id\_2": 0.72, ...\}, "top\_articles": ["article\_id\_1", ...]\}} \\[6pt]
+    Chỉ đưa vào \texttt{top\_articles} những điều khoản có điểm $\geq$ 0.5. Trả về JSON hợp lệ. \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+% -------------------------------------------------------------------
+\section{Sinh câu trả lời IRAC}
+\label{sec:app-prompt-irac}
+
+Hai prompt sau đây được sử dụng để sinh câu trả lời cuối cùng theo cấu trúc IRAC, được tùy chỉnh riêng cho miền pháp luật và miền đào tạo.
+
+\begin{table}[htbp]
+  \centering
+  \caption{Prompt sinh câu trả lời IRAC -- miền pháp luật (D.6)}
+  \label{tab:prompt-irac-phapluat}
+  \begin{tabular}{p{0.95\linewidth}}
+    \toprule
+    \textbf{Mục đích:} Sinh câu trả lời tư vấn pháp lý có căn cứ theo cấu trúc IRAC từ các điều khoản đã truy xuất, dành cho miền pháp luật Việt Nam. \\
+    \midrule
+    \textbf{Prompt:} \\[4pt]
+    Bạn là luật sư tư vấn pháp luật Việt Nam có kinh nghiệm. Dựa trên các điều khoản pháp luật được cung cấp, hãy trả lời câu hỏi của khách hàng theo cấu trúc IRAC (Issue -- Rule -- Application -- Conclusion). \\[6pt]
+    \textbf{Câu hỏi của khách hàng:} \\
+    \texttt{\{user\_query\}} \\[6pt]
+    \textbf{Các điều khoản pháp luật liên quan:} \\
+    \texttt{\{retrieved\_articles\}} \\[6pt]
+    Hãy trả lời theo cấu trúc sau: \\[4pt]
+    \textbf{I. Vấn đề pháp lý (Issue):} \\
+    [Xác định rõ vấn đề pháp lý cần giải quyết từ câu hỏi của khách hàng.] \\[4pt]
+    \textbf{II. Quy định pháp luật áp dụng (Rule):} \\
+    [Trích dẫn chính xác các điều khoản pháp luật có liên quan. Nêu rõ số điều, khoản, văn bản và nội dung cụ thể.] \\[4pt]
+    \textbf{III. Áp dụng vào tình huống (Application):} \\
+    [Phân tích cách áp dụng các quy định trên vào tình huống cụ thể của khách hàng. Giải thích điều kiện, quyền lợi, nghĩa vụ và hậu quả pháp lý.] \\[4pt]
+    \textbf{IV. Kết luận (Conclusion):} \\
+    [Kết luận rõ ràng câu trả lời cho câu hỏi. Nêu các bước hành động cụ thể mà khách hàng cần thực hiện nếu có.] \\[6pt]
+    Lưu ý quan trọng: \\
+    - Chỉ sử dụng thông tin từ các điều khoản được cung cấp, không bịa đặt quy định. \\
+    - Nếu thông tin không đủ để trả lời đầy đủ, hãy nêu rõ giới hạn và khuyến nghị tham khảo luật sư. \\
+    - Trả lời bằng tiếng Việt, ngôn ngữ rõ ràng, tránh thuật ngữ quá chuyên sâu khi không cần thiết. \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\begin{table}[htbp]
+  \centering
+  \caption{Prompt sinh câu trả lời IRAC -- miền đào tạo (D.7)}
+  \label{tab:prompt-irac-daotao}
+  \begin{tabular}{p{0.95\linewidth}}
+    \toprule
+    \textbf{Mục đích:} Sinh câu trả lời tư vấn quy chế đào tạo có căn cứ theo cấu trúc IRAC từ các điều khoản đã truy xuất, dành cho miền quy định đào tạo sau đại học. \\
+    \midrule
+    \textbf{Prompt:} \\[4pt]
+    Bạn là chuyên viên tư vấn học vụ của Trường Đại học Công nghệ Thông tin -- ĐHQG-HCM. Dựa trên các điều khoản quy chế đào tạo được cung cấp, hãy trả lời câu hỏi của học viên theo cấu trúc IRAC (Issue -- Rule -- Application -- Conclusion). \\[6pt]
+    \textbf{Câu hỏi của học viên:} \\
+    \texttt{\{user\_query\}} \\[6pt]
+    \textbf{Các điều khoản quy chế liên quan:} \\
+    \texttt{\{retrieved\_articles\}} \\[6pt]
+    Hãy trả lời theo cấu trúc sau: \\[4pt]
+    \textbf{I. Vấn đề cần giải quyết (Issue):} \\
+    [Xác định rõ quy định hoặc điều kiện cụ thể mà học viên cần tìm hiểu.] \\[4pt]
+    \textbf{II. Quy chế áp dụng (Rule):} \\
+    [Trích dẫn điều khoản quy chế đào tạo liên quan. Nêu rõ số điều, tên quy chế và năm ban hành.] \\[4pt]
+    \textbf{III. Áp dụng vào trường hợp cụ thể (Application):} \\
+    [Giải thích cách quy định áp dụng vào tình huống của học viên. Nêu rõ điều kiện phải đáp ứng, thủ tục cần thực hiện và thời hạn nếu có.] \\[4pt]
+    \textbf{IV. Kết luận và hướng dẫn (Conclusion):} \\
+    [Kết luận ngắn gọn và cung cấp hướng dẫn thực tế: học viên cần làm gì tiếp theo, liên hệ bộ phận nào, chuẩn bị hồ sơ gì.] \\[6pt]
+    Lưu ý: \\
+    - Chỉ sử dụng thông tin từ các điều khoản quy chế được cung cấp. \\
+    - Nếu câu hỏi liên quan đến nhiều văn bản quy chế, hãy tích hợp thông tin một cách nhất quán. \\
+    - Nếu có mâu thuẫn giữa các văn bản, ưu tiên văn bản ban hành gần đây hơn. \\
+    - Sử dụng ngôn ngữ thân thiện, dễ hiểu phù hợp với học viên, tránh văn phong hành chính cứng nhắc. \\
+    - Trả lời bằng tiếng Việt. \\
+    \bottomrule
+  \end{tabular}
+\end{table}

@@ -92,6 +92,11 @@ paper/texput.*
 data/education/images/
 data/education/api_call_log.csv
 
+# Chainlit
+.chainlit/.cache/
+.chainlit/translations/
+.files/
+
 # Claude
 .claude/
 .gitnexus
@@ -128,3 +133,28 @@ paper/icons/
 # LaTeX BibTeX intermediates
 paper/*.bbl
 paper/*.blg
+
+# Thesis restored — build artifacts & tooling
+thesis-restored/node_modules/
+thesis-restored/package-lock.json
+thesis-restored/*.aux
+thesis-restored/*.bbl
+thesis-restored/*.bcf
+thesis-restored/*.blg
+thesis-restored/*.glo
+thesis-restored/*.ist
+thesis-restored/*.lof
+thesis-restored/*.lot
+thesis-restored/*.out
+thesis-restored/*.run.xml
+thesis-restored/*.toc
+thesis-restored/*.log
+thesis-restored/*.synctex.gz
+thesis-restored/chapters/**/*.aux
+
+# Cloned UIT thesis template (reference only, not our code)
+uit-thesis-template/
+
+# SQLite WAL/SHM files (transient)
+*.db-shm
+*.db-wal

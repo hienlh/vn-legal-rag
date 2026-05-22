@@ -1,0 +1,368 @@
+\chapter{Thiết kế hệ thống và thử nghiệm}
+\label{chap:chapter4}
+
+Chương này trình bày thiết kế chi tiết hệ thống KG-RAG ba tầng, bao gồm các yêu cầu chức năng và phi chức năng, kiến trúc triển khai, kết quả thử nghiệm định lượng trên hai miền dữ liệu, phân tích lỗi, và mô tả ứng dụng minh họa chatbot tư vấn văn bản pháp luật.
+
+% ===================================================================
+\section{Yêu cầu hệ thống}
+\label{sec:yeu-cau-he-thong}
+
+\subsection{Yêu cầu chức năng}
+\label{subsec:yc-chuc-nang}
+
+Hệ thống cần đáp ứng ba yêu cầu chức năng cốt lõi:
+
+\begin{enumerate}
+  \item \textbf{Tiếp nhận truy vấn ngôn ngữ tự nhiên:} Hệ thống phải nhận câu hỏi của người dùng bằng tiếng Việt thông qua giao diện web, phân tích ý định và trích xuất các khái niệm pháp lý liên quan để phục vụ quá trình truy xuất.
+
+  \item \textbf{Truy xuất điều khoản liên quan:} Dựa trên câu hỏi đầu vào, hệ thống phải xác định và xếp hạng các điều khoản văn bản luật hoặc quy chế đào tạo liên quan nhất thông qua kiến trúc truy xuất ba tầng, bảo đảm độ chính xác cao theo các chỉ số Hit@k và MRR.
+
+  \item \textbf{Sinh câu trả lời có căn cứ:} Hệ thống phải tổng hợp thông tin từ các điều khoản đã truy xuất và sinh ra câu trả lời mạch lạc, có trích dẫn nguồn cụ thể, theo cấu trúc IRAC (Issue -- Rule -- Application -- Conclusion) phù hợp với từng miền kiến thức.
+\end{enumerate}
+
+\subsection{Yêu cầu phi chức năng}
+\label{subsec:yc-phi-chuc-nang}
+
+\begin{itemize}
+  \item \textbf{Thời gian phản hồi:} Toàn bộ chu trình từ khi người dùng gửi câu hỏi đến khi nhận được câu trả lời phải hoàn thành trong vòng không quá 10 giây trong điều kiện vận hành thông thường.
+
+  \item \textbf{Hỗ trợ tiếng Việt Unicode:} Hệ thống phải xử lý đúng toàn bộ ký tự tiếng Việt có dấu theo chuẩn Unicode (UTF-8), bao gồm cả trong quá trình nhúng văn bản (embedding), lập chỉ mục và sinh câu trả lời.
+
+  \item \textbf{Giao diện thân thiện người dùng:} Giao diện web phải hoạt động tốt trên cả máy tính để bàn (desktop) lẫn thiết bị di động (mobile), có thiết kế trực quan, dễ sử dụng cho người dùng không có nền tảng kỹ thuật.
+\end{itemize}
+
+% ===================================================================
+\section{Kiến trúc hệ thống}
+\label{sec:kien-truc-he-thong}
+
+\subsection{Tổng quan kiến trúc triển khai}
+\label{subsec:tongquan-kientruc}
+
+Hệ thống được thiết kế theo mô hình client--server hai lớp với tầng backend và tầng frontend tách biệt hoàn toàn, giao tiếp qua REST API.
+
+\textbf{Backend} được xây dựng bằng Python FastAPI, đảm nhiệm toàn bộ luồng xử lý nghiệp vụ: tiếp nhận truy vấn, điều phối pipeline truy xuất ba tầng, tương tác với đồ thị tri thức, FAISS vector store và LLM để sinh câu trả lời.
+
+\textbf{Frontend} được xây dựng bằng React 18 và TypeScript, cung cấp giao diện chat tương tác, hiển thị kết quả truy xuất kèm trích dẫn nguồn, và phản hồi trạng thái quá trình xử lý theo thời gian thực.
+
+\subsection{Công nghệ sử dụng}
+\label{subsec:cong-nghe}
+
+Bảng~\ref{tab:cong-nghe} tóm tắt các công nghệ chính được sử dụng trong từng thành phần của hệ thống.
+
+\begin{table}[htbp]
+  \centering
+  \caption{Công nghệ sử dụng trong hệ thống}
+  \label{tab:cong-nghe}
+  \begin{tabular}{ll}
+    \toprule
+    \textbf{Thành phần} & \textbf{Công nghệ} \\
+    \midrule
+    Backend API        & Python 3.11, FastAPI \\
+    Frontend           & React 18, TypeScript, Tailwind CSS \\
+    LLM                & Claude 3.5 Haiku (Anthropic) \\
+    Embedding          & \texttt{sentence-transformers/all-MiniLM-L12-v2} \\
+    Knowledge Graph    & NetworkX + custom graph store \\
+    Vector Store       & FAISS \\
+    Cơ sở dữ liệu      & SQLite (metadata), JSON (document store) \\
+    Triển khai         & Docker, Nginx \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\subsection{Chi tiết triển khai}
+\label{subsec:chitiet-trienkhay}
+
+Luồng xử lý một truy vấn hoàn chỉnh diễn ra như sau. Câu hỏi của người dùng được gửi qua HTTP POST đến endpoint \texttt{/api/query} của FastAPI. Backend khởi động pipeline truy xuất ba tầng theo kiến trúc đã trình bày tại Chương~3: (i)~Tầng 1 sử dụng tóm tắt chương để lọc phạm vi; (ii)~Tầng 2 kết hợp BM25, embedding FAISS và đồ thị tri thức để xếp hạng sơ bộ; (iii)~Tầng 3 mở rộng kết quả qua PPR trên đồ thị và hợp nhất bằng RRF~\cite{cormack2009rrf}. Các điều khoản được chọn sau đó được đưa vào LLM để sinh câu trả lời theo cấu trúc IRAC. Kết quả trả về client dưới dạng JSON bao gồm câu trả lời và danh sách điều khoản nguồn.
+
+Hệ thống được đóng gói bằng Docker Compose với hai service: \texttt{backend} (FastAPI) và \texttt{frontend} (React build được phục vụ qua Nginx). Toàn bộ đồ thị tri thức và chỉ mục FAISS được tải vào bộ nhớ khi khởi động để tối thiểu hóa độ trễ truy vấn.
+
+% ===================================================================
+\section{Kết quả thử nghiệm}
+\label{sec:ket-qua-thu-nghiem}
+
+\subsection{Các chỉ số đánh giá}
+\label{subsec:chi-so-danh-gia}
+
+Nghiên cứu sử dụng hai chỉ số định lượng tiêu chuẩn trong lĩnh vực truy xuất thông tin để đánh giá hiệu năng các hệ thống.
+
+\textbf{Hit@k} (Tỷ lệ trúng tại vị trí k) đo lường tỷ lệ câu hỏi mà ít nhất một điều khoản vàng (gold article) xuất hiện trong danh sách $k$ kết quả truy xuất hàng đầu:
+\begin{equation}
+  \text{Hit@}k = \frac{1}{|Q|} \sum_{q \in Q} \mathbf{1}\!\left[\text{gold}_q \cap \text{top-}k_q \neq \emptyset\right]
+  \label{eq:hitk}
+\end{equation}
+trong đó $Q$ là tập câu hỏi kiểm thử, $\text{gold}_q$ là tập điều khoản vàng cho câu hỏi $q$, và $\text{top-}k_q$ là $k$ điều khoản được hệ thống xếp hạng cao nhất.
+
+\textbf{MRR} (Mean Reciprocal Rank -- Trung bình nghịch đảo thứ hạng) đo lường trung bình nghịch đảo thứ hạng của điều khoản vàng đầu tiên xuất hiện trong danh sách kết quả:
+\begin{equation}
+  \text{MRR} = \frac{1}{|Q|} \sum_{q \in Q} \frac{1}{\text{rank}_q}
+  \label{eq:mrr}
+\end{equation}
+trong đó $\text{rank}_q$ là thứ hạng của điều khoản vàng xuất hiện sớm nhất cho câu hỏi $q$. MRR bằng $0$ nếu không có điều khoản vàng nào xuất hiện trong danh sách kết quả được xét.
+
+\subsection{Các hệ thống đối sánh}
+\label{subsec:he-thong-doi-sanh}
+
+Để đánh giá khách quan, kiến trúc ba tầng được so sánh với bốn hệ thống cơ sở:
+
+\begin{itemize}
+  \item \textbf{NaiveRAG:} Kết hợp BM25 và embedding vector (all-MiniLM-L12-v2) theo phương pháp truy xuất phẳng, không sử dụng cấu trúc đồ thị hay phân cấp ngữ nghĩa.
+
+  \item \textbf{LightRAG}~\cite{guo2025lightrag}: Hệ thống RAG tích hợp đồ thị tri thức với chiến lược truy xuất hai chế độ (local và global), sử dụng LLM để xây dựng đồ thị thực thể--quan hệ tự động.
+
+  \item \textbf{RAPTOR}~\cite{sarthi2024raptor}: Phương pháp xây dựng cây tóm tắt phân cấp đệ quy từ văn bản nguồn, cho phép truy xuất tổng hợp ở nhiều mức độ chi tiết khác nhau.
+
+  \item \textbf{PageIndex}~\cite{zhang2025pageindex}: Phương pháp lập chỉ mục theo trang văn bản kết hợp với chiến lược truy xuất phân cấp hai bước, tối ưu cho tài liệu có cấu trúc trang rõ ràng.
+\end{itemize}
+
+\subsection{Case Study 1: Miền pháp luật Việt Nam}
+\label{subsec:casestudy-phapluat}
+
+Bộ kiểm thử miền pháp luật gồm 400 câu hỏi, chia đều trên hai lĩnh vực: luật doanh nghiệp (200 câu) và luật giao thông đường bộ (200 câu). Các câu hỏi được xây dựng thủ công bởi người có chuyên môn pháp lý, mỗi câu hỏi có ít nhất một điều khoản vàng tương ứng.
+
+\begin{table}[htbp]
+  \centering
+  \caption{Tỷ lệ Hit (\%) trên miền pháp luật (400 câu hỏi)}
+  \label{tab:hit-phapluat}
+  \begin{tabular}{lrrrrr}
+    \toprule
+    \textbf{Hệ thống} & \textbf{Hit@1} & \textbf{Hit@3} & \textbf{Hit@5} & \textbf{Hit@10} & \textbf{MRR} \\
+    \midrule
+    NaiveRAG            & 10{,}5 & 21{,}8 & 30{,}0 & 42{,}8 & 0{,}179 \\
+    LightRAG            & 13{,}0 & 27{,}5 & 39{,}5 & 55{,}8 & 0{,}224 \\
+    RAPTOR              & 12{,}2 & 23{,}2 & 31{,}2 & 41{,}0 & 0{,}196 \\
+    PageIndex           & 38{,}2 & 58{,}5 & 70{,}2 & 84{,}8 & 0{,}507 \\
+    \textbf{3-Tier (ours)} & \textbf{39{,}8} & \textbf{63{,}2} & \textbf{78{,}2} & \textbf{92{,}2} & \textbf{0{,}603} \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+Bảng~\ref{tab:hit-phapluat} cho thấy kiến trúc ba tầng đạt Hit@10 = 92{,}2\% và MRR = 0{,}603, vượt trội so với PageIndex (84{,}8\%; 0{,}507) và các hệ thống còn lại. Đặc biệt, mức cải thiện từ Hit@1 sang Hit@10 của hệ thống ba tầng (39{,}8\% lên 92{,}2\%) cho thấy kiến trúc này có khả năng thu hồi toàn diện nhờ giai đoạn mở rộng đồ thị.
+
+Bảng~\ref{tab:hit10-mien} phân tích chi tiết Hit@10 theo từng lĩnh vực con trong miền pháp luật.
+
+\begin{table}[htbp]
+  \centering
+  \caption{Hit@10 (\%) theo miền trên ba lĩnh vực}
+  \label{tab:hit10-mien}
+  \begin{tabular}{lrrr}
+    \toprule
+    \textbf{Hệ thống} & \textbf{Doanh nghiệp (200)} & \textbf{Giao thông (200)} & \textbf{Tổng (400)} \\
+    \midrule
+    NaiveRAG  & 34{,}5 & 51{,}0 & 42{,}8 \\
+    LightRAG  & 50{,}5 & 61{,}0 & 55{,}8 \\
+    RAPTOR    & 32{,}5 & 49{,}5 & 41{,}0 \\
+    PageIndex & 76{,}6 & 92{,}6 & 84{,}8 \\
+    \textbf{3-Tier (ours)} & \textbf{86{,}5} & \textbf{98{,}0} & \textbf{92{,}2} \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+Kết quả cho thấy lĩnh vực giao thông đường bộ có Hit@10 cao hơn đáng kể so với lĩnh vực doanh nghiệp ở tất cả các hệ thống, phản ánh sự khác biệt về độ phức tạp suy luận pháp lý giữa hai lĩnh vực.
+
+\subsection{Case Study 2: Miền quy định đào tạo}
+\label{subsec:casestudy-daotao}
+
+Bộ kiểm thử miền quy định đào tạo gồm 130 câu hỏi được xây dựng dựa trên năm văn bản quy chế đào tạo sau đại học của Trường Đại học Công nghệ Thông tin~\cite{le2026threetier}. Bảng~\ref{tab:hit-daotao} trình bày kết quả so sánh.
+
+\begin{table}[htbp]
+  \centering
+  \caption{Kết quả trên miền quy định đào tạo (130 câu hỏi)}
+  \label{tab:hit-daotao}
+  \begin{tabular}{lrrrrr}
+    \toprule
+    \textbf{Hệ thống} & \textbf{Hit@1} & \textbf{Hit@3} & \textbf{Hit@5} & \textbf{Hit@10} & \textbf{MRR} \\
+    \midrule
+    NaiveRAG            & 12{,}3 & 26{,}2 & 36{,}2 & 50{,}0 & 0{,}215 \\
+    LightRAG            & 18{,}5 & 33{,}1 & 43{,}1 & 58{,}5 & 0{,}279 \\
+    RAPTOR              & 16{,}2 & 30{,}0 & 40{,}0 & 53{,}8 & 0{,}253 \\
+    PageIndex           & 33{,}1 & 50{,}0 & 59{,}2 & 74{,}6 & 0{,}438 \\
+    \textbf{3-Tier (ours)} & \textbf{40{,}0} & \textbf{60{,}8} & \textbf{73{,}1} & \textbf{87{,}9} & \textbf{0{,}594} \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+Kiến trúc ba tầng tiếp tục dẫn đầu với Hit@10 = 87{,}9\% và MRR = 0{,}594 trên miền đào tạo. So với miền pháp luật (Hit@10 = 92{,}2\%), hiệu năng trên miền đào tạo thấp hơn một phần do đặc thù của quy chế đào tạo có nhiều điều khoản liên quan chéo phức tạp giữa các văn bản.
+
+\subsection{Ablation Study}
+\label{subsec:ablation}
+
+Để hiểu đóng góp của từng thành phần trong kiến trúc ba tầng, chúng tôi tiến hành ablation study bằng cách lần lượt loại bỏ hoặc vô hiệu hóa từng thành phần và đo lại chỉ số Hit@10 trung bình trên ba lần chạy độc lập.
+
+\begin{table}[htbp]
+  \centering
+  \caption{Kết quả ablation study (Hit@10~\%, trung bình 3 lần chạy)}
+  \label{tab:ablation}
+  \begin{tabular}{lrr}
+    \toprule
+    \textbf{Cấu hình} & \textbf{Pháp luật} & \textbf{Đào tạo} \\
+    \midrule
+    Full 3-Tier                    & \textbf{92{,}2} & \textbf{87{,}9} \\
+    w/o Tầng 1 (lọc chương)       & 63{,}5 & 58{,}5 \\
+    w/o Tầng 2 (kết hợp đa nguồn) & 85{,}0 & 78{,}5 \\
+    w/o Tầng 3 (mở rộng đồ thị KG)& 88{,}2 & 83{,}1 \\
+    w/o PPR                        & 87{,}5 & 81{,}5 \\
+    w/o Concept Matching           & 89{,}8 & 84{,}6 \\
+    w/o Agreement Bonus            & 90{,}5 & 85{,}4 \\
+    w/o Dynamic Weight             & 91{,}0 & 86{,}2 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+Kết quả ablation (Bảng~\ref{tab:ablation}) tiết lộ một số quan sát quan trọng:
+
+\begin{itemize}
+  \item \textbf{Tầng 1 có đóng góp lớn nhất:} Loại bỏ tầng lọc chương làm giảm Hit@10 xuống còn 63{,}5\% (pháp luật) và 58{,}5\% (đào tạo), tức giảm khoảng 28--29 điểm phần trăm. Điều này khẳng định giá trị của chiến lược thu hẹp không gian tìm kiếm theo cấu trúc văn bản.
+
+  \item \textbf{Tầng 2 là nền tảng truy xuất:} Loại bỏ giai đoạn kết hợp đa nguồn (BM25 + embedding + KG) làm giảm đáng kể hiệu năng, chứng tỏ mỗi tín hiệu truy xuất đều đóng góp bổ sung.
+
+  \item \textbf{PPR và mở rộng đồ thị bổ trợ nhau:} Cả hai cơ chế mở rộng trong Tầng 3 đều cải thiện recall, với PPR có đóng góp nhỉnh hơn.
+
+  \item \textbf{Agreement Bonus và Dynamic Weight cải thiện biên:} Các cơ chế hợp nhất tinh vi này đóng góp thêm 1--2 điểm phần trăm nhưng vẫn có ý nghĩa thực tiễn.
+\end{itemize}
+
+\subsection{Phân tích lỗi}
+\label{subsec:phan-tich-loi}
+
+Trong tổng số 400 câu hỏi kiểm thử trên miền pháp luật, có 31 câu hỏi mà hệ thống ba tầng không tìm thấy bất kỳ điều khoản vàng nào trong danh sách kết quả (Hit@10 = 0). Đáng chú ý, 27 trên 31 câu hỏi thất bại này thuộc lĩnh vực doanh nghiệp, phù hợp với kết quả Hit@10 thấp hơn của lĩnh vực này (86{,}5\%) so với giao thông (98{,}0\%).
+
+Phân tích thủ công các câu hỏi thất bại cho thấy nguyên nhân chính là \textbf{chuỗi suy luận pháp lý ngầm định} -- các câu hỏi yêu cầu tổng hợp thông tin từ nhiều điều khoản không có liên kết tham chiếu tường minh trong văn bản gốc. Ví dụ, câu hỏi về trách nhiệm của giám đốc doanh nghiệp trong trường hợp phá sản đòi hỏi kết hợp các điều khoản từ Luật Doanh nghiệp, Luật Phá sản và Bộ luật Dân sự -- những quan hệ ngữ nghĩa này không được biểu diễn tường minh trong đồ thị tri thức do giới hạn của quá trình xây dựng đồ thị thủ công. Hướng khắc phục trong tương lai là tích hợp suy luận liên văn bản tự động thông qua GNN hoặc LLM-driven graph expansion.
+
+% ===================================================================
+\section{Ứng dụng minh họa}
+\label{sec:ung-dung-minh-hoa}
+
+\subsection{Kiến trúc ứng dụng}
+\label{subsec:kientruc-ungdung}
+
+Ứng dụng chatbot tư vấn được xây dựng trên nền tảng FastAPI (backend) và React 18 (frontend), triển khai qua Docker Compose. Backend cung cấp ba endpoint chính: \texttt{POST /api/query} để xử lý truy vấn, \texttt{GET /api/health} để kiểm tra trạng thái dịch vụ, và \texttt{GET /api/documents} để liệt kê kho tài liệu. Frontend kết nối với backend qua HTTP và hiển thị kết quả theo thời gian thực với chỉ báo tiến trình.
+
+\subsection{Phương pháp sinh câu trả lời IRAC}
+\label{subsec:phuongphap-irac}
+
+Hệ thống sử dụng cấu trúc IRAC (Issue -- Rule -- Application -- Conclusion) để trình bày câu trả lời theo dạng tư vấn pháp lý có căn cứ. Prompt sinh câu trả lời được điều chỉnh theo từng miền để phù hợp với đặc thù ngôn ngữ và yêu cầu trình bày.
+
+\begin{table}[htbp]
+  \centering
+  \caption{So sánh cấu trúc prompt IRAC giữa miền pháp luật và miền đào tạo}
+  \label{tab:irac-compare}
+  \begin{tabular}{p{0.47\linewidth} p{0.47\linewidth}}
+    \toprule
+    \textbf{Miền pháp luật} & \textbf{Miền đào tạo} \\
+    \midrule
+    \textbf{Issue:} Xác định vấn đề pháp lý cần giải quyết, dựa trên câu hỏi của người dùng. &
+    \textbf{Issue:} Xác định quy định hoặc điều kiện cụ thể mà học viên/sinh viên cần nắm rõ. \\[6pt]
+    \textbf{Rule:} Trích dẫn chính xác điều khoản pháp luật liên quan (số điều, khoản, văn bản). &
+    \textbf{Rule:} Trích dẫn điều khoản quy chế đào tạo tương ứng (số điều, quy chế, năm ban hành). \\[6pt]
+    \textbf{Application:} Áp dụng quy định vào tình huống cụ thể, phân tích điều kiện và hệ quả pháp lý. &
+    \textbf{Application:} Giải thích cách quy định áp dụng vào trường hợp cụ thể của người học. \\[6pt]
+    \textbf{Conclusion:} Kết luận câu trả lời rõ ràng, nêu nghĩa vụ/quyền lợi và các bước hành động tiếp theo. &
+    \textbf{Conclusion:} Kết luận hành động cần thực hiện và thủ tục liên quan. \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\subsection{Các tính năng chính}
+\label{subsec:tinh-nang-chinh}
+
+Ứng dụng cung cấp ba màn hình/tính năng chính được minh họa qua các hình dưới đây.
+
+\begin{figure}[htbp]
+  \centering
+  \fbox{\parbox{0.85\linewidth}{\centering\vspace{2cm}[Màn hình chào mừng -- Placeholder]\vspace{2cm}}}
+  \caption{Màn hình chào mừng của ứng dụng chatbot tư vấn}
+  \label{fig:welcome-screen}
+\end{figure}
+
+\begin{figure}[htbp]
+  \centering
+  \fbox{\parbox{0.85\linewidth}{\centering\vspace{2cm}[Trạng thái truy xuất ``Đang tổng hợp câu trả lời...'' -- Placeholder]\vspace{2cm}}}
+  \caption{Trạng thái truy xuất ``Đang tổng hợp câu trả lời...'' hiển thị trong quá trình xử lý}
+  \label{fig:retrieving-state}
+\end{figure}
+
+\begin{figure}[htbp]
+  \centering
+  \fbox{\parbox{0.85\linewidth}{\centering\vspace{2cm}[Câu trả lời IRAC cho câu hỏi ``Điều kiện bảo vệ luận văn thạc sĩ?'' -- Placeholder]\vspace{2cm}}}
+  \caption{Câu trả lời theo cấu trúc IRAC cho câu hỏi về điều kiện bảo vệ luận văn thạc sĩ}
+  \label{fig:irac-answer}
+\end{figure}
+
+\subsection{Ví dụ minh họa tiêu biểu}
+\label{subsec:vi-du-minh-hoa}
+
+Phần này trình bày bốn ví dụ cụ thể so sánh kết quả truy xuất top-5 của hệ thống ba tầng với PageIndex và RAPTOR, nhằm làm rõ ưu và nhược điểm của từng phương pháp trong thực tế.
+
+\subsubsection*{Ví dụ 1: Điều kiện để được bảo vệ luận văn thạc sĩ}
+
+\textit{Câu hỏi:} ``Điều kiện để được bảo vệ luận văn thạc sĩ là gì?''
+
+\begin{table}[htbp]
+  \centering
+  \caption{So sánh top-5 kết quả truy xuất -- Ví dụ 1}
+  \label{tab:ex1}
+  \begin{tabular}{clll}
+    \toprule
+    \textbf{Rank} & \textbf{3-Tier KG-RAG} & \textbf{PageIndex} & \textbf{RAPTOR} \\
+    \midrule
+    1 & 270:d24~\checkmark & 270:d24~\checkmark & 270:d12 \\
+    2 & 1393:d25~\checkmark & 270:d22            & 1393:d14 \\
+    3 & 270:d29~\checkmark  & 270:d25            & 270:d24~\checkmark \\
+    4 & 270:d22             & 1393:d25~\checkmark& 1393:d3 \\
+    5 & 270:d25             & 270:d16            & 270:d13 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+Hệ thống ba tầng xếp hạng 3 điều khoản vàng trong top-5 (Rank 1, 2, 3), trong khi PageIndex chỉ có 2 (Rank 1, 4) và RAPTOR chỉ có 1 (Rank 3). Kết quả cho thấy cơ chế mở rộng đồ thị tri thức giúp thu hồi được nhiều điều khoản liên quan hơn ở các vị trí cao.
+
+\subsubsection*{Ví dụ 2: Cảnh báo học vụ}
+
+\textit{Câu hỏi:} Câu hỏi về điều kiện và xử lý cảnh báo học vụ đối với học viên cao học.
+
+\begin{table}[htbp]
+  \centering
+  \caption{So sánh top-5 kết quả truy xuất -- Ví dụ 2}
+  \label{tab:ex2}
+  \begin{tabular}{clll}
+    \toprule
+    \textbf{Rank} & \textbf{3-Tier KG-RAG} & \textbf{PageIndex} & \textbf{RAPTOR} \\
+    \midrule
+    1 & 270:d18~\checkmark  & 270:d19   & 270:d38  \\
+    2 & 1393:d11~\checkmark & 160:d24   & 160:d25  \\
+    3 & 270:d11~\checkmark  & 1393:d18  & 270:d26  \\
+    4 & 270:d16             & 1393:d26  & 1393:d13 \\
+    5 & 270:d18~\checkmark  & 1393:d14  & 160:d20  \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+Hệ thống ba tầng đặt 3 trong số 4 điều khoản vàng vào top-3, thể hiện khả năng nhóm các điều khoản liên quan về cùng một chủ đề thông qua quan hệ trong đồ thị tri thức.
+
+\subsubsection*{Ví dụ 3: Đăng ký chuyên đề khác khóa}
+
+\textit{Câu hỏi:} Câu hỏi về thủ tục và điều kiện đăng ký học chuyên đề của khóa học khác.
+
+\begin{table}[htbp]
+  \centering
+  \caption{So sánh top-5 kết quả truy xuất -- Ví dụ 3}
+  \label{tab:ex3}
+  \begin{tabular}{clll}
+    \toprule
+    \textbf{Rank} & \textbf{3-Tier KG-RAG} & \textbf{PageIndex} & \textbf{RAPTOR} \\
+    \midrule
+    1 & 1393:d8~\checkmark & 160:d17   & 160:d12  \\
+    2 & 270:d11~\checkmark & 1393:d13  & 270:d25  \\
+    3 & 160:d13            & 160:d13   & 1393:d9  \\
+    4 & 160:d18            & 1393:d4   & 160:d9   \\
+    5 & 270:d17            & 270:d16   & 1393:d3  \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+Hệ thống ba tầng thu hồi cả hai điều khoản vàng trong top-2, trong khi PageIndex và RAPTOR đều không tìm thấy điều khoản vàng nào trong top-5. Điều này minh họa lợi thế của việc tích hợp ngữ nghĩa đồ thị cho các câu hỏi về thủ tục liên quy chế.
+
+\subsubsection*{Ví dụ 4: Trường hợp thất bại -- câu hỏi suy luận ngầm}
+
+\textit{Câu hỏi:} Câu hỏi yêu cầu suy luận kết hợp nhiều điều khoản từ các văn bản khác nhau mà không có liên kết tường minh trong đồ thị.
+
+Đây là một ví dụ điển hình trong số 31 trường hợp thất bại. Câu hỏi đòi hỏi tổng hợp thông tin từ điều khoản quy định trách nhiệm pháp lý, điều khoản định nghĩa chủ thể và điều khoản về hậu quả -- ba điều khoản thuộc ba chương/văn bản khác nhau, không có quan hệ \texttt{REFERENCES} hay \texttt{REQUIRES} tường minh trong đồ thị tri thức. Do PPR chỉ lan truyền điểm qua các cạnh đồ thị đã có, những điều khoản này không được tăng điểm tương ứng, dẫn đến không xuất hiện trong top-10. Đây là giới hạn cơ bản của phương pháp truy xuất dựa trên đồ thị tĩnh và là động lực chính cho hướng phát triển GNN-RAG trong tương lai~\cite{nguyen2022legalonto}.

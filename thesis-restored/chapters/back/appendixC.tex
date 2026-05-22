@@ -1,0 +1,116 @@
+\chapter{Mẫu quan hệ đồ thị tri thức}
+\label{app:quan-he-do-thi}
+
+Phụ lục này trình bày các mẫu quan hệ tiêu biểu trong đồ thị tri thức được xây dựng từ nguồn văn bản pháp luật và quy chế đào tạo. Mỗi quan hệ được biểu diễn dưới dạng bộ ba \texttt{(Nút nguồn, LOẠI\_QUAN\_HỆ, Nút đích)}, kèm mô tả ngữ nghĩa.
+
+% -------------------------------------------------------------------
+\section{Quan hệ REFERENCES (Tham chiếu)}
+\label{sec:app-references}
+
+Quan hệ \texttt{REFERENCES} biểu diễn việc một điều khoản trích dẫn hoặc dẫn chiếu tường minh đến điều khoản khác trong cùng văn bản hoặc văn bản khác.
+
+\begin{table}[htbp]
+  \centering
+  \caption{Mẫu quan hệ REFERENCES trong đồ thị tri thức}
+  \label{tab:rel-references}
+  \begin{tabular}{p{0.28\linewidth} p{0.28\linewidth} p{0.37\linewidth}}
+    \toprule
+    \textbf{Nút nguồn} & \textbf{Nút đích} & \textbf{Mô tả} \\
+    \midrule
+    270:d24 (Điều kiện bảo vệ luận văn) &
+    270:d18 (Cảnh báo học vụ) &
+    Điều kiện bảo vệ luận văn tham chiếu đến quy định về cảnh báo học vụ để xác định học viên đủ điều kiện. \\[4pt]
+
+    LDN:d162 (Quyền Giám đốc) &
+    LDN:d155 (HĐQT) &
+    Điều về quyền hạn Giám đốc tham chiếu đến điều về Hội đồng quản trị trong phạm vi ủy quyền. \\[4pt]
+
+    NĐ100:d6 (Phạt vượt đèn đỏ) &
+    LGT:d9 (Quy tắc tín hiệu đèn) &
+    Nghị định xử phạt tham chiếu đến Luật Giao thông để xác định hành vi vi phạm. \\[4pt]
+
+    1393:d25 (Yêu cầu luận văn) &
+    270:d24 (Điều kiện bảo vệ) &
+    Văn bản quy định luận văn (1393) tham chiếu đến quy chế đào tạo (270) về điều kiện bảo vệ. \\[4pt]
+
+    LDN:d208 (Thủ tục giải thể) &
+    LDN:d207 (Quyết định giải thể) &
+    Điều về thủ tục giải thể tham chiếu đến điều về quyết định giải thể để xác định điều kiện tiên quyết. \\[4pt]
+
+    270:d32 (Công nhận tốt nghiệp) &
+    270:d29 (Hoàn thành chương trình) &
+    Điều về công nhận tốt nghiệp tham chiếu đến điều về hoàn thành chương trình đào tạo. \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+% -------------------------------------------------------------------
+\section{Quan hệ REQUIRES (Yêu cầu điều kiện)}
+\label{sec:app-requires}
+
+Quan hệ \texttt{REQUIRES} biểu diễn điều kiện tiên quyết -- một điều khoản chỉ áp dụng hoặc có hiệu lực khi điều khoản điều kiện được thỏa mãn.
+
+\begin{table}[htbp]
+  \centering
+  \caption{Mẫu quan hệ REQUIRES trong đồ thị tri thức}
+  \label{tab:rel-requires}
+  \begin{tabular}{p{0.28\linewidth} p{0.28\linewidth} p{0.37\linewidth}}
+    \toprule
+    \textbf{Nút nguồn} & \textbf{Nút đích} & \textbf{Mô tả} \\
+    \midrule
+    270:d24 (Điều kiện bảo vệ luận văn) &
+    270:d19 (Điểm trung bình tích lũy) &
+    Bảo vệ luận văn yêu cầu điểm trung bình tích lũy đạt ngưỡng tối thiểu. \\[4pt]
+
+    LDN:d74 (Thành lập TNHH 1TV) &
+    LDN:d24 (Điều kiện thành viên) &
+    Thành lập công ty TNHH một thành viên yêu cầu chủ sở hữu đáp ứng điều kiện theo Điều 24. \\[4pt]
+
+    LCK:d15 (Phát hành cổ phiếu IPO) &
+    LDN:d123 (Điều kiện công ty cổ phần) &
+    Phát hành cổ phiếu ra công chúng yêu cầu doanh nghiệp là công ty cổ phần theo quy định. \\[4pt]
+
+    270:d31 (Xử lý đạo văn) &
+    270:d30 (Quy trình kiểm tra) &
+    Xử lý vi phạm đạo văn yêu cầu hoàn thành quy trình kiểm tra theo Điều 30. \\[4pt]
+
+    1393:d8 (Đăng ký chuyên đề khác khóa) &
+    1393:d7 (Điều kiện học vụ) &
+    Đăng ký học chuyên đề của khóa khác yêu cầu học viên đáp ứng điều kiện học vụ. \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+% -------------------------------------------------------------------
+\section{Thống kê toàn bộ các loại quan hệ}
+\label{sec:app-thong-ke-quan-he}
+
+Bảng~\ref{tab:top-rel-types} trình bày 10 loại quan hệ phổ biến nhất trong đồ thị tri thức, sắp xếp theo số lượng quan hệ giảm dần. Tổng cộng đồ thị chứa 56 loại quan hệ với 5.963 quan hệ.
+
+\begin{table}[htbp]
+  \centering
+  \caption{Top 10 loại quan hệ phổ biến nhất trong đồ thị tri thức}
+  \label{tab:top-rel-types}
+  \begin{tabular}{clrr}
+    \toprule
+    \textbf{Thứ hạng} & \textbf{Loại quan hệ} & \textbf{Số lượng} & \textbf{Tỷ lệ (\%)} \\
+    \midrule
+    1  & \texttt{REQUIRES}       & 1.377 & 23{,}10 \\
+    2  & \texttt{APPLIES\_TO}    &   810 & 13{,}58 \\
+    3  & \texttt{HAS\_AUTHORITY} &   506 &  8{,}49 \\
+    4  & \texttt{REFERENCES}     &   434 &  7{,}28 \\
+    5  & \texttt{DEFINES}        &   398 &  6{,}67 \\
+    6  & \texttt{HAS\_CONDITION} &   356 &  5{,}97 \\
+    7  & \texttt{GOVERNS}        &   312 &  5{,}23 \\
+    8  & \texttt{HAS\_PENALTY}   &   287 &  4{,}81 \\
+    9  & \texttt{DEPENDS\_ON}    &   245 &  4{,}11 \\
+    10 & \texttt{BELONGS\_TO}    &   238 &  3{,}99 \\
+    \midrule
+    \multicolumn{2}{l}{\textit{46 loại quan hệ còn lại}} & 1.000 & 16{,}77 \\
+    \midrule
+    \multicolumn{2}{l}{\textbf{Tổng cộng (56 loại)}} & \textbf{5.963} & \textbf{100{,}00} \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+Quan hệ \texttt{REQUIRES} chiếm tỷ lệ cao nhất (23{,}10\%) phản ánh bản chất điều kiện -- hệ quả đặc trưng của văn bản pháp luật và quy chế, nơi nhiều điều khoản chỉ có hiệu lực khi các điều kiện tiên quyết được thỏa mãn. Quan hệ \texttt{APPLIES\_TO} (13{,}58\%) mô hình hóa phạm vi áp dụng của các quy định đối với chủ thể cụ thể. Bốn loại quan hệ cuối cùng trong top 10 (\texttt{HAS\_PENALTY}, \texttt{DEPENDS\_ON}, \textbf{\texttt{BELONGS\_TO}}) là đặc trưng của miền pháp luật, phản ánh cấu trúc chế tài và phân cấp của hệ thống pháp lý.
