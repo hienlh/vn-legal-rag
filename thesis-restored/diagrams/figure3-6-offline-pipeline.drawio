@@ -1,0 +1,139 @@
+<mxfile host="app.diagrams.net">
+  <diagram id="fig3-6" name="Hình 3.6 – Offline Knowledge Engineering Pipeline">
+    <mxGraphModel dx="1400" dy="700" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="1500" pageHeight="700" math="0" shadow="0">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+
+        <!-- Input: Raw Documents -->
+        <mxCell id="IN" value="&lt;b&gt;Kho tài liệu thô&lt;/b&gt;&lt;br&gt;&lt;span style=&quot;font-size:9px&quot;&gt;QĐ 270, QĐ 1393,&lt;br&gt;NĐ 04, TT 01, ...&lt;/span&gt;" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=12;fillColor=#FFF3E0;strokeColor=#E65100;strokeWidth=2;fontFamily=Times New Roman;fontSize=11;fontColor=#BF360C;" vertex="1" parent="1">
+          <mxGeometry x="20" y="240" width="120" height="80" as="geometry"/>
+        </mxCell>
+
+        <!-- ===== TRACK 1: Document Forest ===== -->
+        <mxCell id="T1L" value="&lt;b&gt;Track 1: Document Forest&lt;/b&gt;" style="text;html=1;fontSize=11;fontFamily=Times New Roman;fontColor=#1565C0;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="180" y="30" width="200" height="20" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="P1" value="&lt;b&gt;Parser&lt;/b&gt;&lt;br&gt;&lt;span style=&quot;font-size:9px&quot;&gt;Regex phân cấp&lt;br&gt;Văn bản→Chương→Mục→Điều→Khoản→Điểm&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E3F2FD;strokeColor=#1565C0;strokeWidth=2;fontFamily=Times New Roman;fontSize=10;fontColor=#0D47A1;" vertex="1" parent="1">
+          <mxGeometry x="190" y="60" width="240" height="60" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="CR" value="&lt;b&gt;Cross-ref&lt;br&gt;Detection&lt;/b&gt;&lt;br&gt;&lt;span style=&quot;font-size:9px&quot;&gt;Pattern matching&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E3F2FD;strokeColor=#1565C0;fontFamily=Times New Roman;fontSize=10;fontColor=#0D47A1;" vertex="1" parent="1">
+          <mxGeometry x="470" y="55" width="120" height="65" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="SU" value="&lt;b&gt;Tóm tắt&lt;/b&gt;&lt;br&gt;&lt;span style=&quot;font-size:9px&quot;&gt;LLM sinh summary&lt;br&gt;cho Chương + Điều&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E3F2FD;strokeColor=#1565C0;fontFamily=Times New Roman;fontSize=10;fontColor=#0D47A1;" vertex="1" parent="1">
+          <mxGeometry x="630" y="55" width="120" height="65" as="geometry"/>
+        </mxCell>
+
+        <!-- Output: Document Forest -->
+        <mxCell id="OF" value="&lt;b&gt;Document Forest&lt;/b&gt;&lt;br&gt;&lt;span style=&quot;font-size:9px&quot;&gt;Phục vụ Tầng 1&lt;/span&gt;" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=10;fillColor=#C8E6C9;strokeColor=#2E7D32;strokeWidth=2;fontFamily=Times New Roman;fontSize=10;fontColor=#1B5E20;" vertex="1" parent="1">
+          <mxGeometry x="800" y="55" width="110" height="60" as="geometry"/>
+        </mxCell>
+
+        <!-- ===== TRACK 2: Knowledge Graph ===== -->
+        <mxCell id="T2L" value="&lt;b&gt;Track 2: Knowledge Graph&lt;/b&gt;" style="text;html=1;fontSize=11;fontFamily=Times New Roman;fontColor=#7B1FA2;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="180" y="160" width="220" height="20" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="EX" value="&lt;b&gt;① Trích xuất&lt;/b&gt;&lt;br&gt;&lt;span style=&quot;font-size:9px&quot;&gt;LLM trích entity&lt;br&gt;+ relation + evidence&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F3E5F5;strokeColor=#7B1FA2;strokeWidth=2;fontFamily=Times New Roman;fontSize=10;fontColor=#4A148C;" vertex="1" parent="1">
+          <mxGeometry x="190" y="190" width="130" height="65" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="DD" value="&lt;b&gt;② Khử trùng&lt;/b&gt;&lt;br&gt;&lt;span style=&quot;font-size:9px&quot;&gt;Jaro-Winkler ≥ 0.98&lt;br&gt;+ chuẩn hóa VN&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F3E5F5;strokeColor=#7B1FA2;fontFamily=Times New Roman;fontSize=10;fontColor=#4A148C;" vertex="1" parent="1">
+          <mxGeometry x="350" y="190" width="130" height="65" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="ON" value="&lt;b&gt;③ Ontology&lt;/b&gt;&lt;br&gt;&lt;span style=&quot;font-size:9px&quot;&gt;LLM → 14 loại OWL&lt;br&gt;phân cấp 4 cấp&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F3E5F5;strokeColor=#7B1FA2;fontFamily=Times New Roman;fontSize=10;fontColor=#4A148C;" vertex="1" parent="1">
+          <mxGeometry x="510" y="190" width="130" height="65" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="EP" value="&lt;b&gt;④ Tinh chỉnh&lt;/b&gt;&lt;br&gt;&lt;span style=&quot;font-size:9px&quot;&gt;Expert-in-the-loop&lt;br&gt;thêm/xóa/trọng số&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F3E5F5;strokeColor=#7B1FA2;fontFamily=Times New Roman;fontSize=10;fontColor=#4A148C;" vertex="1" parent="1">
+          <mxGeometry x="670" y="190" width="130" height="65" as="geometry"/>
+        </mxCell>
+
+        <!-- Output: KG -->
+        <mxCell id="OG" value="&lt;b&gt;Knowledge&lt;br&gt;Graph&lt;/b&gt;&lt;br&gt;&lt;span style=&quot;font-size:9px&quot;&gt;Phục vụ Tầng 2, 3&lt;/span&gt;" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=10;fillColor=#C8E6C9;strokeColor=#2E7D32;strokeWidth=2;fontFamily=Times New Roman;fontSize=10;fontColor=#1B5E20;" vertex="1" parent="1">
+          <mxGeometry x="840" y="190" width="110" height="65" as="geometry"/>
+        </mxCell>
+
+        <!-- ===== TRACK 3: Derived structures ===== -->
+        <mxCell id="T3L" value="&lt;b&gt;Track 3: Cấu trúc bổ sung&lt;/b&gt;" style="text;html=1;fontSize=11;fontFamily=Times New Roman;fontColor=#00695C;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="180" y="295" width="220" height="20" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="DG" value="&lt;b&gt;Domain Groups&lt;/b&gt;&lt;br&gt;&lt;span style=&quot;font-size:9px&quot;&gt;Jaccard syllable clustering&lt;br&gt;Phục vụ Loop 0, Tầng 1&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E0F2F1;strokeColor=#00695C;strokeWidth=2;fontFamily=Times New Roman;fontSize=10;fontColor=#004D40;" vertex="1" parent="1">
+          <mxGeometry x="350" y="320" width="180" height="60" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="TC" value="&lt;b&gt;Theme Clusters&lt;/b&gt;&lt;br&gt;&lt;span style=&quot;font-size:9px&quot;&gt;Graph partitioning + LLM labels&lt;br&gt;FAISS index → Tầng 2 High-level&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E0F2F1;strokeColor=#00695C;strokeWidth=2;fontFamily=Times New Roman;fontSize=10;fontColor=#004D40;" vertex="1" parent="1">
+          <mxGeometry x="580" y="320" width="210" height="60" as="geometry"/>
+        </mxCell>
+
+        <!-- Output: Embeddings -->
+        <mxCell id="VE" value="&lt;b&gt;Vector&lt;br&gt;Embeddings&lt;/b&gt;&lt;br&gt;&lt;span style=&quot;font-size:9px&quot;&gt;FAISS index&lt;/span&gt;" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=10;fillColor=#C8E6C9;strokeColor=#2E7D32;strokeWidth=2;fontFamily=Times New Roman;fontSize=10;fontColor=#1B5E20;" vertex="1" parent="1">
+          <mxGeometry x="840" y="320" width="110" height="60" as="geometry"/>
+        </mxCell>
+
+        <!-- ===== EDGES ===== -->
+        <!-- Input to tracks -->
+        <mxCell id="EI1" style="endArrow=classic;strokeColor=#555;strokeWidth=1.5;" edge="1" source="IN" target="P1" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="EI2" style="endArrow=classic;strokeColor=#555;strokeWidth=1.5;" edge="1" source="IN" target="EX" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- Track 1 chain -->
+        <mxCell id="ET1" style="endArrow=classic;strokeColor=#1565C0;" edge="1" source="P1" target="CR" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="ET2" style="endArrow=classic;strokeColor=#1565C0;" edge="1" source="CR" target="SU" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="ET3" style="endArrow=classic;strokeColor=#1565C0;" edge="1" source="SU" target="OF" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- Track 2 chain -->
+        <mxCell id="EK1" style="endArrow=classic;strokeColor=#7B1FA2;" edge="1" source="EX" target="DD" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="EK2" style="endArrow=classic;strokeColor=#7B1FA2;" edge="1" source="DD" target="ON" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="EK3" style="endArrow=classic;strokeColor=#7B1FA2;" edge="1" source="ON" target="EP" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="EK4" style="endArrow=classic;strokeColor=#7B1FA2;" edge="1" source="EP" target="OG" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- KG feeds derived structures -->
+        <mxCell id="ED1" style="endArrow=classic;strokeColor=#00695C;dashed=1;" edge="1" source="OG" target="TC" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="ED0" style="endArrow=classic;strokeColor=#00695C;dashed=1;" edge="1" source="OF" target="DG" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- Derived to embeddings -->
+        <mxCell id="EV1" style="endArrow=classic;strokeColor=#2E7D32;" edge="1" source="TC" target="VE" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- Downstream usage labels -->
+        <mxCell id="U1" value="&lt;span style=&quot;font-size:9px;color:#2E7D32&quot;&gt;→ Tầng 1&lt;/span&gt;" style="text;html=1;fontSize=9;fontFamily=Times New Roman;" vertex="1" parent="1">
+          <mxGeometry x="920" y="70" width="60" height="15" as="geometry"/>
+        </mxCell>
+        <mxCell id="U2" value="&lt;span style=&quot;font-size:9px;color:#2E7D32&quot;&gt;→ Tầng 2, 3&lt;/span&gt;" style="text;html=1;fontSize=9;fontFamily=Times New Roman;" vertex="1" parent="1">
+          <mxGeometry x="920" y="210" width="70" height="15" as="geometry"/>
+        </mxCell>
+        <mxCell id="U3" value="&lt;span style=&quot;font-size:9px;color:#2E7D32&quot;&gt;→ Tầng 2&lt;/span&gt;" style="text;html=1;fontSize=9;fontFamily=Times New Roman;" vertex="1" parent="1">
+          <mxGeometry x="920" y="340" width="60" height="15" as="geometry"/>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

@@ -1,0 +1,111 @@
+<mxfile host="app.diagrams.net">
+  <diagram id="fig3-4" name="Hình 3.4 – Query Analysis Pipeline">
+    <mxGraphModel dx="1200" dy="700" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="1400" pageHeight="700" math="0" shadow="0">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+
+        <!-- Input query -->
+        <mxCell id="Q1" value="&lt;i&gt;Truy vấn thô q&lt;/i&gt;&lt;br&gt;&lt;b&gt;&quot;Điều kiện bảo vệ luận văn ThS?&quot;&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFF3E0;strokeColor=#E65100;strokeWidth=2;fontFamily=Times New Roman;fontSize=11;fontColor=#BF360C;arcSize=30;" vertex="1" parent="1">
+          <mxGeometry x="30" y="190" width="210" height="60" as="geometry"/>
+        </mxCell>
+
+        <!-- Step 1: Intent Classification -->
+        <mxCell id="S1" value="&lt;b&gt;① Phân loại ý định&lt;/b&gt;&lt;br&gt;(Intent Classification)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E3F2FD;strokeColor=#1565C0;strokeWidth=2;fontFamily=Times New Roman;fontSize=11;fontColor=#0D47A1;" vertex="1" parent="1">
+          <mxGeometry x="310" y="40" width="200" height="55" as="geometry"/>
+        </mxCell>
+
+        <!-- Intent types -->
+        <mxCell id="IT" value="&lt;span style=&quot;font-size:9px&quot;&gt;Penalty · Definition · Procedure&lt;br&gt;Requirement · Reference · General&lt;/span&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFF;strokeColor=#90CAF9;strokeWidth=1;dashed=1;fontFamily=Times New Roman;fontSize=9;fontColor=#555;" vertex="1" parent="1">
+          <mxGeometry x="530" y="40" width="200" height="35" as="geometry"/>
+        </mxCell>
+
+        <!-- Step 2: Abbreviation Expansion -->
+        <mxCell id="S2" value="&lt;b&gt;② Mở rộng viết tắt&lt;/b&gt;&lt;br&gt;(Abbreviation Expansion)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E3F2FD;strokeColor=#1565C0;strokeWidth=2;fontFamily=Times New Roman;fontSize=11;fontColor=#0D47A1;" vertex="1" parent="1">
+          <mxGeometry x="310" y="190" width="200" height="55" as="geometry"/>
+        </mxCell>
+
+        <!-- Abbreviation example -->
+        <mxCell id="AE" value="&lt;span style=&quot;font-size:9px&quot;&gt;ThS → thạc sĩ&lt;br&gt;CTCP → công ty cổ phần&lt;/span&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFF;strokeColor=#90CAF9;strokeWidth=1;dashed=1;fontFamily=Times New Roman;fontSize=9;fontColor=#555;" vertex="1" parent="1">
+          <mxGeometry x="530" y="192" width="175" height="35" as="geometry"/>
+        </mxCell>
+
+        <!-- Step 3: Seed Entity Extraction -->
+        <mxCell id="S3" value="&lt;b&gt;③ Trích xuất thực thể giống&lt;/b&gt;&lt;br&gt;(Seed Entity Extraction)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E3F2FD;strokeColor=#1565C0;strokeWidth=2;fontFamily=Times New Roman;fontSize=11;fontColor=#0D47A1;" vertex="1" parent="1">
+          <mxGeometry x="310" y="340" width="200" height="55" as="geometry"/>
+        </mxCell>
+
+        <!-- Seed types -->
+        <mxCell id="SE" value="&lt;span style=&quot;font-size:9px&quot;&gt;Tham chiếu điều khoản&lt;br&gt;Tham chiếu luật · Từ khóa pháp lý&lt;/span&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFF;strokeColor=#90CAF9;strokeWidth=1;dashed=1;fontFamily=Times New Roman;fontSize=9;fontColor=#555;" vertex="1" parent="1">
+          <mxGeometry x="530" y="342" width="190" height="35" as="geometry"/>
+        </mxCell>
+
+        <!-- Outputs -->
+        <mxCell id="O1" value="&lt;b&gt;intent&lt;/b&gt; = Requirement" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E8F5E9;strokeColor=#2E7D32;strokeWidth=1.5;fontFamily=Times New Roman;fontSize=10;fontColor=#1B5E20;" vertex="1" parent="1">
+          <mxGeometry x="800" y="30" width="190" height="35" as="geometry"/>
+        </mxCell>
+        <mxCell id="O2" value="&lt;b&gt;expanded_q&lt;/b&gt; = &quot;Điều kiện bảo vệ&lt;br&gt;luận văn thạc sĩ?&quot;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E8F5E9;strokeColor=#2E7D32;strokeWidth=1.5;fontFamily=Times New Roman;fontSize=10;fontColor=#1B5E20;" vertex="1" parent="1">
+          <mxGeometry x="800" y="180" width="190" height="45" as="geometry"/>
+        </mxCell>
+        <mxCell id="O3" value="&lt;b&gt;seeds&lt;/b&gt; = {&quot;bảo vệ luận văn&quot;,&lt;br&gt;&quot;điều kiện&quot;, &quot;thạc sĩ&quot;}" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E8F5E9;strokeColor=#2E7D32;strokeWidth=1.5;fontFamily=Times New Roman;fontSize=10;fontColor=#1B5E20;" vertex="1" parent="1">
+          <mxGeometry x="800" y="335" width="190" height="45" as="geometry"/>
+        </mxCell>
+
+        <!-- Downstream labels -->
+        <mxCell id="D1" value="→ Tầng 2 (trọng số cạnh)" style="text;html=1;fontSize=9;fontFamily=Times New Roman;fontColor=#888;align=left;" vertex="1" parent="1">
+          <mxGeometry x="1000" y="37" width="150" height="20" as="geometry"/>
+        </mxCell>
+        <mxCell id="D2" value="→ Tầng 1 (duyệt cây)" style="text;html=1;fontSize=9;fontFamily=Times New Roman;fontColor=#888;align=left;" vertex="1" parent="1">
+          <mxGeometry x="1000" y="192" width="150" height="20" as="geometry"/>
+        </mxCell>
+        <mxCell id="D3" value="→ Tầng 2 (PPR seeds)" style="text;html=1;fontSize=9;fontFamily=Times New Roman;fontColor=#888;align=left;" vertex="1" parent="1">
+          <mxGeometry x="1000" y="347" width="150" height="20" as="geometry"/>
+        </mxCell>
+
+        <!-- Edges: input to steps -->
+        <mxCell id="E1" style="endArrow=classic;strokeColor=#555;" edge="1" source="Q1" target="S1" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="E2" style="endArrow=classic;strokeColor=#555;" edge="1" source="Q1" target="S2" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="E3" style="endArrow=classic;strokeColor=#555;" edge="1" source="Q1" target="S3" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- Edges: steps to details -->
+        <mxCell id="E4" style="endArrow=none;dashed=1;strokeColor=#90CAF9;" edge="1" source="S1" target="IT" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="E5" style="endArrow=none;dashed=1;strokeColor=#90CAF9;" edge="1" source="S2" target="AE" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="E6" style="endArrow=none;dashed=1;strokeColor=#90CAF9;" edge="1" source="S3" target="SE" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- Edges: steps to outputs -->
+        <mxCell id="E7" style="endArrow=classic;strokeColor=#2E7D32;" edge="1" source="S1" target="O1" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="E8" style="endArrow=classic;strokeColor=#2E7D32;" edge="1" source="S2" target="O2" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="E9" style="endArrow=classic;strokeColor=#2E7D32;" edge="1" source="S3" target="O3" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- Method labels -->
+        <mxCell id="M1" value="regex + LLM fallback" style="text;html=1;fontSize=8;fontFamily=Times New Roman;fontColor=#999;fontStyle=2;" vertex="1" parent="1">
+          <mxGeometry x="310" y="95" width="120" height="15" as="geometry"/>
+        </mxCell>
+        <mxCell id="M2" value="bảng viết tắt miền" style="text;html=1;fontSize=8;fontFamily=Times New Roman;fontColor=#999;fontStyle=2;" vertex="1" parent="1">
+          <mxGeometry x="310" y="245" width="120" height="15" as="geometry"/>
+        </mxCell>
+        <mxCell id="M3" value="pattern matching" style="text;html=1;fontSize=8;fontFamily=Times New Roman;fontColor=#999;fontStyle=2;" vertex="1" parent="1">
+          <mxGeometry x="310" y="395" width="120" height="15" as="geometry"/>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

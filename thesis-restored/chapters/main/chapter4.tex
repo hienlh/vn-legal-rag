@@ -413,7 +413,9 @@ nhưng sinh câu trả lời phù hợp với ngữ cảnh và đối tượng n
   \item \textbf{Trích dẫn nguồn với breadcrumb:} Panel bên phải hiển thị nội dung gốc của các
   điều khoản được trích dẫn, với breadcrumb vị trí rõ ràng (tên văn bản, chương,
   điều) và đường phân cách giữa các nguồn. Người dùng có thể đối chiếu trực tiếp
-  giữa tư vấn và nguyên văn quy định (Hình~\ref{fig:irac-answer}).
+  giữa tư vấn và nguyên văn quy định (Hình~\ref{fig:citation-panel}). Ngoài ra, lộ trình
+  truy xuất 3 vòng lặp (Loop 0--2) cũng được hiển thị minh bạch để người dùng hiểu
+  quá trình tìm kiếm của hệ thống (Hình~\ref{fig:reasoning-path}).
 
   \item \textbf{Hỗ trợ đa miền:} Ứng dụng hỗ trợ chuyển đổi giữa các miền (quy định đào
   tạo, pháp luật) thông qua biến môi trường cấu hình, sử dụng cùng giao diện và
@@ -422,23 +424,37 @@ nhưng sinh câu trả lời phù hợp với ngữ cảnh và đối tượng n
 
 \begin{figure}[htbp]
   \centering
-  \fbox{\parbox{0.85\linewidth}{\centering\vspace{2cm}[Màn hình chào mừng với lĩnh vực ``Quy định đào tạo'' và các câu hỏi gợi ý về quy chế đào tạo sau đại học -- Placeholder]\vspace{2cm}}}
+  \includegraphics[width=0.85\linewidth]{chat-ui-welcome-light.png}
   \caption{Màn hình chào mừng với lĩnh vực ``Quy định đào tạo'' và các câu hỏi gợi ý về quy chế đào tạo sau đại học}
   \label{fig:welcome-screen}
 \end{figure}
 
 \begin{figure}[htbp]
   \centering
-  \fbox{\parbox{0.85\linewidth}{\centering\vspace{2cm}[Trạng thái truy xuất ``Đang tổng hợp câu trả lời...'' hiển thị trực tiếp trong khi hệ thống xử lý câu hỏi -- Placeholder]\vspace{2cm}}}
+  \includegraphics[width=0.85\linewidth]{chat-ui-status-indicator-light.png}
   \caption{Trạng thái truy xuất ``Đang tổng hợp câu trả lời...'' hiển thị trực tiếp trong khi hệ thống xử lý câu hỏi}
   \label{fig:retrieving-state}
 \end{figure}
 
 \begin{figure}[htbp]
   \centering
-  \fbox{\parbox{0.85\linewidth}{\centering\vspace{2cm}[Câu trả lời IRAC cho câu hỏi ``Điều kiện bảo vệ luận văn thạc sĩ?'' với panel nguồn quy định gốc (phải) -- Placeholder]\vspace{2cm}}}
+  \includegraphics[width=0.85\linewidth]{chat-ui-answer-light.png}
   \caption{Câu trả lời IRAC cho câu hỏi ``Điều kiện bảo vệ luận văn thạc sĩ?'' với panel nguồn quy định gốc (phải)}
   \label{fig:irac-answer}
+\end{figure}
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.85\linewidth]{chat-ui-citation-panel-light.png}
+  \caption{Panel trích dẫn nguồn hiển thị nguyên văn điều khoản với breadcrumb vị trí (văn bản $\rightarrow$ chương $\rightarrow$ điều)}
+  \label{fig:citation-panel}
+\end{figure}
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.85\linewidth]{chat-ui-reasoning-path-light.png}
+  \caption{Lộ trình truy xuất 3 vòng lặp: Loop 0 chọn tài liệu, Loop 1 chọn chương, Loop 2 truy xuất điều khoản}
+  \label{fig:reasoning-path}
 \end{figure}
 
 \subsection{Ví dụ minh họa tiêu biểu}

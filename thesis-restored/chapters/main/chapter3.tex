@@ -202,6 +202,19 @@ Hai cấu trúc bổ sung được xây dựng để phục vụ các tầng tru
         trúc này phục vụ high-level (theme matching) của Tầng 2.
 \end{itemize}
 
+Hình~\ref{fig:offline-pipeline} minh họa toàn bộ quy trình xây dựng tri thức ngoại
+tuyến với ba track song song: Document Forest, Knowledge Graph, và các cấu trúc bổ
+sung phục vụ từng tầng truy xuất.
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=\textwidth]{graphics/figure3-6-offline-pipeline.png}
+  \caption{Quy trình xây dựng tri thức ngoại tuyến. Track 1 phân tích cấu trúc
+  văn bản thành Document Forest. Track 2 xây dựng Knowledge Graph qua 4 bước.
+  Track 3 tạo Domain Groups và Theme Clusters phục vụ tìm kiếm.}
+  \label{fig:offline-pipeline}
+\end{figure}
+
 % -------------------------------------------------------------------
 \subsection{Pha trực tuyến}
 \label{subsec:pha-truc-tuyen}
@@ -234,7 +247,16 @@ Với truy vấn thô $q$ từ người dùng, bộ phân tích truy vấn thự
 Các đầu ra này được đưa trực tiếp vào các tầng truy xuất: Tầng 1 sử dụng truy vấn
 đã mở rộng cho duyệt cây, Tầng 2 sử dụng thực thể giống để khởi tạo PageRank và
 nhãn ý định để điều chỉnh trọng số cạnh (1,0 cho quan hệ chính, 0,5 cho quan hệ
-khác).
+khác). Hình~\ref{fig:query-analysis} minh họa ba bước phân tích với ví dụ cụ thể.
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=\textwidth]{graphics/figure3-4-query-analysis.png}
+  \caption{Pipeline phân tích truy vấn gồm ba bước: phân loại ý định (6 loại),
+  mở rộng viết tắt, và trích xuất thực thể giống. Mỗi đầu ra phục vụ một tầng
+  truy xuất khác nhau.}
+  \label{fig:query-analysis}
+\end{figure}
 
 % =====================================================================
 \section{Tầng 1: Duyệt cây cấu trúc hướng dẫn bởi LLM}
@@ -475,7 +497,18 @@ Hai cấp được hợp nhất bằng tổng có trọng số:
 Tỷ lệ 70--30 giữa low-level và high-level phản ánh độ tin cậy cao hơn của các tín
 hiệu entity-specific (keyphrase, PPR, concept) so với tín hiệu chủ đề trừu tượng.
 Các điều khoản có điểm tổng hợp dưới ngưỡng $0{,}1$ bị loại bỏ để giảm nhiễu
-trước khi chuyển sang Tầng 3.
+trước khi chuyển sang Tầng 3. Hình~\ref{fig:tier2-dual-level} minh họa kiến trúc
+hai cấp của Tầng 2 với sáu tín hiệu và cách hợp nhất.
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=\textwidth]{graphics/figure3-5-tier2-dual-level.png}
+  \caption{Kiến trúc Tầng 2 hai cấp. Low-level gồm 4 tín hiệu (Keyphrase,
+  Semantic, Intent-aware PPR, Concept Matching) với minh họa PPR lan truyền qua
+  KG. High-level gồm Theme Matching và Hierarchy Expansion. Công thức hợp nhất
+  70\%--30\% ưu tiên tín hiệu entity-specific.}
+  \label{fig:tier2-dual-level}
+\end{figure}
 
 % =====================================================================
 \section{Tầng 3: Hợp nhất RRF với mở rộng Knowledge Graph}

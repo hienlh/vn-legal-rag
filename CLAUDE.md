@@ -76,3 +76,29 @@ Before completing any code modification task, verify:
 - Generate docs: `npx gitnexus wiki`
 
 <!-- gitnexus:end -->
+
+## Thesis (LaTeX)
+
+Source: `thesis-restored/`
+
+### Compile PDF
+
+MiKTeX is at `C:\Users\PC\AppData\Local\Programs\MiKTeX\miktex\bin\x64\`. Add to PATH then run 2 passes:
+
+```powershell
+$env:Path = "C:\Users\PC\AppData\Local\Programs\MiKTeX\miktex\bin\x64;" + $env:Path
+Set-Location "C:\Users\PC\Projects\vn-legal-rag\thesis-restored"
+pdflatex -interaction=nonstopmode main.tex
+pdflatex -interaction=nonstopmode main.tex
+```
+
+### Render diagrams
+
+Diagrams are draw.io XML in `thesis-restored/diagrams/*.drawio`. Render all to PNG:
+
+```powershell
+Set-Location "C:\Users\PC\Projects\vn-legal-rag\thesis-restored"
+node scripts/drawio-to-png.js
+```
+
+Output goes to `diagrams/output/`. Copy to `graphics/` (rename removing `-drawio` suffix) before compiling PDF.

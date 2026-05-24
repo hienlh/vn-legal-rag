@@ -11,6 +11,9 @@ const figures = [
   'figure3-1-system-architecture',
   'figure3-2-tree-traversal',
   'figure3-3-end-to-end-flow',
+  'figure3-4-query-analysis',
+  'figure3-5-tier2-dual-level',
+  'figure3-6-offline-pipeline',
 ];
 
 function buildViewerHtml(drawioXml) {

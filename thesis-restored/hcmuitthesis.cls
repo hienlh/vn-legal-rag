@@ -53,7 +53,7 @@
 \definecolor{mauve}{rgb}{0.58,0,0.82}
 \newcolumntype{C}[1]{>{\centering\arraybackslash}m{#1}}
 % Config figure path
-\graphicspath{ {./graphics} }
+\graphicspath{ {./graphics} {./screenshots} }
 
 % Define the desired distance from the top of the page
 \newlength{\chaptertopmargin}
