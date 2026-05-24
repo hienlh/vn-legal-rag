@@ -10,7 +10,7 @@ import os
 import sqlite3
 import time
 from pathlib import Path
-from typing import Any, Dict, Optional, Union
+from typing import Any, Dict, Generator, Optional, Union
 
 
 class LLMProvider:
@@ -235,6 +235,52 @@ class LLMProvider:
         self._cache_response(cache_key, prompt, response, response_time_ms)
 
         return response
+
+    def generate_stream(self, prompt: str, **kwargs) -> Generator[str, None, None]:
+        """Stream text chunks from LLM. No caching for streaming."""
+        temperature = kwargs.get("temperature", 0.7)
+        max_tokens = kwargs.get("max_tokens", 2000)
+
+        if self.provider == "anthropic":
+            create_kwargs = {
+                "model": self.model,
+                "max_tokens": max_tokens,
+                "temperature": temperature,
+                "messages": [{"role": "user", "content": prompt}],
+            }
+            with self.client.messages.stream(**create_kwargs) as stream:
+                for text in stream.text_stream:
+                    yield text
+
+        elif self.provider == "openai":
+            response = self.client.chat.completions.create(
+                model=self.model,
+                messages=[{"role": "user", "content": prompt}],
+                temperature=temperature,
+                max_tokens=max_tokens,
+                stream=True,
+            )
+            for chunk in response:
+                if chunk.choices and chunk.choices[0].delta.content:
+                    yield chunk.choices[0].delta.content
+
+        elif self.provider == "gemini":
+            model = self.client.GenerativeModel(self.model)
+            generation_config = {
+                "temperature": temperature,
+                "max_output_tokens": max_tokens,
+            }
+            response = model.generate_content(
+                prompt,
+                generation_config=generation_config,
+                stream=True,
+            )
+            for chunk in response:
+                if chunk.text:
+                    yield chunk.text
+
+        else:
+            yield self.generate(prompt, **kwargs)
 
     def _generate_impl(self, prompt: str, **kwargs) -> str:
         """Provider-specific generation implementation."""

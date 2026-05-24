@@ -1,10 +1,15 @@
+# Domain
+domain: "education"
+
 # Education Domain Configuration
 # For postgraduate education regulation documents (UIT/VNUHCM)
 
 llm:
   provider: "anthropic"
   model: "claude-sonnet-4-20250514"
-  base_url: "http://localhost:3210/proxy"  # PPM proxy
+  base_url: "http://localhost:3333/proxy"  # PPM proxy
+  # Set api_key in .env as ANTHROPIC_API_KEY, or uncomment below for local dev:
+  # api_key: "your-ppm-proxy-key-here"
   use_cache: true
   cache_db: "data/education/llm_cache.db"
 

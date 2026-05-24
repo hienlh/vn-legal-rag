@@ -75,6 +75,13 @@ _reranker = import_module(".cross-encoder-reranker-for-legal-documents", "vn_leg
 CrossEncoderReranker = _reranker.CrossEncoderReranker
 RerankResult = _reranker.RerankResult
 
+# Domain-Aware IRAC Prompt Builder
+_prompt_builder = import_module(".domain-aware-irac-prompt-builder", "vn_legal_rag.online")
+build_irac_prompt = _prompt_builder.build_irac_prompt
+
+# Async Retrieval Bridge (for Chainlit)
+_bridge = import_module(".async-retrieval-bridge-for-chainlit", "vn_legal_rag.online")
+AsyncRetrievalBridge = _bridge.AsyncRetrievalBridge
 
 __all__ = [
     # Main
@@ -125,4 +132,10 @@ __all__ = [
     # Cross-Encoder Reranker
     "CrossEncoderReranker",
     "RerankResult",
+
+    # Prompt Builder
+    "build_irac_prompt",
+
+    # Async Bridge
+    "AsyncRetrievalBridge",
 ]

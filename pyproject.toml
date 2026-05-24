@@ -80,9 +80,14 @@ faiss = [
     "faiss-cpu>=1.7.4",
 ]
 
+# Chat UI
+chat = [
+    "chainlit>=2.0.0",
+]
+
 # Full installation with all features
 full = [
-    "vn-legal-rag[embeddings,faiss,dev]",
+    "vn-legal-rag[embeddings,faiss,chat,dev]",
 ]
 
 # Development dependencies

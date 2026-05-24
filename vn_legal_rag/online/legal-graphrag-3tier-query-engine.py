@@ -46,6 +46,13 @@ LegalQueryType = _query_analyzer.LegalQueryType
 _ppr = import_module(".personalized-page-rank-for-kg", "vn_legal_rag.online")
 PersonalizedPageRank = _ppr.PersonalizedPageRank
 
+# Import prompt builder
+_prompt_builder = import_module(
+    ".domain-aware-irac-prompt-builder", "vn_legal_rag.online"
+)
+build_irac_prompt = _prompt_builder.build_irac_prompt
+INTENT_SECTIONS = _prompt_builder.INTENT_SECTIONS
+
 # Import AblationConfig
 _ablation = import_module(".ablation-config-for-rag-component-testing", "vn_legal_rag.types")
 AblationConfig = _ablation.AblationConfig
@@ -136,11 +143,15 @@ class LegalGraphRAG:
 
         # Handle LLM provider: string or object
         if isinstance(llm_provider, str):
+            llm_kwargs = {}
+            if config and config.get("llm", {}).get("api_key"):
+                llm_kwargs["api_key"] = config["llm"]["api_key"]
             self.llm_provider = create_llm_provider(
                 provider=llm_provider,
                 model=llm_model,
                 base_url=llm_base_url,
                 cache_db=llm_cache_db,
+                **llm_kwargs,
             )
         else:
             self.llm_provider = llm_provider
@@ -277,6 +288,39 @@ class LegalGraphRAG:
             tree_search_result=tree_result,  # semantica-style
             intent=analyzed.intent,  # semantica-style
         )
+
+    def query_stream(self, query: str, max_results: int = 50, domain: str = "legal"):
+        """Stream query results as (event_type, data) tuples.
+
+        Event types: status, metadata, token, error
+        """
+        try:
+            yield ("status", "Đang phân tích câu hỏi...")
+            analyzed = self.query_analyzer.analyze(query)
+
+            yield ("status", "Đang tìm kiếm quy định liên quan...")
+            contexts, tree_result = self._retrieve_contexts(
+                query, analyzed, max_results, adaptive=True
+            )
+            llm_contexts = self._build_llm_contexts(contexts, tree_result, max_llm=10)
+
+            yield ("metadata", {
+                "citations": self._extract_citations(contexts),
+                "reasoning_path": tree_result.reasoning_path if tree_result else [],
+                "confidence": tree_result.confidence if tree_result else 0.0,
+                "intent": analyzed.intent.value,
+                "query_type": analyzed.query_type.value,
+                "contexts": llm_contexts,
+            })
+
+            yield ("status", "Đang tổng hợp câu trả lời...")
+            for chunk in self._generate_response_stream(
+                query, llm_contexts, analyzed, domain
+            ):
+                yield ("token", chunk)
+        except Exception as e:
+            logger.error(f"query_stream error: {e}")
+            yield ("error", "Đã xảy ra lỗi khi xử lý câu hỏi. Vui lòng thử lại.")
 
     def _retrieve_contexts(
         self,
@@ -541,84 +585,40 @@ class LegalGraphRAG:
         except Exception:
             return source_id
 
-    # IRAC intent-specific hints for answer generation
-    _INTENT_SECTIONS = {
-        QueryIntent.PENALTY: (
-            "LƯU Ý: Đây là câu hỏi về MỨC PHẠT/CHẾ TÀI. "
-            "Phần căn cứ pháp luật cần nêu rõ mức phạt cụ thể (tiền, tước GPLX, tịch thu, etc.) "
-            "tại Điều/Khoản/Điểm nào. Phần phân tích cần chỉ rõ hành vi vi phạm thuộc mức phạt nào và tại sao."
-        ),
-        QueryIntent.DEFINITION: (
-            "LƯU Ý: Đây là câu hỏi về ĐỊNH NGHĨA/KHÁI NIỆM pháp lý. "
-            "Phần căn cứ pháp luật cần trích dẫn chính xác định nghĩa theo luật. "
-            "Phần phân tích cần giải thích rõ các yếu tố cấu thành của khái niệm."
-        ),
-        QueryIntent.PROCEDURE: (
-            "LƯU Ý: Đây là câu hỏi về THỦ TỤC/QUY TRÌNH. "
-            "Phần căn cứ pháp luật cần liệt kê các bước theo trình tự luật quy định. "
-            "Phần phân tích cần nêu rõ điều kiện, thời hạn, hồ sơ cần thiết cho từng bước."
-        ),
-        QueryIntent.REQUIREMENT: (
-            "LƯU Ý: Đây là câu hỏi về ĐIỀU KIỆN/YÊU CẦU pháp lý. "
-            "Phần căn cứ pháp luật cần liệt kê đầy đủ các điều kiện. "
-            "Phần phân tích cần chỉ rõ điều kiện nào áp dụng cho tình huống và tại sao."
-        ),
-        QueryIntent.REFERENCE: (
-            "LƯU Ý: Đây là câu hỏi TRA CỨU điều luật cụ thể. "
-            "Trích dẫn chính xác nội dung điều luật được hỏi, giải thích ý nghĩa và phạm vi áp dụng."
-        ),
-    }
+    _INTENT_SECTIONS = INTENT_SECTIONS
+
+    def _build_context_and_prompt(
+        self, query, contexts, analyzed, domain="legal"
+    ):
+        """Build context text, intent block, and final IRAC prompt."""
+        context_parts = []
+        for i, ctx in enumerate(contexts):
+            source_id = ctx.get("metadata", {}).get("source_id", "")
+            label = self._build_reference_label(source_id)
+            if label:
+                context_parts.append(f"[{i+1}] ({label}) {ctx['text']}")
+            else:
+                context_parts.append(f"[{i+1}] {ctx['text']}")
+        context_text = "\n\n".join(context_parts)
+
+        intent_section = self._INTENT_SECTIONS.get(analyzed.intent, "")
+        intent_block = f"\n{intent_section}\n" if intent_section else ""
+
+        return build_irac_prompt(query, context_text, intent_block, domain)
 
     def _generate_response(
         self,
         query: str,
         contexts: List[Dict[str, Any]],
         analyzed: AnalyzedQuery,
+        domain: str = "legal",
     ) -> tuple:
-        """
-        Generate IRAC-structured response using LLM.
-
-        Uses base IRAC prompt with intent-specific hints injected
-        based on QueryIntent (PENALTY, DEFINITION, PROCEDURE, etc.).
+        """Generate IRAC-structured response using LLM.
 
         Returns:
             Tuple of (response_text, confidence)
         """
-        # Build context text with legal reference labels
-        context_parts = []
-        ref_labels = []
-        for i, ctx in enumerate(contexts):
-            source_id = ctx.get("metadata", {}).get("source_id", "")
-            label = self._build_reference_label(source_id)
-            ref_labels.append(label or f"Nguồn {i+1}")
-            context_parts.append(f"[{i+1}] ({label}) {ctx['text']}" if label else f"[{i+1}] {ctx['text']}")
-        context_text = "\n\n".join(context_parts)
-
-        # Build intent-specific section
-        intent_section = self._INTENT_SECTIONS.get(analyzed.intent, "")
-        intent_block = f"\n{intent_section}\n" if intent_section else ""
-
-        prompt = f"""Bạn là luật sư tư vấn pháp luật Việt Nam. Trả lời câu hỏi theo phương pháp phân tích pháp lý IRAC.
-
-CÂU HỎI: {query}
-
-TÀI LIỆU THAM KHẢO:
-{context_text}
-{intent_block}
-HƯỚNG DẪN TRẢ LỜI:
-Viết câu trả lời tự nhiên như luật sư tư vấn, theo flow sau:
-
-1. Xác định vấn đề pháp lý cần giải quyết trong câu hỏi.
-2. Nêu căn cứ pháp luật: trích dẫn chính xác Điều, Khoản, Điểm của văn bản pháp luật liên quan. Format: "Căn cứ Điều X Khoản Y [Tên văn bản]".
-3. Phân tích áp dụng: giải thích cụ thể điều luật áp dụng vào tình huống trong câu hỏi như thế nào, chỉ ra mối liên hệ giữa quy định và tình huống thực tế.
-4. Kết luận dứt khoát, trả lời trực tiếp câu hỏi. Không lập lờ "tùy trường hợp" trừ khi thật sự cần thiết.
-
-QUY TẮC:
-- KHÔNG nhắc "tài liệu tham khảo" hay "tài liệu được cung cấp".
-- Cuối câu trả lời ghi "Căn cứ pháp lý:" liệt kê các điều đã dùng.
-- CHỈ nói "Xin lỗi, tôi không tìm thấy quy định pháp luật liên quan" khi KHÔNG CÓ BẤT KỲ điều luật nào liên quan.
-
-Trả lời:"""
+        prompt = self._build_context_and_prompt(query, contexts, analyzed, domain)
 
         try:
             response = self.llm_provider.generate(prompt)
@@ -626,6 +626,16 @@ Trả lời:"""
             return response, confidence
         except Exception:
             return "Không thể tạo câu trả lời.", 0.0
+
+    def _generate_response_stream(self, query, contexts, analyzed, domain="legal"):
+        """Stream IRAC response tokens."""
+        prompt = self._build_context_and_prompt(query, contexts, analyzed, domain)
+
+        try:
+            for chunk in self.llm_provider.generate_stream(prompt):
+                yield chunk
+        except Exception:
+            yield "Không thể tạo câu trả lời."
 
     def _get_article_text(self, article_id: str) -> str:
         """Get article text from database."""
