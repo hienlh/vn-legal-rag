@@ -1,7 +1,9 @@
 \chapter{Thiết kế hệ thống và thử nghiệm}
 \label{chap:chapter4}
 
-Chương này trình bày thiết kế chi tiết hệ thống KG-RAG ba tầng, bao gồm các yêu cầu chức năng và phi chức năng, kiến trúc triển khai, kết quả thử nghiệm định lượng trên hai miền dữ liệu, phân tích lỗi, và mô tả ứng dụng minh họa chatbot tư vấn văn bản pháp luật.
+Chương này trình bày yêu cầu hệ thống, kiến trúc triển khai, và kết quả thử nghiệm
+trên hai nghiên cứu trường hợp: pháp luật Việt Nam (400 câu hỏi) và quy định đào tạo
+(130 câu hỏi), cùng phân tích ablation đánh giá đóng góp của từng thành phần.
 
 % ===================================================================
 \section{Yêu cầu hệ thống}
@@ -10,26 +12,32 @@ Chương này trình bày thiết kế chi tiết hệ thống KG-RAG ba tầng,
 \subsection{Yêu cầu chức năng}
 \label{subsec:yc-chuc-nang}
 
-Hệ thống cần đáp ứng ba yêu cầu chức năng cốt lõi:
-
 \begin{enumerate}
-  \item \textbf{Tiếp nhận truy vấn ngôn ngữ tự nhiên:} Hệ thống phải nhận câu hỏi của người dùng bằng tiếng Việt thông qua giao diện web, phân tích ý định và trích xuất các khái niệm pháp lý liên quan để phục vụ quá trình truy xuất.
+  \item \textbf{Tiếp nhận truy vấn:} Người dùng nhập câu hỏi bằng tiếng Việt về quy định đào
+  tạo hoặc pháp luật.
 
-  \item \textbf{Truy xuất điều khoản liên quan:} Dựa trên câu hỏi đầu vào, hệ thống phải xác định và xếp hạng các điều khoản văn bản luật hoặc quy chế đào tạo liên quan nhất thông qua kiến trúc truy xuất ba tầng, bảo đảm độ chính xác cao theo các chỉ số Hit@k và MRR.
+  \item \textbf{Truy xuất điều khoản:} Hệ thống trả về danh sách top-K điều khoản liên quan
+  nhất, kèm trích dẫn nguồn (tên văn bản, số điều).
 
-  \item \textbf{Sinh câu trả lời có căn cứ:} Hệ thống phải tổng hợp thông tin từ các điều khoản đã truy xuất và sinh ra câu trả lời mạch lạc, có trích dẫn nguồn cụ thể, theo cấu trúc IRAC (Issue -- Rule -- Application -- Conclusion) phù hợp với từng miền kiến thức.
+  \item \textbf{Sinh câu trả lời:} LLM tổng hợp thông tin từ các điều khoản đã truy xuất thành
+  câu trả lời tự nhiên.
+
+  \item \textbf{Hỗ trợ đa miền:} Hệ thống hoạt động trên nhiều lĩnh vực (doanh nghiệp, giao
+  thông, đào tạo) với cùng pipeline và tham số.
 \end{enumerate}
 
 \subsection{Yêu cầu phi chức năng}
 \label{subsec:yc-phi-chuc-nang}
 
-\begin{itemize}
-  \item \textbf{Thời gian phản hồi:} Toàn bộ chu trình từ khi người dùng gửi câu hỏi đến khi nhận được câu trả lời phải hoàn thành trong vòng không quá 10 giây trong điều kiện vận hành thông thường.
+\begin{enumerate}
+  \item \textbf{Độ chính xác:} Hit@10 $\geq$ 85\% trên các bộ đánh giá.
 
-  \item \textbf{Hỗ trợ tiếng Việt Unicode:} Hệ thống phải xử lý đúng toàn bộ ký tự tiếng Việt có dấu theo chuẩn Unicode (UTF-8), bao gồm cả trong quá trình nhúng văn bản (embedding), lập chỉ mục và sinh câu trả lời.
+  \item \textbf{Thời gian phản hồi:} Dưới 15 giây cho mỗi truy vấn.
 
-  \item \textbf{Giao diện thân thiện người dùng:} Giao diện web phải hoạt động tốt trên cả máy tính để bàn (desktop) lẫn thiết bị di động (mobile), có thiết kế trực quan, dễ sử dụng cho người dùng không có nền tảng kỹ thuật.
-\end{itemize}
+  \item \textbf{Khả năng mở rộng:} Hỗ trợ thêm miền mới mà không cần thay đổi kiến trúc core.
+
+  \item \textbf{Khả năng giải thích:} Mỗi kết quả kèm reasoning trace từ quá trình duyệt cây.
+\end{enumerate}
 
 % ===================================================================
 \section{Kiến trúc hệ thống}
@@ -38,33 +46,48 @@ Hệ thống cần đáp ứng ba yêu cầu chức năng cốt lõi:
 \subsection{Tổng quan kiến trúc triển khai}
 \label{subsec:tongquan-kientruc}
 
-Hệ thống được thiết kế theo mô hình client--server hai lớp với tầng backend và tầng frontend tách biệt hoàn toàn, giao tiếp qua REST API.
+Hệ thống được triển khai theo kiến trúc hai pha (offline--online) với các thành phần
+chính:
 
-\textbf{Backend} được xây dựng bằng Python FastAPI, đảm nhiệm toàn bộ luồng xử lý nghiệp vụ: tiếp nhận truy vấn, điều phối pipeline truy xuất ba tầng, tương tác với đồ thị tri thức, FAISS vector store và LLM để sinh câu trả lời.
+\begin{itemize}
+  \item \textbf{Pha ngoại tuyến (Offline):}
+  \begin{itemize}
+    \item Document Parser: phân tích văn bản thành cây cấu trúc
+    \item KG Builder: xây dựng Knowledge Graph qua LLM + expert review
+    \item Summary Generator: sinh tóm tắt chương và điều
+    \item Embedding Indexer: tạo chỉ mục vector cho tìm kiếm ngữ nghĩa
+  \end{itemize}
 
-\textbf{Frontend} được xây dựng bằng React 18 và TypeScript, cung cấp giao diện chat tương tác, hiển thị kết quả truy xuất kèm trích dẫn nguồn, và phản hồi trạng thái quá trình xử lý theo thời gian thực.
+  \item \textbf{Pha trực tuyến (Online):}
+  \begin{itemize}
+    \item Query Analyzer: phân loại ý định, mở rộng viết tắt, trích xuất thực thể
+    \item Tree Traversal Retriever: duyệt cây 3 vòng lặp (Tầng 1)
+    \item Dual-Level Retriever: truy xuất ngữ nghĩa hai cấp (Tầng 2)
+    \item Semantic Bridge RRF Merger: hợp nhất RRF + mở rộng KG (Tầng 3)
+    \item Answer Generator: sinh câu trả lời từ LLM
+  \end{itemize}
+\end{itemize}
 
 \subsection{Công nghệ sử dụng}
 \label{subsec:cong-nghe}
 
-Bảng~\ref{tab:cong-nghe} tóm tắt các công nghệ chính được sử dụng trong từng thành phần của hệ thống.
+Bảng~\ref{tab:cong-nghe} liệt kê các công nghệ chính được sử dụng.
 
 \begin{table}[htbp]
   \centering
   \caption{Công nghệ sử dụng trong hệ thống}
   \label{tab:cong-nghe}
-  \begin{tabular}{ll}
+  \begin{tabular}{lp{10cm}}
     \toprule
     \textbf{Thành phần} & \textbf{Công nghệ} \\
     \midrule
-    Backend API        & Python 3.11, FastAPI \\
-    Frontend           & React 18, TypeScript, Tailwind CSS \\
-    LLM                & Claude 3.5 Haiku (Anthropic) \\
-    Embedding          & \texttt{sentence-transformers/all-MiniLM-L12-v2} \\
-    Knowledge Graph    & NetworkX + custom graph store \\
-    Vector Store       & FAISS \\
-    Cơ sở dữ liệu      & SQLite (metadata), JSON (document store) \\
-    Triển khai         & Docker, Nginx \\
+    Ngôn ngữ lập trình  & Python 3.11 \\
+    LLM                 & Claude Sonnet 4 (Anthropic API) \\
+    Sentence Embeddings & \texttt{paraphrase-multilingual-MiniLM-L12-v2}~\cite{reimers2019sbert} \\
+    Vector Search       & FAISS \\
+    Cache               & SQLite (WAL mode) \\
+    LLM Proxy           & OAuth, Rate Limiting \\
+    Cấu hình            & YAML (default.yaml, education.yaml) \\
     \bottomrule
   \end{tabular}
 \end{table}
@@ -72,9 +95,28 @@ Bảng~\ref{tab:cong-nghe} tóm tắt các công nghệ chính được sử d�
 \subsection{Chi tiết triển khai}
 \label{subsec:chitiet-trienkhay}
 
-Luồng xử lý một truy vấn hoàn chỉnh diễn ra như sau. Câu hỏi của người dùng được gửi qua HTTP POST đến endpoint \texttt{/api/query} của FastAPI. Backend khởi động pipeline truy xuất ba tầng theo kiến trúc đã trình bày tại Chương~3: (i)~Tầng 1 sử dụng tóm tắt chương để lọc phạm vi; (ii)~Tầng 2 kết hợp BM25, embedding FAISS và đồ thị tri thức để xếp hạng sơ bộ; (iii)~Tầng 3 mở rộng kết quả qua PPR trên đồ thị và hợp nhất bằng RRF~\cite{cormack2009rrf}. Các điều khoản được chọn sau đó được đưa vào LLM để sinh câu trả lời theo cấu trúc IRAC. Kết quả trả về client dưới dạng JSON bao gồm câu trả lời và danh sách điều khoản nguồn.
+\textbf{Document parsing.} Văn bản pháp luật được phân tích bằng bộ regex tùy chỉnh nhận
+diện các dấu hiệu phân cấp tiếng Việt (``Phần'', ``Chương'', ``Mục'', ``Điều'', ``Khoản'',
+``Điểm'') và xây dựng cây cấu trúc 6 cấp. Các văn bản scan (PDF) của miền giáo dục
+(118 trang) được số hóa qua LLM Vision OCR. Tham chiếu chéo được trích xuất qua
+pattern matching trên chuỗi trích dẫn điều khoản, tạo ra 168 cạnh liên tài liệu.
 
-Hệ thống được đóng gói bằng Docker Compose với hai service: \texttt{backend} (FastAPI) và \texttt{frontend} (React build được phục vụ qua Nginx). Toàn bộ đồ thị tri thức và chỉ mục FAISS được tải vào bộ nhớ khi khởi động để tối thiểu hóa độ trễ truy vấn.
+\textbf{Knowledge graph.} Trích xuất thực thể và nhận diện quan hệ sử dụng Claude 3.5
+Haiku qua Anthropic API, với một lời gọi LLM cho mỗi điều khoản. Chuẩn hóa slug
+tiếng Việt loại bỏ dấu và gộp biến thể thanh điệu thành định danh thực thể chuẩn. Bộ
+giải quyết thực thể đa bước (exact match, synonym resolution, abbreviation expansion)
+khử trùng lặp các thực thể tương đương. Sau trích xuất tự động, bước tinh chỉnh expert-in-the-loop sửa các quan hệ nhận diện sai và bổ sung liên kết chuyên ngành mà LLM bỏ
+sót.
+
+\textbf{Online query processing.} Duyệt cây và chọn điều khoản sử dụng Claude Sonnet
+4. Sentence embeddings được tính bằng \texttt{paraphrase-multilingual-MiniLM-L12-v2} \cite{reimers2019sbert},
+mô hình đa ngôn ngữ 384 chiều. PPR được tính lặp (tối đa 50 vòng, tolerance $10^{-6}$,
+damping $\alpha = 0{,}15$). Tất cả phản hồi LLM được cache trong SQLite để đảm bảo tái lập
+và tiết kiệm chi phí.
+
+\textbf{Parallel execution.} Hệ thống hỗ trợ thực thi song song với 10 worker đồng thời,
+đạt tăng tốc 6,5$\times$ (226s $\rightarrow$ 35s cho 10 truy vấn). SQLite cache sử dụng WAL mode +
+timeout 30s cho truy cập đồng thời an toàn.
 
 % ===================================================================
 \section{Kết quả thử nghiệm}
@@ -83,41 +125,54 @@ Hệ thống được đóng gói bằng Docker Compose với hai service: \text
 \subsection{Các chỉ số đánh giá}
 \label{subsec:chi-so-danh-gia}
 
-Nghiên cứu sử dụng hai chỉ số định lượng tiêu chuẩn trong lĩnh vực truy xuất thông tin để đánh giá hiệu năng các hệ thống.
+Hệ thống được đánh giá bằng hai chỉ số truy xuất tiêu chuẩn~\cite{manning2008ir}:
 
-\textbf{Hit@k} (Tỷ lệ trúng tại vị trí k) đo lường tỷ lệ câu hỏi mà ít nhất một điều khoản vàng (gold article) xuất hiện trong danh sách $k$ kết quả truy xuất hàng đầu:
+\textbf{Top-k Hit Rate} đo tỷ lệ truy vấn mà ít nhất một điều khoản liên quan xuất hiện trong
+top-k kết quả:
 \begin{equation}
-  \text{Hit@}k = \frac{1}{|Q|} \sum_{q \in Q} \mathbf{1}\!\left[\text{gold}_q \cap \text{top-}k_q \neq \emptyset\right]
+  \text{Hit@}k = \frac{1}{|Q|} \sum_{q} \mathbf{1}\!\left[\exists a \in R_q : \text{rank}(a) \leq k\right]
   \label{eq:hitk}
 \end{equation}
-trong đó $Q$ là tập câu hỏi kiểm thử, $\text{gold}_q$ là tập điều khoản vàng cho câu hỏi $q$, và $\text{top-}k_q$ là $k$ điều khoản được hệ thống xếp hạng cao nhất.
 
-\textbf{MRR} (Mean Reciprocal Rank -- Trung bình nghịch đảo thứ hạng) đo lường trung bình nghịch đảo thứ hạng của điều khoản vàng đầu tiên xuất hiện trong danh sách kết quả:
+\textbf{Mean Reciprocal Rank} trung bình hạng nghịch đảo của kết quả liên quan đầu tiên:
 \begin{equation}
-  \text{MRR} = \frac{1}{|Q|} \sum_{q \in Q} \frac{1}{\text{rank}_q}
+  \text{MRR} = \frac{1}{|Q|} \sum_{q} \left(\min_{a \in R_q} \text{rank}(a)\right)^{-1}
   \label{eq:mrr}
 \end{equation}
-trong đó $\text{rank}_q$ là thứ hạng của điều khoản vàng xuất hiện sớm nhất cho câu hỏi $q$. MRR bằng $0$ nếu không có điều khoản vàng nào xuất hiện trong danh sách kết quả được xét.
+
+Kết quả được báo cáo tại $k \in \{1, 5, 10, 20\}$, với Hit@10 và MRR là chỉ số chính.
+Hit@10 được ưu tiên vì trong pipeline RAG, LLM xác nhận ngữ cảnh đã truy xuất, nên
+một điều khoản đúng trong mười ứng viên là đủ.
 
 \subsection{Các hệ thống đối sánh}
 \label{subsec:he-thong-doi-sanh}
 
-Để đánh giá khách quan, kiến trúc ba tầng được so sánh với bốn hệ thống cơ sở:
-
 \begin{itemize}
-  \item \textbf{NaiveRAG:} Kết hợp BM25 và embedding vector (all-MiniLM-L12-v2) theo phương pháp truy xuất phẳng, không sử dụng cấu trúc đồ thị hay phân cấp ngữ nghĩa.
+  \item \textbf{BM25}~\cite{robertson2009bm25}: Truy xuất từ vựng với tokenization mức âm tiết.
 
-  \item \textbf{LightRAG}~\cite{guo2025lightrag}: Hệ thống RAG tích hợp đồ thị tri thức với chiến lược truy xuất hai chế độ (local và global), sử dụng LLM để xây dựng đồ thị thực thể--quan hệ tự động.
+  \item \textbf{TF-IDF}~\cite{manning2008ir}: Truy xuất dựa trên tần suất từ--nghịch đảo tần suất tài liệu.
 
-  \item \textbf{RAPTOR}~\cite{sarthi2024raptor}: Phương pháp xây dựng cây tóm tắt phân cấp đệ quy từ văn bản nguồn, cho phép truy xuất tổng hợp ở nhiều mức độ chi tiết khác nhau.
+  \item \textbf{NaiveRAG}~\cite{reimers2019sbert}: Truy xuất dày đặc, không reranking.
 
-  \item \textbf{PageIndex}~\cite{zhang2025pageindex}: Phương pháp lập chỉ mục theo trang văn bản kết hợp với chiến lược truy xuất phân cấp hai bước, tối ưu cho tài liệu có cấu trúc trang rõ ràng.
+  \item \textbf{LightRAG}~\cite{guo2025lightrag}: Truy xuất hybrid KG (vector + duyệt đồ thị).
+
+  \item \textbf{RAPTOR}~\cite{sarthi2024raptor}: Summary Tree đệ quy với truy xuất embedding.
+
+  \item \textbf{PageIndex}~\cite{zhang2025pageindex}: Tìm kiếm cây phân cấp hai bước hướng dẫn bởi LLM.
 \end{itemize}
 
-\subsection{Case Study 1: Miền pháp luật Việt Nam}
+Tất cả hệ thống sử dụng Sonnet 4 cho các lời gọi LLM và truy xuất từ cùng kho tài
+liệu.
+
+\subsection{Case Study 1: Pháp luật Việt Nam}
 \label{subsec:casestudy-phapluat}
 
-Bộ kiểm thử miền pháp luật gồm 400 câu hỏi, chia đều trên hai lĩnh vực: luật doanh nghiệp (200 câu) và luật giao thông đường bộ (200 câu). Các câu hỏi được xây dựng thủ công bởi người có chuyên môn pháp lý, mỗi câu hỏi có ít nhất một điều khoản vàng tương ứng.
+\textbf{Dữ liệu.} Bộ dữ liệu pháp luật gồm 400 câu hỏi khó (hard-400) thuộc hai lĩnh vực: luật doanh
+nghiệp (200 câu, chủ yếu từ Luật 59/2020/QH14 và 9 nghị định) và luật giao thông (200
+câu, từ Luật 36/2024/QH15 và 2 nghị định xử phạt). Câu hỏi được thu thập từ các nhóm
+tư vấn pháp lý trên Facebook, với mức độ khó cao đòi hỏi suy luận đa bước.
+
+\textbf{Kết quả.} Bảng~\ref{tab:hit-phapluat} trình bày kết quả trên bộ dữ liệu pháp luật 400 câu hỏi.
 
 \begin{table}[htbp]
   \centering
@@ -125,244 +180,386 @@ Bộ kiểm thử miền pháp luật gồm 400 câu hỏi, chia đều trên ha
   \label{tab:hit-phapluat}
   \begin{tabular}{lrrrrr}
     \toprule
-    \textbf{Hệ thống} & \textbf{Hit@1} & \textbf{Hit@3} & \textbf{Hit@5} & \textbf{Hit@10} & \textbf{MRR} \\
+    \textbf{Phương pháp} & \textbf{Hit@1} & \textbf{Hit@5} & \textbf{Hit@10} & \textbf{Hit@20} & \textbf{MRR} \\
     \midrule
-    NaiveRAG            & 10{,}5 & 21{,}8 & 30{,}0 & 42{,}8 & 0{,}179 \\
-    LightRAG            & 13{,}0 & 27{,}5 & 39{,}5 & 55{,}8 & 0{,}224 \\
-    RAPTOR              & 12{,}2 & 23{,}2 & 31{,}2 & 41{,}0 & 0{,}196 \\
-    PageIndex           & 38{,}2 & 58{,}5 & 70{,}2 & 84{,}8 & 0{,}507 \\
-    \textbf{3-Tier (ours)} & \textbf{39{,}8} & \textbf{63{,}2} & \textbf{78{,}2} & \textbf{92{,}2} & \textbf{0{,}603} \\
+    \multicolumn{6}{l}{\textit{Truy xuất truyền thống}} \\
+    BM25            & 8{,}8  & 30{,}8 & 47{,}5 & 66{,}2 & 0{,}200 \\
+    TF-IDF          & 10{,}0 & 29{,}2 & 45{,}8 & 64{,}5 & 0{,}207 \\
+    \multicolumn{6}{l}{\textit{Hệ thống RAG}} \\
+    NaiveRAG~\cite{reimers2019sbert}   & 5{,}8  & 22{,}8 & 32{,}8 & 51{,}8 & 0{,}146 \\
+    LightRAG~\cite{guo2025lightrag}           & 9{,}2  & 25{,}5 & 39{,}8 & 47{,}8 & 0{,}173 \\
+    RAPTOR~\cite{sarthi2024raptor}            & 7{,}8  & 25{,}2 & 41{,}0 & 54{,}5 & 0{,}170 \\
+    PageIndex~\cite{zhang2025pageindex}       & 41{,}5 & 76{,}2 & 84{,}8 & 90{,}2 & 0{,}559 \\
+    \textbf{3-Tier (ours)} & \textbf{49{,}2} & \textbf{74{,}5} & \textbf{92{,}2} & \textbf{94{,}8} & \textbf{0{,}603} \\
     \bottomrule
   \end{tabular}
 \end{table}
 
-Bảng~\ref{tab:hit-phapluat} cho thấy kiến trúc ba tầng đạt Hit@10 = 92{,}2\% và MRR = 0{,}603, vượt trội so với PageIndex (84{,}8\%; 0{,}507) và các hệ thống còn lại. Đặc biệt, mức cải thiện từ Hit@1 sang Hit@10 của hệ thống ba tầng (39{,}8\% lên 92{,}2\%) cho thấy kiến trúc này có khả năng thu hồi toàn diện nhờ giai đoạn mở rộng đồ thị.
+Hệ thống đề xuất đạt 92,2\% Hit@10 ($\pm$ 0,3\%) và MRR = 0,603 qua ba lần chạy độc
+lập, vượt PageIndex 7,4 điểm phần trăm (pp) và BM25 44,7 pp. PageIndex đạt Hit@5
+cao hơn (76,2\% so với 74,5\%). Đây là sự đánh đổi giữa độ chính xác và độ phủ vốn có
+trong RRF: các điều khoản từ mở rộng KG đôi khi đẩy kết quả cây từ vị trí 4--5 xuống
+6--7, nhưng phục hồi nội dung tham chiếu chéo mà PageIndex không bao giờ đạt tới, tạo
+ra mức tăng 17,7 pp từ vị trí 6--10 so với chỉ 8,6 pp của PageIndex.
 
-Bảng~\ref{tab:hit10-mien} phân tích chi tiết Hit@10 theo từng lĩnh vực con trong miền pháp luật.
+Các baseline RAG (NaiveRAG 32,8\%, LightRAG 39,8\%, RAPTOR 41,0\%) thấp
+hơn cả BM25 (47,5\%): embeddings đa mục đích thiếu từ vựng pháp lý tiếng Việt, trích
+xuất KG chung tạo nhiễu, và tóm tắt RAPTOR mất chi tiết mức điều khoản.
+
+\textbf{Kết quả theo miền.} Bảng~\ref{tab:hit10-mien} trình bày kết quả Hit@10 theo từng miền.
 
 \begin{table}[htbp]
   \centering
   \caption{Hit@10 (\%) theo miền trên ba lĩnh vực}
   \label{tab:hit10-mien}
+  \small
   \begin{tabular}{lrrr}
     \toprule
-    \textbf{Hệ thống} & \textbf{Doanh nghiệp (200)} & \textbf{Giao thông (200)} & \textbf{Tổng (400)} \\
+    \textbf{Phương pháp} & \textbf{Doanh nghiệp (200)} & \textbf{Giao thông (200)} & \textbf{Đào tạo (130)} \\
     \midrule
-    NaiveRAG  & 34{,}5 & 51{,}0 & 42{,}8 \\
-    LightRAG  & 50{,}5 & 61{,}0 & 55{,}8 \\
-    RAPTOR    & 32{,}5 & 49{,}5 & 41{,}0 \\
-    PageIndex & 76{,}6 & 92{,}6 & 84{,}8 \\
-    \textbf{3-Tier (ours)} & \textbf{86{,}5} & \textbf{98{,}0} & \textbf{92{,}2} \\
+    NaiveRAG  & 29{,}9 & 35{,}5 & 50{,}0 \\
+    LightRAG  & 20{,}3 & 58{,}6 & 56{,}9 \\
+    RAPTOR    & 18{,}5 & 63{,}5 & 53{,}8 \\
+    BM25      & 31{,}5 & 63{,}1 & 70{,}0 \\
+    PageIndex & 76{,}6 & 92{,}6 & 74{,}6 \\
+    \textbf{3-Tier (ours)} & \textbf{86{,}5} & \textbf{98{,}0} & \textbf{87{,}9} \\
+    So với PageIndex & +9{,}9 & +5{,}4 & +13{,}3 \\
     \bottomrule
   \end{tabular}
 \end{table}
 
-Kết quả cho thấy lĩnh vực giao thông đường bộ có Hit@10 cao hơn đáng kể so với lĩnh vực doanh nghiệp ở tất cả các hệ thống, phản ánh sự khác biệt về độ phức tạp suy luận pháp lý giữa hai lĩnh vực.
+Hệ thống vượt trội trên cả ba miền. Luật giao thông đạt cao nhất (98,0\%) nhờ ánh
+xạ trực tiếp vi phạm--hình phạt. Luật doanh nghiệp khó hơn (86,5\%) do tham chiếu
+xuyên nghị định. Quy định đào tạo (87,9\%) cho thấy biên độ lớn nhất so với PageIndex
+(+13,3 pp), nhờ truy xuất ngữ nghĩa bổ sung các thuật ngữ mà duyệt cây bỏ sót. Cùng
+pipeline và siêu tham số được sử dụng trên cả ba miền mà không điều chỉnh riêng.
 
-\subsection{Case Study 2: Miền quy định đào tạo}
+\subsection{Case Study 2: Quy định đào tạo}
 \label{subsec:casestudy-daotao}
 
-Bộ kiểm thử miền quy định đào tạo gồm 130 câu hỏi được xây dựng dựa trên năm văn bản quy chế đào tạo sau đại học của Trường Đại học Công nghệ Thông tin~\cite{le2026threetier}. Bảng~\ref{tab:hit-daotao} trình bày kết quả so sánh.
+\textbf{Dữ liệu.} Bộ dữ liệu quy định đào tạo gồm 130 câu hỏi, 5 văn bản quy chế (109 điều khoản).
+Cấu hình hệ thống sử dụng file \texttt{config/education.yaml} với LLM proxy hỗ trợ OAuth
+và rate limiting.
+
+\textbf{Kết quả chi tiết.} Hệ thống đạt 87,9\% Hit@10 ($\pm$ 0,5 pp qua 3 lần chạy: 87,7\%, 87,7\%, 88,5\%) và
+MRR = 0,594. So sánh với các hệ thống đối sánh:
 
 \begin{table}[htbp]
   \centering
   \caption{Kết quả trên miền quy định đào tạo (130 câu hỏi)}
   \label{tab:hit-daotao}
-  \begin{tabular}{lrrrrr}
+  \begin{tabular}{lrr}
     \toprule
-    \textbf{Hệ thống} & \textbf{Hit@1} & \textbf{Hit@3} & \textbf{Hit@5} & \textbf{Hit@10} & \textbf{MRR} \\
+    \textbf{Phương pháp} & \textbf{Hit@10} & \textbf{MRR} \\
     \midrule
-    NaiveRAG            & 12{,}3 & 26{,}2 & 36{,}2 & 50{,}0 & 0{,}215 \\
-    LightRAG            & 18{,}5 & 33{,}1 & 43{,}1 & 58{,}5 & 0{,}279 \\
-    RAPTOR              & 16{,}2 & 30{,}0 & 40{,}0 & 53{,}8 & 0{,}253 \\
-    PageIndex           & 33{,}1 & 50{,}0 & 59{,}2 & 74{,}6 & 0{,}438 \\
-    \textbf{3-Tier (ours)} & \textbf{40{,}0} & \textbf{60{,}8} & \textbf{73{,}1} & \textbf{87{,}9} & \textbf{0{,}594} \\
+    BM25      & 70{,}0 & 0{,}355 \\
+    NaiveRAG  & 50{,}0 & 0{,}214 \\
+    LightRAG  & 56{,}9 & 0{,}251 \\
+    RAPTOR    & 53{,}8 & 0{,}218 \\
+    PageIndex & 74{,}6 & 0{,}441 \\
+    \textbf{3-Tier (ours)} & \textbf{87{,}9} & \textbf{0{,}594} \\
     \bottomrule
   \end{tabular}
 \end{table}
 
-Kiến trúc ba tầng tiếp tục dẫn đầu với Hit@10 = 87{,}9\% và MRR = 0{,}594 trên miền đào tạo. So với miền pháp luật (Hit@10 = 92{,}2\%), hiệu năng trên miền đào tạo thấp hơn một phần do đặc thù của quy chế đào tạo có nhiều điều khoản liên quan chéo phức tạp giữa các văn bản.
+Hệ thống vượt PageIndex 13,3 pp và RAPTOR 34,1 pp trên miền đào tạo. BM25
+(70,0\%) hoạt động tốt hơn các RAG baseline nhờ trùng khớp thuật ngữ tiếng Việt ở mức
+âm tiết, nhưng không đủ cho các câu hỏi multi-hop. Các cải tiến quan trọng cho miền
+đào tạo bao gồm: temperature = 0,0 cho Loop 1 (loại bỏ variance), fallback thông minh
+chọn chương có nhiều điều khoản nhất, và retry logic (3 lần, exponential backoff).
 
 \subsection{Ablation Study}
 \label{subsec:ablation}
 
-Để hiểu đóng góp của từng thành phần trong kiến trúc ba tầng, chúng tôi tiến hành ablation study bằng cách lần lượt loại bỏ hoặc vô hiệu hóa từng thành phần và đo lại chỉ số Hit@10 trung bình trên ba lần chạy độc lập.
+Để đánh giá đóng góp của từng thành phần, thử nghiệm ablation được thực hiện trên
+bộ hard-200 (150 doanh nghiệp + 50 giao thông). Bảng~\ref{tab:ablation} trình bày kết quả.
 
 \begin{table}[htbp]
   \centering
-  \caption{Kết quả ablation study (Hit@10~\%, trung bình 3 lần chạy)}
+  \caption{Kết quả ablation study (Hit@10 \%, trung bình 3 lần chạy)}
   \label{tab:ablation}
   \begin{tabular}{lrr}
     \toprule
-    \textbf{Cấu hình} & \textbf{Pháp luật} & \textbf{Đào tạo} \\
+    \textbf{Cấu hình} & \textbf{Hit@10} & \textbf{$\Delta$} \\
     \midrule
-    Full 3-Tier                    & \textbf{92{,}2} & \textbf{87{,}9} \\
-    w/o Tầng 1 (lọc chương)       & 63{,}5 & 58{,}5 \\
-    w/o Tầng 2 (kết hợp đa nguồn) & 85{,}0 & 78{,}5 \\
-    w/o Tầng 3 (mở rộng đồ thị KG)& 88{,}2 & 83{,}1 \\
-    w/o PPR                        & 87{,}5 & 81{,}5 \\
-    w/o Concept Matching           & 89{,}8 & 84{,}6 \\
-    w/o Agreement Bonus            & 90{,}5 & 85{,}4 \\
-    w/o Dynamic Weight             & 91{,}0 & 86{,}2 \\
+    Full (3-Tier + RRF)                    & 88{,}0 & --- \\
+    Tree only (Tầng 1)                     & 64{,}8 & $-23{,}2$ \\
+    Dual only (Tầng 2)                     & 33{,}0 & $-55{,}0$ \\
+    Simple merge (không RRF)               & 72{,}8 & $-15{,}2$ \\
+    Tree + KG + expand (không Tầng 2)      & 73{,}0 & $-15{,}0$ \\
     \bottomrule
   \end{tabular}
 \end{table}
 
-Kết quả ablation (Bảng~\ref{tab:ablation}) tiết lộ một số quan sát quan trọng:
-
+Phân tích:
 \begin{itemize}
-  \item \textbf{Tầng 1 có đóng góp lớn nhất:} Loại bỏ tầng lọc chương làm giảm Hit@10 xuống còn 63{,}5\% (pháp luật) và 58{,}5\% (đào tạo), tức giảm khoảng 28--29 điểm phần trăm. Điều này khẳng định giá trị của chiến lược thu hẹp không gian tìm kiếm theo cấu trúc văn bản.
+  \item \textbf{RRF là thành phần quan trọng nhất:} Hợp nhất RRF đóng góp +23,2 pp so với
+  chỉ dùng duyệt cây, và +15,2 pp so với simple merge. Không có RRF, mở rộng
+  KG và Tầng 2 gần như không đóng góp.
 
-  \item \textbf{Tầng 2 là nền tảng truy xuất:} Loại bỏ giai đoạn kết hợp đa nguồn (BM25 + embedding + KG) làm giảm đáng kể hiệu năng, chứng tỏ mỗi tín hiệu truy xuất đều đóng góp bổ sung.
+  \item \textbf{Duyệt cây là backbone:} Tầng 1 alone (64,8\%) vượt xa Tầng 2 alone (33,0\%), xác
+  nhận rằng tín hiệu cấu trúc đáng tin cậy hơn tín hiệu ngữ nghĩa cho văn bản pháp
+  lý có cấu trúc.
 
-  \item \textbf{PPR và mở rộng đồ thị bổ trợ nhau:} Cả hai cơ chế mở rộng trong Tầng 3 đều cải thiện recall, với PPR có đóng góp nhỉnh hơn.
+  \item \textbf{Tầng 2 bổ trợ qua RRF:} Dual-Level alone yếu (33,0\%), nhưng khi kết hợp qua
+  RRF đóng góp +15,0 pp so với Tree+KG, cho thấy giá trị bổ trợ thông qua RRF.
 
-  \item \textbf{Agreement Bonus và Dynamic Weight cải thiện biên:} Các cơ chế hợp nhất tinh vi này đóng góp thêm 1--2 điểm phần trăm nhưng vẫn có ý nghĩa thực tiễn.
+  \item \textbf{Variance thấp:} Tất cả cấu hình có variance $\pm$0,2--0,5 pp qua 3 lần chạy, xác nhận
+  tính ổn định.
 \end{itemize}
 
 \subsection{Phân tích lỗi}
 \label{subsec:phan-tich-loi}
 
-Trong tổng số 400 câu hỏi kiểm thử trên miền pháp luật, có 31 câu hỏi mà hệ thống ba tầng không tìm thấy bất kỳ điều khoản vàng nào trong danh sách kết quả (Hit@10 = 0). Đáng chú ý, 27 trên 31 câu hỏi thất bại này thuộc lĩnh vực doanh nghiệp, phù hợp với kết quả Hit@10 thấp hơn của lĩnh vực này (86{,}5\%) so với giao thông (98{,}0\%).
+Trong 31 câu hỏi bị bỏ sót (7,8\%), 27 thuộc lĩnh vực doanh nghiệp:
+\begin{itemize}
+  \item \textbf{Phụ thuộc xuyên nghị định (6 câu):} Câu hỏi yêu cầu kết hợp thông tin từ luật
+  chính và nghị định hướng dẫn.
 
-Phân tích thủ công các câu hỏi thất bại cho thấy nguyên nhân chính là \textbf{chuỗi suy luận pháp lý ngầm định} -- các câu hỏi yêu cầu tổng hợp thông tin từ nhiều điều khoản không có liên kết tham chiếu tường minh trong văn bản gốc. Ví dụ, câu hỏi về trách nhiệm của giám đốc doanh nghiệp trong trường hợp phá sản đòi hỏi kết hợp các điều khoản từ Luật Doanh nghiệp, Luật Phá sản và Bộ luật Dân sự -- những quan hệ ngữ nghĩa này không được biểu diễn tường minh trong đồ thị tri thức do giới hạn của quá trình xây dựng đồ thị thủ công. Hướng khắc phục trong tương lai là tích hợp suy luận liên văn bản tự động thông qua GNN hoặc LLM-driven graph expansion.
+  \item \textbf{Ngoài kho tài liệu (4 câu):} Câu hỏi về hộ kinh doanh, nằm ngoài phạm vi kho tài
+  liệu.
+
+  \item \textbf{Đa điều khoản (14 câu):} Câu hỏi yêu cầu $>$2 điều khoản, chủ yếu liên kết bằng
+  chuỗi suy luận pháp lý ngầm thay vì tham chiếu chéo rõ ràng.
+
+  \item \textbf{Lỗi Loop 0 (3 câu):} Chọn sai tài liệu ở bước đầu tiên.
+\end{itemize}
 
 % ===================================================================
 \section{Ứng dụng minh họa}
 \label{sec:ung-dung-minh-hoa}
 
+Để minh họa khả năng ứng dụng thực tế của hệ thống truy xuất, một ứng dụng chat-bot tra cứu quy định đào tạo đã được xây dựng dưới dạng giao diện web tương tác. Ứng dụng kết nối trực tiếp với pipeline truy xuất 3-Tier KG-RAG và sử dụng LLM để sinh câu trả lời theo phương pháp phân tích IRAC (Issue--Rule--Application--Conclusion), phục vụ trực tiếp nhu cầu tra cứu quy chế đào tạo sau đại học của học viên cao học.
+
 \subsection{Kiến trúc ứng dụng}
 \label{subsec:kientruc-ungdung}
 
-Ứng dụng chatbot tư vấn được xây dựng trên nền tảng FastAPI (backend) và React 18 (frontend), triển khai qua Docker Compose. Backend cung cấp ba endpoint chính: \texttt{POST /api/query} để xử lý truy vấn, \texttt{GET /api/health} để kiểm tra trạng thái dịch vụ, và \texttt{GET /api/documents} để liệt kê kho tài liệu. Frontend kết nối với backend qua HTTP và hiển thị kết quả theo thời gian thực với chỉ báo tiến trình.
+Ứng dụng được xây dựng trên nền tảng Chainlit 2.0, một framework mã nguồn mở
+cho giao diện chatbot hỗ trợ streaming. Kiến trúc gồm ba thành phần chính:
+
+\begin{itemize}
+  \item \textbf{Giao diện web (Chainlit):} Giao diện chat hỗ trợ streaming token-by-token, hiển
+  thị trạng thái truy xuất theo thời gian thực và panel nguồn trích dẫn với bread-crumb vị trí trong văn bản.
+
+  \item \textbf{Cầu nối bất đồng bộ (Async Bridge):} Pipeline truy xuất 3-Tier hoạt động đồng
+  bộ (synchronous), trong khi Chainlit yêu cầu xử lý bất đồng bộ (asynchronous) để
+  duy trì kết nối WebSocket. Một cầu nối sử dụng \texttt{threading.Thread} và \texttt{asyncio.Queue}
+  chuyển tiếp sự kiện từ pipeline đồng bộ sang vòng lặp sự kiện bất đồng bộ, tránh
+  chặn (block) giao diện trong suốt quá trình truy xuất (30--60 giây).
+
+  \item \textbf{Pipeline truy xuất (3-Tier KG-RAG):} Pipeline sinh ba loại sự kiện: status (cập
+  nhật trạng thái truy xuất), metadata (trích dẫn, reasoning trace, độ tin cậy) và
+  token (nội dung câu trả lời streaming).
+\end{itemize}
 
 \subsection{Phương pháp sinh câu trả lời IRAC}
 \label{subsec:phuongphap-irac}
 
-Hệ thống sử dụng cấu trúc IRAC (Issue -- Rule -- Application -- Conclusion) để trình bày câu trả lời theo dạng tư vấn pháp lý có căn cứ. Prompt sinh câu trả lời được điều chỉnh theo từng miền để phù hợp với đặc thù ngôn ngữ và yêu cầu trình bày.
+IRAC (Issue--Rule--Application--Conclusion) là phương pháp phân tích có nguồn
+gốc từ lĩnh vực pháp lý, được sử dụng rộng rãi trong đào tạo luật và tư vấn pháp luật.
+Phương pháp này phù hợp cho bài toán hỏi đáp quy định vì đảm bảo câu trả lời có cấu
+trúc rõ ràng, trích dẫn căn cứ cụ thể và kết luận dứt khoát. Bốn phần của IRAC gồm:
+
+\begin{enumerate}
+  \item \textbf{Issue (Vấn đề):} Xác định vấn đề cần giải đáp từ câu hỏi của người dùng.
+
+  \item \textbf{Rule (Căn cứ quy chế):} Trích dẫn chính xác Điều, Khoản, Điểm của quy chế/quyết
+  định liên quan từ ngữ cảnh đã truy xuất.
+
+  \item \textbf{Application (Phân tích áp dụng):} Giải thích cụ thể quy định áp dụng vào tình
+  huống như thế nào, chỉ ra mối liên hệ giữa quy chế và câu hỏi thực tế.
+
+  \item \textbf{Conclusion (Kết luận):} Trả lời trực tiếp câu hỏi, tổng hợp các điều kiện hoặc quy
+  trình.
+\end{enumerate}
+
+Hệ thống sử dụng prompt engineering để hướng dẫn LLM sinh câu trả lời theo cấu
+trúc IRAC. Prompt được tùy biến theo miền ứng dụng, với hai điểm khác biệt chính giữa
+miền pháp luật và miền đào tạo:
 
 \begin{table}[htbp]
   \centering
-  \caption{So sánh cấu trúc prompt IRAC giữa miền pháp luật và miền đào tạo}
+  \caption{So sánh prompt IRAC giữa miền pháp luật và miền đào tạo}
   \label{tab:irac-compare}
-  \begin{tabular}{p{0.47\linewidth} p{0.47\linewidth}}
+  \begin{tabular}{lll}
     \toprule
-    \textbf{Miền pháp luật} & \textbf{Miền đào tạo} \\
+    \textbf{Thành phần} & \textbf{Miền pháp luật} & \textbf{Miền đào tạo} \\
     \midrule
-    \textbf{Issue:} Xác định vấn đề pháp lý cần giải quyết, dựa trên câu hỏi của người dùng. &
-    \textbf{Issue:} Xác định quy định hoặc điều kiện cụ thể mà học viên/sinh viên cần nắm rõ. \\[6pt]
-    \textbf{Rule:} Trích dẫn chính xác điều khoản pháp luật liên quan (số điều, khoản, văn bản). &
-    \textbf{Rule:} Trích dẫn điều khoản quy chế đào tạo tương ứng (số điều, quy chế, năm ban hành). \\[6pt]
-    \textbf{Application:} Áp dụng quy định vào tình huống cụ thể, phân tích điều kiện và hệ quả pháp lý. &
-    \textbf{Application:} Giải thích cách quy định áp dụng vào trường hợp cụ thể của người học. \\[6pt]
-    \textbf{Conclusion:} Kết luận câu trả lời rõ ràng, nêu nghĩa vụ/quyền lợi và các bước hành động tiếp theo. &
-    \textbf{Conclusion:} Kết luận hành động cần thực hiện và thủ tục liên quan. \\
+    Vai trò    & Luật sư tư vấn               & Chuyên viên tư vấn đào tạo UIT \\
+    Thuật ngữ  & Căn cứ pháp luật, điều luật  & Căn cứ quy chế, quy định \\
+    Trích dẫn  & Văn bản pháp luật            & QĐ cấp ĐHQG vs QĐ cấp trường \\
+    Ưu tiên    & Không phân cấp               & Ưu tiên QĐ cấp trường (QĐ 270) \\
+    Giọng văn  & Trang trọng, pháp lý         & Thân thiện, hướng dẫn học viên \\
     \bottomrule
   \end{tabular}
 \end{table}
 
+Việc tùy biến prompt theo miền cho phép hệ thống sử dụng cùng pipeline truy xuất
+nhưng sinh câu trả lời phù hợp với ngữ cảnh và đối tượng người dùng của từng lĩnh vực.
+
 \subsection{Các tính năng chính}
 \label{subsec:tinh-nang-chinh}
 
-Ứng dụng cung cấp ba màn hình/tính năng chính được minh họa qua các hình dưới đây.
+\begin{enumerate}
+  \item \textbf{Phản hồi trạng thái theo thời gian thực:} Trong quá trình truy xuất, hệ thống
+  hiển thị trạng thái cập nhật trực tiếp qua ba giai đoạn: ``Đang phân tích câu hỏi'',
+  ``Đang tìm kiếm quy định liên quan'' và ``Đang tổng hợp câu trả lời'' (Hình~\ref{fig:retrieving-state}).
+  Thông báo tự động biến mất khi câu trả lời bắt đầu streaming. Điều này giải quyết
+  vấn đề UX quan trọng khi thời gian truy xuất kéo dài 30--60 giây.
+
+  \item \textbf{Streaming câu trả lời:} Câu trả lời được sinh theo phương pháp IRAC và stream-ing token-by-token đến giao diện, giúp người dùng bắt đầu đọc ngay khi LLM
+  sinh văn bản mà không cần đợi toàn bộ câu trả lời (Hình~\ref{fig:irac-answer}).
+
+  \item \textbf{Trích dẫn nguồn với breadcrumb:} Panel bên phải hiển thị nội dung gốc của các
+  điều khoản được trích dẫn, với breadcrumb vị trí rõ ràng (tên văn bản, chương,
+  điều) và đường phân cách giữa các nguồn. Người dùng có thể đối chiếu trực tiếp
+  giữa tư vấn và nguyên văn quy định (Hình~\ref{fig:irac-answer}).
+
+  \item \textbf{Hỗ trợ đa miền:} Ứng dụng hỗ trợ chuyển đổi giữa các miền (quy định đào
+  tạo, pháp luật) thông qua biến môi trường cấu hình, sử dụng cùng giao diện và
+  pipeline.
+\end{enumerate}
 
 \begin{figure}[htbp]
   \centering
-  \fbox{\parbox{0.85\linewidth}{\centering\vspace{2cm}[Màn hình chào mừng -- Placeholder]\vspace{2cm}}}
-  \caption{Màn hình chào mừng của ứng dụng chatbot tư vấn}
+  \fbox{\parbox{0.85\linewidth}{\centering\vspace{2cm}[Màn hình chào mừng với lĩnh vực ``Quy định đào tạo'' và các câu hỏi gợi ý về quy chế đào tạo sau đại học -- Placeholder]\vspace{2cm}}}
+  \caption{Màn hình chào mừng với lĩnh vực ``Quy định đào tạo'' và các câu hỏi gợi ý về quy chế đào tạo sau đại học}
   \label{fig:welcome-screen}
 \end{figure}
 
 \begin{figure}[htbp]
   \centering
-  \fbox{\parbox{0.85\linewidth}{\centering\vspace{2cm}[Trạng thái truy xuất ``Đang tổng hợp câu trả lời...'' -- Placeholder]\vspace{2cm}}}
-  \caption{Trạng thái truy xuất ``Đang tổng hợp câu trả lời...'' hiển thị trong quá trình xử lý}
+  \fbox{\parbox{0.85\linewidth}{\centering\vspace{2cm}[Trạng thái truy xuất ``Đang tổng hợp câu trả lời...'' hiển thị trực tiếp trong khi hệ thống xử lý câu hỏi -- Placeholder]\vspace{2cm}}}
+  \caption{Trạng thái truy xuất ``Đang tổng hợp câu trả lời...'' hiển thị trực tiếp trong khi hệ thống xử lý câu hỏi}
   \label{fig:retrieving-state}
 \end{figure}
 
 \begin{figure}[htbp]
   \centering
-  \fbox{\parbox{0.85\linewidth}{\centering\vspace{2cm}[Câu trả lời IRAC cho câu hỏi ``Điều kiện bảo vệ luận văn thạc sĩ?'' -- Placeholder]\vspace{2cm}}}
-  \caption{Câu trả lời theo cấu trúc IRAC cho câu hỏi về điều kiện bảo vệ luận văn thạc sĩ}
+  \fbox{\parbox{0.85\linewidth}{\centering\vspace{2cm}[Câu trả lời IRAC cho câu hỏi ``Điều kiện bảo vệ luận văn thạc sĩ?'' với panel nguồn quy định gốc (phải) -- Placeholder]\vspace{2cm}}}
+  \caption{Câu trả lời IRAC cho câu hỏi ``Điều kiện bảo vệ luận văn thạc sĩ?'' với panel nguồn quy định gốc (phải)}
   \label{fig:irac-answer}
 \end{figure}
 
 \subsection{Ví dụ minh họa tiêu biểu}
 \label{subsec:vi-du-minh-hoa}
 
-Phần này trình bày bốn ví dụ cụ thể so sánh kết quả truy xuất top-5 của hệ thống ba tầng với PageIndex và RAPTOR, nhằm làm rõ ưu và nhược điểm của từng phương pháp trong thực tế.
+Phần này trình bày các ví dụ cụ thể từ kết quả thử nghiệm trên miền quy định đào
+tạo, minh họa điểm mạnh và hạn chế của hệ thống qua so sánh trực tiếp với các baseline.
+Các câu hỏi được trích nguyên văn từ diễn đàn học viên cao học UIT.
 
-\subsubsection*{Ví dụ 1: Điều kiện để được bảo vệ luận văn thạc sĩ}
+\subsubsection*{Ví dụ 1: Truy xuất cross-document -- yêu cầu ngoại ngữ}
 
-\textit{Câu hỏi:} ``Điều kiện để được bảo vệ luận văn thạc sĩ là gì?''
+\textit{Câu hỏi:} ``Chứng chỉ TOEIC do các trường ĐH, CĐ trong nước cấp (không phải
+của trung tâm khảo thí của ETS cấp) có được công nhận anh văn đầu ra Cao học không
+ạ?''
+
+\textit{Gold articles:} Điều 6 QĐ 1393 (ĐHQG-HCM, yêu cầu ngoại ngữ đầu ra) và Điều 9
+QĐ 270 (UIT, quy định bổ sung về chứng chỉ được chấp nhận).
+
+\textit{Phân tích:} Câu hỏi yêu cầu kết hợp thông tin từ hai văn bản ở hai tầng quản lý
+khác nhau: QĐ 1393 (ĐHQG-HCM) quy định yêu cầu chung, còn QĐ 270 (UIT) bổ
+sung danh sách chứng chỉ cụ thể được chấp nhận. Tầng 1 chọn đúng cả hai tài liệu ở
+Loop 0, sau đó Loop 1 thu hẹp vào các chương về ngoại ngữ. KG expansion bổ sung
+Điều 25 (QĐ 270) qua cạnh references từ Điều 9. Hệ thống đạt MRR = 1,0 với cả hai
+gold articles trong top 3. PageIndex tìm được Điều 6 nhưng bỏ sót Điều 9 của UIT (chỉ
+tìm trong QĐ 1393 và QĐ 160). RAPTOR không tìm được cả hai, truy xuất phân tán
+giữa các điều khoản không liên quan.
 
 \begin{table}[htbp]
   \centering
-  \caption{So sánh top-5 kết quả truy xuất -- Ví dụ 1}
+  \caption{So sánh top-5 kết quả truy xuất giữa các hệ thống -- Ví dụ 1}
   \label{tab:ex1}
   \begin{tabular}{clll}
     \toprule
     \textbf{Rank} & \textbf{3-Tier KG-RAG} & \textbf{PageIndex} & \textbf{RAPTOR} \\
     \midrule
-    1 & 270:d24~\checkmark & 270:d24~\checkmark & 270:d12 \\
-    2 & 1393:d25~\checkmark & 270:d22            & 1393:d14 \\
-    3 & 270:d29~\checkmark  & 270:d25            & 270:d24~\checkmark \\
-    4 & 270:d22             & 1393:d25~\checkmark& 1393:d3 \\
-    5 & 270:d25             & 270:d16            & 270:d13 \\
+    1 & 1393:d6~$\checkmark$  & 1393:d24           & 160:d37  \\
+    2 & 1393:d23            & 1393:d6~$\checkmark$ & 851:d2   \\
+    3 & 270:d9~$\checkmark$   & 1393:d2            & 1393:d33 \\
+    4 & 270:d25             & 160:d25            & 270:d38  \\
+    5 & 160:d37             & 160:d9             & 160:d19  \\
     \bottomrule
   \end{tabular}
 \end{table}
 
-Hệ thống ba tầng xếp hạng 3 điều khoản vàng trong top-5 (Rank 1, 2, 3), trong khi PageIndex chỉ có 2 (Rank 1, 4) và RAPTOR chỉ có 1 (Rank 3). Kết quả cho thấy cơ chế mở rộng đồ thị tri thức giúp thu hồi được nhiều điều khoản liên quan hơn ở các vị trí cao.
+\subsubsection*{Ví dụ 2: Truy xuất đa điều khoản -- hoãn chuyên đề}
 
-\subsubsection*{Ví dụ 2: Cảnh báo học vụ}
+\textit{Câu hỏi:} ``Cho em hỏi nếu hoãn 1 hoặc 2 môn chuyên đề thôi thì vẫn làm theo mẫu
+trên vẫn được phải không ạ? Nếu đã tham gia học rồi nhưng không nộp bài thì tính
+sao?''
 
-\textit{Câu hỏi:} Câu hỏi về điều kiện và xử lý cảnh báo học vụ đối với học viên cao học.
+\textit{Gold articles:} Điều 8 QĐ 1393 (quy định về chương trình đào tạo), Điều 11 QĐ 270
+(quy chế học vụ) và Điều 18 QĐ 270 (quy định về chuyên đề).
 
 \begin{table}[htbp]
   \centering
-  \caption{So sánh top-5 kết quả truy xuất -- Ví dụ 2}
+  \caption{So sánh top-5 kết quả truy xuất giữa các hệ thống -- Ví dụ 2}
   \label{tab:ex2}
   \begin{tabular}{clll}
     \toprule
     \textbf{Rank} & \textbf{3-Tier KG-RAG} & \textbf{PageIndex} & \textbf{RAPTOR} \\
     \midrule
-    1 & 270:d18~\checkmark  & 270:d19   & 270:d38  \\
-    2 & 1393:d11~\checkmark & 160:d24   & 160:d25  \\
-    3 & 270:d11~\checkmark  & 1393:d18  & 270:d26  \\
+    1 & 1393:d8~$\checkmark$  & 1393:d25  & 270:d38  \\
+    2 & 1393:d24            & 1393:d13  & 1393:d33 \\
+    3 & 270:d11~$\checkmark$  & 1393:d24  & 270:d26  \\
     4 & 270:d16             & 1393:d26  & 1393:d13 \\
-    5 & 270:d18~\checkmark  & 1393:d14  & 160:d20  \\
+    5 & 270:d18~$\checkmark$  & 1393:d14  & 160:d20  \\
     \bottomrule
   \end{tabular}
 \end{table}
 
-Hệ thống ba tầng đặt 3 trong số 4 điều khoản vàng vào top-3, thể hiện khả năng nhóm các điều khoản liên quan về cùng một chủ đề thông qua quan hệ trong đồ thị tri thức.
+\textit{Phân tích:} Hệ thống truy xuất tất cả 3 gold articles trong top 5, MRR = 1,0. Câu
+hỏi đòi hỏi liên kết giữa quy định chung về chương trình đào tạo (QĐ 1393) và quy chế
+riêng của UIT về học vụ và chuyên đề (QĐ 270). Tầng 1 duyệt đúng cả hai tài liệu, KG
+expansion liên kết Điều 11 với Điều 18 qua quan hệ references. PageIndex chỉ tìm trong
+QĐ 1393, bỏ sót hoàn toàn QĐ 270. RAPTOR truy xuất các điều khoản về hình thức xử
+lý (QĐ 270:d38, d26) thay vì các quy định gốc.
 
-\subsubsection*{Ví dụ 3: Đăng ký chuyên đề khác khóa}
+\subsubsection*{Ví dụ 3: Truy xuất đăng ký chuyên đề -- đăng ký môn học khác khóa}
 
-\textit{Câu hỏi:} Câu hỏi về thủ tục và điều kiện đăng ký học chuyên đề của khóa học khác.
+\textit{Câu hỏi:} ``Cho em hỏi là khóa 5 có được phép đăng ký học những môn chuyên đề
+của Khóa 4 không?''
+
+\textit{Gold articles:} Điều 8 QĐ 1393 (chương trình đào tạo), Điều 11, Điều 2, Điều 4
+QĐ 270 (quy chế học vụ, phạm vi áp dụng, hình thức đào tạo).
+
+\textit{Phân tích:} Hệ thống đặt 2/4 gold articles (Đ.8 QĐ 1393 và Đ.11 QĐ 270) ở rank 1--2, MRR = 1,0. Câu hỏi ngắn, không chứa thuật ngữ chuyên ngành nhưng đòi hỏi hiểu
+biết về quy trình đăng ký khác khóa. Tầng 1 chọn đúng chương về đào tạo trong cả hai
+văn bản. Cả PageIndex và RAPTOR đều không truy xuất được Điều 8 hoặc Điều 11
+trong top 10.
 
 \begin{table}[htbp]
   \centering
-  \caption{So sánh top-5 kết quả truy xuất -- Ví dụ 3}
+  \caption{So sánh top-5 kết quả truy xuất giữa các hệ thống -- Ví dụ 3}
   \label{tab:ex3}
   \begin{tabular}{clll}
     \toprule
     \textbf{Rank} & \textbf{3-Tier KG-RAG} & \textbf{PageIndex} & \textbf{RAPTOR} \\
     \midrule
-    1 & 1393:d8~\checkmark & 160:d17   & 160:d12  \\
-    2 & 270:d11~\checkmark & 1393:d13  & 270:d25  \\
-    3 & 160:d13            & 160:d13   & 1393:d9  \\
-    4 & 160:d18            & 1393:d4   & 160:d9   \\
-    5 & 270:d17            & 270:d16   & 1393:d3  \\
+    1 & 1393:d8~$\checkmark$  & 160:d17   & 160:d12  \\
+    2 & 270:d11~$\checkmark$  & 1393:d13  & 270:d25  \\
+    3 & 160:d13             & 160:d13   & 1393:d9  \\
+    4 & 160:d18             & 1393:d4   & 160:d9   \\
+    5 & 270:d17             & 270:d16   & 1393:d3  \\
     \bottomrule
   \end{tabular}
 \end{table}
 
-Hệ thống ba tầng thu hồi cả hai điều khoản vàng trong top-2, trong khi PageIndex và RAPTOR đều không tìm thấy điều khoản vàng nào trong top-5. Điều này minh họa lợi thế của việc tích hợp ngữ nghĩa đồ thị cho các câu hỏi về thủ tục liên quy chế.
+\subsubsection*{Ví dụ 4: Trường hợp thất bại -- câu hỏi thiếu ngữ cảnh}
 
-\subsubsection*{Ví dụ 4: Trường hợp thất bại -- câu hỏi suy luận ngầm}
+\textit{Câu hỏi:} ``Thầy/cô cho em hỏi, nếu như học ngành CNTT, sau này đăng ký học Tiến
+sĩ với bằng Thạc sĩ ngành CNTT thì trường có chấp nhận không ạ?''
 
-\textit{Câu hỏi:} Câu hỏi yêu cầu suy luận kết hợp nhiều điều khoản từ các văn bản khác nhau mà không có liên kết tường minh trong đồ thị.
+\textit{Gold articles:} Điều 6 QĐ 1393 (điều kiện trình độ đầu vào) và Điều 9 QĐ 270 (yêu
+cầu bổ sung).
 
-Đây là một ví dụ điển hình trong số 31 trường hợp thất bại. Câu hỏi đòi hỏi tổng hợp thông tin từ điều khoản quy định trách nhiệm pháp lý, điều khoản định nghĩa chủ thể và điều khoản về hậu quả -- ba điều khoản thuộc ba chương/văn bản khác nhau, không có quan hệ \texttt{REFERENCES} hay \texttt{REQUIRES} tường minh trong đồ thị tri thức. Do PPR chỉ lan truyền điểm qua các cạnh đồ thị đã có, những điều khoản này không được tăng điểm tương ứng, dẫn đến không xuất hiện trong top-10. Đây là giới hạn cơ bản của phương pháp truy xuất dựa trên đồ thị tĩnh và là động lực chính cho hướng phát triển GNN-RAG trong tương lai~\cite{nguyen2022legalonto}.
+\textit{Kết quả:} Hệ thống truy xuất Điều 10, 11 QĐ 1393 (chương trình Tiến sĩ) và Điều 13,
+17 QĐ 270 (nghiên cứu sinh) trong top 5 -- đúng chủ đề Tiến sĩ nhưng sai điều khoản cụ
+thể. PageIndex lại truy xuất đúng nhờ tìm kiếm rộng hơn trên QĐ 270.
+
+\textit{Nguyên nhân:} Câu hỏi hỏi về ``Tiến sĩ'' nhưng gold articles nằm ở phần ``điều kiện
+đầu vào Thạc sĩ'' (Điều 6, Điều 9). Nội dung hai điều khoản này bao gồm cả điều kiện
+cho chương trình Tiến sĩ nhưng tiêu đề chương và tóm tắt chỉ đề cập ``Thạc sĩ'', khiến
+Loop 1 chọn nhầm chương. Đây là hạn chế của duyệt cây khi tiêu đề chương không phản
+ánh đầy đủ nội dung bên trong.

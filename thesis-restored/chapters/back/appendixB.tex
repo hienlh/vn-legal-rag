@@ -1,156 +1,82 @@
 \chapter{Bộ câu hỏi kiểm thử mẫu}
 \label{app:cau-hoi-kiem-thu}
 
-Phụ lục này trình bày các mẫu câu hỏi kiểm thử tiêu biểu từ hai bộ dữ liệu được sử dụng trong thực nghiệm. Mỗi câu hỏi được gán nhãn thủ công với điều khoản vàng (gold articles) tương ứng và phân loại theo dạng suy luận yêu cầu.
-
-Ký hiệu điều khoản vàng theo định dạng \texttt{<mã\_văn\_bản>:d<số\_điều>}, ví dụ \texttt{270:d24} nghĩa là Điều 24 của văn bản có mã 270. Cột ``Loại'' phân loại câu hỏi theo mức độ suy luận: \textbf{Trực tiếp} (D) -- câu trả lời nằm tường minh trong một điều khoản; \textbf{Kết hợp} (K) -- cần tổng hợp từ nhiều điều khoản; \textbf{Suy luận} (S) -- cần suy luận từ các điều khoản liên quan gián tiếp.
+Phụ lục này trình bày 20 câu hỏi mẫu từ bộ kiểm thử miền quy định đào tạo (130 câu hỏi) và miền pháp luật (400 câu hỏi).
 
 % -------------------------------------------------------------------
-\section{Bộ câu hỏi miền quy định đào tạo}
+\section{Câu hỏi miền quy định đào tạo}
 \label{sec:app-cau-hoi-daotao}
 
-\begin{longtable}{>{\centering\arraybackslash}p{0.04\linewidth}
-                   p{0.42\linewidth}
-                   p{0.32\linewidth}
-                   >{\centering\arraybackslash}p{0.08\linewidth}}
-  \caption{Mẫu câu hỏi kiểm thử -- miền quy định đào tạo (10/130 câu)}
-  \label{tab:cau-hoi-daotao} \\
-  \toprule
-  \textbf{STT} & \textbf{Câu hỏi} & \textbf{Điều khoản vàng} & \textbf{Loại} \\
-  \midrule
-  \endfirsthead
-  \multicolumn{4}{c}{\textit{(Tiếp theo Bảng~\ref{tab:cau-hoi-daotao})}} \\
-  \toprule
-  \textbf{STT} & \textbf{Câu hỏi} & \textbf{Điều khoản vàng} & \textbf{Loại} \\
-  \midrule
-  \endhead
-  \bottomrule
-  \endfoot
-
-  1 &
-  Điều kiện để được bảo vệ luận văn thạc sĩ là gì? &
-  270:d24, 1393:d25, 270:d29 &
-  K \\[4pt]
-
-  2 &
-  Học viên bị cảnh báo học vụ trong trường hợp nào? &
-  270:d18, 1393:d11, 270:d11 &
-  K \\[4pt]
-
-  3 &
-  Thủ tục đăng ký học chuyên đề của khóa khác như thế nào? &
-  1393:d8, 270:d11 &
-  D \\[4pt]
-
-  4 &
-  Thời gian tối đa để hoàn thành chương trình thạc sĩ là bao lâu? &
-  270:d5, 1393:d3 &
-  D \\[4pt]
-
-  5 &
-  Điều kiện công nhận tốt nghiệp thạc sĩ bao gồm những yêu cầu gì? &
-  270:d32, 1393:d28, 270:d29 &
-  K \\[4pt]
-
-  6 &
-  Hội đồng chấm luận văn thạc sĩ gồm những thành phần nào và ai có thẩm quyền thành lập? &
-  270:d27, 1393:d22 &
-  D \\[4pt]
-
-  7 &
-  Học viên có thể bảo lưu kết quả học tập trong bao lâu và thủ tục như thế nào? &
-  270:d14, 1393:d12 &
-  K \\[4pt]
-
-  8 &
-  Điểm trung bình tích lũy tối thiểu để không bị cảnh báo học vụ là bao nhiêu? &
-  270:d18, 270:d19 &
-  D \\[4pt]
-
-  9 &
-  Học viên vi phạm quy định về đạo văn trong luận văn sẽ bị xử lý như thế nào? &
-  270:d31, 1393:d26, 270:d22 &
-  S \\[4pt]
-
-  10 &
-  Giảng viên hướng dẫn luận văn thạc sĩ phải đáp ứng những tiêu chuẩn gì? &
-  270:d25, 1393:d20 &
-  D \\
-
-\end{longtable}
+\begin{table}[htbp]
+  \centering
+  \caption{Câu hỏi mẫu miền quy định đào tạo}
+  \label{tab:cau-hoi-daotao}
+  \begin{tabular}{>{\centering\arraybackslash}p{0.5cm}
+                  p{6.5cm}
+                  p{3.5cm}
+                  >{\centering\arraybackslash}p{1.2cm}}
+    \toprule
+    \textbf{STT} & \textbf{Câu hỏi} & \textbf{Gold Articles} & \textbf{Loại} \\
+    \midrule
+    1  & Thời gian đào tạo thạc sĩ tối đa là bao lâu?
+       & QĐ270: Điều 5 & Single \\[4pt]
+    2  & Điều kiện để được bảo vệ luận văn thạc sĩ?
+       & QĐ270: Điều 24 & Single \\[4pt]
+    3  & Điểm trung bình tích lũy tối thiểu để tốt nghiệp?
+       & QĐ270: Điều 29 & Single \\[4pt]
+    4  & Yêu cầu ngoại ngữ đầu ra cho học viên cao học?
+       & QĐ1393: Điều 25 & Single \\[4pt]
+    5  & GVHD được hướng dẫn tối đa bao nhiêu học viên cùng lúc?
+       & QĐ218: Điều 4 & Single \\[4pt]
+    6  & Thế nào là hành vi đạo văn trong luận văn?
+       & QĐ851: Điều 3 & Single \\[4pt]
+    7  & Học viên bị cảnh báo học vụ khi nào?
+       & QĐ270: Điều 18 & Single \\[4pt]
+    8  & Nếu học viên hết thời gian gia hạn mà chưa bảo vệ luận văn thì sao?
+       & QĐ270: Điều 5, 30 & Multi \\[4pt]
+    9  & Học viên khóa 2021 có được áp dụng quy chế 1393 không?
+       & QĐ1393: Điều 32 & Reason \\[4pt]
+    10 & Điều kiện để được gia hạn thời gian đào tạo?
+       & QĐ270: Điều 5, 6 & Multi \\
+    \bottomrule
+  \end{tabular}
+\end{table}
 
 % -------------------------------------------------------------------
-\section{Bộ câu hỏi miền pháp luật Việt Nam}
+\section{Câu hỏi miền pháp luật}
 \label{sec:app-cau-hoi-phapluat}
 
-\begin{longtable}{>{\centering\arraybackslash}p{0.04\linewidth}
-                   p{0.42\linewidth}
-                   p{0.32\linewidth}
-                   >{\centering\arraybackslash}p{0.08\linewidth}}
-  \caption{Mẫu câu hỏi kiểm thử -- miền pháp luật Việt Nam (10/400 câu)}
-  \label{tab:cau-hoi-phapluat} \\
-  \toprule
-  \textbf{STT} & \textbf{Câu hỏi} & \textbf{Điều khoản vàng} & \textbf{Loại} \\
-  \midrule
-  \endfirsthead
-  \multicolumn{4}{c}{\textit{(Tiếp theo Bảng~\ref{tab:cau-hoi-phapluat})}} \\
-  \toprule
-  \textbf{STT} & \textbf{Câu hỏi} & \textbf{Điều khoản vàng} & \textbf{Loại} \\
-  \midrule
-  \endhead
-  \bottomrule
-  \endfoot
-
-  1 &
-  Điều kiện để thành lập công ty trách nhiệm hữu hạn một thành viên là gì? &
-  LDN:d74, LDN:d75 &
-  D \\[4pt]
-
-  2 &
-  Tốc độ tối đa cho phép của xe ô tô trên đường cao tốc là bao nhiêu? &
-  LGT:d12, LGT:d13 &
-  D \\[4pt]
-
-  3 &
-  Mức phạt tiền đối với hành vi vượt đèn đỏ khi điều khiển xe mô tô là bao nhiêu? &
-  NĐ100:d6, NĐ100:d4 &
-  D \\[4pt]
-
-  4 &
-  Giám đốc công ty cổ phần có những quyền hạn và nghĩa vụ gì theo luật doanh nghiệp? &
-  LDN:d162, LDN:d163 &
-  K \\[4pt]
-
-  5 &
-  Điều kiện để một công ty được phát hành cổ phiếu ra công chúng lần đầu là gì? &
-  LCK:d15, LDN:d123, LCK:d16 &
-  K \\[4pt]
-
-  6 &
-  Người điều khiển xe ô tô sử dụng rượu bia có nồng độ cồn vượt quá mức quy định sẽ bị xử phạt như thế nào? &
-  NĐ100:d5, LGT:d8 &
-  K \\[4pt]
-
-  7 &
-  Thủ tục giải thể doanh nghiệp tự nguyện bao gồm những bước nào? &
-  LDN:d207, LDN:d208, LDN:d209 &
-  K \\[4pt]
-
-  8 &
-  Quyền và nghĩa vụ của người đi bộ khi tham gia giao thông đường bộ là gì? &
-  LGT:d32, LGT:d9 &
-  D \\[4pt]
-
-  9 &
-  Hội đồng quản trị công ty cổ phần có tối thiểu và tối đa bao nhiêu thành viên? &
-  LDN:d154, LDN:d155 &
-  D \\[4pt]
-
-  10 &
-  Trách nhiệm dân sự của chủ sở hữu phương tiện khi phương tiện gây tai nạn giao thông được quy định như thế nào? &
-  BLDS:d601, LGT:d53, BLDS:d597 &
-  S \\
-
-\end{longtable}
-
-\noindent\textit{Ghi chú:} LDN = Luật Doanh nghiệp 2020; LGT = Luật Giao thông đường bộ 2008; NĐ100 = Nghị định 100/2019/NĐ-CP; LCK = Luật Chứng khoán 2019; BLDS = Bộ luật Dân sự 2015.
+\begin{table}[htbp]
+  \centering
+  \caption{Câu hỏi mẫu miền pháp luật}
+  \label{tab:cau-hoi-phapluat}
+  \begin{tabular}{>{\centering\arraybackslash}p{0.5cm}
+                  p{6.5cm}
+                  p{3.5cm}
+                  >{\centering\arraybackslash}p{1.2cm}}
+    \toprule
+    \textbf{STT} & \textbf{Câu hỏi} & \textbf{Gold Articles} & \textbf{Loại} \\
+    \midrule
+    1  & Vốn điều lệ tối thiểu của công ty chứng khoán?
+       & 59-QH14: Điều 175 & Single \\[4pt]
+    2  & Mức phạt khi vượt đèn đỏ đối với ô tô?
+       & 168-NĐ: Điều 6 & Single \\[4pt]
+    3  & Thành viên góp vốn bằng tài sản thì phải làm gì?
+       & 59-QH14: Điều 34, 36 & Multi \\[4pt]
+    4  & Nếu thành viên vay tiền góp vốn rồi rút vốn thì bị xử phạt thế nào?
+       & 59-QH14: Điều 16, 47 & Multi \\[4pt]
+    5  & Điều kiện để chuyển đổi công ty TNHH thành công ty cổ phần?
+       & 59-QH14: Điều 202 & Single \\[4pt]
+    6  & Mức phạt khi lái xe say rượu có nồng độ cồn vượt mức?
+       & 168-NĐ: Điều 5 & Single \\[4pt]
+    7  & Quyền và nghĩa vụ của thành viên hội đồng quản trị?
+       & 59-QH14: Điều 153, 165 & Multi \\[4pt]
+    8  & Hộ kinh doanh có phải đăng ký kinh doanh không?
+       & Ngoài corpus & -- \\[4pt]
+    9  & Mức phạt khi không mang giấy phép lái xe?
+       & 168-NĐ: Điều 21 & Single \\[4pt]
+    10 & Quy trình giải thể doanh nghiệp tự nguyện?
+       & 59-QH14: Điều 207, 208 & Multi \\
+    \bottomrule
+  \end{tabular}
+\end{table}

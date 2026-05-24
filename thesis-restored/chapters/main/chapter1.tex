@@ -37,7 +37,7 @@ Các ứng dụng chatbot này chủ yếu dựa trên mô hình ngôn ngữ l�
 
 Các văn bản quy chế đào tạo tại Việt Nam có cấu trúc phân cấp phức tạp: một quy chế tổ chức nội dung theo các cấp Chương, Điều, Khoản và Điểm, mỗi cấp mang phạm vi quy định riêng biệt. Ngoài ra, các văn bản còn chứa nhiều tham chiếu chéo (cross-reference): để trả lời câu hỏi \textit{``Học viên cao học cần đáp ứng điều kiện gì để được bảo vệ luận văn?''} cần kết nối Điều~24 (điều kiện bảo vệ) trong QĐ~270 của UIT với Điều~25 (yêu cầu ngoại ngữ) trong QĐ~1393 của ĐHQG-HCM, vốn là hai văn bản khác nhau ở hai tầng quản lý.
 
-Tiếng Việt còn tạo thêm thách thức qua sự đa nghĩa thanh điệu, các viết tắt chuyên ngành (GVHD, ThS, NCS, ĐHQG) và hệ thống phân cấp văn bản quy phạm đa tầng (Bộ GD\&ĐT, ĐHQG-HCM, trường thành viên). Các phương pháp truy xuất thông tin hiện tại gặp ba hạn chế chính cho văn bản quy phạm có cấu trúc: embedding mờ đi ý nghĩa chính xác của thuật ngữ chuyên ngành (\textit{semantic gap}), truy xuất phẳng bỏ qua cấu trúc phân cấp tài liệu, và tìm kiếm dày đặc không thể kết nối các tham chiếu chéo giữa các quy chế. Các thách thức tương tự cũng xuất hiện trong lĩnh vực pháp luật Việt Nam, nơi hệ thống được mở rộng đánh giá (Chương~\ref{chap:chapter4}).
+Tiếng Việt còn tạo thêm thách thức qua sự đa nghĩa thanh điệu, các viết tắt chuyên ngành (GVHD, ThS, NCS, ĐHQG) và hệ thống phân cấp văn bản quy phạm đa tầng (Bộ GD\&ĐT, ĐHQG-HCM, trường thành viên). Các phương pháp truy xuất thông tin truyền thống dựa trên vector similarity~\cite{reimers2019sbert} hiệu quả trong nhiều lĩnh vực~\cite{fan2024ragsurvey} nhưng không đủ cho văn bản quy phạm có cấu trúc: embedding mờ đi ý nghĩa chính xác của thuật ngữ chuyên ngành (\textit{semantic gap}), truy xuất phẳng bỏ qua cấu trúc phân cấp tài liệu, và tìm kiếm dày đặc không thể kết nối các tham chiếu chéo giữa các quy chế. Các thách thức tương tự cũng xuất hiện trong lĩnh vực pháp luật Việt Nam, nơi hệ thống được mở rộng đánh giá (Chương~\ref{chap:chapter4}).
 
 % ============================================================
 \section{Các nghiên cứu liên quan}
@@ -77,7 +77,7 @@ Chưa có hệ thống nào kết hợp tri thức ontology, truy xuất dựa t
     \centering
     \caption{So sánh các hệ thống liên quan}
     \label{tab:comparison}
-    \begin{tabular}{lcccc}
+    \resizebox{\textwidth}{!}{\begin{tabular}{lcccc}
         \toprule
         \textbf{Hệ thống} & \textbf{Cấu trúc} & \textbf{KG} & \textbf{Ngữ nghĩa} & \textbf{Đa tài liệu} \\
         \midrule
@@ -89,7 +89,7 @@ Chưa có hệ thống nào kết hợp tri thức ontology, truy xuất dựa t
         Legal-Onto~\cite{nguyen2022legalonto} & --    & \checkmark & -- & -- \\
         \textbf{3-Tier (ours)}       & Document Tree  & \checkmark & \checkmark & \checkmark \\
         \bottomrule
-    \end{tabular}
+    \end{tabular}}
 \end{table}
 
 % ============================================================
@@ -102,9 +102,11 @@ Chưa có hệ thống nào kết hợp tri thức ontology, truy xuất dựa t
 
 Luận văn này nghiên cứu và giải quyết các vấn đề sau:
 \begin{enumerate}
-    \item Xây dựng Knowledge Graph và Ontology cho văn bản quy phạm.
-    \item Đề xuất kiến trúc truy xuất 3-Tier KG-RAG.
-    \item Xây dựng bộ đánh giá và so sánh định lượng.
+    \item \textbf{Xây dựng Knowledge Graph và Ontology cho văn bản quy phạm:} Xây dựng pipeline trích xuất tri thức bán tự động sử dụng LLM để trích xuất thực thể và quan hệ từ văn bản quy phạm, kết hợp tinh chỉnh bởi chuyên gia (expert-in-the-loop) để tạo KG. Từ KG đã xây dựng, suy luận (infer) ontology chuyên biệt theo chuẩn OWL, xác định hệ thống phân cấp các loại thực thể (chủ thể, điều kiện, thời hạn, mức phạt, \ldots) và quan hệ (references, requires, depends\_on, \ldots), phục vụ cho cơ chế Concept Matching trong truy xuất ngữ nghĩa.
+
+    \item \textbf{Đề xuất kiến trúc truy xuất 3-Tier KG-RAG:} Thiết kế kiến trúc truy xuất ba tầng kết hợp duyệt cây cấu trúc hướng dẫn bởi LLM (Tầng~1), truy xuất ngữ nghĩa hai cấp dựa trên KG và embedding (Tầng~2), và hợp nhất Reciprocal Rank Fusion với mở rộng Knowledge Graph (Tầng~3). Kiến trúc này tận dụng đồng thời cấu trúc phân cấp của văn bản quy phạm, quan hệ ngữ nghĩa trong đồ thị tri thức và tín hiệu tương đồng vector để truy xuất chính xác các điều khoản liên quan.
+
+    \item \textbf{Xây dựng bộ đánh giá và so sánh định lượng:} Thiết kế các bộ benchmark tiếng Việt gồm các câu hỏi phức tạp yêu cầu suy luận đa bước, tham chiếu chéo giữa các văn bản. Đánh giá hệ thống bằng các chỉ số Hit@k và MRR, so sánh với các phương pháp tiên tiến (PageIndex, RAPTOR, LightRAG), và phân tích ablation để đo lường đóng góp của từng thành phần.
 \end{enumerate}
 
 % ------------------------------------------------------------
@@ -132,9 +134,10 @@ Ngoài ra, hệ thống còn được đánh giá trên bộ dữ liệu pháp l
 \section{Bố cục luận văn}
 \label{sec:bocuc}
 
+Phần còn lại của luận văn được tổ chức như sau:
 \begin{itemize}
-    \item \textbf{Chương~\ref{chap:chapter2}}: Thu thập kiến thức về quy định đào tạo.
-    \item \textbf{Chương~\ref{chap:chapter3}}: Thiết kế giải thuật.
-    \item \textbf{Chương~\ref{chap:chapter4}}: Thiết kế hệ thống và thử nghiệm.
-    \item \textbf{Chương~\ref{chap:chapter5}}: Kết luận và hướng phát triển.
+    \item \textbf{Chương~2}: Thu thập kiến thức về quy định đào tạo: trình bày tổng quan hệ thống quy chế đào tạo thạc sĩ, quy trình thu thập và tổ chức kiến thức từ văn bản quy phạm, cũng như xây dựng bộ câu hỏi kiểm thử.
+    \item \textbf{Chương~3}: Thiết kế giải thuật: trình bày chi tiết kiến trúc 3-Tier KG-RAG bao gồm phân tích truy vấn, duyệt cây cấu trúc, truy xuất ngữ nghĩa hai cấp và hợp nhất RRF với mở rộng Knowledge Graph.
+    \item \textbf{Chương~4}: Thiết kế hệ thống và thử nghiệm: trình bày yêu cầu hệ thống, kiến trúc triển khai, và kết quả thử nghiệm trên hai nghiên cứu trường hợp (case study) cùng phân tích ablation.
+    \item \textbf{Chương~5}: Kết luận và hướng phát triển: tổng kết các kết quả đạt được, thảo luận hạn chế và đề xuất hướng phát triển tương lai.
 \end{itemize}

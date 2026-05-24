@@ -561,7 +561,7 @@ function getRelRect(el, container) {
   };
 }
 
-function makeDashedArrow(svg, x1, y1, x2, y2, label, color) {
+function makeDashedArrow(svg, x1, y1, x2, y2, label, color, labelOffsetY) {
   const ns = "http://www.w3.org/2000/svg";
   const markerId = "arr-" + Math.random().toString(36).slice(2, 7);
 
@@ -600,7 +600,7 @@ function makeDashedArrow(svg, x1, y1, x2, y2, label, color) {
   // label at midpoint
   if (label) {
     const mx = (x1 + x2) / 2 + 3;
-    const my = (y1 + y2) / 2 - 4;
+    const my = (y1 + y2) / 2 - 4 + (labelOffsetY || 0);
     const txt = document.createElementNS(ns, "text");
     txt.setAttribute("x", mx);
     txt.setAttribute("y", my);
@@ -638,14 +638,14 @@ function drawConnectors() {
   const srcX = kr.right;
   const srcY = kr.midY;
 
-  // Target 1: left-center of Tier 1
-  makeDashedArrow(svg, srcX, srcY, t1.left, t1.midY, "Document Forest", color);
+  // Target 1: left-center of Tier 1 (offset label up to avoid overlap)
+  makeDashedArrow(svg, srcX, srcY, t1.left, t1.midY, "Document Forest", color, -10);
 
   // Target 2: left-center of Tier 2
-  makeDashedArrow(svg, srcX, srcY, t2.left, t2.midY, "Knowledge Graph", color);
+  makeDashedArrow(svg, srcX, srcY, t2.left, t2.midY, "Knowledge Graph", color, 0);
 
-  // Target 3: left-center of Tier 3
-  makeDashedArrow(svg, srcX, srcY, t3.left, t3.midY, "Knowledge Graph", color);
+  // Target 3: left-center of Tier 3 (offset label down to avoid overlap)
+  makeDashedArrow(svg, srcX, srcY, t3.left, t3.midY, "Knowledge Graph", color, 10);
 }
 
 // Draw after layout settles

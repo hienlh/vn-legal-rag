@@ -1,0 +1,121 @@
+<mxfile host="app.diagrams.net">
+  <diagram id="rhScd3W4XU-KMCGPZieR" name="Hình 3.1 – Kiến trúc KG-RAG 3 tầng">
+    <mxGraphModel dx="1148" dy="1406" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="KQJt65IdwTOF0xwXXbfh-1" parent="1" style="swimlane;html=1;startSize=30;fillColor=#F8F6FF;strokeColor=#B39DDB;strokeWidth=1.5;fontFamily=Times New Roman;fontSize=12;fontStyle=1;fontColor=#4527A0;rounded=1;" value="⚙ Pha ngoại tuyến" vertex="1">
+          <mxGeometry height="580" width="440" x="20" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="KQJt65IdwTOF0xwXXbfh-2" parent="KQJt65IdwTOF0xwXXbfh-1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFF9C4;strokeColor=#F9A825;strokeWidth=1.5;fontFamily=Times New Roman;fontSize=11;fontColor=#5D4037;" value="&lt;b&gt;Văn bản pháp lý&lt;/b&gt;&lt;br&gt;&lt;i&gt;Legal Documents&lt;/i&gt;" vertex="1">
+          <mxGeometry height="45" width="400" x="20" y="50" as="geometry" />
+        </mxCell>
+        <mxCell id="KQJt65IdwTOF0xwXXbfh-3" parent="KQJt65IdwTOF0xwXXbfh-1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E3F2FD;strokeColor=#1976D2;strokeWidth=1.5;fontFamily=Times New Roman;fontSize=11;fontColor=#0D47A1;" value="&lt;b&gt;Phân tích cú pháp tài liệu&lt;/b&gt;&lt;br&gt;&lt;i&gt;Document Parsing&lt;/i&gt;" vertex="1">
+          <mxGeometry height="45" width="400" x="20" y="120" as="geometry" />
+        </mxCell>
+        <mxCell id="KQJt65IdwTOF0xwXXbfh-4" parent="KQJt65IdwTOF0xwXXbfh-1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E3F2FD;strokeColor=#1976D2;strokeWidth=1.5;fontFamily=Times New Roman;fontSize=11;fontColor=#0D47A1;" value="&lt;b&gt;Trích xuất thực thể &amp;amp; quan hệ bằng LLM&lt;/b&gt;&lt;br&gt;&lt;i&gt;Entity &amp;amp; Relation Extraction&lt;/i&gt;" vertex="1">
+          <mxGeometry height="45" width="400" x="20" y="190" as="geometry" />
+        </mxCell>
+        <mxCell id="KQJt65IdwTOF0xwXXbfh-5" parent="KQJt65IdwTOF0xwXXbfh-1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E8F5E9;strokeColor=#388E3C;strokeWidth=1.5;fontFamily=Times New Roman;fontSize=10;fontColor=#1B5E20;" value="&lt;b&gt;Xây dựng KG tăng dần&lt;/b&gt;&lt;br&gt;&lt;i&gt;Incremental KG Builder&lt;/i&gt;" vertex="1">
+          <mxGeometry height="50" width="190" x="20" y="270" as="geometry" />
+        </mxCell>
+        <mxCell id="KQJt65IdwTOF0xwXXbfh-6" parent="KQJt65IdwTOF0xwXXbfh-1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E8F5E9;strokeColor=#388E3C;strokeWidth=1.5;fontFamily=Times New Roman;fontSize=10;fontColor=#1B5E20;" value="&lt;b&gt;Tóm tắt chương &amp;amp; điều&lt;/b&gt;&lt;br&gt;&lt;i&gt;Chapter &amp;amp; Article Summaries&lt;/i&gt;" vertex="1">
+          <mxGeometry height="50" width="190" x="230" y="270" as="geometry" />
+        </mxCell>
+        <mxCell id="KQJt65IdwTOF0xwXXbfh-7" parent="KQJt65IdwTOF0xwXXbfh-1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F3E5F5;strokeColor=#7B1FA2;strokeWidth=2;fontFamily=Times New Roman;fontSize=11;fontColor=#4A148C;" value="⬡ &lt;b&gt;Biểu diễn tri thức&lt;/b&gt;&lt;br&gt;Document Forest · Knowledge Graph · Ontology" vertex="1">
+          <mxGeometry height="55" width="400" x="20" y="370" as="geometry" />
+        </mxCell>
+        <mxCell id="KQJt65IdwTOF0xwXXbfh-8" edge="1" parent="KQJt65IdwTOF0xwXXbfh-1" source="KQJt65IdwTOF0xwXXbfh-2" style="endArrow=classic;strokeColor=#555;" target="KQJt65IdwTOF0xwXXbfh-3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="KQJt65IdwTOF0xwXXbfh-9" edge="1" parent="KQJt65IdwTOF0xwXXbfh-1" source="KQJt65IdwTOF0xwXXbfh-3" style="endArrow=classic;strokeColor=#555;" target="KQJt65IdwTOF0xwXXbfh-4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="KQJt65IdwTOF0xwXXbfh-10" edge="1" parent="KQJt65IdwTOF0xwXXbfh-1" source="KQJt65IdwTOF0xwXXbfh-4" style="endArrow=classic;strokeColor=#555;" target="KQJt65IdwTOF0xwXXbfh-5">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="KQJt65IdwTOF0xwXXbfh-11" edge="1" parent="KQJt65IdwTOF0xwXXbfh-1" source="KQJt65IdwTOF0xwXXbfh-4" style="endArrow=classic;strokeColor=#555;" target="KQJt65IdwTOF0xwXXbfh-6">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="KQJt65IdwTOF0xwXXbfh-12" edge="1" parent="KQJt65IdwTOF0xwXXbfh-1" source="KQJt65IdwTOF0xwXXbfh-5" style="endArrow=classic;strokeColor=#555;" target="KQJt65IdwTOF0xwXXbfh-7">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="KQJt65IdwTOF0xwXXbfh-13" edge="1" parent="KQJt65IdwTOF0xwXXbfh-1" source="KQJt65IdwTOF0xwXXbfh-6" style="endArrow=classic;strokeColor=#555;" target="KQJt65IdwTOF0xwXXbfh-7">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="KQJt65IdwTOF0xwXXbfh-14" parent="1" style="swimlane;html=1;startSize=30;fillColor=#F0F7FF;strokeColor=#90CAF9;strokeWidth=1.5;fontFamily=Times New Roman;fontSize=12;fontStyle=1;fontColor=#0D47A1;rounded=1;" value="🔍 Pha trực tuyến" vertex="1">
+          <mxGeometry height="580" width="700" x="500" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="KQJt65IdwTOF0xwXXbfh-15" parent="KQJt65IdwTOF0xwXXbfh-14" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFF9C4;strokeColor=#F9A825;strokeWidth=1.5;fontFamily=Times New Roman;fontSize=11;fontColor=#5D4037;" value="&lt;b&gt;Truy vấn người dùng&lt;/b&gt;&lt;br&gt;&lt;i&gt;User Query&lt;/i&gt;" vertex="1">
+          <mxGeometry height="40" width="660" x="20" y="50" as="geometry" />
+        </mxCell>
+        <mxCell id="KQJt65IdwTOF0xwXXbfh-16" parent="KQJt65IdwTOF0xwXXbfh-14" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E3F2FD;strokeColor=#1976D2;strokeWidth=1.5;fontFamily=Times New Roman;fontSize=11;fontColor=#0D47A1;" value="&lt;b&gt;Phân tích truy vấn&lt;/b&gt;&lt;br&gt;&lt;i&gt;Ý định · Loại · Viết tắt · Thực thể&lt;/i&gt;" vertex="1">
+          <mxGeometry height="45" width="660" x="20" y="120" as="geometry" />
+        </mxCell>
+        <mxCell id="KQJt65IdwTOF0xwXXbfh-17" parent="KQJt65IdwTOF0xwXXbfh-14" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F1F8E9;strokeColor=#388E3C;strokeWidth=2;fontFamily=Times New Roman;fontSize=11;fontColor=#1B5E20;" value="&lt;b&gt;Tầng 1: Duyệt cây hướng dẫn bởi LLM&lt;/b&gt;&lt;br&gt;&lt;i&gt;Forest → Domain → Doc → Chapter → Article&lt;/i&gt;" vertex="1">
+          <mxGeometry height="60" width="310" x="20" y="200" as="geometry" />
+        </mxCell>
+        <mxCell id="KQJt65IdwTOF0xwXXbfh-18" parent="KQJt65IdwTOF0xwXXbfh-14" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E8F4FD;strokeColor=#1976D2;strokeWidth=2;fontFamily=Times New Roman;fontSize=11;fontColor=#0D47A1;" value="&lt;b&gt;Tầng 2: Truy xuất ngữ nghĩa hai cấp&lt;/b&gt;&lt;br&gt;&lt;i&gt;Thấp: keyphrase+semantic+PPR+concept&lt;br&gt;Cao: theme + hierarchy expansion&lt;/i&gt;" vertex="1">
+          <mxGeometry height="60" width="330" x="350" y="200" as="geometry" />
+        </mxCell>
+        <mxCell id="KQJt65IdwTOF0xwXXbfh-19" parent="KQJt65IdwTOF0xwXXbfh-14" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFF3E0;strokeColor=#E65100;strokeWidth=2;fontFamily=Times New Roman;fontSize=11;fontColor=#BF360C;" value="&lt;b&gt;Tầng 3 - Hợp nhất: Semantic Bridge - RRF + KG Expansion&lt;/b&gt;&lt;br&gt;&lt;i&gt;w₁=1.2 · w₂=0.7 · w_KG=1.0 · k=60&lt;/i&gt;" vertex="1">
+          <mxGeometry height="50" width="660" x="20" y="300" as="geometry" />
+        </mxCell>
+        <mxCell id="KQJt65IdwTOF0xwXXbfh-20" parent="KQJt65IdwTOF0xwXXbfh-14" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F3E5F5;strokeColor=#7B1FA2;strokeWidth=2;fontFamily=Times New Roman;fontSize=11;fontColor=#4A148C;" value="&lt;b&gt;LLM sinh câu trả lời&lt;/b&gt;&lt;br&gt;&lt;i&gt;Answer Generation&lt;/i&gt;" vertex="1">
+          <mxGeometry height="50" width="310" x="195" y="392" as="geometry" />
+        </mxCell>
+        <mxCell id="KQJt65IdwTOF0xwXXbfh-21" parent="KQJt65IdwTOF0xwXXbfh-14" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E8F5E9;strokeColor=#2E7D32;strokeWidth=2;fontFamily=Times New Roman;fontSize=11;fontColor=#1B5E20;" value="&lt;b&gt;Câu trả lời pháp lý&lt;/b&gt;&lt;br&gt;&lt;i&gt;Legal Answer&lt;/i&gt;" vertex="1">
+          <mxGeometry height="50" width="300" x="200" y="484" as="geometry" />
+        </mxCell>
+        <mxCell id="KQJt65IdwTOF0xwXXbfh-22" edge="1" parent="KQJt65IdwTOF0xwXXbfh-14" source="KQJt65IdwTOF0xwXXbfh-15" style="endArrow=classic;strokeColor=#555;" target="KQJt65IdwTOF0xwXXbfh-16">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="KQJt65IdwTOF0xwXXbfh-23" edge="1" parent="KQJt65IdwTOF0xwXXbfh-14" source="KQJt65IdwTOF0xwXXbfh-16" style="endArrow=classic;strokeColor=#555;" target="KQJt65IdwTOF0xwXXbfh-17">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="KQJt65IdwTOF0xwXXbfh-24" edge="1" parent="KQJt65IdwTOF0xwXXbfh-14" source="KQJt65IdwTOF0xwXXbfh-16" style="endArrow=classic;strokeColor=#555;" target="KQJt65IdwTOF0xwXXbfh-18">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="KQJt65IdwTOF0xwXXbfh-25" edge="1" parent="KQJt65IdwTOF0xwXXbfh-14" source="KQJt65IdwTOF0xwXXbfh-17" style="endArrow=classic;strokeColor=#555;" target="KQJt65IdwTOF0xwXXbfh-19">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="KQJt65IdwTOF0xwXXbfh-26" edge="1" parent="KQJt65IdwTOF0xwXXbfh-14" source="KQJt65IdwTOF0xwXXbfh-18" style="endArrow=classic;strokeColor=#555;" target="KQJt65IdwTOF0xwXXbfh-19">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="KQJt65IdwTOF0xwXXbfh-27" edge="1" parent="KQJt65IdwTOF0xwXXbfh-14" source="KQJt65IdwTOF0xwXXbfh-19" style="endArrow=classic;strokeColor=#555;" target="KQJt65IdwTOF0xwXXbfh-20">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="KQJt65IdwTOF0xwXXbfh-28" edge="1" parent="KQJt65IdwTOF0xwXXbfh-14" source="KQJt65IdwTOF0xwXXbfh-20" style="endArrow=classic;strokeColor=#555;" target="KQJt65IdwTOF0xwXXbfh-21">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="KQJt65IdwTOF0xwXXbfh-29" edge="1" parent="1" source="KQJt65IdwTOF0xwXXbfh-7" style="endArrow=classic;html=1;dashed=1;dashPattern=5 3;strokeColor=#7B1FA2;strokeWidth=1.5;fontFamily=Times New Roman;fontSize=9;fontStyle=2;fontColor=#7B1FA2;edgeStyle=orthogonalEdgeStyle;" target="KQJt65IdwTOF0xwXXbfh-17" value="Document Forest">
+          <mxGeometry relative="1" x="0.3616" y="-28" as="geometry">
+            <mxPoint as="offset" />
+            <Array as="points">
+              <mxPoint x="483" y="428" />
+              <mxPoint x="483" y="260" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="KQJt65IdwTOF0xwXXbfh-30" edge="1" parent="1" source="KQJt65IdwTOF0xwXXbfh-7" style="endArrow=classic;html=1;dashed=1;dashPattern=5 3;strokeColor=#7B1FA2;strokeWidth=1.5;fontFamily=Times New Roman;fontSize=9;fontStyle=2;fontColor=#7B1FA2;edgeStyle=orthogonalEdgeStyle;" target="KQJt65IdwTOF0xwXXbfh-18" value="Knowledge Graph">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="471" y="427" />
+              <mxPoint x="471" y="213" />
+              <mxPoint x="1015" y="213" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="KQJt65IdwTOF0xwXXbfh-31" edge="1" parent="1" source="KQJt65IdwTOF0xwXXbfh-7" style="endArrow=classic;html=1;dashed=1;dashPattern=5 3;strokeColor=#7B1FA2;strokeWidth=1.5;fontFamily=Times New Roman;fontSize=9;fontStyle=2;fontColor=#7B1FA2;edgeStyle=orthogonalEdgeStyle;" target="KQJt65IdwTOF0xwXXbfh-19" value="Knowledge Graph">
+          <mxGeometry relative="1" x="0.2131" y="-26" as="geometry">
+            <mxPoint as="offset" />
+            <Array as="points">
+              <mxPoint x="496" y="428" />
+              <mxPoint x="496" y="355" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

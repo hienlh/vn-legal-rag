@@ -1,0 +1,67 @@
+<mxfile host="app.diagrams.net" modified="2026-05-23" type="device">
+  <diagram id="fig2-1" name="Hình 2.1 – Cây tài liệu QĐ 270">
+    <mxGraphModel dx="1200" dy="900" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1400" pageHeight="700">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+
+        <!-- Row labels -->
+        <mxCell id="L1" value="&lt;i&gt;Văn bản&lt;/i&gt;" style="text;html=1;align=right;verticalAlign=middle;fontSize=11;fontFamily=Times New Roman;fontColor=#666;" vertex="1" parent="1"><mxGeometry x="10" y="35" width="80" height="30" as="geometry"/></mxCell>
+        <mxCell id="L2" value="&lt;i&gt;Chương&lt;/i&gt;" style="text;html=1;align=right;verticalAlign=middle;fontSize=11;fontFamily=Times New Roman;fontColor=#666;" vertex="1" parent="1"><mxGeometry x="10" y="145" width="80" height="30" as="geometry"/></mxCell>
+        <mxCell id="L4" value="&lt;i&gt;Điều&lt;/i&gt;" style="text;html=1;align=right;verticalAlign=middle;fontSize=11;fontFamily=Times New Roman;fontColor=#666;" vertex="1" parent="1"><mxGeometry x="10" y="275" width="80" height="30" as="geometry"/></mxCell>
+        <mxCell id="L5" value="&lt;i&gt;Khoản&lt;/i&gt;" style="text;html=1;align=right;verticalAlign=middle;fontSize=11;fontFamily=Times New Roman;fontColor=#666;" vertex="1" parent="1"><mxGeometry x="10" y="405" width="80" height="30" as="geometry"/></mxCell>
+        <mxCell id="L6" value="&lt;i&gt;Điểm&lt;/i&gt;" style="text;html=1;align=right;verticalAlign=middle;fontSize=11;fontFamily=Times New Roman;fontColor=#666;" vertex="1" parent="1"><mxGeometry x="10" y="525" width="80" height="30" as="geometry"/></mxCell>
+
+        <!-- QĐ 270 (root) -->
+        <mxCell id="N1" value="&lt;b&gt;QĐ 270&lt;/b&gt;&lt;br&gt;(Văn bản)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E3F2FD;strokeColor=#1565C0;strokeWidth=2;fontFamily=Times New Roman;fontSize=12;fontColor=#0D47A1;" vertex="1" parent="1"><mxGeometry x="580" y="25" width="140" height="50" as="geometry"/></mxCell>
+
+        <!-- Chương I -->
+        <mxCell id="N2" value="Chương I:&lt;br&gt;Quy định chung" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F0F7FF;strokeColor=#90CAF9;fontFamily=Times New Roman;fontSize=11;" vertex="1" parent="1"><mxGeometry x="200" y="135" width="140" height="50" as="geometry"/></mxCell>
+        <!-- Chương IV -->
+        <mxCell id="N3" value="Chương IV:&lt;br&gt;Luận văn" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F0F7FF;strokeColor=#90CAF9;fontFamily=Times New Roman;fontSize=11;" vertex="1" parent="1"><mxGeometry x="580" y="135" width="140" height="50" as="geometry"/></mxCell>
+        <!-- Chương VIII -->
+        <mxCell id="N4" value="Chương VIII:&lt;br&gt;Điều khoản thi hành" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F0F7FF;strokeColor=#90CAF9;fontFamily=Times New Roman;fontSize=11;" vertex="1" parent="1"><mxGeometry x="1000" y="135" width="140" height="50" as="geometry"/></mxCell>
+
+        <!-- Điều 1 -->
+        <mxCell id="N5" value="Điều 1:&lt;br&gt;Phạm vi" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFF;strokeColor=#999;fontFamily=Times New Roman;fontSize=11;" vertex="1" parent="1"><mxGeometry x="140" y="265" width="120" height="50" as="geometry"/></mxCell>
+        <!-- Điều 2 -->
+        <mxCell id="N6" value="Điều 2:&lt;br&gt;Đối tượng" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFF;strokeColor=#999;fontFamily=Times New Roman;fontSize=11;" vertex="1" parent="1"><mxGeometry x="290" y="265" width="120" height="50" as="geometry"/></mxCell>
+        <!-- Điều 24 -->
+        <mxCell id="N7" value="Điều 24:&lt;br&gt;Điều kiện bảo vệ" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFF;strokeColor=#999;fontFamily=Times New Roman;fontSize=11;" vertex="1" parent="1"><mxGeometry x="510" y="265" width="130" height="50" as="geometry"/></mxCell>
+        <!-- Điều 25 -->
+        <mxCell id="N8" value="Điều 25:&lt;br&gt;Hội đồng bảo vệ" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFF;strokeColor=#999;fontFamily=Times New Roman;fontSize=11;" vertex="1" parent="1"><mxGeometry x="670" y="265" width="130" height="50" as="geometry"/></mxCell>
+        <!-- ref QĐ 1393 -->
+        <mxCell id="N9" value="&lt;i&gt;ref: QĐ 1393,&lt;br&gt;Điều 25&lt;/i&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFF;strokeColor=#C62828;strokeWidth=1;dashed=1;fontFamily=Times New Roman;fontSize=10;fontColor=#C62828;" vertex="1" parent="1"><mxGeometry x="830" y="270" width="100" height="40" as="geometry"/></mxCell>
+        <!-- Điều 35 -->
+        <mxCell id="N10" value="Điều 35:&lt;br&gt;Hiệu lực" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFF;strokeColor=#999;fontFamily=Times New Roman;fontSize=11;" vertex="1" parent="1"><mxGeometry x="1010" y="265" width="120" height="50" as="geometry"/></mxCell>
+
+        <!-- Khoản 1, 2 -->
+        <mxCell id="N11" value="Khoản&lt;br&gt;1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFF;strokeColor=#999;fontFamily=Times New Roman;fontSize=11;" vertex="1" parent="1"><mxGeometry x="510" y="395" width="80" height="50" as="geometry"/></mxCell>
+        <mxCell id="N12" value="Khoản&lt;br&gt;2" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFF;strokeColor=#999;fontFamily=Times New Roman;fontSize=11;" vertex="1" parent="1"><mxGeometry x="620" y="395" width="80" height="50" as="geometry"/></mxCell>
+
+        <!-- Điểm a -->
+        <mxCell id="N13" value="Điểm a" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFF;strokeColor=#999;fontFamily=Times New Roman;fontSize=11;" vertex="1" parent="1"><mxGeometry x="510" y="515" width="80" height="40" as="geometry"/></mxCell>
+
+        <!-- Edges -->
+        <mxCell id="E1" style="endArrow=classic;strokeColor=#999;" edge="1" source="N1" target="N2" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="E2" style="endArrow=classic;strokeColor=#999;" edge="1" source="N1" target="N3" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="E3" style="endArrow=classic;strokeColor=#999;" edge="1" source="N1" target="N4" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="E4" style="endArrow=classic;strokeColor=#999;" edge="1" source="N2" target="N5" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="E5" style="endArrow=classic;strokeColor=#999;" edge="1" source="N2" target="N6" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="E6" style="endArrow=classic;strokeColor=#999;" edge="1" source="N3" target="N7" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="E7" style="endArrow=classic;strokeColor=#999;" edge="1" source="N3" target="N8" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="E8" style="endArrow=none;dashed=1;strokeColor=#C62828;" edge="1" source="N8" target="N9" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="E9" style="endArrow=classic;strokeColor=#999;" edge="1" source="N4" target="N10" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="E10" style="endArrow=classic;strokeColor=#999;" edge="1" source="N7" target="N11" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="E11" style="endArrow=classic;strokeColor=#999;" edge="1" source="N7" target="N12" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="E12" style="endArrow=classic;strokeColor=#999;" edge="1" source="N11" target="N13" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+
+        <!-- Dotted level lines -->
+        <mxCell id="DL1" style="endArrow=none;dashed=1;strokeColor=#DDD;dashPattern=8 4;" edge="1" parent="1"><mxGeometry relative="1" as="geometry"><mxPoint x="100" y="110" as="sourcePoint"/><mxPoint x="1200" y="110" as="targetPoint"/></mxGeometry></mxCell>
+        <mxCell id="DL2" style="endArrow=none;dashed=1;strokeColor=#DDD;dashPattern=8 4;" edge="1" parent="1"><mxGeometry relative="1" as="geometry"><mxPoint x="100" y="240" as="sourcePoint"/><mxPoint x="1200" y="240" as="targetPoint"/></mxGeometry></mxCell>
+        <mxCell id="DL3" style="endArrow=none;dashed=1;strokeColor=#DDD;dashPattern=8 4;" edge="1" parent="1"><mxGeometry relative="1" as="geometry"><mxPoint x="100" y="370" as="sourcePoint"/><mxPoint x="1200" y="370" as="targetPoint"/></mxGeometry></mxCell>
+        <mxCell id="DL4" style="endArrow=none;dashed=1;strokeColor=#DDD;dashPattern=8 4;" edge="1" parent="1"><mxGeometry relative="1" as="geometry"><mxPoint x="100" y="490" as="sourcePoint"/><mxPoint x="1200" y="490" as="targetPoint"/></mxGeometry></mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
