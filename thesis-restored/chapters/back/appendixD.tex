@@ -10,7 +10,7 @@ lặp), và sinh câu trả lời theo phương pháp IRAC.
 \label{sec:app-prompt-entity}
 
 Prompt này được sử dụng để trích xuất đồng thời thực thể và quan hệ từ mỗi điều
-khoản trong giai đoạn xây dựng Knowledge Graph (Mục~3.2).
+khoản trong giai đoạn xây dựng Knowledge Graph (Mục~\ref{sec:tong-quan-kien-truc}).
 
 \begin{table}[htbp]
   \centering
@@ -50,7 +50,7 @@ khoản trong giai đoạn xây dựng Knowledge Graph (Mục~3.2).
 \label{sec:app-prompt-chapter-summary}
 
 Prompt này được sử dụng để sinh mô tả giàu từ khóa cho mỗi chương, phục vụ bước
-chọn nhánh trong Loop 1 của Tầng 1 (Mục~3.4).
+chọn nhánh trong Loop 1 của Tầng 1 (Mục~\ref{sec:pipeline-truy-xuat}).
 
 \begin{table}[htbp]
   \centering
@@ -103,11 +103,11 @@ của Tầng 1.
 \end{table}
 
 % -------------------------------------------------------------------
-\section{Loop 1 --- Chọn chương (Pha trực tuyến)}
+\section{Loop 1: Chọn chương (Pha trực tuyến)}
 \label{sec:app-prompt-loop1}
 
 Prompt này được Tầng 1 sử dụng trong Loop 1 để chọn các chương phù hợp từ danh
-sách chương kèm mô tả (Mục~3.4). Nhiệt độ = 0,0 để đảm bảo kết quả xác định.
+sách chương kèm mô tả (Mục~\ref{sec:pipeline-truy-xuat}). Nhiệt độ = 0,0 để đảm bảo kết quả xác định.
 
 \begin{table}[htbp]
   \centering
@@ -129,7 +129,7 @@ sách chương kèm mô tả (Mục~3.4). Nhiệt độ = 0,0 để đảm bảo
 \end{table}
 
 % -------------------------------------------------------------------
-\section{Loop 2 --- Chọn điều khoản (Pha trực tuyến)}
+\section{Loop 2: Chọn điều khoản (Pha trực tuyến)}
 \label{sec:app-prompt-loop2}
 
 Prompt này được Tầng 1 sử dụng trong Loop 2 để chọn điều khoản cụ thể trong mỗi
@@ -167,7 +167,7 @@ Prompt này được sử dụng ở bước cuối cùng để sinh câu trả 
 
 \begin{table}[htbp]
   \centering
-  \caption{Prompt sinh câu trả lời IRAC --- Lĩnh vực pháp luật}
+  \caption{Prompt sinh câu trả lời IRAC -- Lĩnh vực pháp luật}
   \label{tab:prompt-irac-phapluat}
   \begin{tabular}{p{0.95\linewidth}}
     \toprule
@@ -194,7 +194,7 @@ Prompt này được sử dụng ở bước cuối cùng để sinh câu trả 
 
 \begin{table}[htbp]
   \centering
-  \caption{Prompt sinh câu trả lời IRAC --- Lĩnh vực đào tạo}
+  \caption{Prompt sinh câu trả lời IRAC -- Lĩnh vực đào tạo}
   \label{tab:prompt-irac-daotao}
   \begin{tabular}{p{0.95\linewidth}}
     \toprule

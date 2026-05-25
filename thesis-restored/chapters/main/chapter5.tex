@@ -12,62 +12,32 @@ Chương này tổng kết các kết quả đạt được của luận văn, t
 
 Luận văn đã đề xuất và xây dựng thành công kiến trúc 3-Tier KG-RAG, một hệ thống truy xuất kiến thức ba tầng kết hợp ontology, Knowledge Graph và Document Forest cho bài toán hỏi đáp quy định đào tạo và pháp luật Việt Nam. Các kết quả chính bao gồm:
 
-\begin{enumerate}
-    \item \textbf{Ontology và Knowledge Graph chuyên biệt:} Xây dựng ontology miền với 14 loại thực thể sử dụng OWL, phân cấp 4 cấp với ánh xạ nhãn tiếng Việt. Knowledge Graph kết quả chứa 5.936 thực thể và 5.963 quan hệ thuộc 56 loại quan hệ, cùng Document Forest gồm 9.226 nút cấu trúc từ 13 tài liệu. Quy trình xây dựng KG bán tự động kết hợp trích xuất LLM với tinh chỉnh expert-in-the-loop đảm bảo chất lượng và khả năng truy vết nguồn gốc.
+Đóng góp đầu tiên là \textbf{ontology và Knowledge Graph chuyên biệt} cho lĩnh vực pháp luật và quy định đào tạo Việt Nam. Ontology miền được xây dựng với 14 loại thực thể sử dụng OWL, phân cấp 4 cấp với ánh xạ nhãn tiếng Việt. Knowledge Graph kết quả chứa 5.936 thực thể và 5.963 quan hệ thuộc 56 loại quan hệ, cùng Document Forest gồm 9.226 nút cấu trúc từ 13 tài liệu. Quy trình xây dựng KG bán tự động kết hợp trích xuất LLM với tinh chỉnh expert-in-the-loop đảm bảo chất lượng và khả năng truy vết nguồn gốc.
 
-    \item \textbf{Kiến trúc truy xuất ba tầng:} Thiết kế và triển khai pipeline truy xuất thống nhất gồm ba tầng: duyệt cây cấu trúc hướng dẫn bởi LLM (Tầng~1), truy xuất ngữ nghĩa hai cấp với PPR nhận biết ý định (Tầng~2), và hợp nhất RRF với mở rộng Knowledge Graph (Tầng~3). Cùng pipeline và siêu tham số hoạt động trên cả ba miền mà không cần điều chỉnh riêng.
+Bên cạnh đó, luận văn thiết kế và triển khai \textbf{kiến trúc truy xuất ba tầng} thống nhất gồm: duyệt cây cấu trúc hướng dẫn bởi LLM (Tầng~1), truy xuất ngữ nghĩa hai cấp với PPR nhận biết ý định (Tầng~2), và hợp nhất RRF với mở rộng Knowledge Graph (Tầng~3). Điểm nổi bật là cùng một pipeline và siêu tham số có thể hoạt động trên cả ba miền mà không cần điều chỉnh riêng. Kết quả đánh giá trên 530 câu hỏi chuyên gia cho thấy hệ thống đạt hiệu quả vượt trội so với các baseline: lĩnh vực pháp luật (400 câu) đạt 92,2\% Hit@10 và MRR = 0,603, vượt PageIndex +7,4~pp và RAPTOR +51,2~pp; lĩnh vực doanh nghiệp (200 câu) đạt 86,5\% Hit@10, vượt PageIndex +9,9~pp; lĩnh vực giao thông (200 câu) đạt 98,0\% Hit@10, vượt PageIndex +5,4~pp; và quy định đào tạo (130 câu) đạt 87,9\% Hit@10 và MRR = 0,594, vượt PageIndex +13,3~pp và RAPTOR +34,1~pp.
 
-    \item \textbf{Kết quả đánh giá vượt trội:} Trên 530 câu hỏi chuyên gia thuộc ba lĩnh vực:
-    \begin{itemize}
-        \item Pháp luật (400 câu): 92,2\% Hit@10, MRR = 0,603, vượt PageIndex +7,4~pp và RAPTOR +51,2~pp.
-        \item Doanh nghiệp (200 câu): 86,5\% Hit@10, vượt PageIndex +9,9~pp.
-        \item Giao thông (200 câu): 98,0\% Hit@10, vượt PageIndex +5,4~pp.
-        \item Quy định đào tạo (130 câu): 87,9\% Hit@10, MRR = 0,594, vượt PageIndex +13,3~pp và RAPTOR +34,1~pp.
-    \end{itemize}
+Ngoài ra, luận văn xây dựng \textbf{bộ kiểm thử tiếng Việt} gồm 530 câu hỏi với gold articles được gán nhãn bởi chuyên gia, bao gồm các tình huống single-hop, multi-hop và reasoning phức tạp. Song song đó, một \textbf{ứng dụng chatbot web} tương tác được triển khai, tích hợp trực tiếp với pipeline truy xuất, hỗ trợ streaming câu trả lời theo phương pháp IRAC, hiển thị trích dẫn nguồn quy định và quá trình suy luận. Ứng dụng hoạt động trên cả desktop và thiết bị di động, phục vụ trực tiếp nhu cầu tra cứu quy chế đào tạo sau đại học của học viên cao học.
 
-    \item \textbf{Bộ kiểm thử tiếng Việt:} Xây dựng bộ câu hỏi kiểm thử gồm 530 câu hỏi với gold articles được gán nhãn bởi chuyên gia, bao gồm các tình huống single-hop, multi-hop và reasoning phức tạp.
-
-    \item \textbf{Ứng dụng chatbot minh họa:} Xây dựng ứng dụng chatbot web tương tác tích hợp trực tiếp với pipeline truy xuất, hỗ trợ streaming câu trả lời theo phương pháp IRAC, hiển thị trích dẫn nguồn quy định và quá trình suy luận. Ứng dụng hoạt động trên cả desktop và thiết bị di động, phục vụ trực tiếp nhu cầu tra cứu quy chế đào tạo sau đại học của học viên cao học.
-
-    \item \textbf{Bài báo khoa học:} Kết quả nghiên cứu đã được nộp dưới dạng bài báo tại hội nghị quốc tế SOMET~2026 (đang trong quá trình phản biện).
-\end{enumerate}
+Cuối cùng, kết quả nghiên cứu đã được nộp dưới dạng \textbf{bài báo khoa học} tại hội nghị quốc tế SOMET~2026 (đang trong quá trình phản biện).
 
 % ============================================================
 \section{Hạn chế}
 \label{sec:han-che}
 
-Mặc dù đạt được các kết quả đáng khích lệ, hệ thống vẫn còn một số hạn chế:
+Mặc dù đạt được các kết quả đáng khích lệ, hệ thống vẫn còn một số hạn chế cần được nhìn nhận thẳng thắn.
 
-\begin{enumerate}
-    \item \textbf{Phụ thuộc LLM và độ trễ:} Tầng~1 yêu cầu nhiều lời gọi LLM tuần tự (Loop~0 $\to$ Loop~1 $\to$ Loop~2), dẫn đến thời gian phản hồi khoảng 7 giây mỗi truy vấn. Chất lượng hệ thống phụ thuộc trực tiếp vào khả năng suy luận của LLM sử dụng, tạo ra rủi ro khi LLM cập nhật hoặc thay đổi.
+Hạn chế đáng kể nhất liên quan đến \textbf{sự phụ thuộc vào LLM và độ trễ xử lý}. Tầng~1 yêu cầu nhiều lời gọi LLM tuần tự (Loop~0 $\to$ Loop~1 $\to$ Loop~2), dẫn đến thời gian phản hồi khoảng 7 giây mỗi truy vấn. Chất lượng toàn hệ thống phụ thuộc trực tiếp vào khả năng suy luận của LLM đang sử dụng, tạo ra rủi ro khi mô hình được cập nhật hoặc thay thế. Một hạn chế khác là \textbf{quy mô bộ kiểm thử miền đào tạo} hiện gồm 130 câu hỏi, đủ để đánh giá xu hướng nhưng có thể mở rộng hơn để tăng tính đại diện thống kê.
 
-    \item \textbf{Quy mô bộ kiểm thử miền đào tạo:} Bộ kiểm thử miền đào tạo gồm 130 câu hỏi, đủ để đánh giá xu hướng nhưng có thể mở rộng để tăng tính đại diện thống kê.
-
-    \item \textbf{KG xây dựng thủ công:} Bước tinh chỉnh expert-in-the-loop đảm bảo chất lượng nhưng khó mở rộng quy mô. Hệ thống chưa hỗ trợ cập nhật KG tự động khi quy định thay đổi.
-
-    \item \textbf{Chưa đánh giá chất lượng sinh câu trả lời:} Luận văn tập trung đánh giá chất lượng truy xuất (Hit@k, MRR). Chất lượng câu trả lời sinh bởi LLM từ ngữ cảnh đã truy xuất chưa được đánh giá bằng các chỉ số như BLEU, ROUGE hay BERTScore.
-
-    \item \textbf{Hiệu quả trên nhóm luật về doanh nghiệp thấp hơn:} 27/31 câu hỏi bị bỏ sót thuộc nhóm luật về doanh nghiệp, chủ yếu do chuỗi suy luận pháp lý ngầm giữa các nghị định không có tham chiếu chéo rõ ràng.
-\end{enumerate}
+Về phía xây dựng dữ liệu, \textbf{Knowledge Graph được xây dựng qua tinh chỉnh thủ công} theo quy trình expert-in-the-loop — điều này đảm bảo chất lượng cao nhưng khó mở rộng quy mô và hệ thống chưa hỗ trợ cập nhật KG tự động khi quy định thay đổi. Bên cạnh đó, luận văn tập trung đánh giá chất lượng truy xuất qua các chỉ số Hit@k và MRR, trong khi \textbf{chất lượng câu trả lời sinh bởi LLM} từ ngữ cảnh đã truy xuất chưa được đánh giá bằng các chỉ số như BLEU, ROUGE hay BERTScore. Ngoài ra, hiệu quả của hệ thống trên \textbf{nhóm luật về doanh nghiệp còn thấp hơn so với các miền khác}: 27/31 câu hỏi bị bỏ sót thuộc nhóm này, chủ yếu do chuỗi suy luận pháp lý ngầm giữa các nghị định không có tham chiếu chéo rõ ràng.
 
 % ============================================================
 \section{Hướng phát triển}
 \label{sec:huong-phat-trien}
 
-Dựa trên các hạn chế và tiềm năng đã xác định, các hướng phát triển tương lai bao gồm:
+Dựa trên các hạn chế và tiềm năng đã xác định, một số hướng phát triển tương lai được đề xuất.
 
-\begin{enumerate}
-    \item \textbf{Giảm độ trễ LLM:} Nghiên cứu thực thi song song các lời gọi LLM trong Tầng~1 và model distillation để giảm chi phí tính toán. Các mô hình nhỏ hơn có thể được fine-tune cho tác vụ chọn chương/điều khoản cụ thể.
+Về tối ưu hiệu năng, hướng ưu tiên trước mắt là \textbf{giảm độ trễ LLM} thông qua thực thi song song các lời gọi trong Tầng~1 và áp dụng model distillation để giảm chi phí tính toán — các mô hình nhỏ hơn có thể được fine-tune chuyên biệt cho tác vụ chọn chương/điều khoản. Song song đó, cần \textbf{tự động hóa quy trình cập nhật KG} bằng cách phát triển pipeline tự động phát hiện thay đổi trong văn bản quy phạm và cập nhật Knowledge Graph tương ứng, giảm thiểu sự can thiệp thủ công hiện tại.
 
-    \item \textbf{Cập nhật KG tự động:} Phát triển pipeline tự động phát hiện thay đổi trong văn bản quy phạm và cập nhật Knowledge Graph tương ứng, giảm thiểu sự can thiệp thủ công.
+Về kỹ thuật nâng cao, khi Knowledge Graph đạt quy mô đủ lớn, việc tích hợp \textbf{Graph Neural Networks} theo hướng tiếp cận GNN-RAG~\cite{mavromatis2024gnnrag} sẽ cho phép khai thác cấu trúc đồ thị sâu hơn thay vì chỉ duyệt cạnh đơn. Bên cạnh đó, mở rộng hệ thống theo hướng \textbf{đa phương thức} để hỗ trợ xử lý biểu mẫu, sơ đồ quy trình (flowchart thủ tục) và bảng biểu trong văn bản quy phạm cũng là một hướng có tiềm năng cao.
 
-    \item \textbf{GNN-RAG:} Khi Knowledge Graph đủ lớn, nghiên cứu tích hợp Graph Neural Networks~\cite{mavromatis2024gnnrag} cho truy xuất trên KG, khai thác cấu trúc đồ thị sâu hơn thay vì chỉ duyệt cạnh đơn.
-
-    \item \textbf{Đa phương thức:} Mở rộng hệ thống hỗ trợ xử lý biểu mẫu, sơ đồ quy trình (flowchart thủ tục) và bảng biểu trong văn bản quy phạm.
-
-    \item \textbf{Mở rộng miền:} Áp dụng hệ thống cho các miền quy định khác như đào tạo đại học, tuyển sinh, hoặc các lĩnh vực pháp luật bổ sung (lao động, thuế, đất đai).
-
-    \item \textbf{Triển khai production:} Nâng cấp ứng dụng chatbot hiện tại thành hệ thống production với xác thực người dùng, lưu lịch sử hội thoại, phản hồi từ người dùng (feedback loop) để cải thiện chất lượng truy xuất, và tích hợp vào cổng thông tin đào tạo.
-
-    \item \textbf{Đánh giá chất lượng sinh câu trả lời:} Bổ sung đánh giá end-to-end bằng các chỉ số sinh văn bản (BLEU, ROUGE, BERTScore) và đánh giá chủ quan bởi chuyên gia miền.
-\end{enumerate}
+Về mở rộng phạm vi và hoàn thiện hệ thống, luận văn đề xuất \textbf{mở rộng sang các miền quy định khác} như đào tạo đại học, tuyển sinh, hoặc các lĩnh vực pháp luật bổ sung (lao động, thuế, đất đai). Ứng dụng chatbot hiện tại cũng cần được \textbf{nâng cấp lên môi trường production} với xác thực người dùng, lưu lịch sử hội thoại, phản hồi từ người dùng (feedback loop) để cải thiện chất lượng truy xuất, và tích hợp vào cổng thông tin đào tạo. Cuối cùng, cần \textbf{bổ sung đánh giá chất lượng sinh câu trả lời} end-to-end bằng các chỉ số sinh văn bản (BLEU, ROUGE, BERTScore) và đánh giá chủ quan bởi chuyên gia miền, nhằm hoàn thiện bức tranh đánh giá toàn diện cho hệ thống.

@@ -1,254 +1,658 @@
 % ============================================================
-%  Chương 2: Thu thập kiến thức về quy định đào tạo
+%  Chương 2: Cơ sở lý thuyết và các công trình liên quan
 % ============================================================
-\chapter{Thu thập kiến thức về quy định đào tạo}
-\label{chap:chapter2}
+\chapter{Cơ sở lý thuyết và các công trình liên quan}
+\label{chap:co-so-ly-thuyet}
 
-Chương này trình bày tổng quan về hệ thống quy chế đào tạo thạc sĩ tại UIT và ĐHQG-HCM, quy trình thu thập và tổ chức kiến thức từ các văn bản quy phạm, cũng như việc xây dựng bộ câu hỏi kiểm thử phục vụ đánh giá hệ thống. Nội dung chương này tuân theo phương pháp thu thập kiến thức theo miền (domain knowledge acquisition) cho hệ thống truy xuất thông tin.
+Chương này trình bày các nền tảng lý thuyết được sử dụng trong luận văn, bao gồm
+truy xuất thông tin, biểu diễn ngữ nghĩa, đồ thị tri thức, Personalized PageRank,
+Reciprocal Rank Fusion và Retrieval-Augmented Generation. Phần sau tổng hợp các
+công trình liên quan và xác định vị trí đóng góp của luận văn.
 
 % ============================================================
-\section{Giới thiệu về hệ thống quy chế đào tạo thạc sĩ}
-\label{sec:gioithieu_quyche}
+\section{Truy xuất thông tin}
+\label{sec:cslt-truy-xuat}
 
-% ------------------------------------------------------------
-\subsection{Tổng quan hệ thống quy chế đào tạo sau đại học tại Việt Nam}
-\label{subsec:tongquan_hethong}
+Truy xuất thông tin (Information Retrieval -- IR) là bài toán tìm kiếm các tài liệu
+liên quan từ một kho dữ liệu lớn dựa trên truy vấn của người dùng~\cite{manning2008ir}.
+Một hệ thống IR nhận đầu vào là truy vấn $q$ và kho tài liệu $\mathcal{D} = \{d_1, d_2, \ldots, d_N\}$, trả về danh sách xếp hạng các tài liệu theo mức độ
+liên quan giảm dần.
 
-Hệ thống giáo dục sau đại học tại Việt Nam được quản lý bởi nhiều tầng văn bản quy phạm pháp luật, từ cấp quốc gia đến cấp trường. Tại cấp quốc gia, Luật Giáo dục và Luật Giáo dục Đại học đặt ra khung pháp lý chung. Bộ Giáo dục và Đào tạo ban hành các quy chế đào tạo trình độ thạc sĩ, tiến sĩ áp dụng trên toàn quốc. Tại cấp cơ sở, các đại học quốc gia và trường đại học ban hành quy chế riêng phù hợp với đặc thù đào tạo.
+\subsection{Chỉ mục ngược}
+\label{subsec:chi-muc-nguoc}
 
-Đối với UIT, một trường thành viên của ĐHQG-HCM, hệ thống quy chế đào tạo thạc sĩ bao gồm hai tầng chính:
+Chỉ mục ngược (inverted index) là cấu trúc dữ liệu nền tảng cho truy xuất văn bản.
+Với mỗi thuật ngữ $t$ trong từ vựng, chỉ mục lưu danh sách các tài liệu chứa $t$
+cùng thông tin bổ trợ như tần suất xuất hiện và vị trí. Khi nhận truy vấn, hệ thống
+tra cứu chỉ mục cho từng thuật ngữ trong truy vấn, giao các danh sách tài liệu,
+rồi tính điểm xếp hạng. Cấu trúc này cho phép truy xuất trong thời gian gần tuyến
+tính theo kích thước kết quả, thay vì quét toàn bộ kho tài liệu.
+
+\subsection{BM25}
+\label{subsec:bm25}
+
+BM25 (Best Matching 25)~\cite{robertson2009bm25} là hàm xếp hạng dựa trên mô hình
+xác suất, cải tiến từ TF-IDF bằng cách bổ sung chuẩn hóa độ dài tài liệu và bão
+hòa tần suất thuật ngữ. Điểm BM25 của tài liệu $d$ với truy vấn $q$ gồm các thuật
+ngữ $q_1, q_2, \ldots, q_n$ được tính:
+
+\begin{equation}
+  \text{BM25}(d, q) = \sum_{i=1}^{n} \text{IDF}(q_i) \cdot
+  \frac{f(q_i, d) \cdot (k_1 + 1)}{f(q_i, d) + k_1 \cdot
+  \left(1 - b + b \cdot \frac{|d|}{\text{avgdl}}\right)}
+  \label{eq:bm25}
+\end{equation}
+
+\noindent trong đó $f(q_i, d)$ là tần suất thuật ngữ $q_i$ trong tài liệu $d$,
+$|d|$ là độ dài tài liệu, $\text{avgdl}$ là độ dài trung bình, $k_1$ (thường
+$1{,}2$--$2{,}0$) kiểm soát mức bão hòa tần suất, $b$ (thường $0{,}75$) kiểm soát
+chuẩn hóa độ dài, và $\text{IDF}(q_i) = \ln\!\left(\frac{N - n(q_i) + 0{,}5}{n(q_i) + 0{,}5}\right)$
+là trọng số tần suất tài liệu ngược (inverse document frequency) với $N$ là tổng
+số tài liệu và $n(q_i)$ là số tài liệu chứa $q_i$.
+
+BM25 hoạt động tốt khi thuật ngữ trong truy vấn trùng khớp với tài liệu, nhưng
+thất bại khi người dùng diễn đạt lại khái niệm bằng ngôn ngữ khác (vocabulary
+mismatch). Hạn chế này đặc biệt rõ trong miền pháp lý: người dùng hỏi ``mở công ty cần gì''
+trong khi văn bản quy định dùng thuật ngữ ``đăng ký thành lập doanh nghiệp''.
+
+\subsection{TF-IDF}
+\label{subsec:tf-idf}
+
+TF-IDF (Term Frequency -- Inverse Document Frequency)~\cite{manning2008ir} là
+phương pháp biểu diễn tài liệu dưới dạng vector trọng số thuật ngữ. Trọng số
+$w_{t,d}$ của thuật ngữ $t$ trong tài liệu $d$ được tính:
+
+\begin{equation}
+  w_{t,d} = \text{tf}(t,d) \times \log\frac{N}{df(t)}
+  \label{eq:tfidf}
+\end{equation}
+
+\noindent trong đó $\text{tf}(t,d)$ là tần suất thuật ngữ và $df(t)$ là số tài liệu
+chứa $t$. Tài liệu được xếp hạng theo cosine similarity giữa vector truy vấn và
+vector tài liệu. TF-IDF là nền tảng cho BM25 và các phương pháp truy xuất thưa
+(sparse retrieval) khác.
+
+\subsection{Các chỉ số đánh giá truy xuất}
+\label{subsec:chi-so-danh-gia}
+
+Luận văn sử dụng hai chỉ số đánh giá chính~\cite{manning2008ir}:
+
+\textbf{Hit@$k$} (Top-$k$ Hit Rate) đo tỷ lệ truy vấn mà ít nhất một tài liệu
+liên quan xuất hiện trong $k$ kết quả hàng đầu:
+
+\begin{equation}
+  \text{Hit@}k = \frac{1}{|Q|} \sum_{q \in Q}
+  \mathbf{1}\!\left[\exists\, a \in R_q : \text{rank}(a) \leq k\right]
+  \label{eq:hitk-def}
+\end{equation}
+
+\noindent trong đó $Q$ là tập truy vấn, $R_q$ là tập tài liệu liên quan của truy
+vấn $q$, và $\mathbf{1}[\cdot]$ là hàm chỉ báo. Hit@10 được chọn làm chỉ số chính
+vì trong pipeline RAG, mô hình ngôn ngữ lớn đóng vai trò lọc bổ sung trên ngữ cảnh
+đã truy xuất; chỉ cần một điều khoản đúng trong 10 ứng viên là đủ để sinh câu trả
+lời chính xác.
+
+\textbf{MRR} (Mean Reciprocal Rank) trung bình hạng nghịch đảo của tài liệu liên
+quan đầu tiên:
+
+\begin{equation}
+  \text{MRR} = \frac{1}{|Q|} \sum_{q \in Q}
+  \frac{1}{\min_{a \in R_q} \text{rank}(a)}
+  \label{eq:mrr-def}
+\end{equation}
+
+MRR bổ sung cho Hit@$k$ bằng cách thưởng cho việc đặt tài liệu liên quan ở vị trí
+cao hơn, giúp giảm nhiễu mà mô hình ngôn ngữ phải lọc.
+
+% ============================================================
+\section{Biểu diễn ngữ nghĩa}
+\label{sec:cslt-bieu-dien}
+
+Truy xuất thưa (sparse retrieval) dựa trên so khớp thuật ngữ không nắm bắt được
+tương đồng ngữ nghĩa giữa các cách diễn đạt khác nhau của cùng một khái niệm. Truy
+xuất dày đặc (dense retrieval) giải quyết vấn đề này bằng cách biểu diễn cả truy
+vấn và tài liệu dưới dạng vector trong không gian liên tục, nơi khoảng cách vector
+phản ánh mức độ tương đồng ngữ nghĩa.
+
+\subsection{Embedding câu}
+\label{subsec:embedding-cau}
+
+Sentence-BERT (SBERT)~\cite{reimers2019sbert} mở rộng kiến trúc BERT bằng mạng
+Siamese để tính embedding cấp câu một cách độc lập. Mỗi câu $s$ được mã hóa thành
+vector $\mathbf{v}_s \in \mathbb{R}^d$ (với $d = 384$ trong mô hình đa ngôn ngữ
+paraphrase-multilingual-MiniLM-L12-v2 mà luận văn sử dụng). Mức độ tương đồng giữa
+hai câu $s_1$ và $s_2$ được tính bằng cosine similarity:
+
+\begin{equation}
+  \text{sim}(s_1, s_2) = \frac{\mathbf{v}_{s_1} \cdot \mathbf{v}_{s_2}}
+  {\|\mathbf{v}_{s_1}\| \cdot \|\mathbf{v}_{s_2}\|}
+  \label{eq:cosine-sim}
+\end{equation}
+
+Ưu điểm chính của SBERT so với BERT gốc: câu hỏi và tài liệu được mã hóa
+\textit{độc lập}, cho phép tính trước embedding của toàn bộ kho tài liệu và truy
+xuất bằng tìm kiếm vector thay vì so khớp từng cặp. SBERT giảm thời gian tìm kiếm
+từ 65 giờ (so khớp cặp với BERT) xuống khoảng 5 giây cho 10.000 câu.
+
+\subsection{Tìm kiếm vector với FAISS}
+\label{subsec:faiss}
+
+FAISS (Facebook AI Similarity Search) là thư viện tìm kiếm vector cho phép truy
+xuất các vector gần nhất từ tập dữ liệu lớn. Luận văn sử dụng FAISS để xây dựng
+chỉ mục vector cho các embedding điều khoản, hỗ trợ tìm kiếm tương đồng ngữ nghĩa
+tại Tầng~2 của pipeline truy xuất. Với kho tài liệu gồm $N$ điều khoản, FAISS cho
+phép tìm $k$ điều khoản gần nhất trong thời gian gần hằng số thông qua các cấu trúc
+chỉ mục tối ưu (flat index, IVF, HNSW).
+
+% ============================================================
+\section{Đồ thị tri thức và Ontology}
+\label{sec:cslt-kg-ontology}
+
+\subsection{Đồ thị tri thức}
+\label{subsec:do-thi-tri-thuc}
+
+Đồ thị tri thức (Knowledge Graph -- KG) là cấu trúc dữ liệu biểu diễn tri thức
+dưới dạng đồ thị có hướng, trong đó các nút biểu diễn thực thể và các cạnh biểu
+diễn quan hệ giữa chúng. Mỗi đơn vị tri thức được biểu diễn bằng một bộ ba (triple):
+
+\begin{equation}
+  (h, r, t) \in \mathcal{E} \times \mathcal{R} \times \mathcal{E}
+  \label{eq:kg-triple}
+\end{equation}
+
+\noindent trong đó $h$ (head) là thực thể nguồn, $r$ (relation) là quan hệ, $t$
+(tail) là thực thể đích, $\mathcal{E}$ là tập thực thể và $\mathcal{R}$ là tập
+loại quan hệ. Ví dụ, bộ ba (\textit{Điều~24}, \textit{requires}, \textit{ngoại ngữ B1})
+biểu diễn rằng Điều~24 yêu cầu trình độ ngoại ngữ B1.
+
+Trong ngữ cảnh luận văn, KG được xây dựng từ văn bản quy phạm với hai vai trò: biểu
+diễn các quan hệ ngữ nghĩa giữa điều khoản (tham chiếu, phụ thuộc, điều kiện) phục
+vụ suy luận đa bước, và cung cấp thông tin thực thể cho truy xuất ngữ nghĩa tại
+Tầng~2.
+
+\subsection{Ontology và OWL}
+\label{subsec:ontology-owl}
+
+Ontology là mô hình hình thức định nghĩa các khái niệm (concept), thuộc tính
+(property), và quan hệ (relation) trong một miền tri thức cụ thể. Ontology cung cấp
+lược đồ (schema) cho đồ thị tri thức, xác định các loại thực thể hợp lệ và các
+loại quan hệ giữa chúng.
+
+OWL (Web Ontology Language) là ngôn ngữ chuẩn W3C cho biểu diễn ontology, hỗ trợ
+phân cấp lớp (class hierarchy), ràng buộc thuộc tính (property restrictions), và suy
+luận logic. Luận văn sử dụng OWL để định nghĩa ontology miền với 14 loại thực thể
+(Action, Legal Term, Organization, Penalty, Condition, v.v.) tổ chức theo phân cấp
+4 cấp, kèm ánh xạ nhãn tiếng Việt. Ontology miền phục vụ hai mục đích: hướng dẫn
+quá trình trích xuất thực thể từ văn bản (đảm bảo tính nhất quán về loại), và cung
+cấp thông tin loại thực thể cho cơ chế Concept Matching tại Tầng~2.
+
+\subsection{Document Forest}
+\label{subsec:document-forest}
+
+Các văn bản quy phạm Việt Nam có cấu trúc phân cấp nghiêm ngặt: Văn bản $\to$
+Chương $\to$ Mục $\to$ Điều $\to$ Khoản $\to$ Điểm. Mỗi tài liệu được mô hình hóa
+dưới dạng cây có gốc (rooted tree), và toàn bộ kho tài liệu gồm $m$ văn bản tạo
+thành Document Forest $\mathcal{F} = \{T_1, T_2, \ldots, T_m\}$, được bổ sung các
+cạnh tham chiếu chéo liên kết các điều khoản giữa các cây. Cấu trúc Document Forest
+cho phép duyệt cây top-down (từ văn bản xuống điều khoản) và mở rộng ngang
+(cross-reference) giữa các văn bản.
+
+% ============================================================
+\section{Personalized PageRank}
+\label{sec:cslt-ppr}
+
+PageRank~\cite{gleich2015pagerank} là thuật toán xếp hạng nút trên đồ thị, ban đầu
+được thiết kế để đo tầm quan trọng của trang web dựa trên cấu trúc liên kết.
+Personalized PageRank (PPR)~\cite{haveliwala2002ppr,jeh2003ppr} mở rộng PageRank
+bằng cách thiên lệch (bias) phân phối xác suất về một tập nút nguồn cụ thể, cho
+phép đo tầm quan trọng \textit{tương đối so với} nút nguồn thay vì tầm quan trọng
+toàn cục.
+
+PPR được tính theo công thức lặp:
+
+\begin{equation}
+  \text{PPR}(v) = (1 - \alpha) \sum_{u \in N(v)}
+  \frac{w(u,v) \cdot \text{PPR}(u)}{d^{+}(u)}
+  + \alpha \cdot p(v)
+  \label{eq:ppr-def}
+\end{equation}
+
+\noindent trong đó:
 \begin{itemize}
-    \item \textbf{Tầng ĐHQG-HCM}: Các quy chế khung do ĐHQG-HCM ban hành, áp dụng cho tất cả các trường thành viên (QĐ~160, QĐ~1393, QĐ~218).
-    \item \textbf{Tầng trường}: Các quy chế, quy định cụ thể hóa do UIT ban hành (QĐ~270, QĐ~851), bổ sung và chi tiết hóa các quy định của ĐHQG-HCM.
+  \item $\alpha \in (0,1)$ là xác suất dịch chuyển tức thời (teleport probability),
+        kiểm soát tỷ lệ giữa duyệt đồ thị và quay về nút nguồn;
+  \item $N(v)$ là tập nút kề có cạnh hướng đến $v$;
+  \item $w(u,v)$ là trọng số cạnh từ $u$ đến $v$;
+  \item $d^{+}(u) = \sum_{v' \in N^{+}(u)} w(u, v')$ là tổng trọng số cạnh đi ra
+        từ $u$;
+  \item $p(v)$ là vector cá nhân hóa (personalization vector), phân phối xác suất trên
+        các nút nguồn.
 \end{itemize}
 
-% ------------------------------------------------------------
-\subsection{Cấu trúc văn bản quy phạm}
-\label{subsec:cautruc_vanban}
+Trực giác: PPR mô phỏng bước đi ngẫu nhiên (random walk) trên đồ thị, trong đó tại
+mỗi bước, người đi hoặc theo một cạnh ngẫu nhiên (xác suất $1 - \alpha$) hoặc nhảy
+về nút nguồn (xác suất $\alpha$). Sau khi hội tụ, các nút có giá trị PPR cao là
+những nút ``gần'' với nút nguồn theo cấu trúc đồ thị. Thuật toán hội tụ khi
+$\max_v |\text{PPR}^{(t)}(v) - \text{PPR}^{(t-1)}(v)| < \epsilon$ (luận văn sử dụng
+$\alpha = 0{,}15$, $\epsilon = 10^{-6}$, tối đa 50 vòng lặp).
 
-Các văn bản quy chế đào tạo tuân theo cấu trúc phân cấp chuẩn của văn bản quy phạm pháp luật Việt Nam:
-
-\[
-\text{Văn bản} \rightarrow \text{Chương} \rightarrow \text{Mục} \rightarrow \text{Điều} \rightarrow \text{Khoản} \rightarrow \text{Điểm}
-\]
-
-Mỗi cấp mang phạm vi pháp lý riêng biệt. Một Văn bản thường bao gồm nhiều Chương, mỗi Chương có thể chứa các Mục gom nhóm các Điều theo chủ đề. Mỗi Điều quy định về một vấn đề cụ thể và được chia thành các Khoản (đánh số 1, 2, 3\ldots) và Điểm (đánh số a, b, c\ldots). Đây chính là đơn vị trích dẫn nhỏ nhất (minimal citable unit) trong thực tiễn pháp lý Việt Nam. Trong thực tế, không phải văn bản nào cũng có đủ cả 6 cấp; ví dụ các quy chế đào tạo thường không có cấp Mục.
-
-Hình~\ref{fig:document_tree} minh họa cấu trúc Document Tree của QĐ~270/QĐ-ĐHCNTT với các cấp phân cấp và tham chiếu chéo.
-
-\begin{figure}[htbp]
-    \centering
-    \includegraphics[width=0.95\textwidth]{graphics/figure2-1-document-tree.png}
-    \caption{Cấu trúc Document Tree của QĐ~270/QĐ-ĐHCNTT theo cấu trúc phân cấp 6 cấp: Văn bản $\rightarrow$ Chương $\rightarrow$ Mục $\rightarrow$ Điều $\rightarrow$ Khoản $\rightarrow$ Điểm (cấp Mục không áp dụng cho văn bản này). Mũi tên nét đứt đỏ thể hiện các tham chiếu chéo giữa các điều khoản và giữa các văn bản.}
-    \label{fig:document_tree}
-\end{figure}
-
-% ------------------------------------------------------------
-\subsection{Các quy chế trong phạm vi nghiên cứu}
-\label{subsec:cacquiche}
-
-Bảng~\ref{tab:quyche_list} liệt kê 5 quy chế được sử dụng trong luận văn.
-
-\begin{table}[htbp]
-    \centering
-    \caption{Danh sách các quy chế đào tạo trong phạm vi nghiên cứu}
-    \label{tab:quyche_list}
-    \begin{tabular}{cp{5.5cm}ccc}
-        \toprule
-        \textbf{STT} & \textbf{Tên quy chế} & \textbf{Số QĐ} & \textbf{Số chương} & \textbf{Số điều} \\
-        \midrule
-        1 & Quy chế ĐT trình độ ThS của UIT
-          & 270/QĐ-ĐHCNTT & 8 & 35 \\
-        2 & Quy chế ĐT trình độ ThS của ĐHQG-HCM (khóa 2021)
-          & 160/QĐ-ĐHQG & 7 & 28 \\
-        3 & Quy chế ĐT trình độ ThS của ĐHQG-HCM (khóa 2022+)
-          & 1393/QĐ-ĐHQG & 8 & 32 \\
-        4 & Quy chế sửa đổi bổ sung về GVHD
-          & 218/QĐ-ĐHQG & 2 & 6 \\
-        5 & Quy định liêm chính học thuật
-          & 851/QĐ-ĐHCNTT & 3 & 8 \\
-        \midrule
-        \multicolumn{3}{r}{\textbf{Tổng cộng}} & \textbf{28} & \textbf{109} \\
-        \bottomrule
-    \end{tabular}
-\end{table}
-
-\textbf{QĐ~270/QĐ-ĐHCNTT} (25/04/2022) là quy chế đào tạo trình độ thạc sĩ chính của UIT, gồm 8 chương và 35 điều, quy định toàn bộ quy trình từ tuyển sinh, tổ chức đào tạo, đánh giá kết quả học tập, thực hiện luận văn đến xét tốt nghiệp. Đây là văn bản được học viên cao học UIT tham chiếu nhiều nhất.
-
-\textbf{QĐ~160/QĐ-ĐHQG} (24/03/2017) là quy chế khung của ĐHQG-HCM áp dụng cho khóa 2021, gồm 7 chương và 28 điều, quy định các nguyên tắc chung về đào tạo thạc sĩ tại các trường thành viên.
-
-\textbf{QĐ~1393/QĐ-ĐHQG} (03/11/2021) là quy chế mới thay thế QĐ~160, áp dụng cho khóa từ 2022 trở đi, gồm 8 chương và 32 điều với nhiều thay đổi quan trọng về thời gian đào tạo, điều kiện tốt nghiệp và yêu cầu luận văn.
-
-\textbf{QĐ~218/QĐ-ĐHQG} (15/03/2024) sửa đổi, bổ sung một số điều về quy định giáo viên hướng dẫn trong quy chế đào tạo của ĐHQG-HCM.
-
-\textbf{QĐ~851/QĐ-ĐHCNTT} (14/08/2024) quy định về liêm chính học thuật áp dụng cho học viên cao học UIT, gồm 3 chương và 8 điều, bao gồm các quy định về đạo văn, gian lận và xử lý vi phạm.
+Trong luận văn, PPR được áp dụng trên đồ thị tri thức pháp lý tại Tầng~2 của
+pipeline truy xuất. Vector cá nhân hóa $p(v)$ được khởi tạo từ các thực thể khớp
+với truy vấn (seed entities), và trọng số cạnh $w(u,v)$ được điều chỉnh theo ý
+định truy vấn (intent-aware): các cạnh dẫn đến thực thể liên quan đến ý định nhận
+trọng số $1{,}0$, các cạnh khác nhận $0{,}5$. Cơ chế này cho phép PPR ưu tiên các
+đường suy luận phù hợp với loại câu hỏi.
 
 % ============================================================
-\section{Thu thập kiến thức trong văn bản quy chế}
-\label{sec:thuthap_kienthuc}
+\section{Reciprocal Rank Fusion}
+\label{sec:cslt-rrf}
 
-% ------------------------------------------------------------
-\subsection{Quy trình thu thập và số hóa}
-\label{subsec:quytrinh_thuthap}
+Reciprocal Rank Fusion (RRF)~\cite{cormack2009rrf} là phương pháp kết hợp nhiều
+danh sách xếp hạng thành một danh sách duy nhất. RRF không yêu cầu điểm số thô
+(raw score) từ các hệ thống thành phần, chỉ cần thứ hạng, giúp kết hợp được các
+hệ thống có thang điểm khác nhau. Điểm RRF của tài liệu $d$ được tính:
 
-Quá trình thu thập kiến thức từ các văn bản được thực hiện theo các bước sau:
+\begin{equation}
+  \text{RRF}(d) = \sum_{s=1}^{S} w_s \cdot \frac{1}{k + \text{rank}_s(d)}
+  \label{eq:rrf-def}
+\end{equation}
+
+\noindent trong đó $S$ là số danh sách nguồn, $w_s$ là trọng số của nguồn thứ $s$,
+$\text{rank}_s(d)$ là thứ hạng của $d$ trong nguồn $s$ (bắt đầu từ 1), và $k$ là
+hằng số điều hòa (thường $k = 60$) giúp giảm ảnh hưởng quá mức của các tài liệu
+xếp hạng rất cao.
+
+RRF phù hợp cho bài toán của luận văn vì ba tầng truy xuất sử dụng các phương pháp
+khác nhau (duyệt cây, embedding, đồ thị) với thang điểm không tương thích. RRF cho
+phép kết hợp chúng chỉ dựa trên thứ hạng, tận dụng thế mạnh bổ trợ của từng tầng.
+
+% ============================================================
+\section{Retrieval-Augmented Generation}
+\label{sec:cslt-rag}
+
+Retrieval-Augmented Generation (RAG)~\cite{lewis2020rag} là kiến trúc kết hợp bộ
+truy xuất (retriever) với mô hình ngôn ngữ lớn (LLM) để sinh câu trả lời có căn cứ
+từ tài liệu nguồn. Pipeline RAG cơ bản gồm ba bước:
 
 \begin{enumerate}
-    \item \textbf{Thu thập văn bản gốc}: Tải các quyết định từ website chính thức của UIT và ĐHQG-HCM. Các văn bản ở dạng PDF scan (118 trang) được số hóa bằng LLM Vision OCR.
-
-    \item \textbf{Phân tích cấu trúc}: Sử dụng bộ phân tích cú pháp (parser) tùy chỉnh với regex nhận diện các dấu hiệu phân cấp tiếng Việt (``Chương'', ``Mục'', ``Điều'', ``Khoản'', ``Điểm'') để xây dựng cây cấu trúc phân cấp.
-
-    \item \textbf{Trích xuất tham chiếu chéo}: Nhận diện các tham chiếu giữa các điều khoản bằng pattern matching trên chuỗi trích dẫn (ví dụ: ``Điều 5 Quy chế 270'').
-
-    \item \textbf{Tạo tóm tắt}: Sinh tóm tắt chương và điều bằng LLM (Claude 3.5 Haiku), tạo mô tả gồm nhiều từ khóa phục vụ cho bước chọn nhánh trong Tầng~1.
+  \item \textbf{Truy xuất (Retrieve):} Cho truy vấn $q$, bộ truy xuất tìm $k$ tài
+        liệu liên quan nhất $\{d_1, \ldots, d_k\}$ từ kho dữ liệu.
+  \item \textbf{Tăng cường (Augment):} Các tài liệu được ghép vào prompt cùng truy
+        vấn, tạo thành ngữ cảnh cho LLM.
+  \item \textbf{Sinh (Generate):} LLM sinh câu trả lời dựa trên ngữ cảnh đã truy
+        xuất, giảm thiểu hiện tượng ảo giác (hallucination) bằng cách neo (ground)
+        nội dung vào tài liệu cụ thể.
 \end{enumerate}
 
-% ------------------------------------------------------------
-\subsection{Các khái niệm chính trong quy chế đào tạo}
-\label{subsec:khainiemchinh}
+RAG giải quyết hai hạn chế chính của LLM đơn thuần: kiến thức bị đóng băng tại thời
+điểm huấn luyện (knowledge cutoff), và xu hướng sinh thông tin sai khi thiếu ngữ cảnh
+(hallucination). Trong miền pháp lý, RAG đặc biệt quan trọng vì câu trả lời phải
+trích dẫn được điều khoản cụ thể và phản ánh đúng quy định hiện hành.
 
-Qua phân tích nội dung 5 quy chế, các khái niệm chính được xác định bao gồm:
-
-\begin{itemize}
-    \item \textbf{Chương trình đào tạo}: khung chương trình, môn học bắt buộc, môn học tự chọn, số tín chỉ tối thiểu.
-    \item \textbf{Tín chỉ và môn học}: định nghĩa tín chỉ, phân loại môn học, điều kiện tiên quyết, đăng ký môn học.
-    \item \textbf{Đánh giá kết quả học tập}: thang điểm 10, thang điểm 4, thang điểm chữ (A, B+, B, C+, C, D+, D, F), quy đổi giữa các thang điểm.
-    \item \textbf{Thời hạn đào tạo}: thời gian đào tạo chuẩn, thời gian tối đa, gia hạn, bảo lưu kết quả học tập.
-    \item \textbf{Luận văn thạc sĩ}: đề cương luận văn, hội đồng xét duyệt đề cương, giáo viên hướng dẫn, hội đồng bảo vệ luận văn, điều kiện bảo vệ.
-    \item \textbf{Điều kiện tốt nghiệp}: điểm trung bình tích lũy, yêu cầu ngoại ngữ, yêu cầu bài báo khoa học, xét tốt nghiệp.
-    \item \textbf{Liêm chính học thuật}: định nghĩa đạo văn, các hình thức vi phạm, mức xử lý kỷ luật.
-\end{itemize}
-
-% ------------------------------------------------------------
-\subsection{Các quan hệ giữa các khái niệm}
-\label{subsec:quanhe}
-
-Các mối quan hệ quan trọng được xác định từ văn bản quy chế:
-
-\begin{itemize}
-    \item \textbf{Tiên quyết} (MonHoc $\rightarrow$ MonHoc): Một môn học yêu cầu hoàn thành môn khác trước khi đăng ký.
-    \item \textbf{Thuộc} (DieuKhoan $\rightarrow$ VanBan): Một điều khoản thuộc về một văn bản quy chế cụ thể.
-    \item \textbf{Tham chiếu} (DieuKhoan $\rightarrow$ DieuKhoan): Một điều khoản dẫn chiếu đến điều khoản khác trong cùng hoặc khác văn bản.
-    \item \textbf{Thay thế/Bổ sung} (VanBan $\rightarrow$ VanBan): Một văn bản thay thế hoặc bổ sung cho văn bản khác (ví dụ: QĐ~1393 thay thế QĐ~160; QĐ~218 bổ sung QĐ~1393).
-    \item \textbf{Yêu cầu} (DieuKien $\rightarrow$ HanhDong): Một điều kiện phải được đáp ứng trước khi thực hiện một hành động (ví dụ: đạt điểm ngoại ngữ trước khi bảo vệ luận văn).
-\end{itemize}
-
-Hình~\ref{fig:kg_subgraph} minh họa một đồ thị con trích xuất từ Knowledge Graph miền đào tạo, thể hiện các thực thể và quan hệ xung quanh chủ đề bảo vệ luận văn thạc sĩ.
-
-\begin{figure}[htbp]
-    \centering
-    \includegraphics[width=0.95\textwidth]{graphics/figure2-2-kg-subgraph.png}
-    \caption{Đồ thị con minh họa các thực thể và quan hệ xung quanh chủ đề ``bảo vệ luận văn thạc sĩ''. Các nút được phân loại theo ontology (Action, Condition, Organization, Person, Legal Reference) và các cạnh thể hiện các loại quan hệ (requires, leads\_to, regulates, references).}
-    \label{fig:kg_subgraph}
-\end{figure}
-
-% ------------------------------------------------------------
-\subsection{Phân loại chủ đề}
-\label{subsec:phanloa_chude}
-
-Bảng~\ref{tab:chude_phanloa} trình bày các nhóm chủ đề chính được phân loại từ nội dung quy chế.
-
-\begin{table}[htbp]
-    \centering
-    \caption{Phân loại chủ đề trong quy chế đào tạo thạc sĩ}
-    \label{tab:chude_phanloa}
-    \begin{tabular}{clp{7cm}}
-        \toprule
-        \textbf{STT} & \textbf{Chủ đề} & \textbf{Nội dung} \\
-        \midrule
-        1 & Quy trình đào tạo
-          & Đăng ký môn học, lịch học, thời khóa biểu, nghỉ phép \\
-        2 & Điều kiện tốt nghiệp
-          & Điểm TB tích lũy, ngoại ngữ, bài báo, luận văn \\
-        3 & Luận văn
-          & Đề cương, GVHD, hội đồng, bảo vệ, chỉnh sửa \\
-        4 & Đánh giá kết quả
-          & Thang điểm, quy đổi, cảnh báo học vụ, buộc thôi học \\
-        5 & Tuyển sinh
-          & Điều kiện dự tuyển, hồ sơ, xét tuyển \\
-        6 & Liêm chính học thuật
-          & Đạo văn, gian lận, xử lý vi phạm \\
-        7 & Quy định GVHD
-          & Tiêu chuẩn, số lượng, trách nhiệm \\
-        \bottomrule
-    \end{tabular}
-\end{table}
+Tuy nhiên, chất lượng câu trả lời của RAG phụ thuộc trực tiếp vào chất lượng truy
+xuất. Nếu bộ truy xuất không tìm được điều khoản đúng, LLM hoặc bỏ sót thông tin
+quan trọng hoặc sinh nội dung không chính xác dựa trên điều khoản không liên quan.
+Đây là động lực thiết kế pipeline truy xuất ba tầng trong luận văn: kết hợp nhiều
+phương pháp truy xuất bổ trợ để tăng khả năng tìm được điều khoản liên quan.
 
 % ============================================================
-\section{Thu thập câu hỏi kiểm thử}
-\label{sec:cau_hoi_kiem_thu}
+% PHẦN B: CÁC CÔNG TRÌNH LIÊN QUAN
+% (Di chuyển từ Chapter 2 cũ, Section 2.2)
+% ============================================================
+
+\section{Các công trình liên quan}
+\label{sec:cong-trinh-lien-quan}
+
+Bài toán thu thập, biểu diễn, và truy xuất kiến thức pháp lý là một lĩnh vực nghiên
+cứu có lịch sử lâu dài trong trí tuệ nhân tạo và luật học tính toán (computational
+law). Phần này trình bày năm hướng nghiên cứu chính liên quan đến luận văn: ontology
+pháp lý, mô hình ngôn ngữ cho văn bản pháp lý, truy xuất tăng cường sinh
+(Retrieval-Augmented Generation), truy xuất dựa trên đồ thị tri thức, và hỏi đáp
+pháp lý tự động.
 
 % ------------------------------------------------------------
-\subsection{Nguồn thu thập}
-\label{subsec:nguon_thuthap}
+\subsection{Ontology và biểu diễn tri thức pháp lý}
+\label{subsec:ontology-phap-ly}
 
-Bộ câu hỏi kiểm thử cho miền quy định đào tạo gồm 130 câu hỏi, được thu thập từ các diễn đàn và nhóm trao đổi trực tuyến của học viên cao học tại UIT. Các câu hỏi bao gồm từ tra cứu đơn giản (``Thời gian đào tạo thạc sĩ tối đa là bao lâu?'') đến các truy vấn đa bước yêu cầu suy luận liên văn bản (``Học viên khóa 2021 có được áp dụng quy chế mới không?''). Chuyên gia miền gán nhãn mỗi câu hỏi với 1--5 điều khoản liên quan (gold articles) để phục vụ đánh giá định lượng.
+Sartor và cộng sự \cite{sartor2011legalonto} trình bày một tuyển tập các phương pháp
+xây dựng ontology pháp lý, phân biệt ba tầng: \textit{ontology trên} (upper ontology)
+định nghĩa các khái niệm trừu tượng như quy tắc (norm), chủ thể (agent), hành vi
+(action); \textit{ontology miền} (domain ontology) đặc tả cho từng lĩnh vực pháp
+luật cụ thể; và \textit{ontology ứng dụng} (application ontology) phục vụ tác vụ
+riêng biệt. Các tác giả nhấn mạnh rằng ontology pháp lý là nền tảng thiết yếu cho
+việc xử lý, truy xuất, và suy luận tự động trên thông tin pháp lý trong bối cảnh
+Semantic Web. Mô hình ba tầng này được xác nhận là tối ưu cho việc biểu diễn tri
+thức pháp lý trong các bối cảnh khác nhau, từ suy luận lôgic đến truy xuất tài liệu.
+Luận văn áp dụng mô hình phân tầng này, trong đó ontology miền cho quy chế đào tạo
+được tự động sinh bởi LLM (14 loại thực thể) kết hợp tinh chỉnh thủ công.
 
-Ngoài ra, hệ thống còn được đánh giá trên bộ 400 câu hỏi pháp luật thu thập từ các nhóm tư vấn pháp lý trên Facebook, thuộc hai lĩnh vực luật doanh nghiệp (200 câu) và luật giao thông (200 câu), nhằm chứng minh tính tổng quát của phương pháp.
+Nguyen T. và cộng sự \cite{nguyen2022legalonto} đề xuất Legal-Onto, mô hình hai lớp
+cho biểu diễn tri thức văn bản pháp luật: lớp ontology định nghĩa các khái niệm
+và quan hệ trong văn bản pháp luật, còn lớp Knowledge Graph hiện thực hóa
+ontology phục vụ truy xuất thông minh. Mô hình được thiết kế cho văn bản pháp luật
+Việt Nam, tập trung vào cấu trúc phân cấp (chương, mục, điều, khoản) và các quan
+hệ giữa các điều khoản. Cách tiếp cận hai lớp này cho phép tách biệt rõ ràng giữa
+định nghĩa khái niệm (conceptual layer) và triển khai kỹ thuật (implementation
+layer), tạo điều kiện cho việc tái sử dụng ontology qua nhiều ứng dụng khác nhau.
+Luận văn kế thừa ý tưởng tích hợp ontology--Knowledge Graph từ Legal-Onto, nhưng
+mở rộng bằng việc bổ sung quan hệ ngữ nghĩa (synonym, related, prerequisite) bên
+cạnh quan hệ cấu trúc.
+
+Do N.\,V. và cộng sự \cite{do2018rela} đề xuất Rela-model, khung biểu diễn tri thức dựa
+trên ontology cho hệ thống chuyên gia, bao gồm ba thành phần: khái niệm (concept),
+quan hệ (relation), và quy tắc (rule). Mô hình sử dụng ngôn ngữ đặc tả hình thức
+để mô tả cấu trúc tri thức miền, hỗ trợ suy luận dựa trên quy tắc trên dữ liệu
+có cấu trúc. Điểm mạnh của Rela-model là khả năng biểu diễn các luật suy luận phức
+tạp và các ràng buộc (constraints) trên dữ liệu, điều này đặc biệt hữu ích cho
+miền pháp lý nơi các quy tắc và điều kiện là trung tâm. Luận văn tham khảo cách
+tiếp cận quan hệ hóa (relation-based) của Rela-model khi thiết kế lược đồ quan hệ
+cho Knowledge Graph pháp lý.
+
+Ngo H. và cộng sự \cite{ngo2024ontology} đề xuất phương pháp ontology Knowledge Map
+cho việc xây dựng Linked Data cho các ứng dụng pháp lý tiếng Việt. Nghiên cứu này
+xử lý kho dữ liệu lớn gồm khoảng 325.000 tài liệu pháp lý, đề xuất Legal-Onto
+model kết hợp ontology làm lớp khái niệm (conceptual layer) và Knowledge Graph làm
+lớp triển khai (implementation layer). Một đóng góp quan trọng của công trình này là
+cách tiếp cận hệ thống để trích xuất ontology từ một khối lượng lớn tài liệu pháp
+lý không có cấu trúc, sử dụng kỹ thuật xử lý ngôn ngữ tự nhiên để tự động nhận
+diện khái niệm và quan hệ. Phương pháp này trực tiếp hỗ trợ bài toán của luận văn
+về việc tự động sinh ontology miền cho quy chế đào tạo từ tài liệu gốc.
+
+Pham V. và cộng sự \cite{pham2024enhancing} đề xuất cách tiếp cận tri thức được tích
+hợp (knowledge-infused) cho truy xuất thông tin pháp lý trong lĩnh vực luật lao động
+tiếng Việt. Nghiên cứu sử dụng tập dữ liệu gồm 300.000 tài liệu được phân loại
+thành 20 loại tài liệu pháp lý và 27 lĩnh vực pháp lý, xây dựng bộ câu hỏi--trả
+lời (Q\&A dataset) riêng cho lĩnh vực luật lao động và tích hợp ontology pháp lý
+vào quy trình truy xuất. Kết quả cho thấy việc tích hợp tri thức ontology cải thiện
+đáng kể hiệu suất truy xuất so với các phương pháp không sử dụng tri thức, chứng
+minh hiệu quả của việc kết hợp Knowledge Graph và ontology cho truy xuất tài liệu
+pháp lý tiếng Việt -- một kết quả mà luận văn tận dụng cho miền quy chế đào tạo.
+
+Pham V. và cộng sự \cite{pham2026ontology} đề xuất phương pháp Knowledge Graph dựa
+trên ontology cho hệ thống truy xuất thông tin pháp lý tự động, nhấn mạnh tích hợp
+sâu giữa ontology làm lớp khái niệm và Knowledge Graph làm lớp triển khai. Phương
+pháp được thiết kế để xử lý các vấn đề chính trong miền pháp lý: tự động trích xuất
+thông tin từ tài liệu không có cấu trúc, suy luận trên các quan hệ phức tạp giữa
+các khái niệm pháp lý, và trả lời các truy vấn yêu cầu suy luận đa bước. Công
+trình chứng minh rằng Knowledge Graph kết hợp với ontology pháp lý cải thiện độ
+chính xác truy xuất so với các phương pháp truyền thống, cung cấp nền tảng lý thuyết
+cho thiết kế Tầng~3 của luận văn nơi Knowledge Graph kết hợp suy luận đồ thị được
+sử dụng để mở rộng kết quả truy xuất.
 
 % ------------------------------------------------------------
-\subsection{Phân loại câu hỏi}
-\label{subsec:phanloa_cauhoi}
+\subsection{Mô hình ngôn ngữ và NLP cho văn bản pháp lý}
+\label{subsec:nlp-phap-ly}
 
-Bộ câu hỏi được phân loại theo mức độ phức tạp:
+Devlin và cộng sự \cite{devlin2019bert} giới thiệu BERT (Bidirectional Encoder
+Representations from Transformers), kiến trúc mô hình ngôn ngữ tiền huấn luyện hai
+chiều đạt kết quả vượt trội trên 11 tác vụ NLP. BERT trở thành nền tảng cho hầu
+hết các mô hình ngôn ngữ chuyên biệt miền sau này, bao gồm cả miền pháp lý.
 
-\begin{itemize}
-    \item \textbf{Single-hop}: Câu hỏi chỉ cần tra cứu một điều khoản duy nhất. Ví dụ: ``Thời gian đào tạo thạc sĩ tối đa là bao lâu?''
+Chalkidis và cộng sự \cite{chalkidis2020legalbert} giới thiệu LEGAL-BERT, mô hình
+ngôn ngữ được tiền huấn luyện trên kho văn bản pháp lý tiếng Anh (bao gồm luật
+của EU, UK, và Mỹ). Thông qua tìm kiếm siêu tham số mở rộng, nghiên cứu chứng
+minh rằng các hướng dẫn tinh chỉnh (fine-tuning) từ NLP đa dụng không tổng quát
+hóa tốt cho miền pháp lý -- mô hình chuyên biệt miền vượt trội so với mô hình đa
+ngôn ngữ (XLM-R) và BERT tổng quát trên các tác vụ phân loại văn bản pháp luật
+và rà soát hợp đồng.
 
-    \item \textbf{Multi-hop}: Câu hỏi cần kết hợp thông tin từ nhiều điều khoản hoặc nhiều văn bản. Ví dụ: ``Nếu học viên khóa 2021 muốn chuyển sang quy chế mới thì cần đáp ứng điều kiện gì?''
+Zhong và cộng sự \cite{zhong2020nlplaw} tổng hợp hệ thống các ứng dụng NLP trong
+lĩnh vực pháp luật, phân loại thành năm nhóm tác vụ chính: phân loại văn bản pháp
+lý, nhận dạng thực thể, trích xuất thông tin, tóm tắt văn bản, và hỏi đáp pháp lý.
+Nghiên cứu chỉ ra rằng miền pháp lý đặt ra các thách thức đặc thù: thuật ngữ
+chuyên ngành, nhạy cảm ngữ cảnh cao, và sự thay đổi thường xuyên của quy định.
 
-    \item \textbf{Reasoning}: Câu hỏi đòi hỏi suy luận logic dựa trên các quy định. Ví dụ: ``Học viên đã hết thời gian gia hạn nhưng chưa bảo vệ luận văn thì có thể làm gì?''
-\end{itemize}
+\begin{sloppypar}
+Đối với tiếng Việt, Nguyen D.\,Q. và Nguyen A.\,T. \cite{nguyen2020phobert} phát triển PhoBERT,
+mô hình ngôn ngữ tiền huấn luyện đơn ngữ cho tiếng Việt gồm hai phiên bản
+(PhoBERT\textsubscript{base} và PhoBERT\textsubscript{large}), được huấn luyện trên
+kho ngữ liệu tiếng Việt lớn. PhoBERT vượt trội so với mô hình đa ngôn ngữ XLM-R
+trên các tác vụ gán nhãn từ loại, phân tích cú pháp phụ thuộc, nhận dạng thực thể,
+và suy luận ngôn ngữ tự nhiên -- khẳng định rằng mô hình đơn ngữ là thiết yếu cho
+các ngôn ngữ có hình thái phong phú. Vu T. và cộng sự \cite{vu2018vncore} phát triển
+VnCoreNLP, bộ công cụ NLP mã nguồn mở cho tiếng Việt, tích hợp phân đoạn từ
+(word segmentation), gán nhãn từ loại (POS tagging), nhận dạng thực thể (NER), và
+phân tích cú pháp phụ thuộc (dependency parsing), đạt kết quả tiên tiến nhất
+(state-of-the-art) trên các tập dữ liệu chuẩn tiếng Việt tại thời điểm công bố.
+\end{sloppypar}
+
+Tuy nhiên, các công cụ NLP tiếng Việt nêu trên chưa được tối ưu cho văn bản pháp
+lý, đặc biệt trong việc nhận diện viết tắt chuyên ngành (ThS, NCS, GVHD), thuật
+ngữ pháp lý, và cấu trúc tham chiếu (``theo Điều X Khoản Y''). Luận văn bổ sung
+bước tiền xử lý chuyên biệt gồm mở rộng viết tắt (49 mục), ánh xạ đồng nghĩa
+(18 cặp), và trích xuất thực thể giống (seed entity extraction) trước khi truy xuất.
+
+Reimers và Gurevych \cite{reimers2019sbert} đề xuất Sentence-BERT (SBERT), phương
+pháp tính embedding cấp câu dựa trên mạng Siamese BERT. Mặc dù BERT gốc đạt hiệu
+suất tốt nhất trên các tác vụ so khớp cặp câu (semantic textual similarity), mô
+hình này yêu cầu cả hai câu phải được đưa vào mạng cùng lúc, dẫn đến chi phí tính
+toán khổng lồ: việc tìm cặp câu giống nhất từ 10.000 câu yêu cầu khoảng 50 triệu
+phép suy luận (~65 giờ). Sentence-BERT sử dụng cấu trúc mạng Siamese và Triplet để
+tính embedding câu một cách độc lập, cho phép so sánh bằng cosine-similarity trên
+các vector embedding, giảm thời gian tìm kiếm xuống còn khoảng 5 giây trong khi vẫn
+duy trì độ chính xác tương đương. Sentence-BERT đã trở thành phương pháp chuẩn (de
+facto standard) cho tính toán embedding câu trong hệ thống truy xuất vector hiện đại.
+Luận văn sử dụng Sentence-BERT tại Tầng~2 của pipeline truy xuất để tính embedding
+cho các điều khoản và câu hỏi người dùng, cho phép truy xuất nhanh chóng các điều
+khoản liên quan dựa trên tương đồng ngữ nghĩa.
 
 % ------------------------------------------------------------
-\subsection{Thống kê bộ câu hỏi}
-\label{subsec:thongke_cauhoi}
+\subsection{Truy xuất tăng cường sinh (RAG)}
+\label{subsec:rag}
 
-Bảng~\ref{tab:thongke_cauhoi} trình bày thống kê phân bố câu hỏi theo chủ đề.
+Lewis và cộng sự \cite{lewis2020rag} đề xuất kiến trúc RAG (Retrieval-Augmented
+Generation), kết hợp bộ truy xuất (retriever) dựa trên bộ mã hóa kép (dual-encoder)
+với bộ sinh (generator) seq2seq tiền huấn luyện, huấn luyện đầu-cuối
+(end-to-end) thông qua tìm kiếm tích nội tối đa (MIPS). RAG vượt trội so với mô
+hình seq2seq thuần trên các tác vụ đòi hỏi kiến thức (knowledge-intensive) như hỏi
+đáp miền mở (open-domain QA), xác minh sự kiện (fact verification), nhờ việc neo
+(grounding) quá trình sinh vào các tài liệu nguồn cụ thể. Sự kết hợp giữa bộ truy
+xuất và bộ sinh cho phép mô hình tiếp cận thông tin cập nhật từ kho tài liệu bên
+ngoài mà không cần huấn luyện lại toàn bộ các thông số mô hình. Kiến trúc RAG trở
+thành nền tảng cho hệ thống hỏi đáp có căn cứ -- đặc biệt quan trọng trong miền
+pháp lý nơi câu trả lời phải trích dẫn được nguồn.
+
+Karpukhin và cộng sự \cite{karpukhin2020dpr} giới thiệu DPR (Dense Passage
+Retrieval), sử dụng bộ mã hóa kép huấn luyện với hàm mất mát tương phản
+(contrastive loss) trên các cặp câu hỏi--đoạn văn. DPR vượt trội BM25 từ
+9--19\% độ chính xác truy xuất cấp đoạn văn, chứng minh rằng biểu diễn dày đặc
+(dense representation) nắm bắt tương đồng ngữ nghĩa tốt hơn phương pháp thưa
+(sparse). Phương pháp dual-encoder của DPR cho phép mã hóa độc lập câu hỏi và
+tài liệu, tạo điều kiện thuận lợi cho truy xuất nhanh bằng tính toán vector tương
+đồng. Luận văn sử dụng cách tiếp cận embedding dày đặc tương tự tại Tầng~2
+của pipeline truy xuất.
+
+Fan và cộng sự \cite{fan2024ragsurvey} khảo sát hệ thống các kiến trúc RAG kết
+hợp LLM, phân loại theo ba chiều: kiến trúc (retriever-reader, retriever-generator),
+chiến lược huấn luyện (huấn luyện retriever, generator, hoặc đồng thời), và ứng
+dụng (tăng tính chính xác, cập nhật kiến thức, tác vụ chuyên biệt miền). Nghiên
+cứu xác nhận rằng RAG chuyên biệt miền vượt trội so với RAG đa dụng, với các hệ
+thống miền cụ thể đạt được độ chính xác cao hơn 10--20\% so với mô hình đa dụng
+trên các tác vụ hẹp, củng cố lựa chọn của luận văn về việc thiết kế pipeline truy
+xuất riêng cho miền quy chế đào tạo.
+
+Gao và cộng sự \cite{gao2023hyde} đề xuất HyDE (Hypothetical Document Expansion),
+cách tiếp cận zero-shot cho truy xuất dày đặc không cần nhãn liên quan. Thay vì
+truy xuất trực tiếp từ truy vấn người dùng, HyDE sử dụng LLM để tạo ra tài liệu
+giả thuyết (hypothetical document) có thể trả lời truy vấn, sau đó mã hóa tài liệu
+này bằng encoder không giám sát và sử dụng dense bottleneck để lọc bỏ ảo giác, chỉ
+giữ lại các tài liệu thực tế có vector tương đồng cao. HyDE đạt kết quả tương đương
+hoặc vượt trội DPR trên các bộ dữ liệu QA mở và xác minh sự kiện, đồng thời mở
+rộng được sang các ngôn ngữ không phải tiếng Anh.
+
+Sarthi và cộng sự \cite{sarthi2024raptor} đề xuất RAPTOR (Recursive Abstractive
+Processing for Tree-Organized Retrieval), giải quyết hạn chế của RAG truyền thống
+khi xử lý các tài liệu dài. RAPTOR xây dựng cây phân cấp bằng cách đệ quy nhúng,
+phân cụm, và tóm tắt các khối văn bản từ dưới lên trên, tạo ra các mức tóm tắt
+khác nhau từ chi tiết cụ thể đến tổng quát hóa toàn bộ tài liệu. Tại thời điểm
+suy luận, hệ thống truy xuất từ các mức cây khác nhau phù hợp với yêu cầu câu hỏi,
+tích hợp thông tin ở nhiều mức độ trừu tượng. Trên bộ dữ liệu QuALITY yêu cầu suy
+luận phức tạp đa bước, RAPTOR cải thiện kết quả 20\% tuyệt đối khi kết hợp với
+GPT-4. RAPTOR được sử dụng làm baseline đánh giá trong Chương~\ref{chap:chapter4};
+so sánh cho thấy pipeline 3 tầng của luận văn vượt trội RAPTOR nhờ kết hợp duyệt
+cây theo hướng dẫn LLM, truy xuất ngữ nghĩa hai cấp, và mở rộng qua Knowledge
+Graph thay vì chỉ sử dụng cây phân cấp tóm tắt.
+
+Asai và cộng sự \cite{asai2024selfrag} đề xuất Self-RAG, khung cho phép mô hình
+ngôn ngữ tự động quyết định khi nào cần truy xuất và đánh giá chất lượng tài liệu
+được truy xuất. Khác với RAG truyền thống luôn truy xuất một số lượng cố định tài
+liệu, Self-RAG huấn luyện mô hình truy xuất linh hoạt: có thể truy xuất nhiều lần
+trong quá trình sinh hoặc bỏ qua truy xuất hoàn toàn, sử dụng các reflection tokens
+để đánh giá cả tài liệu truy xuất lẫn nội dung sinh ra. Self-RAG (7B và 13B tham
+số) vượt trội ChatGPT và Llama2-chat trên các tác vụ hỏi đáp miền mở, suy luận,
+và xác minh sự kiện, đồng thời cải thiện tính xác thực (factuality) và độ chính xác
+trích dẫn. Cách tiếp cận phản xạ (self-reflection) của Self-RAG có ảnh hưởng đến
+thiết kế Tầng~1 của luận văn, nơi LLM được sử dụng để duyệt cây quy định một cách
+thông minh.
+
+Zhang và Tang \cite{zhang2025pageindex} giới thiệu PageIndex, khung RAG không sử
+dụng vector database (vectorless RAG) dựa trên suy luận LLM. Thay vì dựa vào vector
+similarity search, PageIndex xây dựng chỉ mục cấu trúc cây từ tài liệu và cho phép
+LLM thực hiện suy luận trên cấu trúc đó, mô phỏng cách chuyên gia con người điều
+hướng tài liệu phức tạp. PageIndex không yêu cầu chia nhỏ tài liệu (chunking) mà
+tổ chức chúng vào các phần tự nhiên, cải thiện khả năng truy vết (explainability).
+Trên bộ dữ liệu tài chính FinanceBench, PageIndex đạt 98,7\% độ chính xác. PageIndex
+cũng được sử dụng làm baseline trong Chương~\ref{chap:chapter4}; so sánh cho thấy
+pipeline 3 tầng của luận văn vượt trội PageIndex khoảng 7--13 điểm phần trăm trên
+Hit@10, nhờ kết hợp truy xuất đa phương pháp: duyệt cây, embedding dày đặc, và mở
+rộng Knowledge Graph.
+
+% ------------------------------------------------------------
+\subsection{Truy xuất dựa trên đồ thị tri thức}
+\label{subsec:graph-rag}
+
+Edge và cộng sự \cite{edge2024graphrag} đề xuất GraphRAG, phương pháp tiên tiến
+giải quyết hạn chế của RAG truyền thống trên các câu hỏi đòi hỏi tổng hợp toàn
+cục (global sensemaking queries) như ``các chủ đề chính là gì?''. GraphRAG sử dụng
+LLM để trích xuất đồ thị tri thức thực thể từ tài liệu, sau đó sinh trước các bản
+tóm tắt cộng đồng (community summaries) cho từng cụm thực thể dựa trên cấu trúc
+phân cấp, rồi tổng hợp câu trả lời từ các bản tóm tắt này thay vì trực tiếp từ
+văn bản. Phương pháp cải thiện đáng kể tính toàn diện và đa dạng của câu trả lời
+so với RAG truyền thống, đồng thời cho phép mở rộng đến tập dữ liệu lớn (1 triệu
+token) nhờ cấu trúc cộng đồng phân cấp. GraphRAG đã được triển khai trong các ứng
+dụng quản lý tri thức tại Microsoft, chứng minh khả năng ứng dụng thực tế.
+
+Guo và cộng sự \cite{guo2025lightrag} đề xuất LightRAG, khung truy xuất tối ưu hơn
+bằng cách tích hợp cấu trúc đồ thị trực tiếp vào quá trình đánh chỉ mục (indexing).
+LightRAG sử dụng hệ thống truy xuất hai cấp giúp khám phá thông tin ở cả mức thấp
+(low-level) cho các thực thể cụ thể và quan hệ chi tiết, và mức cao (high-level)
+cho các chủ đề tổng quát và cộng đồng thực thể, đồng thời tích hợp cấu trúc đồ thị
+với biểu diễn vector để truy xuất hiệu quả các thực thể liên quan và mối quan hệ
+giữa chúng. LightRAG vượt trội so với NaiveRAG, RQ-RAG, HyDE, và chính GraphRAG
+trên bốn miền ứng dụng, bao gồm rõ ràng \textbf{miền pháp lý}. Cơ chế truy xuất
+hai cấp độ của LightRAG có ảnh hưởng trực tiếp đến thiết kế Tầng~2 của luận văn
+(xem Chương~\ref{chap:thiet-ke-giai-thuat}), nơi truy xuất cấp thực thể
+(low-level) và cấp chủ đề (high-level) được tích hợp.
+
+\begin{sloppypar}
+Mavromatis và Karypis \cite{mavromatis2024gnnrag} đề xuất GNN-RAG, sử dụng mạng
+nơ-ron đồ thị (Graph Neural Network) để trích xuất các đường lý luận
+(reasoning paths) có độ dài ngắn nhất trên đồ thị tri thức, kết nối trực tiếp từ
+thực thể được đề cập trong câu hỏi đến các ứng viên câu trả lời. Sau khi trích
+xuất, các đường lý luận được chuyển đổi thành dạng văn bản tự nhiên để LLM có thể
+suy luận dựa trên bối cảnh. GNN-RAG đạt kết quả tiên tiến trên các tập dữ liệu
+KGQA công khai WebQSP và CWQ, vượt phương pháp truy xuất bằng LLM từ
+8,9--15,5\% F1 trên các câu hỏi đa bước (multi-hop), đồng thời chỉ sử dụng khoảng
+1/9 số token so với phương pháp ngữ cảnh dài (long-context). Ý tưởng trích xuất
+đường lý luận trên đồ thị tương đồng với cơ chế mở rộng KG tại Tầng~3 của luận
+văn, nơi PPR (Personalized PageRank) được dùng để tìm các thực thể liên quan qua
+suy luận đa bước.
+\end{sloppypar}
+
+Cấu trúc các phương pháp truy xuất dựa trên đồ thị xây dựng trên nền tảng lý
+thuyết của các thuật toán xếp hạng trên đồ thị, đặc biệt là các biến thể của
+PageRank. Haveliwala \cite{haveliwala2002ppr} giới thiệu Topic-Sensitive PageRank,
+phương pháp tính toán nhiều vector PageRank độc lập, mỗi vector được thiên lệch
+theo một chủ đề cụ thể, cho phép xếp hạng các nút đồ thị dựa trên tầm quan trọng
+so với chủ đề đó. Jeh và Widom \cite{jeh2003ppr} mở rộng công trình này bằng
+phương pháp tính toán vector PageRank cá nhân hóa theo tập hợp các trang được người
+dùng quan tâm, giải quyết bài toán tính toán hiệu quả mà không cần thực hiện lặp
+lại đầy đủ cho từng cá nhân hóa. Gleich \cite{gleich2015pagerank} thực hiện khảo
+sát toàn diện về ứng dụng PageRank ngoài lĩnh vực tìm kiếm web, chứng minh rằng
+toán học PageRank là tổng quát và áp dụng được trên bất kỳ đồ thị hoặc mạng nào.
+Các công trình nền tảng này cung cấp cơ sở lý thuyết cho việc áp dụng PPR trong
+cơ chế mở rộng tri thức tại Tầng~3 của luận văn.
+
+% ------------------------------------------------------------
+\subsection{Hỏi đáp pháp lý tự động}
+\label{subsec:hoi-dap-phap-ly}
+
+Lai và cộng sự \cite{lai2024llmlaw} thực hiện khảo sát toàn diện và hệ thống về ứng
+dụng của các mô hình ngôn ngữ lớn trong lĩnh vực pháp luật, với tiêu chí đánh giá
+11 bộ benchmark năng lực pháp lý (CaseLaw, DISC-Law-Eval, KBL, LAiW, LawBench, LBOX
+OPEN, LegalBench, LexEval, LexGLUE, SimuCourt, SMILED) và 4 bộ benchmark tác vụ
+chuyên biệt. Nghiên cứu chỉ ra rằng LLM cho thấy tiềm năng lớn trong ba lĩnh vực
+chính: tư vấn pháp lý, hỗ trợ quyết định cho thẩm phán, và phân tích tài liệu pháp
+luật. Tuy nhiên, các mô hình đối mặt ba thách thức: dữ liệu huấn luyện pháp lý
+còn hạn chế so với dữ liệu chung; vấn đề đạo đức và trách nhiệm pháp lý khi sử
+dụng AI trong quyết định pháp lý; và ảo giác (hallucination) -- hiện tượng mô
+hình phát sinh thông tin sai khi thiếu ngữ cảnh chính xác. Kết luận này củng cố lựa
+chọn kiến trúc RAG của luận văn: LLM cần bước truy xuất rõ ràng từ tài liệu gốc để
+đảm bảo câu trả lời có căn cứ pháp lý và giảm thiểu rủi ro ảo giác.
+
+Ngo Q.\,H. và cộng sự \cite{ngo2021aimelaw} phát triển AimeLaw, hệ thống hỏi đáp pháp lý
+tiếng Việt tham gia cuộc thi Automated Legal Question Answering Competition
+(ALQAC)~2021. Hệ thống kết hợp ba thành phần chính: truy xuất từ điển (BM25), mô
+hình BERT tiền huấn luyện trên tập dữ liệu lớn, và tăng cường dữ liệu nhận biết
+miền pháp lý (domain-aware data augmentation) -- kỹ thuật tạo mẫu huấn luyện nhân
+tạo dựa trên kiến thức miền. Hệ thống đạt kết quả nổi bật: suy luận văn bản pháp
+lý (legal textual entailment) 69,89\% chính xác (giải nhất), truy xuất văn bản pháp
+lý 80,61\% F2 (giải nhì), hỏi đáp pháp lý 64,77\% chính xác (giải nhì). Kết quả
+cho thấy tích hợp tri thức miền pháp lý cải thiện đáng kể hiệu suất so với mô hình
+nơ-ron thuần -- một quan sát phù hợp với cách tiếp cận Knowledge Graph của luận văn.
+
+Nguyen H. và cộng sự \cite{nguyen2024intelligent} phát triển hệ thống tìm kiếm thông
+minh cho việc khớp hồ sơ công việc và truy vấn luật lao động Việt Nam. Hệ thống sử
+dụng phương pháp dựa trên ontology để giải quyết hai bài toán: khớp kỹ năng
+công việc giữa hồ sơ ứng viên và mô tả công việc, đồng thời tìm kiếm các quy định
+pháp luật lao động liên quan. Nhóm tác giả xây dựng hai ontology riêng biệt -- một
+ontology kỹ năng và một ontology pháp luật lao động -- tích hợp vào cùng một cơ sở
+tri thức. Hệ thống đạt kết quả tốt nhất trên các truy vấn về bảo hiểm thất nghiệp
+(độ chính xác trên 70\%), chứng minh hiệu quả của phương pháp biểu diễn tri thức
+dựa trên ontology cho các lĩnh vực pháp lý Việt Nam.
+
+Ho X. và cộng sự \cite{ho2020constructing} trình bày phương pháp xây dựng tập dữ liệu
+hỏi đáp đa bước (multi-hop QA dataset) gọi là 2WikiMultiHopQA, kết hợp dữ liệu có
+cấu trúc (từ Wikidata) và dữ liệu phi cấu trúc (văn bản Wikipedia). Đặc điểm nổi
+bật là mỗi câu hỏi đi kèm thông tin bằng chứng (evidence) chứa đường suy luận
+(reasoning path) rõ ràng, cho phép đánh giá không chỉ độ chính xác câu trả lời mà
+còn chất lượng quá trình suy luận. Phương pháp này đặc biệt liên quan đến luận văn
+vì các câu hỏi về quy chế đào tạo thường yêu cầu suy luận đa bước: cần kết hợp
+thông tin từ nhiều điều khoản, từ nhiều tầng quy chế (ĐHQG-HCM và UIT), hoặc từ
+các quy định liên quan để tạo thành câu trả lời hoàn chỉnh.
+
+\vspace{0.5em}
+\noindent\textbf{Tổng hợp và vị trí của luận văn.} Bảng~\ref{tab:related-work-compare}
+so sánh các đặc trưng chính của luận văn với các công trình liên quan. Luận văn khác
+biệt ở ba điểm: sử dụng kiến trúc truy xuất 3 tầng (duyệt cây + semantic + KG
+fusion) thay vì truy xuất đơn tầng; khai thác cấu trúc phân cấp đặc thù của
+văn bản quy phạm Việt Nam (6 cấp: văn bản $\rightarrow$ chương $\rightarrow$ mục
+$\rightarrow$ điều $\rightarrow$ khoản $\rightarrow$ điểm) thay vì coi tài liệu như
+tập hợp phẳng; và kết hợp Knowledge Graph với PPR để mở rộng kết quả truy xuất
+qua suy luận đa bước trên đồ thị quan hệ, thay vì chỉ dùng community summaries
+như GraphRAG hoặc dual-level retrieval như LightRAG.
 
 \begin{table}[htbp]
     \centering
-    \caption{Thống kê bộ câu hỏi kiểm thử miền quy định đào tạo}
-    \label{tab:thongke_cauhoi}
-    \begin{tabular}{lcc}
+    \caption{So sánh các công trình liên quan với luận văn}
+    \label{tab:related-work-compare}
+    \small
+    \begin{tabular}{p{2.8cm}cccc}
         \toprule
-        \textbf{Chủ đề} & \textbf{Số câu hỏi} & \textbf{Tỷ lệ} \\
+        \textbf{Công trình} & \textbf{KG} & \textbf{Đa tầng} &
+        \textbf{Cấu trúc VB} & \textbf{Tiếng Việt} \\
         \midrule
-        Quy trình đào tạo       & 28 & 21,5\% \\
-        Điều kiện tốt nghiệp    & 25 & 19,2\% \\
-        Luận văn                & 22 & 16,9\% \\
-        Đánh giá kết quả        & 18 & 13,8\% \\
-        Tuyển sinh              & 15 & 11,5\% \\
-        Liêm chính học thuật    & 12 &  9,2\% \\
-        Quy định GVHD           & 10 &  7,7\% \\
-        \midrule
-        \textbf{Tổng}           & \textbf{130} & \textbf{100\%} \\
-        \bottomrule
-    \end{tabular}
-\end{table}
-
-Bảng~\ref{tab:vidu_cauhoi} trình bày một số ví dụ câu hỏi mẫu từ bộ kiểm thử.
-
-Chi tiết kết quả đánh giá trên cả hai bộ dữ liệu được trình bày trong Chương~4.
-
-\begin{table}[htbp]
-    \centering
-    \caption{Ví dụ câu hỏi mẫu từ bộ kiểm thử}
-    \label{tab:vidu_cauhoi}
-    \begin{tabular}{cp{8cm}p{4cm}}
-        \toprule
-        \textbf{STT} & \textbf{Câu hỏi} & \textbf{Điều khoản} \\
-        \midrule
-        1  & Thời gian đào tạo thạc sĩ tối đa là bao lâu? & QĐ270: Điều 5 \\
-        2  & Điều kiện để được bảo vệ luận văn thạc sĩ? & QĐ270: Điều 24 \\
-        3  & Điểm trung bình tích lũy tối thiểu để tốt nghiệp? & QĐ270: Điều 29 \\
-        4  & Yêu cầu ngoại ngữ đầu ra cho học viên cao học? & QĐ1393: Điều 25 \\
-        5  & Tiêu chuẩn để được làm GVHD luận văn thạc sĩ? & QĐ218: Điều 3 \\
-        6  & Thế nào là hành vi đạo văn trong luận văn? & QĐ851: Điều 3 \\
-        7  & Học viên bị cảnh báo học vụ khi nào? & QĐ270: Điều 18 \\
-        8  & Học viên khóa 2021 có được áp dụng quy chế mới không? & QĐ1393: Điều 32 \\
-        9  & Số tín chỉ tối thiểu cho chương trình ThS nghiên cứu? & QĐ270: Điều 8 \\
-        10 & GVHD được hướng dẫn tối đa bao nhiêu học viên? & QĐ218: Điều 4 \\
+        RAG \cite{lewis2020rag} & -- & -- & -- & -- \\
+        DPR \cite{karpukhin2020dpr} & -- & -- & -- & -- \\
+        RAPTOR \cite{sarthi2024raptor} & -- & Cây & $\checkmark$ & -- \\
+        Self-RAG \cite{asai2024selfrag} & -- & -- & -- & -- \\
+        PageIndex \cite{zhang2025pageindex} & -- & -- & $\checkmark$ & -- \\
+        GraphRAG \cite{edge2024graphrag} & $\checkmark$ & -- & -- & -- \\
+        LightRAG \cite{guo2025lightrag} & $\checkmark$ & 2 cấp & -- & -- \\
+        GNN-RAG \cite{mavromatis2024gnnrag} & $\checkmark$ & -- & -- & -- \\
+        AimeLaw \cite{ngo2021aimelaw} & -- & -- & -- & $\checkmark$ \\
+        Legal-Onto \cite{nguyen2022legalonto} & $\checkmark$ & -- & $\checkmark$ & $\checkmark$ \\
+        \textbf{Luận văn} & $\checkmark$ & 3 tầng & $\checkmark$ & $\checkmark$ \\
         \bottomrule
     \end{tabular}
 \end{table}

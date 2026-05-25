@@ -1,0 +1,87 @@
+<mxfile host="app.diagrams.net">
+  <diagram id="op0GqVNEH_0OrjsCMBWv" name="Hình 4.1 – Kiến trúc triển khai">
+    <mxGraphModel dx="980" dy="1588" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="mNPjxvJ0A7KgPUrMqm5H-1" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFF9C4;strokeColor=#F9A825;strokeWidth=2;fontFamily=Times New Roman;fontSize=12;fontStyle=1;fontColor=#5D4037;" value="&lt;b&gt;Client&lt;/b&gt;&lt;br&gt;Trình duyệt web" vertex="1">
+          <mxGeometry height="60" width="150" x="30" y="300" as="geometry" />
+        </mxCell>
+        <mxCell id="mNPjxvJ0A7KgPUrMqm5H-2" parent="1" style="swimlane;html=1;startSize=30;fillColor=#E3F2FD;strokeColor=#1976D2;strokeWidth=2;fontFamily=Times New Roman;fontSize=12;fontStyle=1;fontColor=#0D47A1;rounded=1;" value="Chainlit Server" vertex="1">
+          <mxGeometry height="200" width="200" x="270" y="220" as="geometry" />
+        </mxCell>
+        <mxCell id="mNPjxvJ0A7KgPUrMqm5H-3" parent="mNPjxvJ0A7KgPUrMqm5H-2" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#BBDEFB;strokeColor=#1976D2;strokeWidth=1;fontFamily=Times New Roman;fontSize=10;fontColor=#0D47A1;" value="Chat UI Handler" vertex="1">
+          <mxGeometry height="40" width="160" x="20" y="50" as="geometry" />
+        </mxCell>
+        <mxCell id="mNPjxvJ0A7KgPUrMqm5H-4" parent="mNPjxvJ0A7KgPUrMqm5H-2" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#BBDEFB;strokeColor=#1976D2;strokeWidth=1;fontFamily=Times New Roman;fontSize=10;fontColor=#0D47A1;" value="Async Bridge" vertex="1">
+          <mxGeometry height="40" width="160" x="20" y="110" as="geometry" />
+        </mxCell>
+        <mxCell id="mNPjxvJ0A7KgPUrMqm5H-5" parent="1" style="swimlane;html=1;startSize=30;fillColor=#E8F5E9;strokeColor=#388E3C;strokeWidth=2;fontFamily=Times New Roman;fontSize=12;fontStyle=1;fontColor=#1B5E20;rounded=1;" value="Pipeline 3-Tier KG-RAG" vertex="1">
+          <mxGeometry height="280" width="200" x="560" y="180" as="geometry" />
+        </mxCell>
+        <mxCell id="mNPjxvJ0A7KgPUrMqm5H-6" parent="mNPjxvJ0A7KgPUrMqm5H-5" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#C8E6C9;strokeColor=#388E3C;strokeWidth=1;fontFamily=Times New Roman;fontSize=10;fontColor=#1B5E20;" value="Tầng 1: Tree Traversal" vertex="1">
+          <mxGeometry height="40" width="160" x="20" y="45" as="geometry" />
+        </mxCell>
+        <mxCell id="mNPjxvJ0A7KgPUrMqm5H-7" parent="mNPjxvJ0A7KgPUrMqm5H-5" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#C8E6C9;strokeColor=#388E3C;strokeWidth=1;fontFamily=Times New Roman;fontSize=10;fontColor=#1B5E20;" value="Tầng 2: Dual-Level Retrieval" vertex="1">
+          <mxGeometry height="40" width="160" x="20" y="110" as="geometry" />
+        </mxCell>
+        <mxCell id="mNPjxvJ0A7KgPUrMqm5H-8" parent="mNPjxvJ0A7KgPUrMqm5H-5" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#C8E6C9;strokeColor=#388E3C;strokeWidth=1;fontFamily=Times New Roman;fontSize=10;fontColor=#1B5E20;" value="Tầng 3: RRF Merger + PPR" vertex="1">
+          <mxGeometry height="40" width="160" x="20" y="175" as="geometry" />
+        </mxCell>
+        <mxCell id="mNPjxvJ0A7KgPUrMqm5H-9" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FCE4EC;strokeColor=#E91E63;strokeWidth=2;fontFamily=Times New Roman;fontSize=11;fontStyle=1;fontColor=#880E4F;" value="&lt;b&gt;Anthropic API&lt;/b&gt;&lt;br&gt;Claude Sonnet 4 (LLM)" vertex="1">
+          <mxGeometry height="55" width="170" x="830" y="155" as="geometry" />
+        </mxCell>
+        <mxCell id="mNPjxvJ0A7KgPUrMqm5H-10" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F3E5F5;strokeColor=#7B1FA2;strokeWidth=2;fontFamily=Times New Roman;fontSize=11;fontStyle=1;fontColor=#4A148C;" value="&lt;b&gt;FAISS Index&lt;/b&gt;&lt;br&gt;Vector Search" vertex="1">
+          <mxGeometry height="55" width="170" x="830" y="280" as="geometry" />
+        </mxCell>
+        <mxCell id="mNPjxvJ0A7KgPUrMqm5H-11" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E8EAF6;strokeColor=#3F51B5;strokeWidth=2;fontFamily=Times New Roman;fontSize=11;fontStyle=1;fontColor=#1A237E;" value="&lt;b&gt;SQLite Cache&lt;/b&gt;&lt;br&gt;WAL mode · LLM responses" vertex="1">
+          <mxGeometry height="55" width="170" x="830" y="400" as="geometry" />
+        </mxCell>
+        <mxCell id="mNPjxvJ0A7KgPUrMqm5H-12" edge="1" parent="1" source="mNPjxvJ0A7KgPUrMqm5H-1" style="endArrow=classic;startArrow=classic;strokeColor=#F9A825;strokeWidth=1.5;fontFamily=Times New Roman;fontSize=9;fontColor=#5D4037;" target="mNPjxvJ0A7KgPUrMqm5H-2" value="WebSocket" vertex="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="mNPjxvJ0A7KgPUrMqm5H-13" edge="1" parent="1" source="mNPjxvJ0A7KgPUrMqm5H-4" style="endArrow=classic;strokeColor=#1976D2;strokeWidth=1.5;fontFamily=Times New Roman;fontSize=9;fontColor=#0D47A1;edgeStyle=orthogonalEdgeStyle;" target="mNPjxvJ0A7KgPUrMqm5H-5" value="sync call" vertex="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="mNPjxvJ0A7KgPUrMqm5H-14" edge="1" parent="1" source="mNPjxvJ0A7KgPUrMqm5H-6" style="endArrow=classic;strokeColor=#E91E63;strokeWidth=1.5;edgeStyle=orthogonalEdgeStyle;" target="mNPjxvJ0A7KgPUrMqm5H-9" vertex="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="790" y="245" />
+              <mxPoint x="790" y="183" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="mNPjxvJ0A7KgPUrMqm5H-15" edge="1" parent="1" source="mNPjxvJ0A7KgPUrMqm5H-7" style="endArrow=classic;strokeColor=#7B1FA2;strokeWidth=1.5;" target="mNPjxvJ0A7KgPUrMqm5H-10" vertex="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="mNPjxvJ0A7KgPUrMqm5H-16" edge="1" parent="1" source="mNPjxvJ0A7KgPUrMqm5H-6" style="endArrow=classic;strokeColor=#3F51B5;strokeWidth=1.5;edgeStyle=orthogonalEdgeStyle;" target="mNPjxvJ0A7KgPUrMqm5H-11" vertex="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="792" y="245" />
+              <mxPoint x="792" y="427" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="mNPjxvJ0A7KgPUrMqm5H-17" edge="1" parent="1" source="mNPjxvJ0A7KgPUrMqm5H-7" style="endArrow=classic;strokeColor=#3F51B5;strokeWidth=1.5;edgeStyle=orthogonalEdgeStyle;" target="mNPjxvJ0A7KgPUrMqm5H-11" vertex="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="779" y="310" />
+              <mxPoint x="779" y="439" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="mNPjxvJ0A7KgPUrMqm5H-18" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E0F2F1;strokeColor=#00897B;strokeWidth=2;fontFamily=Times New Roman;fontSize=11;fontStyle=1;fontColor=#004D40;" value="&lt;b&gt;Knowledge Graph&lt;/b&gt;&lt;br&gt;NetworkX · PPR" vertex="1">
+          <mxGeometry height="55" width="170" x="830" y="520" as="geometry" />
+        </mxCell>
+        <mxCell id="mNPjxvJ0A7KgPUrMqm5H-19" edge="1" parent="1" source="mNPjxvJ0A7KgPUrMqm5H-8" style="endArrow=classic;strokeColor=#00897B;strokeWidth=1.5;edgeStyle=orthogonalEdgeStyle;" target="mNPjxvJ0A7KgPUrMqm5H-18" vertex="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="766" y="375" />
+              <mxPoint x="766" y="548" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

@@ -9,11 +9,12 @@ const figures = [
   'figure2-1-document-tree',
   'figure2-2-kg-subgraph',
   'figure3-1-system-architecture',
-  'figure3-2-tree-traversal',
-  'figure3-3-end-to-end-flow',
-  'figure3-4-query-analysis',
+  'figure3-2-offline-pipeline',
+  'figure3-3-query-analysis',
+  'figure3-4-tree-traversal',
   'figure3-5-tier2-dual-level',
-  'figure3-6-offline-pipeline',
+  'figure3-6-end-to-end-flow',
+  'figure4-1-deployment-architecture',
 ];
 
 function buildViewerHtml(drawioXml) {

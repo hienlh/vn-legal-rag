@@ -1,0 +1,109 @@
+<mxfile host="app.diagrams.net">
+  <diagram id="-6zX2yW45t1F6oBAoQSN" name="Hình 3.6 – Offline Knowledge Engineering Pipeline">
+    <mxGraphModel dx="871" dy="1411" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="zTonVBz_X0vSHUcWm_ut-1" parent="1" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=12;fillColor=#FFF3E0;strokeColor=#E65100;strokeWidth=2;fontFamily=Times New Roman;fontSize=11;fontColor=#BF360C;" value="&lt;b&gt;Kho tài liệu thô&lt;/b&gt;&lt;br&gt;&lt;span style=&quot;font-size:9px&quot;&gt;QĐ 270, QĐ 1393,&lt;br&gt;NĐ 04, TT 01, ...&lt;/span&gt;" vertex="1">
+          <mxGeometry height="80" width="120" x="20" y="240" as="geometry" />
+        </mxCell>
+        <mxCell id="zTonVBz_X0vSHUcWm_ut-2" parent="1" style="text;html=1;fontSize=11;fontFamily=Times New Roman;fontColor=#1565C0;fontStyle=1;" value="&lt;b&gt;Track 1: Document Forest&lt;/b&gt;" vertex="1">
+          <mxGeometry height="20" width="200" x="180" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="zTonVBz_X0vSHUcWm_ut-3" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E3F2FD;strokeColor=#1565C0;strokeWidth=2;fontFamily=Times New Roman;fontSize=10;fontColor=#0D47A1;" value="&lt;b&gt;Parser&lt;/b&gt;&lt;br&gt;&lt;span style=&quot;font-size:9px&quot;&gt;Regex phân cấp&lt;br&gt;Văn bản→Chương→Mục→Điều→Khoản→Điểm&lt;/span&gt;" vertex="1">
+          <mxGeometry height="60" width="240" x="190" y="60" as="geometry" />
+        </mxCell>
+        <mxCell id="zTonVBz_X0vSHUcWm_ut-4" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E3F2FD;strokeColor=#1565C0;fontFamily=Times New Roman;fontSize=10;fontColor=#0D47A1;" value="&lt;b&gt;Cross-ref&lt;br&gt;Detection&lt;/b&gt;&lt;br&gt;&lt;span style=&quot;font-size:9px&quot;&gt;Pattern matching&lt;/span&gt;" vertex="1">
+          <mxGeometry height="65" width="120" x="470" y="55" as="geometry" />
+        </mxCell>
+        <mxCell id="zTonVBz_X0vSHUcWm_ut-5" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E3F2FD;strokeColor=#1565C0;fontFamily=Times New Roman;fontSize=10;fontColor=#0D47A1;" value="&lt;b&gt;Tóm tắt&lt;/b&gt;&lt;br&gt;&lt;span style=&quot;font-size:9px&quot;&gt;LLM sinh summary&lt;br&gt;cho Chương + Điều&lt;/span&gt;" vertex="1">
+          <mxGeometry height="65" width="120" x="630" y="55" as="geometry" />
+        </mxCell>
+        <mxCell id="zTonVBz_X0vSHUcWm_ut-6" parent="1" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=10;fillColor=#C8E6C9;strokeColor=#2E7D32;strokeWidth=2;fontFamily=Times New Roman;fontSize=10;fontColor=#1B5E20;" value="&lt;b&gt;Document Forest&lt;/b&gt;&lt;br&gt;&lt;span style=&quot;font-size:9px&quot;&gt;Phục vụ Tầng 1&lt;/span&gt;" vertex="1">
+          <mxGeometry height="60" width="110" x="800" y="55" as="geometry" />
+        </mxCell>
+        <mxCell id="zTonVBz_X0vSHUcWm_ut-7" parent="1" style="text;html=1;fontSize=11;fontFamily=Times New Roman;fontColor=#7B1FA2;fontStyle=1;" value="&lt;b&gt;Track 2: Knowledge Graph&lt;/b&gt;" vertex="1">
+          <mxGeometry height="20" width="220" x="180" y="160" as="geometry" />
+        </mxCell>
+        <mxCell id="zTonVBz_X0vSHUcWm_ut-8" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F3E5F5;strokeColor=#7B1FA2;strokeWidth=2;fontFamily=Times New Roman;fontSize=10;fontColor=#4A148C;" value="&lt;b&gt;① Trích xuất&lt;/b&gt;&lt;br&gt;&lt;span style=&quot;font-size:9px&quot;&gt;LLM trích entity&lt;br&gt;+ relation + evidence&lt;/span&gt;" vertex="1">
+          <mxGeometry height="65" width="130" x="190" y="190" as="geometry" />
+        </mxCell>
+        <mxCell id="zTonVBz_X0vSHUcWm_ut-9" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F3E5F5;strokeColor=#7B1FA2;fontFamily=Times New Roman;fontSize=10;fontColor=#4A148C;" value="&lt;b&gt;② Khử trùng&lt;/b&gt;&lt;br&gt;&lt;span style=&quot;font-size:9px&quot;&gt;Jaro-Winkler ≥ 0.98&lt;br&gt;+ chuẩn hóa VN&lt;/span&gt;" vertex="1">
+          <mxGeometry height="65" width="130" x="350" y="190" as="geometry" />
+        </mxCell>
+        <mxCell id="zTonVBz_X0vSHUcWm_ut-10" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F3E5F5;strokeColor=#7B1FA2;fontFamily=Times New Roman;fontSize=10;fontColor=#4A148C;" value="&lt;b&gt;③ Ontology&lt;/b&gt;&lt;br&gt;&lt;span style=&quot;font-size:9px&quot;&gt;LLM → 14 loại OWL&lt;br&gt;phân cấp 4 cấp&lt;/span&gt;" vertex="1">
+          <mxGeometry height="65" width="130" x="510" y="190" as="geometry" />
+        </mxCell>
+        <mxCell id="zTonVBz_X0vSHUcWm_ut-11" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F3E5F5;strokeColor=#7B1FA2;fontFamily=Times New Roman;fontSize=10;fontColor=#4A148C;" value="&lt;b&gt;④ Tinh chỉnh&lt;/b&gt;&lt;br&gt;&lt;span style=&quot;font-size:9px&quot;&gt;Expert-in-the-loop&lt;br&gt;thêm/xóa/trọng số&lt;/span&gt;" vertex="1">
+          <mxGeometry height="65" width="130" x="670" y="190" as="geometry" />
+        </mxCell>
+        <mxCell id="zTonVBz_X0vSHUcWm_ut-12" parent="1" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=10;fillColor=#C8E6C9;strokeColor=#2E7D32;strokeWidth=2;fontFamily=Times New Roman;fontSize=10;fontColor=#1B5E20;" value="&lt;b&gt;Knowledge&lt;br&gt;Graph&lt;/b&gt;&lt;br&gt;&lt;span style=&quot;font-size:9px&quot;&gt;Phục vụ Tầng 2, 3&lt;/span&gt;" vertex="1">
+          <mxGeometry height="65" width="110" x="840" y="190" as="geometry" />
+        </mxCell>
+        <mxCell id="zTonVBz_X0vSHUcWm_ut-13" parent="1" style="text;html=1;fontSize=11;fontFamily=Times New Roman;fontColor=#00695C;fontStyle=1;" value="&lt;b&gt;Track 3: Cấu trúc bổ sung&lt;/b&gt;" vertex="1">
+          <mxGeometry height="20" width="220" x="180" y="295" as="geometry" />
+        </mxCell>
+        <mxCell id="zTonVBz_X0vSHUcWm_ut-14" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E0F2F1;strokeColor=#00695C;strokeWidth=2;fontFamily=Times New Roman;fontSize=10;fontColor=#004D40;" value="&lt;b&gt;Domain Groups&lt;/b&gt;&lt;br&gt;&lt;span style=&quot;font-size:9px&quot;&gt;Jaccard syllable clustering&lt;br&gt;Phục vụ Loop 0, Tầng 1&lt;/span&gt;" vertex="1">
+          <mxGeometry height="60" width="180" x="350" y="320" as="geometry" />
+        </mxCell>
+        <mxCell id="zTonVBz_X0vSHUcWm_ut-15" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E0F2F1;strokeColor=#00695C;strokeWidth=2;fontFamily=Times New Roman;fontSize=10;fontColor=#004D40;" value="&lt;b&gt;Theme Clusters&lt;/b&gt;&lt;br&gt;&lt;span style=&quot;font-size:9px&quot;&gt;Graph partitioning + LLM labels&lt;br&gt;FAISS index → Tầng 2 High-level&lt;/span&gt;" vertex="1">
+          <mxGeometry height="60" width="210" x="580" y="320" as="geometry" />
+        </mxCell>
+        <mxCell id="zTonVBz_X0vSHUcWm_ut-16" parent="1" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=10;fillColor=#C8E6C9;strokeColor=#2E7D32;strokeWidth=2;fontFamily=Times New Roman;fontSize=10;fontColor=#1B5E20;" value="&lt;b&gt;Vector Embeddings&lt;/b&gt;&lt;br&gt;&lt;span style=&quot;font-size:9px&quot;&gt;FAISS index&lt;/span&gt;&lt;div&gt;&lt;span style=&quot;font-size:9px&quot;&gt;Phục vụ Tầng 2&lt;/span&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="60" width="110" x="840" y="320" as="geometry" />
+        </mxCell>
+        <mxCell id="zTonVBz_X0vSHUcWm_ut-17" edge="1" parent="1" source="zTonVBz_X0vSHUcWm_ut-1" style="endArrow=classic;strokeColor=#555;strokeWidth=1.5;edgeStyle=orthogonalEdgeStyle;" target="zTonVBz_X0vSHUcWm_ut-3">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="80" y="90" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="zTonVBz_X0vSHUcWm_ut-18" edge="1" parent="1" source="zTonVBz_X0vSHUcWm_ut-1" style="endArrow=classic;strokeColor=#555;strokeWidth=1.5;" target="zTonVBz_X0vSHUcWm_ut-8">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="zTonVBz_X0vSHUcWm_ut-19" edge="1" parent="1" source="zTonVBz_X0vSHUcWm_ut-3" style="endArrow=classic;strokeColor=#1565C0;" target="zTonVBz_X0vSHUcWm_ut-4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="zTonVBz_X0vSHUcWm_ut-20" edge="1" parent="1" source="zTonVBz_X0vSHUcWm_ut-4" style="endArrow=classic;strokeColor=#1565C0;" target="zTonVBz_X0vSHUcWm_ut-5">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="zTonVBz_X0vSHUcWm_ut-21" edge="1" parent="1" source="zTonVBz_X0vSHUcWm_ut-5" style="endArrow=classic;strokeColor=#1565C0;" target="zTonVBz_X0vSHUcWm_ut-6">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="zTonVBz_X0vSHUcWm_ut-22" edge="1" parent="1" source="zTonVBz_X0vSHUcWm_ut-8" style="endArrow=classic;strokeColor=#7B1FA2;" target="zTonVBz_X0vSHUcWm_ut-9">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="zTonVBz_X0vSHUcWm_ut-23" edge="1" parent="1" source="zTonVBz_X0vSHUcWm_ut-9" style="endArrow=classic;strokeColor=#7B1FA2;" target="zTonVBz_X0vSHUcWm_ut-10">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="zTonVBz_X0vSHUcWm_ut-24" edge="1" parent="1" source="zTonVBz_X0vSHUcWm_ut-10" style="endArrow=classic;strokeColor=#7B1FA2;" target="zTonVBz_X0vSHUcWm_ut-11">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="zTonVBz_X0vSHUcWm_ut-25" edge="1" parent="1" source="zTonVBz_X0vSHUcWm_ut-11" style="endArrow=classic;strokeColor=#7B1FA2;" target="zTonVBz_X0vSHUcWm_ut-12">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="zTonVBz_X0vSHUcWm_ut-26" edge="1" parent="1" source="zTonVBz_X0vSHUcWm_ut-12" style="endArrow=classic;strokeColor=#00695C;dashed=1;edgeStyle=orthogonalEdgeStyle;" target="zTonVBz_X0vSHUcWm_ut-15">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="895" y="285" />
+              <mxPoint x="685" y="285" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="zTonVBz_X0vSHUcWm_ut-27" edge="1" parent="1" source="zTonVBz_X0vSHUcWm_ut-6" style="endArrow=classic;strokeColor=#00695C;dashed=1;edgeStyle=orthogonalEdgeStyle;" target="zTonVBz_X0vSHUcWm_ut-14">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="991" y="85" />
+              <mxPoint x="991" y="404" />
+              <mxPoint x="440" y="404" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="zTonVBz_X0vSHUcWm_ut-28" edge="1" parent="1" source="zTonVBz_X0vSHUcWm_ut-15" style="endArrow=classic;strokeColor=#2E7D32;" target="zTonVBz_X0vSHUcWm_ut-16">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

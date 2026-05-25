@@ -4,7 +4,7 @@
 \chapter{Tổng quan}
 \label{chap:chapter1}
 
-Chương này trình bày tổng quan về đề tài nghiên cứu, bao gồm giới thiệu bối cảnh và động lực nghiên cứu, tổng quan các công trình liên quan, mục tiêu và phạm vi nghiên cứu, cũng như bố cục của luận văn.
+Chương này trình bày tổng quan về đề tài nghiên cứu, bao gồm giới thiệu bối cảnh và động lực nghiên cứu, mục tiêu và phạm vi nghiên cứu, cũng như bố cục của luận văn.
 
 % ============================================================
 \section{Giới thiệu đề tài}
@@ -40,59 +40,6 @@ Các văn bản quy chế đào tạo tại Việt Nam có cấu trúc phân c�
 Tiếng Việt còn tạo thêm thách thức qua sự đa nghĩa thanh điệu, các viết tắt chuyên ngành (GVHD, ThS, NCS, ĐHQG) và hệ thống phân cấp văn bản quy phạm đa tầng (Bộ GD\&ĐT, ĐHQG-HCM, trường thành viên). Các phương pháp truy xuất thông tin truyền thống dựa trên vector similarity~\cite{reimers2019sbert} hiệu quả trong nhiều lĩnh vực~\cite{fan2024ragsurvey} nhưng không đủ cho văn bản quy phạm có cấu trúc: embedding mờ đi ý nghĩa chính xác của thuật ngữ chuyên ngành (\textit{semantic gap}), truy xuất phẳng bỏ qua cấu trúc phân cấp tài liệu, và tìm kiếm dày đặc không thể kết nối các tham chiếu chéo giữa các quy chế. Các thách thức tương tự cũng xuất hiện trong lĩnh vực pháp luật Việt Nam, nơi hệ thống được mở rộng đánh giá (Chương~\ref{chap:chapter4}).
 
 % ============================================================
-\section{Các nghiên cứu liên quan}
-\label{sec:lienquan}
-
-% ------------------------------------------------------------
-\subsection{Từ truy xuất từ vựng đến truy xuất neural}
-\label{subsec:truyxuat_tuvung}
-
-Truy xuất thông tin pháp lý ban đầu dựa vào đối sánh từ vựng: BM25~\cite{robertson2009bm25} và TF-IDF~\cite{manning2008ir} xếp hạng tài liệu theo mức độ trùng khớp thuật ngữ, nhưng thất bại khi người dùng diễn đạt lại các khái niệm pháp lý bằng ngôn ngữ tự nhiên. Truy xuất dày đặc (dense retrieval) chuyển sang các biểu diễn học được với Sentence-BERT~\cite{reimers2019sbert} và DPR~\cite{karpukhin2020dpr}; các công trình tiếp theo bổ sung cơ chế tự phản ánh~\cite{asai2024selfrag} và sinh tài liệu giả thuyết~\cite{gao2023hyde} (được tổng quan bởi Fan và cộng sự~\cite{fan2024ragsurvey}). Các mô hình chuyên biệt miền như LEGAL-BERT~\cite{chalkidis2020legalbert} nắm bắt ngôn ngữ pháp lý nhưng vẫn hoạt động trên các đoạn văn bản phẳng.
-
-Đối với tiếng Việt, PhoBERT~\cite{nguyen2020phobert} và VnCoreNLP~\cite{vu2018vncore} cung cấp các mô hình nền tảng, và Ngo cùng cộng sự~\cite{ngo2021aimelaw} đã kết hợp BM25 với BERT~\cite{devlin2019bert} cho cuộc thi ALQAC~2021. Một hạn chế chung xuyên suốt các phương pháp này: việc coi tài liệu như tập hợp phẳng đã loại bỏ cấu trúc phân cấp quan trọng cho văn bản pháp lý.
-
-% ------------------------------------------------------------
-\subsection{Truy xuất tăng cường tri thức}
-\label{subsec:truyxuat_trithuc}
-
-Để phục hồi thông tin có cấu trúc và quan hệ, các nhà nghiên cứu đã chuyển sang các mô hình biểu diễn tri thức. Legal-Onto~\cite{nguyen2022legalonto} kết hợp mô hình Rela~\cite{do2018rela} với đồ thị khái niệm cho Luật Đất đai Việt Nam nhưng dựa vào luật thủ công, không có khả năng mở rộng. GraphRAG~\cite{edge2024graphrag} phân vùng đồ thị thực thể thành các cộng đồng với tóm tắt LLM, và LightRAG~\cite{guo2025lightrag} kết hợp tìm kiếm vector với duyệt đồ thị. Cả hai cho phép suy luận đa bước nhưng coi tài liệu như tập hợp thực thể mà không bảo toàn cấu trúc phân cấp; trong thử nghiệm của chúng tôi, chất lượng trích xuất thực thể của LightRAG khá thấp (74\% thực thể chỉ xuất hiện một lần).
-
-RAG~\cite{lewis2020rag} nền tảng hóa việc sinh văn bản dựa trên bằng chứng truy xuất nhưng vẫn bị giới hạn bởi chất lượng truy xuất. Các khảo sát~\cite{zhong2020nlplaw,lai2024llmlaw} xác nhận rằng việc kết nối tri thức pháp lý với truy xuất có khả năng mở rộng vẫn là một vấn đề mở.
-
-% ------------------------------------------------------------
-\subsection{Truy xuất phân cấp nhận biết cấu trúc}
-\label{subsec:truyxuat_phancap}
-
-RAPTOR~\cite{sarthi2024raptor} xây dựng Summary Tree qua phân cụm đệ quy và tóm tắt LLM, nắm bắt chủ đề đa mức chi tiết; tuy nhiên, nó loại bỏ cấu trúc phân cấp gốc của tài liệu và chỉ dựa vào truy xuất embedding tại thời điểm truy vấn, chỉ đạt 41,0\% tỷ lệ Hit@10 trên bộ đánh giá pháp lý có cấu trúc của chúng tôi.
-
-PageIndex~\cite{zhang2025pageindex} duyệt qua cây theo hướng dẫn bởi LLM để tìm kiếm tài liệu đã phân cấp, đạt độ chính xác cao khi mô hình chọn đúng nhánh nhưng bỏ sót nội dung ngoài đường duyệt. Đặc biệt, cả hai hệ thống đều không tích hợp Knowledge Graph cho suy luận liên tài liệu; các truy vấn đa bước xuyên các luật hoặc nghị định khác nhau chưa được giải quyết.
-
-% ------------------------------------------------------------
-\subsection{Định vị nghiên cứu}
-\label{subsec:dinhvi}
-
-Chưa có hệ thống nào kết hợp tri thức ontology, truy xuất dựa trên đồ thị và duyệt cây cấu trúc cho văn bản pháp lý Việt Nam. Hệ thống được đề xuất trong luận văn này tích hợp cả ba khả năng thông qua kiến trúc ba tầng với suy luận nhận biết ý định và tổng hợp, xếp hạng. Bảng~\ref{tab:comparison} tóm tắt so sánh các phương pháp liên quan.
-
-\begin{table}[htbp]
-    \centering
-    \caption{So sánh các hệ thống liên quan}
-    \label{tab:comparison}
-    \resizebox{\textwidth}{!}{\begin{tabular}{lcccc}
-        \toprule
-        \textbf{Hệ thống} & \textbf{Cấu trúc} & \textbf{KG} & \textbf{Ngữ nghĩa} & \textbf{Đa tài liệu} \\
-        \midrule
-        BM25/TF-IDF                  & --             & --  & --  & \checkmark \\
-        NaiveRAG                     & --             & --  & \checkmark & \checkmark \\
-        LightRAG~\cite{guo2025lightrag}  & --         & \checkmark & \checkmark & \checkmark \\
-        RAPTOR~\cite{sarthi2024raptor}   & Summary Tree & --  & \checkmark & \checkmark \\
-        PageIndex~\cite{zhang2025pageindex} & Document Tree & -- & -- & \checkmark \\
-        Legal-Onto~\cite{nguyen2022legalonto} & --    & \checkmark & -- & -- \\
-        \textbf{3-Tier (ours)}       & Document Tree  & \checkmark & \checkmark & \checkmark \\
-        \bottomrule
-    \end{tabular}}
-\end{table}
-
-% ============================================================
 \section{Mục tiêu và phạm vi nghiên cứu}
 \label{sec:muctieu}
 
@@ -106,7 +53,7 @@ Luận văn này nghiên cứu và giải quyết các vấn đề sau:
 
     \item \textbf{Đề xuất kiến trúc truy xuất 3-Tier KG-RAG:} Thiết kế kiến trúc truy xuất ba tầng kết hợp duyệt cây cấu trúc hướng dẫn bởi LLM (Tầng~1), truy xuất ngữ nghĩa hai cấp dựa trên KG và embedding (Tầng~2), và hợp nhất Reciprocal Rank Fusion với mở rộng Knowledge Graph (Tầng~3). Kiến trúc này tận dụng đồng thời cấu trúc phân cấp của văn bản quy phạm, quan hệ ngữ nghĩa trong đồ thị tri thức và tín hiệu tương đồng vector để truy xuất chính xác các điều khoản liên quan.
 
-    \item \textbf{Xây dựng bộ đánh giá và so sánh định lượng:} Thiết kế các bộ benchmark tiếng Việt gồm các câu hỏi phức tạp yêu cầu suy luận đa bước, tham chiếu chéo giữa các văn bản. Đánh giá hệ thống bằng các chỉ số Hit@k và MRR, so sánh với các phương pháp tiên tiến (PageIndex, RAPTOR, LightRAG), và phân tích ablation để đo lường đóng góp của từng thành phần.
+    \item \textbf{Xây dựng bộ đánh giá và so sánh định lượng:} Thiết kế các bộ benchmark tiếng Việt gồm các câu hỏi phức tạp yêu cầu suy luận đa bước, tham chiếu chéo giữa các văn bản. Đánh giá hệ thống bằng các chỉ số Hit@k và MRR, so sánh với các phương pháp tiên tiến (PageIndex, RAPTOR, LightRAG).
 \end{enumerate}
 
 % ------------------------------------------------------------
@@ -119,7 +66,9 @@ Luận văn này nghiên cứu và giải quyết các vấn đề sau:
 \subsection{Phạm vi nghiên cứu}
 \label{subsec:phamvi}
 
-Hệ thống được kiểm thử trên 5 bộ quy chế, quy định đào tạo thạc sĩ:
+Phạm vi nghiên cứu bao gồm hai miền ứng dụng: miền quy định đào tạo và miền pháp luật Việt Nam.
+
+\textbf{Miền quy định đào tạo.} Hệ thống được kiểm thử trên 5 bộ quy chế, quy định đào tạo thạc sĩ:
 \begin{enumerate}
     \item Quy chế đào tạo trình độ thạc sĩ của UIT số 270/QĐ-ĐHCNTT ngày 25/04/2022.
     \item Quy chế đào tạo trình độ thạc sĩ cho khóa 2021 số 160/QĐ-ĐHQG ngày 24/03/2017 của ĐHQG-HCM.
@@ -128,7 +77,7 @@ Hệ thống được kiểm thử trên 5 bộ quy chế, quy định đào t�
     \item Quy định về liêm chính học thuật số 851/QĐ-ĐHCNTT ngày 14/08/2024 của UIT.
 \end{enumerate}
 
-Ngoài ra, hệ thống còn được đánh giá trên bộ dữ liệu pháp luật Việt Nam gồm 12 văn bản thuộc lĩnh vực luật doanh nghiệp và luật giao thông để chứng minh tính tổng quát của phương pháp.
+\textbf{Miền pháp luật Việt Nam.} Để chứng minh tính tổng quát của phương pháp, hệ thống được đánh giá bổ sung trên 13 văn bản pháp luật thuộc hai lĩnh vực: luật doanh nghiệp và luật giao thông. Lĩnh vực luật doanh nghiệp bao gồm Luật Doanh nghiệp 2020 (số 59/2020/QH14) cùng các nghị định hướng dẫn thi hành, quy định về thành lập, tổ chức, quản lý, giải thể doanh nghiệp, quyền và nghĩa vụ của các loại hình doanh nghiệp (TNHH, cổ phần, hợp danh). Lĩnh vực luật giao thông bao gồm Nghị định 168/2024/NĐ-CP về xử phạt vi phạm hành chính trong lĩnh vực giao thông đường bộ và các văn bản liên quan, quy định mức phạt cho các hành vi vi phạm cụ thể (vượt đèn đỏ, nồng độ cồn, không giấy phép lái xe). Corpus pháp luật gồm tổng cộng 672 điều khoản, lớn hơn đáng kể so với miền đào tạo (109 điều), cho phép đánh giá khả năng mở rộng của hệ thống. Bộ kiểm thử miền pháp luật gồm 400 câu hỏi do chuyên gia gán nhãn, bao gồm các tình huống single-hop, multi-hop, và reasoning phức tạp yêu cầu kết hợp thông tin từ nhiều điều khoản thuộc các văn bản khác nhau.
 
 % ============================================================
 \section{Bố cục luận văn}
@@ -136,8 +85,8 @@ Ngoài ra, hệ thống còn được đánh giá trên bộ dữ liệu pháp l
 
 Phần còn lại của luận văn được tổ chức như sau:
 \begin{itemize}
-    \item \textbf{Chương~2}: Thu thập kiến thức về quy định đào tạo: trình bày tổng quan hệ thống quy chế đào tạo thạc sĩ, quy trình thu thập và tổ chức kiến thức từ văn bản quy phạm, cũng như xây dựng bộ câu hỏi kiểm thử.
-    \item \textbf{Chương~3}: Thiết kế giải thuật: trình bày chi tiết kiến trúc 3-Tier KG-RAG bao gồm phân tích truy vấn, duyệt cây cấu trúc, truy xuất ngữ nghĩa hai cấp và hợp nhất RRF với mở rộng Knowledge Graph.
-    \item \textbf{Chương~4}: Thiết kế hệ thống và thử nghiệm: trình bày yêu cầu hệ thống, kiến trúc triển khai, và kết quả thử nghiệm trên hai nghiên cứu trường hợp (case study) cùng phân tích ablation.
-    \item \textbf{Chương~5}: Kết luận và hướng phát triển: tổng kết các kết quả đạt được, thảo luận hạn chế và đề xuất hướng phát triển tương lai.
+    \item \textbf{Chương~2: Cơ sở lý thuyết và các công trình liên quan}: trình bày nền tảng lý thuyết về truy xuất thông tin, biểu diễn ngữ nghĩa, đồ thị tri thức, ontology, Document Forest, Personalized PageRank, Reciprocal Rank Fusion và Retrieval-Augmented Generation; đồng thời tổng quan các công trình liên quan và định vị nghiên cứu.
+    \item \textbf{Chương~3: Thu thập kiến thức và thiết kế giải thuật}: trình bày tổng quan hệ thống quy chế đào tạo thạc sĩ, quy trình thu thập và tổ chức kiến thức từ văn bản quy phạm, xây dựng bộ câu hỏi kiểm thử; tiếp đó trình bày chi tiết kiến trúc 3-Tier KG-RAG bao gồm phân tích truy vấn, duyệt cây cấu trúc, truy xuất ngữ nghĩa hai cấp và hợp nhất RRF với mở rộng Knowledge Graph.
+    \item \textbf{Chương~4: Thiết kế hệ thống và thử nghiệm}: trình bày kiến trúc triển khai, kết quả thử nghiệm trên hai miền (quy định đào tạo và pháp luật Việt Nam), và ứng dụng chatbot minh họa.
+    \item \textbf{Chương~5: Kết luận và hướng phát triển}: tổng kết các kết quả đạt được, thảo luận hạn chế và đề xuất hướng phát triển tương lai.
 \end{itemize}
