@@ -4,23 +4,32 @@
 \chapter{Cơ sở lý thuyết và các công trình liên quan}
 \label{chap:co-so-ly-thuyet}
 
-Chương này trình bày các nền tảng lý thuyết được sử dụng trong luận văn, bao gồm
-truy xuất thông tin, biểu diễn ngữ nghĩa, đồ thị tri thức, Personalized PageRank,
-Reciprocal Rank Fusion và Retrieval-Augmented Generation. Phần sau tổng hợp các
-công trình liên quan và xác định vị trí đóng góp của luận văn.
+Chương này trình bày các nền tảng lý thuyết được sử dụng trong luận văn và tổng hợp
+các công trình liên quan. Phần~\ref{sec:cslt-truy-xuat} giới thiệu các phương pháp
+truy xuất thông tin, từ phương pháp cơ bản đến đồ thị tri thức. Phần~\ref{sec:cong-trinh-lien-quan}
+khảo sát các công trình nghiên cứu liên quan và xác định vị trí đóng góp của luận văn.
 
 % ============================================================
-\section{Truy xuất thông tin}
+\section{Các phương pháp truy xuất thông tin}
 \label{sec:cslt-truy-xuat}
+
+Phần này trình bày các phương pháp truy xuất thông tin được sử dụng trong luận văn,
+bao gồm các phương pháp cơ bản (truy xuất thưa, truy xuất dày đặc, xếp hạng và
+hợp nhất) và các phương pháp dựa trên đồ thị tri thức.
+
+% ------------------------------------------------------------
+\subsection{Các phương pháp cơ bản}
+\label{subsec:phuong-phap-co-ban}
 
 Truy xuất thông tin (Information Retrieval -- IR) là bài toán tìm kiếm các tài liệu
 liên quan từ một kho dữ liệu lớn dựa trên truy vấn của người dùng~\cite{manning2008ir}.
 Một hệ thống IR nhận đầu vào là truy vấn $q$ và kho tài liệu $\mathcal{D} = \{d_1, d_2, \ldots, d_N\}$, trả về danh sách xếp hạng các tài liệu theo mức độ
-liên quan giảm dần.
+liên quan giảm dần. Các phương pháp truy xuất được chia thành hai nhóm chính: truy
+xuất thưa (sparse retrieval) dựa trên so khớp thuật ngữ, và truy xuất dày đặc
+(dense retrieval) dựa trên biểu diễn ngữ nghĩa.
 
-\subsection{Chỉ mục ngược}
+\paragraph{Chỉ mục ngược.}
 \label{subsec:chi-muc-nguoc}
-
 Chỉ mục ngược (inverted index) là cấu trúc dữ liệu nền tảng cho truy xuất văn bản.
 Với mỗi thuật ngữ $t$ trong từ vựng, chỉ mục lưu danh sách các tài liệu chứa $t$
 cùng thông tin bổ trợ như tần suất xuất hiện và vị trí. Khi nhận truy vấn, hệ thống
@@ -28,53 +37,22 @@ tra cứu chỉ mục cho từng thuật ngữ trong truy vấn, giao các danh 
 rồi tính điểm xếp hạng. Cấu trúc này cho phép truy xuất trong thời gian gần tuyến
 tính theo kích thước kết quả, thay vì quét toàn bộ kho tài liệu.
 
-\subsection{BM25}
+\paragraph{BM25 và TF-IDF.}
 \label{subsec:bm25}
-
 BM25 (Best Matching 25)~\cite{robertson2009bm25} là hàm xếp hạng dựa trên mô hình
-xác suất, cải tiến từ TF-IDF bằng cách bổ sung chuẩn hóa độ dài tài liệu và bão
-hòa tần suất thuật ngữ. Điểm BM25 của tài liệu $d$ với truy vấn $q$ gồm các thuật
-ngữ $q_1, q_2, \ldots, q_n$ được tính:
+xác suất, kết hợp tần suất thuật ngữ (TF), tần suất tài liệu ngược (IDF) với chuẩn
+hóa độ dài tài liệu và bão hòa tần suất. BM25 cải tiến từ TF-IDF~\cite{manning2008ir}
+--- phương pháp biểu diễn tài liệu bằng vector trọng số thuật ngữ --- bằng cách xử lý
+hiệu quả hơn sự chênh lệch độ dài giữa các tài liệu. Cả hai phương pháp đều thuộc
+nhóm truy xuất thưa (sparse retrieval): nhanh, dễ giải thích, và hiệu quả khi thuật
+ngữ trong truy vấn trùng khớp với tài liệu. Tuy nhiên, truy xuất thưa thất bại trước
+bài toán bất khớp từ vựng (vocabulary mismatch)~\cite{reimers2019sbert}: người dùng
+hỏi \textit{``mở công ty cần gì''} trong khi văn bản quy định dùng thuật ngữ
+\textit{``đăng ký thành lập doanh nghiệp''}. Hạn chế này thúc đẩy sự phát triển
+của truy xuất dày đặc và truy xuất lai.
 
-\begin{equation}
-  \text{BM25}(d, q) = \sum_{i=1}^{n} \text{IDF}(q_i) \cdot
-  \frac{f(q_i, d) \cdot (k_1 + 1)}{f(q_i, d) + k_1 \cdot
-  \left(1 - b + b \cdot \frac{|d|}{\text{avgdl}}\right)}
-  \label{eq:bm25}
-\end{equation}
-
-\noindent trong đó $f(q_i, d)$ là tần suất thuật ngữ $q_i$ trong tài liệu $d$,
-$|d|$ là độ dài tài liệu, $\text{avgdl}$ là độ dài trung bình, $k_1$ (thường
-$1{,}2$--$2{,}0$) kiểm soát mức bão hòa tần suất, $b$ (thường $0{,}75$) kiểm soát
-chuẩn hóa độ dài, và $\text{IDF}(q_i) = \ln\!\left(\frac{N - n(q_i) + 0{,}5}{n(q_i) + 0{,}5}\right)$
-là trọng số tần suất tài liệu ngược (inverse document frequency) với $N$ là tổng
-số tài liệu và $n(q_i)$ là số tài liệu chứa $q_i$.
-
-BM25 hoạt động tốt khi thuật ngữ trong truy vấn trùng khớp với tài liệu, nhưng
-thất bại khi người dùng diễn đạt lại khái niệm bằng ngôn ngữ khác (vocabulary
-mismatch). Hạn chế này đặc biệt rõ trong miền pháp lý: người dùng hỏi ``mở công ty cần gì''
-trong khi văn bản quy định dùng thuật ngữ ``đăng ký thành lập doanh nghiệp''.
-
-\subsection{TF-IDF}
-\label{subsec:tf-idf}
-
-TF-IDF (Term Frequency -- Inverse Document Frequency)~\cite{manning2008ir} là
-phương pháp biểu diễn tài liệu dưới dạng vector trọng số thuật ngữ. Trọng số
-$w_{t,d}$ của thuật ngữ $t$ trong tài liệu $d$ được tính:
-
-\begin{equation}
-  w_{t,d} = \text{tf}(t,d) \times \log\frac{N}{df(t)}
-  \label{eq:tfidf}
-\end{equation}
-
-\noindent trong đó $\text{tf}(t,d)$ là tần suất thuật ngữ và $df(t)$ là số tài liệu
-chứa $t$. Tài liệu được xếp hạng theo cosine similarity giữa vector truy vấn và
-vector tài liệu. TF-IDF là nền tảng cho BM25 và các phương pháp truy xuất thưa
-(sparse retrieval) khác.
-
-\subsection{Các chỉ số đánh giá truy xuất}
+\paragraph{Các chỉ số đánh giá truy xuất.}
 \label{subsec:chi-so-danh-gia}
-
 Luận văn sử dụng hai chỉ số đánh giá chính~\cite{manning2008ir}:
 
 \textbf{Hit@$k$} (Top-$k$ Hit Rate) đo tỷ lệ truy vấn mà ít nhất một tài liệu
@@ -104,18 +82,13 @@ quan đầu tiên:
 MRR bổ sung cho Hit@$k$ bằng cách thưởng cho việc đặt tài liệu liên quan ở vị trí
 cao hơn, giúp giảm nhiễu mà mô hình ngôn ngữ phải lọc.
 
-% ============================================================
-\section{Biểu diễn ngữ nghĩa}
-\label{sec:cslt-bieu-dien}
-
-Truy xuất thưa (sparse retrieval) dựa trên so khớp thuật ngữ không nắm bắt được
-tương đồng ngữ nghĩa giữa các cách diễn đạt khác nhau của cùng một khái niệm. Truy
-xuất dày đặc (dense retrieval) giải quyết vấn đề này bằng cách biểu diễn cả truy
-vấn và tài liệu dưới dạng vector trong không gian liên tục, nơi khoảng cách vector
-phản ánh mức độ tương đồng ngữ nghĩa.
-
-\subsection{Embedding câu}
+\paragraph{Embedding câu.}
 \label{subsec:embedding-cau}
+Truy xuất thưa dựa trên so khớp thuật ngữ không nắm bắt được tương đồng ngữ nghĩa
+giữa các cách diễn đạt khác nhau của cùng một khái niệm. Truy xuất dày đặc (dense
+retrieval) giải quyết vấn đề này bằng cách biểu diễn cả truy vấn và tài liệu dưới
+dạng vector trong không gian liên tục, nơi khoảng cách vector phản ánh mức độ tương
+đồng ngữ nghĩa.
 
 Sentence-BERT (SBERT)~\cite{reimers2019sbert} mở rộng kiến trúc BERT bằng mạng
 Siamese để tính embedding cấp câu một cách độc lập. Mỗi câu $s$ được mã hóa thành
@@ -134,9 +107,8 @@ hai câu $s_1$ và $s_2$ được tính bằng cosine similarity:
 xuất bằng tìm kiếm vector thay vì so khớp từng cặp. SBERT giảm thời gian tìm kiếm
 từ 65 giờ (so khớp cặp với BERT) xuống khoảng 5 giây cho 10.000 câu.
 
-\subsection{Tìm kiếm vector với FAISS}
+\paragraph{Tìm kiếm vector với FAISS.}
 \label{subsec:faiss}
-
 FAISS (Facebook AI Similarity Search) là thư viện tìm kiếm vector cho phép truy
 xuất các vector gần nhất từ tập dữ liệu lớn. Luận văn sử dụng FAISS để xây dựng
 chỉ mục vector cho các embedding điều khoản, hỗ trợ tìm kiếm tương đồng ngữ nghĩa
@@ -144,63 +116,48 @@ tại Tầng~2 của pipeline truy xuất. Với kho tài liệu gồm $N$ đi�
 phép tìm $k$ điều khoản gần nhất trong thời gian gần hằng số thông qua các cấu trúc
 chỉ mục tối ưu (flat index, IVF, HNSW).
 
-% ============================================================
-\section{Đồ thị tri thức và Ontology}
-\label{sec:cslt-kg-ontology}
+\paragraph{Truy xuất lai.}
+\label{subsec:truy-xuat-lai}
+Truy xuất thưa giỏi so khớp thuật ngữ chính xác nhưng bỏ sót tương đồng ngữ nghĩa;
+truy xuất dày đặc nắm bắt ngữ nghĩa nhưng có thể bỏ qua tín hiệu từ vựng quan
+trọng~\cite{fan2024ragsurvey}. Truy xuất lai (hybrid retrieval) kết hợp cả hai
+bằng cách chạy song song BM25 và tìm kiếm vector, sau đó hợp nhất kết quả thông qua
+phương pháp như Reciprocal Rank Fusion (RRF). Cách tiếp cận này đã trở thành chuẩn
+công nghiệp cho các hệ thống RAG~\cite{fan2024ragsurvey}, và là nền tảng mà kiến
+trúc 3-Tier KG-RAG của luận văn mở rộng: thay vì chỉ kết hợp hai nguồn tín hiệu
+(thưa và dày đặc), luận văn hợp nhất ba tầng truy xuất gồm duyệt cây cấu trúc,
+tìm kiếm ngữ nghĩa hai cấp, và mở rộng đồ thị tri thức.
 
-\subsection{Đồ thị tri thức}
-\label{subsec:do-thi-tri-thuc}
+\paragraph{Xếp hạng lại.}
+\label{subsec:xep-hang-lai}
+Trong kiến trúc truy xuất hai giai đoạn (two-stage retrieval), giai đoạn đầu dùng
+phương pháp nhanh (BM25 hoặc bi-encoder) để lọc $N$ ứng viên từ kho tài liệu lớn;
+giai đoạn hai dùng cross-encoder --- mô hình xử lý đồng thời cặp (truy vấn, tài liệu)
+--- để xếp hạng lại chính xác hơn~\cite{nogueira2020reranking}. Cross-encoder đạt
+độ chính xác cao hơn bi-encoder nhưng có chi phí tính toán $O(N)$ theo số ứng viên,
+nên chỉ áp dụng trên tập nhỏ đã lọc. Các nghiên cứu cho thấy reranking cải thiện
+33--40\% độ chính xác với chỉ 120ms chi phí bổ sung. Luận văn không sử dụng
+cross-encoder generic mà thay thế bằng cơ chế chuyên biệt miền: KG expansion tại
+Tầng~3 đóng vai trò ``xếp hạng lại dựa trên tri thức'' --- bổ sung các điều khoản
+liên quan thông qua quan hệ trong đồ thị tri thức thay vì chỉ dựa trên tương đồng
+ngữ nghĩa bề mặt.
 
-Đồ thị tri thức (Knowledge Graph -- KG) là cấu trúc dữ liệu biểu diễn tri thức
-dưới dạng đồ thị có hướng, trong đó các nút biểu diễn thực thể và các cạnh biểu
-diễn quan hệ giữa chúng. Mỗi đơn vị tri thức được biểu diễn bằng một bộ ba (triple):
+\paragraph{Truy xuất tăng cường bởi LLM.}
+\label{subsec:truy-xuat-llm}
+Sự phát triển của các mô hình ngôn ngữ lớn (LLM) đã mở ra paradigm mới trong truy
+xuất thông tin: sử dụng LLM không chỉ để sinh câu trả lời mà còn để cải thiện chính
+quá trình truy xuất~\cite{zhu2024llmir}. HyDE (Hypothetical Document Embeddings)~\cite{gao2023hyde}
+tạo tài liệu giả định từ truy vấn rồi dùng embedding của tài liệu đó để tìm kiếm, giúp
+thu hẹp khoảng cách ngữ nghĩa giữa truy vấn ngắn và tài liệu dài. Step-Back
+Prompting trừu tượng hóa truy vấn cụ thể thành câu hỏi tổng quát hơn để mở rộng
+phạm vi truy xuất. Các hệ thống Agentic RAG~\cite{asai2024selfrag} cho phép LLM
+tự đánh giá và điều chỉnh chiến lược truy xuất qua nhiều vòng lặp. Tầng~1 của luận
+văn thuộc paradigm này: sử dụng LLM để phân tích truy vấn và điều hướng trên cấu
+trúc phân cấp của văn bản quy phạm (duyệt cây chương--điều), thay vì tìm kiếm
+trực tiếp trên toàn bộ kho tài liệu.
 
-\begin{equation}
-  (h, r, t) \in \mathcal{E} \times \mathcal{R} \times \mathcal{E}
-  \label{eq:kg-triple}
-\end{equation}
-
-\noindent trong đó $h$ (head) là thực thể nguồn, $r$ (relation) là quan hệ, $t$
-(tail) là thực thể đích, $\mathcal{E}$ là tập thực thể và $\mathcal{R}$ là tập
-loại quan hệ. Ví dụ, bộ ba (\textit{Điều~24}, \textit{requires}, \textit{ngoại ngữ B1})
-biểu diễn rằng Điều~24 yêu cầu trình độ ngoại ngữ B1.
-
-Trong ngữ cảnh luận văn, KG được xây dựng từ văn bản quy phạm với hai vai trò: biểu
-diễn các quan hệ ngữ nghĩa giữa điều khoản (tham chiếu, phụ thuộc, điều kiện) phục
-vụ suy luận đa bước, và cung cấp thông tin thực thể cho truy xuất ngữ nghĩa tại
-Tầng~2.
-
-\subsection{Ontology và OWL}
-\label{subsec:ontology-owl}
-
-Ontology là mô hình hình thức định nghĩa các khái niệm (concept), thuộc tính
-(property), và quan hệ (relation) trong một miền tri thức cụ thể. Ontology cung cấp
-lược đồ (schema) cho đồ thị tri thức, xác định các loại thực thể hợp lệ và các
-loại quan hệ giữa chúng.
-
-OWL (Web Ontology Language) là ngôn ngữ chuẩn W3C cho biểu diễn ontology, hỗ trợ
-phân cấp lớp (class hierarchy), ràng buộc thuộc tính (property restrictions), và suy
-luận logic. Luận văn sử dụng OWL để định nghĩa ontology miền với 14 loại thực thể
-(Action, Legal Term, Organization, Penalty, Condition, v.v.) tổ chức theo phân cấp
-4 cấp, kèm ánh xạ nhãn tiếng Việt. Ontology miền phục vụ hai mục đích: hướng dẫn
-quá trình trích xuất thực thể từ văn bản (đảm bảo tính nhất quán về loại), và cung
-cấp thông tin loại thực thể cho cơ chế Concept Matching tại Tầng~2.
-
-\subsection{Document Forest}
-\label{subsec:document-forest}
-
-Các văn bản quy phạm Việt Nam có cấu trúc phân cấp nghiêm ngặt: Văn bản $\to$
-Chương $\to$ Mục $\to$ Điều $\to$ Khoản $\to$ Điểm. Mỗi tài liệu được mô hình hóa
-dưới dạng cây có gốc (rooted tree), và toàn bộ kho tài liệu gồm $m$ văn bản tạo
-thành Document Forest $\mathcal{F} = \{T_1, T_2, \ldots, T_m\}$, được bổ sung các
-cạnh tham chiếu chéo liên kết các điều khoản giữa các cây. Cấu trúc Document Forest
-cho phép duyệt cây top-down (từ văn bản xuống điều khoản) và mở rộng ngang
-(cross-reference) giữa các văn bản.
-
-% ============================================================
-\section{Personalized PageRank}
+\paragraph{Personalized PageRank.}
 \label{sec:cslt-ppr}
-
 PageRank~\cite{gleich2015pagerank} là thuật toán xếp hạng nút trên đồ thị, ban đầu
 được thiết kế để đo tầm quan trọng của trang web dựa trên cấu trúc liên kết.
 Personalized PageRank (PPR)~\cite{haveliwala2002ppr,jeh2003ppr} mở rộng PageRank
@@ -243,10 +200,8 @@ với truy vấn (seed entities), và trọng số cạnh $w(u,v)$ được đi�
 trọng số $1{,}0$, các cạnh khác nhận $0{,}5$. Cơ chế này cho phép PPR ưu tiên các
 đường suy luận phù hợp với loại câu hỏi.
 
-% ============================================================
-\section{Reciprocal Rank Fusion}
+\paragraph{Reciprocal Rank Fusion.}
 \label{sec:cslt-rrf}
-
 Reciprocal Rank Fusion (RRF)~\cite{cormack2009rrf} là phương pháp kết hợp nhiều
 danh sách xếp hạng thành một danh sách duy nhất. RRF không yêu cầu điểm số thô
 (raw score) từ các hệ thống thành phần, chỉ cần thứ hạng, giúp kết hợp được các
@@ -266,10 +221,58 @@ RRF phù hợp cho bài toán của luận văn vì ba tầng truy xuất sử d
 khác nhau (duyệt cây, embedding, đồ thị) với thang điểm không tương thích. RRF cho
 phép kết hợp chúng chỉ dựa trên thứ hạng, tận dụng thế mạnh bổ trợ của từng tầng.
 
-% ============================================================
-\section{Retrieval-Augmented Generation}
-\label{sec:cslt-rag}
+% ------------------------------------------------------------
+\subsection{Đồ thị tri thức và Ontology}
+\label{subsec:kg-ontology}
 
+\paragraph{Đồ thị tri thức.}
+\label{subsec:do-thi-tri-thuc}
+Đồ thị tri thức (Knowledge Graph -- KG) là cấu trúc dữ liệu biểu diễn tri thức
+dưới dạng đồ thị có hướng, trong đó các nút biểu diễn thực thể và các cạnh biểu
+diễn quan hệ giữa chúng. Mỗi đơn vị tri thức được biểu diễn bằng một bộ ba (triple):
+
+\begin{equation}
+  (h, r, t) \in \mathcal{E} \times \mathcal{R} \times \mathcal{E}
+  \label{eq:kg-triple}
+\end{equation}
+
+\noindent trong đó $h$ (head) là thực thể nguồn, $r$ (relation) là quan hệ, $t$
+(tail) là thực thể đích, $\mathcal{E}$ là tập thực thể và $\mathcal{R}$ là tập
+loại quan hệ. Ví dụ, bộ ba (\textit{Điều~24}, \textit{requires}, \textit{ngoại ngữ B1})
+biểu diễn rằng Điều~24 yêu cầu trình độ ngoại ngữ B1.
+
+Trong ngữ cảnh luận văn, KG được xây dựng từ văn bản quy phạm với hai vai trò: biểu
+diễn các quan hệ ngữ nghĩa giữa điều khoản (tham chiếu, phụ thuộc, điều kiện) phục
+vụ suy luận đa bước, và cung cấp thông tin thực thể cho truy xuất ngữ nghĩa tại
+Tầng~2.
+
+\paragraph{Ontology và OWL.}
+\label{subsec:ontology-owl}
+Ontology là mô hình hình thức định nghĩa các khái niệm (concept), thuộc tính
+(property), và quan hệ (relation) trong một miền tri thức cụ thể. Ontology cung cấp
+lược đồ (schema) cho đồ thị tri thức, xác định các loại thực thể hợp lệ và các
+loại quan hệ giữa chúng.
+
+OWL (Web Ontology Language) là ngôn ngữ chuẩn W3C cho biểu diễn ontology, hỗ trợ
+phân cấp lớp (class hierarchy), ràng buộc thuộc tính (property restrictions), và suy
+luận logic. Luận văn sử dụng OWL để định nghĩa ontology miền với 14 loại thực thể
+(Action, Legal Term, Organization, Penalty, Condition, v.v.) tổ chức theo phân cấp
+4 cấp, kèm ánh xạ nhãn tiếng Việt. Ontology miền phục vụ hai mục đích: hướng dẫn
+quá trình trích xuất thực thể từ văn bản (đảm bảo tính nhất quán về loại), và cung
+cấp thông tin loại thực thể cho cơ chế Concept Matching tại Tầng~2.
+
+\paragraph{Document Forest.}
+\label{subsec:document-forest}
+Các văn bản quy phạm Việt Nam có cấu trúc phân cấp nghiêm ngặt: Văn bản $\to$
+Chương $\to$ Mục $\to$ Điều $\to$ Khoản $\to$ Điểm. Mỗi tài liệu được mô hình hóa
+dưới dạng cây có gốc (rooted tree), và toàn bộ kho tài liệu gồm $m$ văn bản tạo
+thành Document Forest $\mathcal{F} = \{T_1, T_2, \ldots, T_m\}$, được bổ sung các
+cạnh tham chiếu chéo liên kết các điều khoản giữa các cây. Cấu trúc Document Forest
+cho phép duyệt cây top-down (từ văn bản xuống điều khoản) và mở rộng ngang
+(cross-reference) giữa các văn bản.
+
+\paragraph{Retrieval-Augmented Generation.}
+\label{sec:cslt-rag}
 Retrieval-Augmented Generation (RAG)~\cite{lewis2020rag} là kiến trúc kết hợp bộ
 truy xuất (retriever) với mô hình ngôn ngữ lớn (LLM) để sinh câu trả lời có căn cứ
 từ tài liệu nguồn. Pipeline RAG cơ bản gồm ba bước:
@@ -296,11 +299,7 @@ quan trọng hoặc sinh nội dung không chính xác dựa trên điều kho�
 phương pháp truy xuất bổ trợ để tăng khả năng tìm được điều khoản liên quan.
 
 % ============================================================
-% PHẦN B: CÁC CÔNG TRÌNH LIÊN QUAN
-% (Di chuyển từ Chapter 2 cũ, Section 2.2)
-% ============================================================
-
-\section{Các công trình liên quan}
+\section{Các phương pháp truy vấn kiến thức pháp lý}
 \label{sec:cong-trinh-lien-quan}
 
 Bài toán thu thập, biểu diễn, và truy xuất kiến thức pháp lý là một lĩnh vực nghiên
@@ -393,7 +392,7 @@ ngôn ngữ được tiền huấn luyện trên kho văn bản pháp lý tiến
 của EU, UK, và Mỹ). Thông qua tìm kiếm siêu tham số mở rộng, nghiên cứu chứng
 minh rằng các hướng dẫn tinh chỉnh (fine-tuning) từ NLP đa dụng không tổng quát
 hóa tốt cho miền pháp lý -- mô hình chuyên biệt miền vượt trội so với mô hình đa
-ngôn ngữ (XLM-R) và BERT tổng quát trên các tác vụ phân loại văn bản pháp luật
+ngữ (XLM-R) và BERT tổng quát trên các tác vụ phân loại văn bản pháp luật
 và rà soát hợp đồng.
 
 Zhong và cộng sự \cite{zhong2020nlplaw} tổng hợp hệ thống các ứng dụng NLP trong

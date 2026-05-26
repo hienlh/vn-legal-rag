@@ -147,9 +147,13 @@
 \setsecnumdepth{subsection}
 \settocdepth{subsection}
 
-% Set numwidths
-\setlength{\cfttablenumwidth}{3em}
-\setlength{\cftfigurenumwidth}{3em}
+% Set numwidths and prefix "Hình"/"Bảng" in LOF/LOT
+\renewcommand{\cftfigurepresnum}{Hình\space}
+\renewcommand{\cfttablepresnum}{Bảng\space}
+\newlength{\myfignumwidth}
+\settowidth{\myfignumwidth}{Hình 9.99\quad}
+\setlength{\cftfigurenumwidth}{\myfignumwidth}
+\setlength{\cfttablenumwidth}{\myfignumwidth}
 \AtBeginDocument{\renewcommand*\bibname{References}}
 
 % ==========Setup corlor for link and url==========

@@ -46,44 +46,29 @@ tách biệt rõ ràng giữa công đoạn xây dựng tri thức (thực hiệ
 mới) và công đoạn phục vụ truy vấn (thực hiện theo thời gian thực). Hình~\ref{fig:kien-truc-he-thong}
 (Chương~\ref{chap:thiet-ke-giai-thuat}) minh họa kiến trúc tổng thể của hệ thống.
 
-\textbf{Pha ngoại tuyến (Offline).} Khi có tài liệu mới, hệ thống thực hiện một chuỗi
-xử lý một chiều từ văn bản thô đến các cấu trúc dữ liệu phục vụ truy vấn. Đầu tiên,
-Document Parser phân tích văn bản pháp luật bằng bộ regex tùy chỉnh nhận diện các
-dấu hiệu phân cấp tiếng Việt (``Phần'', ``Chương'', ``Mục'', ``Điều'', ``Khoản'',
-``Điểm'') và xây dựng cây cấu trúc 6 cấp. Các văn bản scan (PDF) của miền giáo dục
-(118 trang) được số hóa qua LLM Vision OCR trước khi đưa vào parser. Tham chiếu
-chéo giữa các điều khoản được trích xuất qua pattern matching trên chuỗi trích dẫn,
-tạo ra 168 cạnh liên tài liệu trong Knowledge Graph. Tiếp theo, KG Builder sử dụng
-Claude 3.5 Haiku qua Anthropic API để trích xuất thực thể và nhận diện quan hệ, với
-một lời gọi LLM cho mỗi điều khoản. Chuẩn hóa slug tiếng Việt loại bỏ dấu và gộp
-biến thể thanh điệu thành định danh thực thể chuẩn; bộ giải quyết thực thể đa bước
-(exact match, synonym resolution, abbreviation expansion) khử trùng lặp các thực thể
-tương đương. Sau trích xuất tự động, bước tinh chỉnh expert-in-the-loop sửa các quan
-hệ nhận diện sai và bổ sung liên kết chuyên ngành mà LLM bỏ sót. Song song với đó,
-Summary Generator sinh tóm tắt ngắn gọn cho mỗi chương và mỗi điều khoản nhằm
-phục vụ quá trình duyệt cây ở pha online. Cuối cùng, Embedding Indexer mã hóa toàn
-bộ tóm tắt điều khoản thành vector 384 chiều sử dụng mô hình
-\texttt{paraphrase-multilingual-MiniLM-L12-v2}~\cite{reimers2019sbert} và lưu vào
-chỉ mục FAISS để tìm kiếm ngữ nghĩa nhanh.
+\textbf{Pha ngoại tuyến (Offline).} Quy trình xây dựng tri thức gồm ba track song
+song đã trình bày tại Mục~\ref{subsec:pha-ngoai-tuyen}. Về mặt triển khai, Document
+Parser sử dụng bộ regex tùy chỉnh cho tiếng Việt, hỗ trợ thêm LLM Vision OCR để số
+hóa 118 trang tài liệu scan (PDF) của miền giáo dục trước khi phân tích cấu trúc. KG
+Builder gọi Claude 3.5 Haiku qua Anthropic API với một lời gọi LLM cho mỗi điều
+khoản, kết hợp chuẩn hóa slug tiếng Việt (loại dấu, gộp biến thể thanh điệu) và bộ
+giải quyết thực thể đa bước (exact match, synonym resolution, abbreviation expansion)
+để khử trùng lặp. Embedding Indexer mã hóa tóm tắt điều khoản thành vector 384 chiều
+bằng mô hình \texttt{paraphrase-multilingual-MiniLM-L12-v2}~\cite{reimers2019sbert},
+lưu vào chỉ mục FAISS phục vụ tìm kiếm ngữ nghĩa nhanh.
 
-\textbf{Pha trực tuyến (Online).} Khi nhận được câu hỏi từ người dùng, pipeline gồm
-năm thành phần xử lý tuần tự. Query Analyzer là thành phần đầu tiên, chịu trách nhiệm
-phân tích ngôn ngữ học của câu hỏi: phân loại ý định (factual lookup, multi-hop
-reasoning, procedural inquiry), mở rộng viết tắt pháp lý tiếng Việt (ví dụ: ``TOEIC
-trường cấp'' thành tên đầy đủ), và trích xuất các thực thể quan trọng để định hướng
-duyệt cây. Tree Traversal Retriever (Tầng 1) sau đó thực hiện duyệt cây 3 vòng lặp:
-Loop 0 chọn tài liệu liên quan nhất trong kho, Loop 1 chọn chương phù hợp trong mỗi
-tài liệu, và Loop 2 chọn các điều khoản cụ thể trong chương đã chọn. Mỗi vòng lặp sử
-dụng Claude Sonnet 4 để đánh giá tóm tắt nút và đưa ra quyết định duyệt. Dual-Level
-Retriever (Tầng 2) bổ sung kết quả bằng cách tìm kiếm ngữ nghĩa hai cấp, so sánh
-câu hỏi với cả tóm tắt chương lẫn tóm tắt điều khoản qua chỉ mục FAISS. Semantic
-Bridge RRF Merger (Tầng 3) hợp nhất kết quả từ Tầng 1 và Tầng 2 bằng thuật toán
-Reciprocal Rank Fusion, sau đó mở rộng tập kết quả bằng cách theo các cạnh KG từ
-những điều khoản đã được xếp hạng cao (Personalized PageRank với damping
-$\alpha = 0{,}15$, tối đa 50 vòng lặp). Cuối cùng, Answer Generator truyền top-$K$ điều
-khoản đã hợp nhất vào LLM cùng prompt cấu trúc IRAC để sinh câu trả lời tự nhiên.
+\textbf{Pha trực tuyến (Online).} Pipeline truy xuất ba tầng đã trình bày chi tiết
+tại Mục~\ref{sec:phan-tich-truy-van}. Về mặt triển khai, mỗi bước duyệt cây (Tầng~1)
+sử dụng Claude Sonnet 4 với temperature và số lượng ứng viên cấu hình riêng cho từng
+miền qua file YAML (xem phần cấu hình đa miền bên dưới). Tầng~2 truy vấn chỉ mục
+FAISS đã xây dựng ở pha ngoại tuyến. Tầng~3 thực hiện Personalized PageRank với
+damping $\alpha = 0{,}15$ và tối đa 50 vòng lặp trên KG. Answer Generator sinh câu trả
+lời theo cấu trúc IRAC với prompt riêng cho từng miền (xem Phụ lục~D,
+Bảng~D.6 và D.7).
 
-Bảng~\ref{tab:cong-nghe} tóm tắt các công nghệ chính được sử dụng trong từng thành phần.
+Bảng~\ref{tab:cong-nghe} tóm tắt các công nghệ chính được sử dụng trong từng thành
+phần. Hình~\ref{fig:deployment-architecture} minh họa kiến trúc triển khai với các
+thành phần kết nối.
 
 \begin{table}[htbp]
   \centering
@@ -107,7 +92,7 @@ Bảng~\ref{tab:cong-nghe} tóm tắt các công nghệ chính được sử d�
 \begin{figure}[htbp]
   \centering
   \includegraphics[width=0.95\linewidth]{graphics/figure4-1-deployment-architecture.png}
-  \caption{Kiến trúc triển khai hệ thống: Client (trình duyệt web) kết nối với máy chủ
+  \caption[Kiến trúc triển khai hệ thống]{Kiến trúc triển khai hệ thống: Client (trình duyệt web) kết nối với máy chủ
   Chainlit qua WebSocket, máy chủ gọi pipeline 3-Tier KG-RAG đồng bộ thông qua
   Async Bridge, pipeline truy vấn các dịch vụ ngoại vi gồm Anthropic API (LLM), FAISS
   Index (vector search) và SQLite Cache (LLM response caching).}
@@ -154,7 +139,7 @@ nhóm tham số chính:
 \end{enumerate}
 
 Sự khác biệt giữa hai file cấu hình hiện tại phản ánh đặc điểm riêng của từng miền.
-File \texttt{education.yaml} sử dụng nhiệt độ bằng 0,0 cho Loop 1 (chọn chương) nhằm
+File \texttt{education.yaml} sử dụng nhiệt độ bằng 0,0 cho Bước 2 (chọn chương) nhằm
 đảm bảo tính xác định khi kho tài liệu nhỏ (12 chương) chỉ có một lựa chọn hợp lệ rõ
 ràng. Ngược lại, \texttt{default.yaml} dùng nhiệt độ 0,3 cho cùng bước đó, cho phép mô
 hình khám phá rộng hơn khi kho pháp luật lớn có nhiều chương tiềm năng. Ngưỡng
@@ -303,7 +288,7 @@ nội dung khác nhau. LightRAG xây dựng KG theo schema chung nên tạo nhi�
 RAPTOR mất chi tiết điều khoản trong quá trình tóm tắt đệ quy.
 
 Một số cải tiến cấu hình đặc thù cho miền đào tạo đóng góp đáng kể vào kết quả:
-temperature bằng 0,0 tại Loop 1 loại bỏ hoàn toàn variance trong bước chọn chương
+temperature bằng 0,0 tại Bước 2 loại bỏ hoàn toàn variance trong bước chọn chương
 --- bước quan trọng nhất vì cơ sở tri thức nhỏ (5 văn bản, 28 chương) khiến mỗi lần
 chọn sai chương đều dẫn đến bỏ sót điều khoản liên quan; cơ chế fallback thông minh
 chọn chương có số điều khoản nhiều nhất khi LLM không tự tin; và retry logic với 3
@@ -421,7 +406,7 @@ khớp trực tiếp với từ ngữ trong điều khoản gốc.
 130 câu hỏi của miền đào tạo. Ba giá trị Hit@10 thu được lần lượt là 87,7\%, 87,7\% và
 88,5\%, tương ứng độ lệch chuẩn 0,38 pp, thực tế không đáng kể ở quy mô thử nghiệm
 này. Phương sai thấp là kết quả trực tiếp của hai quyết định thiết kế: temperature = 0,0
-tại Loop 1 đảm bảo tính xác định trong quyết định điều hướng quan trọng nhất của Tầng
+tại Bước 2 đảm bảo tính xác định trong quyết định điều hướng quan trọng nhất của Tầng
 1, và cache LLM bền vững (SQLite WAL) đảm bảo các lần gọi API lặp lại cho cùng một
 truy vấn luôn trả về kết quả đồng nhất.
 
@@ -690,7 +675,7 @@ nhau; chúng được liên kết bởi logic pháp lý ngầm hiểu bởi lu�
 được mã hóa trong văn bản. Cơ chế PPR hai bước trong Tầng 3 chỉ mở rộng được một
 bước từ seed node, không đủ để bắt chuỗi ba bước này.
 
-\textit{Nhóm 4: Lỗi Loop 0 (3 câu).} Hệ thống chọn sai tài liệu ngay từ bước đầu tiên
+\textit{Nhóm 4: Lỗi Bước 1 (3 câu).} Hệ thống chọn sai tài liệu ngay từ bước đầu tiên
 do tiêu đề văn bản không phản ánh đủ nội dung điều khoản. Ví dụ: câu hỏi về quyền
 của người lao động trong công ty liên quan đến cả Luật Doanh nghiệp và Bộ luật Lao
 động; hệ thống chỉ tìm kiếm trong kho pháp luật doanh nghiệp nên bỏ sót nguồn bên ngoài.
@@ -750,7 +735,7 @@ trúc rõ ràng, trích dẫn căn cứ cụ thể và kết luận dứt khoát
 
 Hệ thống sử dụng prompt engineering để hướng dẫn LLM sinh câu trả lời theo cấu
 trúc IRAC. Prompt được tùy biến theo miền ứng dụng, với hai điểm khác biệt chính giữa
-miền pháp luật và miền đào tạo:
+miền pháp luật và miền đào tạo, được tóm tắt trong Bảng~\ref{tab:irac-compare}.
 
 \begin{table}[htbp]
   \centering
@@ -789,7 +774,7 @@ nhưng sinh câu trả lời phù hợp với ngữ cảnh và đối tượng n
   điều khoản được trích dẫn, với breadcrumb vị trí rõ ràng (tên văn bản, chương,
   điều) và đường phân cách giữa các nguồn. Người dùng có thể đối chiếu trực tiếp
   giữa tư vấn và nguyên văn quy định (Hình~\ref{fig:citation-panel}). Ngoài ra, lộ trình
-  truy xuất 3 vòng lặp (Loop 0--2) cũng được hiển thị minh bạch để người dùng hiểu
+  truy xuất 3 bước (Bước 1--3) cũng được hiển thị minh bạch để người dùng hiểu
   quá trình tìm kiếm của hệ thống (Hình~\ref{fig:reasoning-path}).
 
   \item \textbf{Hỗ trợ đa miền:} Ứng dụng hỗ trợ chuyển đổi giữa các miền (quy định đào
@@ -797,38 +782,41 @@ nhưng sinh câu trả lời phù hợp với ngữ cảnh và đối tượng n
   pipeline.
 \end{enumerate}
 
+Hình~\ref{fig:welcome-screen}--\ref{fig:reasoning-path} minh họa các màn hình chính
+của ứng dụng, từ giao diện chào mừng đến kết quả truy xuất.
+
 \begin{figure}[htbp]
   \centering
   \includegraphics[width=0.85\linewidth]{chat-ui-welcome-light.png}
-  \caption{Màn hình chào mừng với lĩnh vực ``Quy định đào tạo'' và các câu hỏi gợi ý về quy chế đào tạo sau đại học}
+  \caption[Màn hình chào mừng]{Màn hình chào mừng với lĩnh vực ``Quy định đào tạo'' và các câu hỏi gợi ý về quy chế đào tạo sau đại học}
   \label{fig:welcome-screen}
 \end{figure}
 
 \begin{figure}[htbp]
   \centering
   \includegraphics[width=0.85\linewidth]{chat-ui-status-indicator-light.png}
-  \caption{Trạng thái truy xuất ``Đang tổng hợp câu trả lời...'' hiển thị trực tiếp trong khi hệ thống xử lý câu hỏi}
+  \caption[Trạng thái truy xuất đang xử lý]{Trạng thái truy xuất ``Đang tổng hợp câu trả lời...'' hiển thị trực tiếp trong khi hệ thống xử lý câu hỏi}
   \label{fig:retrieving-state}
 \end{figure}
 
 \begin{figure}[htbp]
   \centering
   \includegraphics[width=0.85\linewidth]{chat-ui-answer-light.png}
-  \caption{Câu trả lời IRAC cho câu hỏi ``Điều kiện bảo vệ luận văn thạc sĩ?'' với panel nguồn quy định gốc (phải)}
+  \caption[Câu trả lời IRAC với panel nguồn]{Câu trả lời IRAC cho câu hỏi ``Điều kiện bảo vệ luận văn thạc sĩ?'' với panel nguồn quy định gốc (phải)}
   \label{fig:irac-answer}
 \end{figure}
 
 \begin{figure}[htbp]
   \centering
   \includegraphics[width=0.85\linewidth]{chat-ui-citation-panel-light.png}
-  \caption{Panel trích dẫn nguồn hiển thị nguyên văn điều khoản với breadcrumb vị trí (văn bản $\rightarrow$ chương $\rightarrow$ điều)}
+  \caption[Panel trích dẫn nguồn]{Panel trích dẫn nguồn hiển thị nguyên văn điều khoản với breadcrumb vị trí (văn bản $\rightarrow$ chương $\rightarrow$ điều)}
   \label{fig:citation-panel}
 \end{figure}
 
 \begin{figure}[htbp]
   \centering
   \includegraphics[width=0.85\linewidth]{chat-ui-reasoning-path-light.png}
-  \caption{Lộ trình truy xuất 3 vòng lặp: Loop 0 chọn tài liệu, Loop 1 chọn chương, Loop 2 truy xuất điều khoản}
+  \caption[Lộ trình truy xuất 3 bước]{Lộ trình truy xuất 3 bước: Bước 1 chọn tài liệu, Bước 2 chọn chương, Bước 3 truy xuất điều khoản}
   \label{fig:reasoning-path}
 \end{figure}
 
@@ -851,11 +839,11 @@ QĐ 270 (UIT, quy định bổ sung về chứng chỉ được chấp nhận).
 \textit{Phân tích:} Câu hỏi yêu cầu kết hợp thông tin từ hai văn bản ở hai tầng quản lý
 khác nhau: QĐ 1393 (ĐHQG-HCM) quy định yêu cầu chung, còn QĐ 270 (UIT) bổ
 sung danh sách chứng chỉ cụ thể được chấp nhận. Tầng 1 chọn đúng cả hai tài liệu ở
-Loop 0, sau đó Loop 1 thu hẹp vào các chương về ngoại ngữ. KG expansion bổ sung
+Bước 1, sau đó Bước 2 thu hẹp vào các chương về ngoại ngữ. KG expansion bổ sung
 Điều 25 (QĐ 270) qua cạnh references từ Điều 9. Hệ thống đạt MRR = 1,0 với cả hai
-gold articles trong top 3. PageIndex tìm được Điều 6 nhưng bỏ sót Điều 9 của UIT (chỉ
-tìm trong QĐ 1393 và QĐ 160). RAPTOR không tìm được cả hai, truy xuất phân tán
-giữa các điều khoản không liên quan.
+gold articles trong top 3 (Bảng~\ref{tab:ex1}). PageIndex tìm được Điều 6 nhưng bỏ
+sót Điều 9 của UIT (chỉ tìm trong QĐ 1393 và QĐ 160). RAPTOR không tìm được cả
+hai, truy xuất phân tán giữa các điều khoản không liên quan.
 
 \begin{table}[htbp]
   \centering
@@ -900,12 +888,12 @@ sao?''
   \end{tabular}
 \end{table}
 
-\textit{Phân tích:} Hệ thống truy xuất tất cả 3 gold articles trong top 5, MRR = 1,0. Câu
-hỏi đòi hỏi liên kết giữa quy định chung về chương trình đào tạo (QĐ 1393) và quy chế
-riêng của UIT về học vụ và chuyên đề (QĐ 270). Tầng 1 duyệt đúng cả hai tài liệu, KG
-expansion liên kết Điều 11 với Điều 18 qua quan hệ references. PageIndex chỉ tìm trong
-QĐ 1393, bỏ sót hoàn toàn QĐ 270. RAPTOR truy xuất các điều khoản về hình thức xử
-lý (QĐ 270:d38, d26) thay vì các quy định gốc.
+\textit{Phân tích:} Hệ thống truy xuất tất cả 3 gold articles trong top 5, MRR = 1,0
+(Bảng~\ref{tab:ex2}). Câu hỏi đòi hỏi liên kết giữa quy định chung về chương trình
+đào tạo (QĐ 1393) và quy chế riêng của UIT về học vụ và chuyên đề (QĐ 270). Tầng 1
+duyệt đúng cả hai tài liệu, KG expansion liên kết Điều 11 với Điều 18 qua quan hệ
+references. PageIndex chỉ tìm trong QĐ 1393, bỏ sót hoàn toàn QĐ 270. RAPTOR truy
+xuất các điều khoản về hình thức xử lý (QĐ 270:d38, d26) thay vì các quy định gốc.
 
 \subsubsection*{Ví dụ 3: Truy xuất đăng ký chuyên đề -- đăng ký môn học khác khóa}
 
@@ -915,10 +903,11 @@ của Khóa 4 không?''
 \textit{Gold articles:} Điều 8 QĐ 1393 (chương trình đào tạo), Điều 11, Điều 2, Điều 4
 QĐ 270 (quy chế học vụ, phạm vi áp dụng, hình thức đào tạo).
 
-\textit{Phân tích:} Hệ thống đặt 2/4 gold articles (Đ.8 QĐ 1393 và Đ.11 QĐ 270) ở rank 1--2, MRR = 1,0. Câu hỏi ngắn, không chứa thuật ngữ chuyên ngành nhưng đòi hỏi hiểu
-biết về quy trình đăng ký khác khóa. Tầng 1 chọn đúng chương về đào tạo trong cả hai
-văn bản. Cả PageIndex và RAPTOR đều không truy xuất được Điều 8 hoặc Điều 11
-trong top 10.
+\textit{Phân tích:} Hệ thống đặt 2/4 gold articles (Đ.8 QĐ 1393 và Đ.11 QĐ 270) ở
+rank 1--2, MRR = 1,0 (Bảng~\ref{tab:ex3}). Câu hỏi ngắn, không chứa thuật ngữ
+chuyên ngành nhưng đòi hỏi hiểu biết về quy trình đăng ký khác khóa. Tầng 1 chọn
+đúng chương về đào tạo trong cả hai văn bản. Cả PageIndex và RAPTOR đều không truy
+xuất được Điều 8 hoặc Điều 11 trong top 10.
 
 \begin{table}[htbp]
   \centering
@@ -952,5 +941,5 @@ thể. PageIndex lại truy xuất đúng nhờ tìm kiếm rộng hơn trên Q�
 \textit{Nguyên nhân:} Câu hỏi hỏi về ``Tiến sĩ'' nhưng gold articles nằm ở phần ``điều kiện
 đầu vào Thạc sĩ'' (Điều 6, Điều 9). Nội dung hai điều khoản này bao gồm cả điều kiện
 cho chương trình Tiến sĩ nhưng tiêu đề chương và tóm tắt chỉ đề cập ``Thạc sĩ'', khiến
-Loop 1 chọn nhầm chương. Đây là hạn chế của duyệt cây khi tiêu đề chương không phản
+Bước 2 chọn nhầm chương. Đây là hạn chế của duyệt cây khi tiêu đề chương không phản
 ánh đầy đủ nội dung bên trong.

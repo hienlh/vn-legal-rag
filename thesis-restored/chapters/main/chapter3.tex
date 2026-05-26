@@ -7,12 +7,12 @@
 
 Chương này trình bày toàn bộ quy trình từ thu thập kiến thức miền đến thiết kế
 giải thuật truy xuất. Phần đầu
-(Mục~\ref{sec:gioithieu_quyche}--\ref{sec:cau_hoi_kiem_thu}) giới thiệu hệ thống
-quy chế đào tạo, quy trình thu thập và tiền xử lý dữ liệu, cùng bộ câu hỏi kiểm
-thử. Phần sau
-(Mục~\ref{sec:phat-bieu-bai-toan}--\ref{sec:pipeline-truy-xuat}) trình bày chi
-tiết kiến trúc giải thuật 3-Tier KG-RAG được đề xuất, bao gồm phát biểu bài toán,
-tổng quan kiến trúc hệ thống, phân tích truy vấn, và pipeline truy xuất ba tầng.
+(Mục~\ref{sec:gioithieu_quyche}--\ref{sec:tien-xu-ly-du-lieu}) giới thiệu hệ thống
+quy chế đào tạo, thu thập dữ liệu (bao gồm cả bộ câu hỏi kiểm thử), và tiền xử
+lý dữ liệu. Phần sau
+(Mục~\ref{sec:tong-quan-kien-truc}--\ref{sec:phan-tich-truy-van}) trình bày chi
+tiết kiến trúc giải thuật 3-Tier KG-RAG được đề xuất, bao gồm tổng quan kiến trúc
+hệ thống, phân tích truy vấn, và pipeline truy xuất ba tầng.
 Nội dung phần thiết kế giải thuật dựa trên bài báo khoa học đã nộp tại hội nghị
 SOMET 2026 \cite{le2026threetier}.
 
@@ -73,7 +73,7 @@ một vấn đề cụ thể (ví dụ: ``điều kiện bảo vệ luận văn'
 thông tin từ cả hai tầng -- quy định chung từ ĐHQG-HCM và quy định bổ sung từ UIT
 -- để đưa ra câu trả lời đầy đủ. Đây là một trong những động lực chính cho kiến
 trúc truy xuất đa tầng được trình bày ở phần sau của chương
-(Mục~\ref{sec:phat-bieu-bai-toan}).
+(Mục~\ref{sec:phan-tich-truy-van}).
 
 % ------------------------------------------------------------
 \subsection{Cấu trúc văn bản quy phạm}
@@ -117,7 +117,7 @@ với các cấp phân cấp và tham chiếu chéo.
 \begin{figure}[htbp]
     \centering
     \includegraphics[width=0.95\textwidth]{graphics/figure2-1-document-tree.png}
-    \caption{Cấu trúc Document Tree của QĐ~270/QĐ-ĐHCNTT theo cấu trúc phân cấp
+    \caption[Cấu trúc Document Tree của QĐ~270/QĐ-ĐHCNTT]{Cấu trúc Document Tree của QĐ~270/QĐ-ĐHCNTT theo cấu trúc phân cấp
     6 cấp: Văn bản $\rightarrow$ Chương $\rightarrow$ Mục $\rightarrow$ Điều
     $\rightarrow$ Khoản $\rightarrow$ Điểm (cấp Mục không áp dụng cho văn bản
     này). Mũi tên nét đứt đỏ thể hiện các tham chiếu chéo giữa các điều khoản
@@ -278,7 +278,7 @@ cho học viên cao học UIT, gồm 3 chương và 8 điều:
 \end{itemize}
 
 % ============================================================
-\section{Thu thập kiến thức trong văn bản quy chế}
+\section{Thu thập dữ liệu}
 \label{sec:thuthap_kienthuc}
 
 % ------------------------------------------------------------
@@ -455,7 +455,7 @@ regulates, references).
 \begin{figure}[htbp]
     \centering
     \includegraphics[width=0.95\textwidth]{graphics/figure2-2-kg-subgraph.png}
-    \caption{Đồ thị con minh họa các thực thể và quan hệ xung quanh chủ đề ``bảo
+    \caption[Đồ thị con KG chủ đề ``bảo vệ luận văn thạc sĩ'']{Đồ thị con minh họa các thực thể và quan hệ xung quanh chủ đề ``bảo
     vệ luận văn thạc sĩ''. Các nút được phân loại theo ontology (Action, Condition,
     Organization, Person, Legal Reference) và các cạnh thể hiện các loại quan hệ
     (requires, leads\_to, regulates, references).}
@@ -504,6 +504,143 @@ Cần lưu ý rằng tổng số điều liên quan (84) nhỏ hơn tổng số 
 nằm trong chủ đề chuyên biệt nào. Ngược lại, một số điều có thể liên quan đến
 nhiều chủ đề; ví dụ Điều 24 QĐ~270 (điều kiện bảo vệ luận văn) liên quan đến cả
 chủ đề ``Luận văn'' và ``Điều kiện tốt nghiệp''.
+
+% ------------------------------------------------------------
+\subsection{Nguồn thu thập và phương pháp xây dựng bộ câu hỏi kiểm thử}
+\label{subsec:nguon_thuthap}
+
+Tổng cộng 530 câu hỏi kiểm thử được thu thập từ hai nguồn: các nhóm tư vấn pháp
+lý trên Facebook (400 câu hỏi pháp luật) và các diễn đàn học viên UIT (130 câu
+hỏi quy định đào tạo). Các câu hỏi bao phủ nhiều mức độ phức tạp, từ tra
+cứu đơn điều khoản (``Vốn điều lệ tối thiểu công ty chứng khoán là bao nhiêu?'')
+đến các tình huống multi-hop đòi hỏi suy luận liên văn bản.
+
+Mỗi câu hỏi được gán nhãn thủ công (manual annotation) bởi chuyên gia miền với
+1--8 điều khoản liên quan (gold articles). Tiêu chí gán nhãn: một điều khoản được
+gán là ``gold'' nếu cần thiết để trả lời đầy đủ câu hỏi -- tức là nếu thiếu điều
+khoản đó, câu trả lời sẽ không hoàn chỉnh hoặc thiếu căn cứ.
+
+Cụ thể, 400 câu hỏi pháp luật thuộc hai lĩnh vực: luật doanh nghiệp (200 câu,
+Luật Doanh nghiệp 2020 và các nghị định hướng dẫn) và luật giao thông (200 câu,
+Luật Trật tự, An toàn Giao thông Đường bộ 2024 và Nghị định 168/2024/NĐ-CP về
+xử phạt vi phạm hành chính). 130 câu hỏi đào tạo bao gồm các chủ đề thường gặp
+của học viên cao học: quy trình đào tạo, điều kiện tốt nghiệp, thủ tục bảo vệ luận
+văn, chuẩn ngoại ngữ đầu ra, đăng ký môn học, và học phí. Việc đánh giá trên cả
+ba miền nhằm chứng minh tính tổng quát của phương pháp.
+
+% ------------------------------------------------------------
+\subsection{Phân loại câu hỏi theo độ phức tạp}
+\label{subsec:phanloa_cauhoi}
+
+Phần này trình bày chi tiết phân loại bộ 130 câu hỏi miền quy định đào tạo theo ba mức độ phức tạp truy xuất, phản ánh số bước suy luận cần thiết để tìm đúng điều khoản. Bộ 400 câu hỏi miền pháp luật được thiết kế theo tiêu chí khác: toàn bộ đều thuộc dạng multi-hop yêu cầu suy luận đa bước, và sẽ được mô tả chi tiết trong Chương~\ref{chap:chapter4} cùng với kết quả thử nghiệm.
+
+\begin{itemize}
+    \item \textbf{Single-hop (58 câu, 44,6\%):} Câu hỏi chỉ cần tra cứu một điều
+          khoản duy nhất, thường có từ khóa trùng khớp trực tiếp với tiêu đề hoặc
+          nội dung điều khoản. Ví dụ: ``Thời gian đào tạo thạc sĩ tối đa là bao
+          lâu?'' $\to$ Điều 5 QĐ~270 (thời gian đào tạo).
+
+    \item \textbf{Multi-hop (52 câu, 40,0\%):} Câu hỏi cần kết hợp thông tin từ
+          nhiều điều khoản hoặc nhiều văn bản. Chia thành hai dạng phụ:
+          \begin{itemize}
+            \item \textit{Intra-document} (31 câu): Nhiều điều trong cùng văn bản.
+                  Ví dụ: ``Quy trình bảo vệ luận văn từ A-Z?'' cần Điều 22
+                  (đề cương), Điều 23 (hội đồng), Điều 24 (điều kiện), Điều 25
+                  (quy trình bảo vệ) QĐ~270.
+            \item \textit{Cross-document} (21 câu): Kết hợp nhiều văn bản. Ví dụ:
+                  ``Yêu cầu ngoại ngữ đầu ra cho học viên cao học?'' cần Điều 29
+                  QĐ~270 (điều kiện tốt nghiệp) và Điều 25 QĐ~1393 (chi tiết yêu
+                  cầu ngoại ngữ).
+          \end{itemize}
+
+    \item \textbf{Reasoning (20 câu, 15,4\%):} Câu hỏi đòi hỏi suy luận logic dựa
+          trên các quy định, thường là tình huống giả định yêu cầu áp dụng nhiều
+          điều kiện. Ví dụ: ``Học viên đã hết thời gian gia hạn nhưng chưa bảo vệ
+          luận văn thì có thể làm gì?'' cần suy luận từ Điều 17 (gia hạn) kết hợp
+          Điều 20 (buộc thôi học) và Điều 16 (bảo lưu).
+\end{itemize}
+
+% ------------------------------------------------------------
+\subsection{Thống kê và phân tích bộ câu hỏi}
+\label{subsec:thongke_cauhoi}
+
+Bảng~\ref{tab:thongke_cauhoi} trình bày phân bố câu hỏi theo chủ đề. Phân bố này
+phản ánh tần suất thực tế của các câu hỏi từ diễn đàn: quy trình đào tạo và điều
+kiện tốt nghiệp là hai chủ đề được quan tâm nhiều nhất.
+
+\begin{table}[htbp]
+    \centering
+    \caption{Thống kê bộ câu hỏi kiểm thử miền quy định đào tạo}
+    \label{tab:thongke_cauhoi}
+    \begin{tabular}{lccccc}
+        \toprule
+        \textbf{Chủ đề} & \textbf{Số câu} & \textbf{Tỷ lệ}
+          & \textbf{Single} & \textbf{Multi} & \textbf{Reason} \\
+        \midrule
+        Quy trình đào tạo       & 28 & 21,5\% & 10 & 14 & 4 \\
+        Điều kiện tốt nghiệp    & 25 & 19,2\% &  8 & 12 & 5 \\
+        Luận văn                & 22 & 16,9\% &  8 & 10 & 4 \\
+        Đánh giá kết quả        & 18 & 13,8\% & 12 &  4 & 2 \\
+        Tuyển sinh              & 15 & 11,5\% &  9 &  4 & 2 \\
+        Liêm chính học thuật    & 12 &  9,2\% &  6 &  4 & 2 \\
+        Quy định GVHD           & 10 &  7,7\% &  5 &  4 & 1 \\
+        \midrule
+        \textbf{Tổng}           & \textbf{130} & \textbf{100\%}
+          & \textbf{58} & \textbf{52} & \textbf{20} \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+Phân tích cho thấy các chủ đề phức tạp (Luận văn, Điều kiện tốt nghiệp) có tỷ lệ
+câu hỏi multi-hop và reasoning cao hơn do bản chất liên kết nhiều điều khoản. Ngược
+lại, các chủ đề rõ ràng (Đánh giá kết quả, Tuyển sinh) có nhiều câu single-hop hơn.
+
+Số gold articles trung bình mỗi câu hỏi là 3,0 (min: 1, max: 6, trung vị: 3). Phân
+bố: 3 câu có 1 gold article, 40 câu có 2 gold articles, 49 câu có 3 gold articles,
+29 câu có 4 gold articles, 8 câu có 5 gold articles, và 1 câu có 6 gold articles.
+Phân bố nghiêng về phía đa điều khoản phản ánh đặc trưng tham chiếu chéo của hệ
+thống quy chế đào tạo, nơi hầu hết câu hỏi đòi hỏi kết hợp quy định từ nhiều
+điều khoản hoặc nhiều văn bản khác nhau.
+
+Bảng~\ref{tab:vidu_cauhoi} trình bày 10 ví dụ câu hỏi mẫu từ bộ kiểm thử, bao
+phủ các mức độ phức tạp và chủ đề khác nhau.
+
+\begin{table}[htbp]
+    \centering
+    \caption{Ví dụ câu hỏi mẫu từ bộ kiểm thử}
+    \label{tab:vidu_cauhoi}
+    \begin{tabular}{ccp{6.5cm}p{3cm}}
+        \toprule
+        \textbf{STT} & \textbf{Loại} & \textbf{Câu hỏi} & \textbf{Gold articles} \\
+        \midrule
+        1  & S & Thời gian đào tạo thạc sĩ tối đa là bao lâu?
+           & QĐ270: Đ.5 \\
+        2  & M & Điều kiện để được bảo vệ luận văn thạc sĩ?
+           & QĐ270: Đ.24; QĐ1393: Đ.25 \\
+        3  & S & Điểm TB tích lũy tối thiểu để tốt nghiệp?
+           & QĐ270: Đ.29 \\
+        4  & M & Yêu cầu ngoại ngữ đầu ra cho học viên cao học?
+           & QĐ1393: Đ.25; QĐ270: Đ.29 \\
+        5  & S & Tiêu chuẩn để được làm GVHD luận văn ThS?
+           & QĐ218: Đ.3 \\
+        6  & S & Thế nào là hành vi đạo văn trong luận văn?
+           & QĐ851: Đ.3 \\
+        7  & S & Học viên bị cảnh báo học vụ khi nào?
+           & QĐ270: Đ.18 \\
+        8  & R & HV khóa 2021 có được áp dụng quy chế mới không?
+           & QĐ1393: Đ.32 \\
+        9  & M & Số tín chỉ tối thiểu cho ThS nghiên cứu?
+           & QĐ270: Đ.8; QĐ1393: Đ.15 \\
+        10 & R & GVHD được hướng dẫn tối đa bao nhiêu HV?
+           & QĐ218: Đ.4 \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+\noindent\textit{Ký hiệu: S = Single-hop, M = Multi-hop, R = Reasoning.}
+
+Chi tiết kết quả đánh giá trên cả hai bộ dữ liệu (đào tạo và pháp luật) được trình
+bày trong Chương~\ref{chap:chapter4}.
 
 % ============================================================
 \section{Tiền xử lý dữ liệu}
@@ -699,184 +836,10 @@ sau khi hoàn tất quá trình tiền xử lý.
     \end{tabular}
 \end{table}
 
-% ============================================================
-\section{Thu thập câu hỏi kiểm thử}
-\label{sec:cau_hoi_kiem_thu}
-
-% ------------------------------------------------------------
-\subsection{Nguồn thu thập và phương pháp}
-\label{subsec:nguon_thuthap}
-
-Tổng cộng 530 câu hỏi kiểm thử được thu thập từ hai nguồn: các nhóm tư vấn pháp
-lý trên Facebook (400 câu hỏi pháp luật) và các diễn đàn học viên UIT (130 câu
-hỏi quy định đào tạo). Các câu hỏi bao phủ nhiều mức độ phức tạp, từ tra
-cứu đơn điều khoản (``Vốn điều lệ tối thiểu công ty chứng khoán là bao nhiêu?'')
-đến các tình huống multi-hop đòi hỏi suy luận liên văn bản.
-
-Mỗi câu hỏi được gán nhãn thủ công (manual annotation) bởi chuyên gia miền với
-1--8 điều khoản liên quan (gold articles). Tiêu chí gán nhãn: một điều khoản được
-gán là ``gold'' nếu cần thiết để trả lời đầy đủ câu hỏi -- tức là nếu thiếu điều
-khoản đó, câu trả lời sẽ không hoàn chỉnh hoặc thiếu căn cứ.
-
-Cụ thể, 400 câu hỏi pháp luật thuộc hai lĩnh vực: luật doanh nghiệp (200 câu,
-Luật Doanh nghiệp 2020 và các nghị định hướng dẫn) và luật giao thông (200 câu,
-Luật Trật tự, An toàn Giao thông Đường bộ 2024 và Nghị định 168/2024/NĐ-CP về
-xử phạt vi phạm hành chính). 130 câu hỏi đào tạo bao gồm các chủ đề thường gặp
-của học viên cao học: quy trình đào tạo, điều kiện tốt nghiệp, thủ tục bảo vệ luận
-văn, chuẩn ngoại ngữ đầu ra, đăng ký môn học, và học phí. Việc đánh giá trên cả
-ba miền nhằm chứng minh tính tổng quát của phương pháp.
-
-% ------------------------------------------------------------
-\subsection{Phân loại câu hỏi theo độ phức tạp}
-\label{subsec:phanloa_cauhoi}
-
-Phần này trình bày chi tiết phân loại bộ 130 câu hỏi miền quy định đào tạo theo ba mức độ phức tạp truy xuất, phản ánh số bước suy luận cần thiết để tìm đúng điều khoản. Bộ 400 câu hỏi miền pháp luật được thiết kế theo tiêu chí khác: toàn bộ đều thuộc dạng multi-hop yêu cầu suy luận đa bước, và sẽ được mô tả chi tiết trong Chương~\ref{chap:chapter4} cùng với kết quả thử nghiệm.
-
-\begin{itemize}
-    \item \textbf{Single-hop (58 câu, 44,6\%):} Câu hỏi chỉ cần tra cứu một điều
-          khoản duy nhất, thường có từ khóa trùng khớp trực tiếp với tiêu đề hoặc
-          nội dung điều khoản. Ví dụ: ``Thời gian đào tạo thạc sĩ tối đa là bao
-          lâu?'' $\to$ Điều 5 QĐ~270 (thời gian đào tạo).
-
-    \item \textbf{Multi-hop (52 câu, 40,0\%):} Câu hỏi cần kết hợp thông tin từ
-          nhiều điều khoản hoặc nhiều văn bản. Chia thành hai dạng phụ:
-          \begin{itemize}
-            \item \textit{Intra-document} (31 câu): Nhiều điều trong cùng văn bản.
-                  Ví dụ: ``Quy trình bảo vệ luận văn từ A-Z?'' cần Điều 22
-                  (đề cương), Điều 23 (hội đồng), Điều 24 (điều kiện), Điều 25
-                  (quy trình bảo vệ) QĐ~270.
-            \item \textit{Cross-document} (21 câu): Kết hợp nhiều văn bản. Ví dụ:
-                  ``Yêu cầu ngoại ngữ đầu ra cho học viên cao học?'' cần Điều 29
-                  QĐ~270 (điều kiện tốt nghiệp) và Điều 25 QĐ~1393 (chi tiết yêu
-                  cầu ngoại ngữ).
-          \end{itemize}
-
-    \item \textbf{Reasoning (20 câu, 15,4\%):} Câu hỏi đòi hỏi suy luận logic dựa
-          trên các quy định, thường là tình huống giả định yêu cầu áp dụng nhiều
-          điều kiện. Ví dụ: ``Học viên đã hết thời gian gia hạn nhưng chưa bảo vệ
-          luận văn thì có thể làm gì?'' cần suy luận từ Điều 17 (gia hạn) kết hợp
-          Điều 20 (buộc thôi học) và Điều 16 (bảo lưu).
-\end{itemize}
-
-% ------------------------------------------------------------
-\subsection{Thống kê và phân tích bộ câu hỏi}
-\label{subsec:thongke_cauhoi}
-
-Bảng~\ref{tab:thongke_cauhoi} trình bày phân bố câu hỏi theo chủ đề. Phân bố này
-phản ánh tần suất thực tế của các câu hỏi từ diễn đàn: quy trình đào tạo và điều
-kiện tốt nghiệp là hai chủ đề được quan tâm nhiều nhất.
-
-\begin{table}[htbp]
-    \centering
-    \caption{Thống kê bộ câu hỏi kiểm thử miền quy định đào tạo}
-    \label{tab:thongke_cauhoi}
-    \begin{tabular}{lccccc}
-        \toprule
-        \textbf{Chủ đề} & \textbf{Số câu} & \textbf{Tỷ lệ}
-          & \textbf{Single} & \textbf{Multi} & \textbf{Reason} \\
-        \midrule
-        Quy trình đào tạo       & 28 & 21,5\% & 10 & 14 & 4 \\
-        Điều kiện tốt nghiệp    & 25 & 19,2\% &  8 & 12 & 5 \\
-        Luận văn                & 22 & 16,9\% &  8 & 10 & 4 \\
-        Đánh giá kết quả        & 18 & 13,8\% & 12 &  4 & 2 \\
-        Tuyển sinh              & 15 & 11,5\% &  9 &  4 & 2 \\
-        Liêm chính học thuật    & 12 &  9,2\% &  6 &  4 & 2 \\
-        Quy định GVHD           & 10 &  7,7\% &  5 &  4 & 1 \\
-        \midrule
-        \textbf{Tổng}           & \textbf{130} & \textbf{100\%}
-          & \textbf{58} & \textbf{52} & \textbf{20} \\
-        \bottomrule
-    \end{tabular}
-\end{table}
-
-Phân tích cho thấy các chủ đề phức tạp (Luận văn, Điều kiện tốt nghiệp) có tỷ lệ
-câu hỏi multi-hop và reasoning cao hơn do bản chất liên kết nhiều điều khoản. Ngược
-lại, các chủ đề rõ ràng (Đánh giá kết quả, Tuyển sinh) có nhiều câu single-hop hơn.
-
-Số gold articles trung bình mỗi câu hỏi là 3,0 (min: 1, max: 6, trung vị: 3). Phân
-bố: 3 câu có 1 gold article, 40 câu có 2 gold articles, 49 câu có 3 gold articles,
-29 câu có 4 gold articles, 8 câu có 5 gold articles, và 1 câu có 6 gold articles.
-Phân bố nghiêng về phía đa điều khoản phản ánh đặc trưng tham chiếu chéo của hệ
-thống quy chế đào tạo, nơi hầu hết câu hỏi đòi hỏi kết hợp quy định từ nhiều
-điều khoản hoặc nhiều văn bản khác nhau.
-
-Bảng~\ref{tab:vidu_cauhoi} trình bày 10 ví dụ câu hỏi mẫu từ bộ kiểm thử, bao
-phủ các mức độ phức tạp và chủ đề khác nhau.
-
-\begin{table}[htbp]
-    \centering
-    \caption{Ví dụ câu hỏi mẫu từ bộ kiểm thử}
-    \label{tab:vidu_cauhoi}
-    \begin{tabular}{ccp{6.5cm}p{3cm}}
-        \toprule
-        \textbf{STT} & \textbf{Loại} & \textbf{Câu hỏi} & \textbf{Gold articles} \\
-        \midrule
-        1  & S & Thời gian đào tạo thạc sĩ tối đa là bao lâu?
-           & QĐ270: Đ.5 \\
-        2  & M & Điều kiện để được bảo vệ luận văn thạc sĩ?
-           & QĐ270: Đ.24; QĐ1393: Đ.25 \\
-        3  & S & Điểm TB tích lũy tối thiểu để tốt nghiệp?
-           & QĐ270: Đ.29 \\
-        4  & M & Yêu cầu ngoại ngữ đầu ra cho học viên cao học?
-           & QĐ1393: Đ.25; QĐ270: Đ.29 \\
-        5  & S & Tiêu chuẩn để được làm GVHD luận văn ThS?
-           & QĐ218: Đ.3 \\
-        6  & S & Thế nào là hành vi đạo văn trong luận văn?
-           & QĐ851: Đ.3 \\
-        7  & S & Học viên bị cảnh báo học vụ khi nào?
-           & QĐ270: Đ.18 \\
-        8  & R & HV khóa 2021 có được áp dụng quy chế mới không?
-           & QĐ1393: Đ.32 \\
-        9  & M & Số tín chỉ tối thiểu cho ThS nghiên cứu?
-           & QĐ270: Đ.8; QĐ1393: Đ.15 \\
-        10 & R & GVHD được hướng dẫn tối đa bao nhiêu HV?
-           & QĐ218: Đ.4 \\
-        \bottomrule
-    \end{tabular}
-\end{table}
-
-\noindent\textit{Ký hiệu: S = Single-hop, M = Multi-hop, R = Reasoning.}
-
-Chi tiết kết quả đánh giá trên cả hai bộ dữ liệu (đào tạo và pháp luật) được trình
-bày trong Chương~\ref{chap:chapter4}.
-
 % =====================================================================
 % PHẦN B: THIẾT KẾ GIẢI THUẬT
 % (từ Chapter 3 cũ)
 % =====================================================================
-
-% =====================================================================
-\section{Phát biểu bài toán}
-\label{sec:phat-bieu-bai-toan}
-
-Các văn bản quy phạm Việt Nam thường có cấu trúc phân cấp sáu cấp: Văn bản,
-Chương, Mục (nếu có), Điều, Khoản, Điểm với các tham chiếu chéo xuyên suốt giữa
-các tài liệu. Truy xuất đoạn văn bản truyền thống coi tài liệu như tập hợp phẳng,
-do đó không thể khai thác cấu trúc phân cấp này hoặc thực hiện suy luận đa bước.
-
-Mỗi tài liệu được mô hình hóa dưới dạng cây có gốc (rooted tree), trong đó các
-nút tương ứng với các cấp cấu trúc và các cạnh biểu diễn quan hệ cha--con. Toàn
-bộ kho tài liệu gồm $m$ văn bản hình thành một Document Forest:
-
-\begin{equation}
-  \mathcal{F} = \{T_1, T_2, \ldots, T_m\}
-  \label{eq:document-forest}
-\end{equation}
-
-\noindent được bổ sung các cạnh tham chiếu chéo liên kết các điều khoản giữa các
-cây. Mỗi nút được gán một định danh hợp thành mã hóa vị trí trong cấu trúc phân
-cấp, ví dụ \texttt{59-2020-QH14:c2} cho Chương 2, \texttt{59-2020-QH14:d5} cho
-Điều 5, cho phép tham chiếu chéo rõ ràng giữa các cây.
-
-\textbf{Bài toán truy xuất:} Cho truy vấn $q$ của người dùng, trả về danh sách
-xếp hạng $k$ điều khoản liên quan nhất từ $\mathcal{F}$. Mức chi tiết ở cấp điều
-khoản (article-level) là cần thiết vì các quy chế đào tạo tại Việt Nam tổ chức
-nội dung theo đơn vị Điều, mỗi Điều quy định một vấn đề cụ thể (ví dụ: Điều 24
-quy định điều kiện bảo vệ luận văn, Điều 29 quy định điều kiện tốt nghiệp). Khi
-trả lời câu hỏi của học viên, hệ thống cần trích dẫn chính xác đến từng Điều để
-đảm bảo tính minh bạch và có thể kiểm chứng, thay vì trả về các đoạn văn bản tùy
-ý không rõ nguồn gốc. Yêu cầu này cũng áp dụng tương tự cho miền pháp luật, nơi
-các điều khoản luật là đơn vị trích dẫn nhỏ nhất trong thực tiễn tư vấn pháp lý.
 
 % =====================================================================
 \section{Tổng quan kiến trúc hệ thống}
@@ -888,7 +851,7 @@ trực tuyến (online phase), như minh họa trong Hình~\ref{fig:kien-truc-he
 \begin{figure}[htbp]
   \centering
   \includegraphics[width=\textwidth]{graphics/figure3-1-system-architecture.png}
-  \caption{Kiến trúc hệ thống truy xuất ba tầng. Pha ngoại tuyến (trái): xây dựng
+  \caption[Kiến trúc hệ thống truy xuất ba tầng]{Kiến trúc hệ thống truy xuất ba tầng. Pha ngoại tuyến (trái): xây dựng
   mô hình tri thức từ văn bản quy phạm. Pha trực tuyến (phải): xử lý truy vấn qua
   Tầng 1 (duyệt cây cấu trúc), Tầng 2 (truy xuất ngữ nghĩa hai cấp), và Tầng 3
   (hợp nhất RRF với mở rộng KG).}
@@ -1011,7 +974,7 @@ vi điều khoản (ví dụ: ``Điều 1--16'') và danh sách từ khóa đặ
 xuất từ nội dung các điều trong chương. Tóm tắt điều gồm tiêu đề và các từ khóa
 chính. Các mô tả này được sử dụng trực tiếp làm thuộc tính \texttt{description}
 của các nút trong Document Forest, cung cấp đủ ngữ cảnh cho LLM đưa ra quyết định
-chọn nhánh trong Loop 1 và Loop 2 (xem prompt chi tiết tại Phụ lục D, Bảng D.2
+chọn nhánh trong Bước 2 và Bước 3 (xem prompt chi tiết tại Phụ lục D, Bảng D.2
 và D.3).
 
 \textbf{Nhóm miền và cụm chủ đề.}
@@ -1023,7 +986,7 @@ Hai cấu trúc bổ sung được xây dựng để phục vụ các tầng tru
         Thuật toán lấy các văn bản gốc làm neo (anchor), sau đó gán các nghị định,
         thông tư liên quan vào nhóm có độ trùng khớp từ khóa cao nhất. Mỗi nhóm
         miền lưu nhãn, danh sách từ khóa đặc trưng, và ID các tài liệu thành viên.
-        Cấu trúc này phục vụ Loop 0 của Tầng 1 để nhanh chóng thu hẹp không gian
+        Cấu trúc này phục vụ Bước 1 của Tầng 1 để nhanh chóng thu hẹp không gian
         tìm kiếm từ toàn bộ kho xuống nhóm miền phù hợp. Để dễ dàng mở rộng sau
         này khi áp dụng phương pháp trên nhiều domain và tài liệu khác nhau hơn.
 
@@ -1042,7 +1005,7 @@ sung phục vụ từng tầng truy xuất.
 \begin{figure}[htbp]
   \centering
   \includegraphics[width=\textwidth]{graphics/figure3-2-offline-pipeline.png}
-  \caption{Quy trình xây dựng tri thức ngoại tuyến. Track 1 phân tích cấu trúc
+  \caption[Quy trình xây dựng tri thức ngoại tuyến]{Quy trình xây dựng tri thức ngoại tuyến. Track 1 phân tích cấu trúc
   văn bản thành Document Forest. Track 2 xây dựng Knowledge Graph qua 4 bước.
   Track 3 tạo Domain Groups và Theme Clusters phục vụ tìm kiếm.}
   \label{fig:offline-pipeline}
@@ -1058,8 +1021,41 @@ dẫn bởi LLM (Tầng 1), truy xuất ngữ nghĩa hai cấp trên Knowledge G
 và hợp nhất với mở rộng Knowledge Graph (Tầng 3).
 
 % =====================================================================
-\section{Phân tích truy vấn}
+\section{Kiến trúc truy xuất 3-Tier KG-RAG}
 \label{sec:phan-tich-truy-van}
+
+Các văn bản quy phạm Việt Nam thường có cấu trúc phân cấp sáu cấp: Văn bản,
+Chương, Mục (nếu có), Điều, Khoản, Điểm với các tham chiếu chéo xuyên suốt giữa
+các tài liệu. Truy xuất đoạn văn bản truyền thống coi tài liệu như tập hợp phẳng,
+do đó không thể khai thác cấu trúc phân cấp này hoặc thực hiện suy luận đa bước.
+
+Mỗi tài liệu được mô hình hóa dưới dạng cây có gốc (rooted tree), trong đó các
+nút tương ứng với các cấp cấu trúc và các cạnh biểu diễn quan hệ cha--con. Toàn
+bộ kho tài liệu gồm $m$ văn bản hình thành một Document Forest:
+
+\begin{equation}
+  \mathcal{F} = \{T_1, T_2, \ldots, T_m\}
+  \label{eq:document-forest}
+\end{equation}
+
+\noindent được bổ sung các cạnh tham chiếu chéo liên kết các điều khoản giữa các
+cây. Mỗi nút được gán một định danh hợp thành mã hóa vị trí trong cấu trúc phân
+cấp, ví dụ \texttt{59-2020-QH14:c2} cho Chương 2, \texttt{59-2020-QH14:d5} cho
+Điều 5, cho phép tham chiếu chéo rõ ràng giữa các cây.
+
+\textbf{Bài toán truy xuất:} Cho truy vấn $q$ của người dùng, trả về danh sách
+xếp hạng $k$ điều khoản liên quan nhất từ $\mathcal{F}$. Mức chi tiết ở cấp điều
+khoản (article-level) là cần thiết vì các quy chế đào tạo tại Việt Nam tổ chức
+nội dung theo đơn vị Điều, mỗi Điều quy định một vấn đề cụ thể (ví dụ: Điều 24
+quy định điều kiện bảo vệ luận văn, Điều 29 quy định điều kiện tốt nghiệp). Khi
+trả lời câu hỏi của học viên, hệ thống cần trích dẫn chính xác đến từng Điều để
+đảm bảo tính minh bạch và có thể kiểm chứng, thay vì trả về các đoạn văn bản tùy
+ý không rõ nguồn gốc. Yêu cầu này cũng áp dụng tương tự cho miền pháp luật, nơi
+các điều khoản luật là đơn vị trích dẫn nhỏ nhất trong thực tiễn tư vấn pháp lý.
+
+% -------------------------------------------------------------------
+\subsection{Phân tích truy vấn}
+\label{subsec:phan-tich-truy-van-detail}
 
 Trước khi đưa vào ba tầng truy xuất, truy vấn thô $q$ từ người dùng được xử lý qua
 bộ phân tích truy vấn gồm ba bước: phân loại ý định, mở rộng viết tắt, và trích
@@ -1070,14 +1066,13 @@ pipeline phân tích.
 \begin{figure}[htbp]
   \centering
   \includegraphics[width=\textwidth]{graphics/figure3-3-query-analysis.png}
-  \caption{Pipeline phân tích truy vấn gồm ba bước: phân loại ý định (6 loại),
+  \caption[Pipeline phân tích truy vấn]{Pipeline phân tích truy vấn gồm ba bước: phân loại ý định (6 loại),
   mở rộng viết tắt, và trích xuất thực thể giống. Mỗi đầu ra phục vụ một tầng
   truy xuất khác nhau.}
   \label{fig:query-analysis}
 \end{figure}
 
-% -------------------------------------------------------------------
-\subsection{Phân loại ý định}
+\subsubsection{Phân loại ý định}
 \label{subsec:phan-loai-y-dinh}
 
 Bước đầu tiên phân loại truy vấn thành một trong sáu loại ý định
@@ -1124,7 +1119,7 @@ hướng dẫn LLM nhấn mạnh mức phạt cụ thể và điều luật áp 
 PROCEDURE hướng dẫn liệt kê các bước theo trình tự.
 
 % -------------------------------------------------------------------
-\subsection{Mở rộng viết tắt}
+\subsubsection{Mở rộng viết tắt}
 \label{subsec:mo-rong-viet-tat}
 
 Văn bản pháp luật và quy chế đào tạo Việt Nam sử dụng phổ biến các viết tắt chuyên
@@ -1165,7 +1160,7 @@ tắt và đồng nghĩa được sử dụng trực tiếp cho Tầng 1 (duyệ
 cho Tầng 2.
 
 % -------------------------------------------------------------------
-\subsection{Trích xuất thực thể giống}
+\subsubsection{Trích xuất thực thể giống}
 \label{subsec:trich-xuat-thuc-the}
 
 Bước cuối cùng trích xuất ba loại thực thể giống (seed entities) từ truy vấn, phục vụ
@@ -1181,7 +1176,7 @@ làm điểm khởi tạo cho thuật toán Personalized PageRank trong Tầng 2
   \item \textbf{Tham chiếu văn bản luật (Law Reference):} Nhận diện số hiệu văn bản
         pháp luật theo định dạng \texttt{số/năm/cơ\_quan} bằng regex, ví dụ:
         ``Luật số 68/2014/QH13'' $\to$ \texttt{68/2014/QH13}. Tham chiếu này được
-        sử dụng để thu hẹp không gian tìm kiếm trong Loop 0 của Tầng 1.
+        sử dụng để thu hẹp không gian tìm kiếm trong Bước 1 của Tầng 1.
 
   \item \textbf{Từ khóa pháp lý (Legal Keywords):} Sau khi loại bỏ 15 từ dừng tiếng
         Việt phổ biến (là, gì, của, trong, và, các, có, được, để, cho, về, với, khi,
@@ -1225,8 +1220,8 @@ Tầng 2 nhận thực thể giống làm seed cho PPR và nhãn ý định đ�
 cạnh; và Tầng 3 sử dụng tham chiếu điều khoản (nếu có) để bổ sung trực tiếp vào
 danh sách ứng viên trước khi hợp nhất RRF.
 
-% =====================================================================
-\section{Pipeline truy xuất ba tầng}
+% -------------------------------------------------------------------
+\subsection{Pipeline truy xuất ba tầng}
 \label{sec:pipeline-truy-xuat}
 
 Ba tầng truy xuất hoạt động tuần tự trên các biểu diễn tri thức đã xây dựng: Tầng~1
@@ -1234,17 +1229,17 @@ khai thác cấu trúc phân cấp Document Forest, Tầng~2 khai thác cấu tr
 Knowledge Graph, và Tầng~3 hợp nhất kết quả từ hai tầng trước với mở rộng đồ thị.
 
 % -------------------------------------------------------------------
-\subsection{Tầng 1: Duyệt cây cấu trúc hướng dẫn bởi LLM}
+\subsubsection{Tầng 1: Duyệt cây cấu trúc hướng dẫn bởi LLM}
 \label{subsec:tang1-duyet-cay}
 
 Tầng 1 nhận truy vấn đã mở rộng và Document Forest, trả về danh sách xếp hạng
 các điều khoản ứng viên với điểm cấu trúc. Lấy cảm hứng từ PageIndex
 \cite{zhang2025pageindex}, Tầng 1 sử dụng suy luận LLM để duyệt cây từ trên xuống
-(top-down) qua ba vòng lặp thu hẹp dần không gian tìm kiếm: từ toàn bộ kho văn
-bản xuống tài liệu, rồi chương, rồi điều khoản cụ thể. Mỗi vòng lặp tạo ra một
+(top-down) qua ba bước thu hẹp dần không gian tìm kiếm: từ toàn bộ kho văn
+bản xuống tài liệu, rồi chương, rồi điều khoản cụ thể. Mỗi bước tạo ra một
 chuỗi suy luận (reasoning trace) phục vụ khả năng giải thích (interpretability).
 
-\textbf{Vòng lặp 0: Chọn tài liệu.}
+\textbf{Bước 1: Chọn tài liệu.}
 Khi kho có nhiều hơn một tài liệu, LLM được cung cấp danh sách các nhóm miền
 (domain group) cùng từ khóa đặc trưng đã tính toán trước trong giai đoạn offline.
 LLM chọn nhóm miền phù hợp nhất với truy vấn, từ đó xác định tập tài liệu liên
@@ -1256,7 +1251,7 @@ Cơ chế fallback: nếu LLM không trả về kết quả hợp lệ, hệ th�
 từ khóa (keyword overlap) giữa các âm tiết trong truy vấn và từ khóa miền để chọn
 nhóm có điểm trùng khớp cao nhất.
 
-\textbf{Vòng lặp 1: Chọn chương.}
+\textbf{Bước 2: Chọn chương.}
 LLM nhận cấu trúc tài liệu gồm tên và mô tả tóm tắt của từng chương, cùng với
 truy vấn (có gợi ý ngữ nghĩa từ bước mở rộng truy vấn nếu có). LLM chọn tối đa 8
 chương phù hợp nhất và trả về JSON chứa danh sách index cùng độ tin cậy (xem Phụ
@@ -1280,7 +1275,7 @@ Cơ chế fallback: nếu LLM thất bại, hệ thống chọn các chương c�
 nhất (thay vì chọn theo thứ tự xuất hiện), vì các chương lớn thường bao phủ nhiều
 chủ đề hơn.
 
-\textbf{Vòng lặp 2: Chọn điều khoản.}
+\textbf{Bước 3: Chọn điều khoản.}
 Với mỗi chương đã chọn, LLM nhận danh sách điều khoản kèm tóm tắt (tiêu đề, từ
 khóa) và chọn tối đa 7 điều khoản phù hợp (xem Phụ lục D, Bảng D.5). Nhiệt độ
 $= 0{,}0$ cho kết quả ổn định. Trước khi gọi LLM, hệ thống bổ sung hai tín hiệu
@@ -1301,27 +1296,27 @@ hợp hơn), nhưng LLM vẫn có quyền quyết định cuối cùng dựa tr�
 
 Sau khi tất cả chương được xử lý, các điều khoản được gộp, loại trùng lặp, và giới
 hạn tổng số lượng. Điểm tin cậy tổng hợp của Tầng 1 được tính bằng trung bình có
-trọng số giữa confidence của Loop 1 ($\times 0{,}45$) và trung bình confidence của
-Loop 2 ($\times 0{,}55$), giới hạn tối đa $0{,}95$.
+trọng số giữa confidence của Bước 2 ($\times 0{,}45$) và trung bình confidence của
+Bước 3 ($\times 0{,}55$), giới hạn tối đa $0{,}95$.
 
 Logic retry (3 lần, exponential backoff) được áp dụng cho tất cả lời gọi LLM để
 xử lý các lỗi tạm thời từ proxy hoặc API.
 
-Hình~\ref{fig:tree-traversal} minh họa quá trình duyệt cây ba vòng lặp với một
+Hình~\ref{fig:tree-traversal} minh họa quá trình duyệt cây ba bước với một
 truy vấn ví dụ từ miền quy định đào tạo.
 
 \begin{figure}[htbp]
   \centering
   \includegraphics[width=\textwidth]{graphics/figure3-4-tree-traversal.png}
-  \caption{Minh họa quá trình duyệt cây ba vòng lặp với truy vấn ``Điều kiện để
+  \caption[Minh họa quá trình duyệt cây ba bước]{Minh họa quá trình duyệt cây ba bước với truy vấn ``Điều kiện để
   được bảo vệ luận văn thạc sĩ?''. Các nút xanh là được chọn bởi LLM, các nút
-  xám bị loại. Loop 0 chọn 3/5 tài liệu, Loop 1 thu hẹp xuống các chương liên
-  quan, Loop 2 xác định các điều khoản cụ thể.}
+  xám bị loại. Bước 1 chọn 3/5 tài liệu, Bước 2 thu hẹp xuống các chương liên
+  quan, Bước 3 xác định các điều khoản cụ thể.}
   \label{fig:tree-traversal}
 \end{figure}
 
 % -------------------------------------------------------------------
-\subsection{Tầng 2: Truy xuất ngữ nghĩa hai cấp}
+\subsubsection{Tầng 2: Truy xuất ngữ nghĩa hai cấp}
 \label{subsec:tang2-semantic}
 
 Tầng 2 nhận các thực thể đã trích xuất và nhãn ý định từ bước phân tích truy vấn
@@ -1332,7 +1327,7 @@ qua các quan hệ ontology để tìm các điều khoản liên quan. Tầng n
 cấp: low-level (entity-specific) tập trung vào từng thực thể cụ thể, và high-level
 (conceptual) nắm bắt mối liên hệ chủ đề giữa các cụm khái niệm.
 
-\subsubsection{Low-level (Entity-specific)}
+\paragraph{Low-level (Entity-specific).}
 \label{subsubsec:low-level}
 
 Low-level tính bốn tín hiệu độc lập cho mỗi điều khoản, mỗi tín hiệu nắm bắt một
@@ -1428,7 +1423,7 @@ cấp seed cho PPR và loại thực thể cho concept matching, thay vì trực
 định xếp hạng. PPR nhận trọng số cao nhất (0,25) vì khả năng nắm bắt quan hệ cấu
 trúc đồ thị.
 
-\subsubsection{High-level (Conceptual)}
+\paragraph{High-level (Conceptual).}
 \label{subsubsec:high-level}
 
 High-level hoạt động ở cấp độ trừu tượng hơn, tìm kiếm các điều khoản liên quan
@@ -1454,7 +1449,7 @@ dụ: nếu theme matching tìm được điều khoản về ``xử phạt vi p
 loại CHẾ\_TÀI), hierarchy expansion sẽ bổ sung các điều khoản khác cũng chứa thực
 thể loại CHẾ\_TÀI với điểm giảm một nửa.
 
-\subsubsection{Hợp nhất Low-level và High-level}
+\paragraph{Hợp nhất Low-level và High-level.}
 \label{subsubsec:merge-levels}
 
 Hai cấp được hợp nhất bằng tổng có trọng số:
@@ -1475,7 +1470,7 @@ hai cấp của Tầng 2 với sáu tín hiệu và cách hợp nhất.
 \begin{figure}[htbp]
   \centering
   \includegraphics[width=\textwidth]{graphics/figure3-5-tier2-dual-level.png}
-  \caption{Kiến trúc Tầng 2 hai cấp. Low-level gồm 4 tín hiệu (Keyphrase,
+  \caption[Kiến trúc Tầng 2 -- truy xuất ngữ nghĩa hai cấp]{Kiến trúc Tầng 2 hai cấp. Low-level gồm 4 tín hiệu (Keyphrase,
   Semantic, Intent-aware PPR, Concept Matching) với minh họa PPR lan truyền qua
   KG. High-level gồm Theme Matching và Hierarchy Expansion. Công thức hợp nhất
   70\%--30\% ưu tiên tín hiệu entity-specific.}
@@ -1483,13 +1478,13 @@ hai cấp của Tầng 2 với sáu tín hiệu và cách hợp nhất.
 \end{figure}
 
 % -------------------------------------------------------------------
-\subsection{Tầng 3: Hợp nhất RRF với mở rộng Knowledge Graph}
+\subsubsection{Tầng 3: Hợp nhất RRF với mở rộng Knowledge Graph}
 \label{subsec:tang3-rrf}
 
 Tầng 3 tạo ra danh sách top-$k$ điều khoản cuối cùng thông qua ba bước: mở rộng
 Knowledge Graph, RRF, và các cơ chế điều chỉnh.
 
-\subsubsection{Mở rộng Knowledge Graph}
+\paragraph{Mở rộng Knowledge Graph.}
 \label{subsubsec:kg-expansion}
 
 Các điều khoản hạt giống từ Tầng 1 và Tầng 2 được mở rộng thông qua các cạnh quan
@@ -1508,7 +1503,7 @@ Bộ lọc liên quan ngữ nghĩa (cosine similarity $\geq 0{,}4$) được áp
 bỏ nhiễu. Kết quả mở rộng tạo thành danh sách xếp hạng thứ ba bên cạnh Tầng 1 và
 Tầng 2.
 
-\subsubsection{Reciprocal Rank Fusion}
+\paragraph{Reciprocal Rank Fusion.}
 \label{subsubsec:rrf}
 
 Ba danh sách được hợp nhất sử dụng Reciprocal Rank Fusion \cite{cormack2009rrf}:
@@ -1527,7 +1522,7 @@ cấp tín hiệu cấu trúc đáng tin cậy nhất.
 \begin{figure}[htbp]
   \centering
   \includegraphics[width=\textwidth]{graphics/figure3-6-end-to-end-flow.png}
-  \caption{Minh họa luồng xử lý end-to-end với truy vấn ``Học viên cần đáp ứng
+  \caption[Minh họa luồng xử lý end-to-end qua 3 tầng]{Minh họa luồng xử lý end-to-end với truy vấn ``Học viên cần đáp ứng
   điều kiện gì về ngoại ngữ để tốt nghiệp?''. Tầng 1 tìm Đ.29, Đ.25, Đ.24 qua
   duyệt cây. Tầng 2 xác nhận Đ.25 và Đ.29 qua PPR, bổ sung Đ.8. Tầng 3 nhận
   seeds từ Tầng 1 và Tầng 2, mở rộng KG thêm Đ.5, sau đó hợp nhất RRF cả ba danh
@@ -1535,7 +1530,7 @@ cấp tín hiệu cấu trúc đáng tin cậy nhất.
   \label{fig:end-to-end-flow}
 \end{figure}
 
-\subsubsection{Các cơ chế điều chỉnh}
+\paragraph{Các cơ chế điều chỉnh.}
 \label{subsubsec:dieu-chinh}
 
 Hệ thống áp dụng ba cơ chế điều chỉnh điểm sau hợp nhất RRF:

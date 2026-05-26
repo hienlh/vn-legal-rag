@@ -187,7 +187,7 @@
     flex-shrink: 0;
   }
 
-  /* ── Loop 0: document list ── */
+  /* ── Bước 1: document list ── */
   .doc-list {
     display: flex;
     flex-direction: column;
@@ -203,7 +203,7 @@
     margin-top: 2mm;
   }
 
-  /* ── Loop 1 & 2: grouped subtrees ── */
+  /* ── Bước 2 & 3: grouped subtrees ── */
   .group {
     width: 100%;
     margin-bottom: 1.5mm;
@@ -250,12 +250,12 @@
     <div class="loops-row" id="loopsRow">
 
       <!-- ═══════════════════════════════════
-           LOOP 0 — Chọn tài liệu
+           Bước 1 — Chọn tài liệu
            ═══════════════════════════════════ -->
       <div class="loop-col loop-col-0" id="col0">
 
         <div class="loop-header">
-          <span class="loop-label">Loop 0</span>
+          <span class="loop-label">Bước 1</span>
           <span class="loop-subtitle">Chọn tài liệu</span>
         </div>
 
@@ -285,12 +285,12 @@
       </div>
 
       <!-- ═══════════════════════════════════
-           LOOP 1 — Chọn chương
+           Bước 2 — Chọn chương
            ═══════════════════════════════════ -->
       <div class="loop-col loop-col-1" id="col1">
 
         <div class="loop-header">
-          <span class="loop-label">Loop 1</span>
+          <span class="loop-label">Bước 2</span>
           <span class="loop-subtitle">Chọn chương</span>
         </div>
 
@@ -345,12 +345,12 @@
       </div>
 
       <!-- ═══════════════════════════════════
-           LOOP 2 — Chọn điều
+           Bước 3 — Chọn điều
            ═══════════════════════════════════ -->
       <div class="loop-col loop-col-2" id="col2">
 
         <div class="loop-header">
-          <span class="loop-label">Loop 2</span>
+          <span class="loop-label">Bước 3</span>
           <span class="loop-subtitle">Chọn điều</span>
         </div>
 
@@ -479,13 +479,13 @@
   `;
   svg.appendChild(defs);
 
-  // Loop 0 → Loop 1
+  // Bước 1 → Bước 2
   connect('d-qd270',  'c-iv-270',  '#2e7d32');
   connect('d-qd270',  'c-v-270',   '#2e7d32');
   connect('d-qd1393', 'c-vi-1393', '#2e7d32');
   connect('d-qd218',  'c-ii-218',  '#2e7d32');
 
-  // Loop 1 → Loop 2
+  // Bước 2 → Bước 3
   connect('c-iv-270',  'a-24-270',  '#1b5e20');
   connect('c-v-270',   'a-25-270',  '#2e7d32');
   connect('c-vi-1393', 'a-25-1393', '#2e7d32');

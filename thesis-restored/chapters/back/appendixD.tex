@@ -9,7 +9,7 @@ lặp), và sinh câu trả lời theo phương pháp IRAC.
 \section{Trích xuất thực thể và quan hệ (Pha ngoại tuyến)}
 \label{sec:app-prompt-entity}
 
-Prompt này được sử dụng để trích xuất đồng thời thực thể và quan hệ từ mỗi điều
+Bảng~\ref{tab:prompt-entity} trình bày prompt được sử dụng để trích xuất đồng thời thực thể và quan hệ từ mỗi điều
 khoản trong giai đoạn xây dựng Knowledge Graph (Mục~\ref{sec:tong-quan-kien-truc}).
 
 \begin{table}[htbp]
@@ -49,8 +49,8 @@ khoản trong giai đoạn xây dựng Knowledge Graph (Mục~\ref{sec:tong-quan
 \section{Sinh tóm tắt chương (Pha ngoại tuyến)}
 \label{sec:app-prompt-chapter-summary}
 
-Prompt này được sử dụng để sinh mô tả giàu từ khóa cho mỗi chương, phục vụ bước
-chọn nhánh trong Loop 1 của Tầng 1 (Mục~\ref{sec:pipeline-truy-xuat}).
+Bảng~\ref{tab:prompt-chapter-summary} trình bày prompt sinh mô tả giàu từ khóa cho mỗi chương, phục vụ bước
+chọn nhánh trong Bước 2 của Tầng 1 (Mục~\ref{sec:pipeline-truy-xuat}).
 
 \begin{table}[htbp]
   \centering
@@ -80,7 +80,7 @@ chọn nhánh trong Loop 1 của Tầng 1 (Mục~\ref{sec:pipeline-truy-xuat}).
 \section{Sinh tóm tắt điều khoản (Pha ngoại tuyến)}
 \label{sec:app-prompt-article-summary}
 
-Prompt này sinh từ khóa cho từng điều khoản, phục vụ bước chọn điều trong Loop 2
+Bảng~\ref{tab:prompt-article-summary} trình bày prompt sinh từ khóa cho từng điều khoản, phục vụ bước chọn điều trong Bước 3
 của Tầng 1.
 
 \begin{table}[htbp]
@@ -103,15 +103,15 @@ của Tầng 1.
 \end{table}
 
 % -------------------------------------------------------------------
-\section{Loop 1: Chọn chương (Pha trực tuyến)}
+\section{Bước 2: Chọn chương (Pha trực tuyến)}
 \label{sec:app-prompt-loop1}
 
-Prompt này được Tầng 1 sử dụng trong Loop 1 để chọn các chương phù hợp từ danh
+Bảng~\ref{tab:prompt-loop1} trình bày prompt được Tầng 1 sử dụng trong Bước 2 để chọn các chương phù hợp từ danh
 sách chương kèm mô tả (Mục~\ref{sec:pipeline-truy-xuat}). Nhiệt độ = 0,0 để đảm bảo kết quả xác định.
 
 \begin{table}[htbp]
   \centering
-  \caption{Prompt chọn chương (Loop 1)}
+  \caption{Prompt chọn chương (Bước 2)}
   \label{tab:prompt-loop1}
   \begin{tabular}{p{0.95\linewidth}}
     \toprule
@@ -129,16 +129,16 @@ sách chương kèm mô tả (Mục~\ref{sec:pipeline-truy-xuat}). Nhiệt độ
 \end{table}
 
 % -------------------------------------------------------------------
-\section{Loop 2: Chọn điều khoản (Pha trực tuyến)}
+\section{Bước 3: Chọn điều khoản (Pha trực tuyến)}
 \label{sec:app-prompt-loop2}
 
-Prompt này được Tầng 1 sử dụng trong Loop 2 để chọn điều khoản cụ thể trong mỗi
+Bảng~\ref{tab:prompt-loop2} trình bày prompt được Tầng 1 sử dụng trong Bước 3 để chọn điều khoản cụ thể trong mỗi
 chương đã chọn. Ngoài tóm tắt, mỗi điều khoản còn được bổ sung \texttt{semantic\_rank} và
 \texttt{dual\_rank} (từ Tầng 2) giúp LLM đưa ra quyết định chính xác hơn.
 
 \begin{table}[htbp]
   \centering
-  \caption{Prompt chọn điều khoản (Loop 2)}
+  \caption{Prompt chọn điều khoản (Bước 3)}
   \label{tab:prompt-loop2}
   \begin{tabular}{p{0.95\linewidth}}
     \toprule
@@ -163,7 +163,8 @@ chương đã chọn. Ngoài tóm tắt, mỗi điều khoản còn được b�
 
 Prompt này được sử dụng ở bước cuối cùng để sinh câu trả lời cho người dùng từ các
 điều khoản đã truy xuất. Hệ thống áp dụng phương pháp phân tích pháp lý IRAC (Issue
--- Rule -- Application -- Conclusion) với hai biến thể tùy theo lĩnh vực.
+-- Rule -- Application -- Conclusion) với hai biến thể tùy theo lĩnh vực: lĩnh vực pháp luật
+(Bảng~\ref{tab:prompt-irac-phapluat}) và lĩnh vực đào tạo (Bảng~\ref{tab:prompt-irac-daotao}).
 
 \begin{table}[htbp]
   \centering
