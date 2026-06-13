@@ -61,13 +61,11 @@ def insert_scraped_document(db: LegalDocumentDB, doc, doc_id_override: str = Non
     doc_id = doc_id_override or make_document_id(doc.so_hieu)
 
     with db.SessionLocal() as session:
-        # Check if document already exists
         existing = session.get(LegalDocumentModel, doc_id)
         if existing:
             logger.warning(f"Document {doc_id} already exists. Skipping.")
             return False
 
-        # Create document model
         doc_model = LegalDocumentModel(
             id=doc_id,
             so_hieu=doc.so_hieu,
@@ -84,9 +82,15 @@ def insert_scraped_document(db: LegalDocumentDB, doc, doc_id_override: str = Non
         session.add(doc_model)
 
         article_position = 0
+        seen_ids = set()
 
         for ch_idx, chapter in enumerate(doc.chapters):
+            # Use 1-based position as chapter number if Roman numeral collides
             chapter_id = make_chapter_id(doc_id, chapter.number)
+            if chapter_id in seen_ids:
+                chapter_id = f"{doc_id}:c{ch_idx + 1}"
+            seen_ids.add(chapter_id)
+
             chapter_model = LegalChapterModel(
                 id=chapter_id,
                 document_id=doc_id,
@@ -96,14 +100,16 @@ def insert_scraped_document(db: LegalDocumentDB, doc, doc_id_override: str = Non
             )
             session.add(chapter_model)
 
-            # Articles directly under chapter (no section)
             for article in chapter.articles:
                 article_position += 1
-                _insert_article(session, doc_id, chapter_id, None, article, article_position)
+                _insert_article(session, doc_id, chapter_id, None, article, article_position, seen_ids)
 
-            # Sections within chapter
             for sec_idx, section in enumerate(chapter.sections):
                 section_id = make_section_id(doc_id, chapter.number, section.number)
+                if section_id in seen_ids:
+                    section_id = f"{chapter_id}:m{sec_idx + 1}"
+                seen_ids.add(section_id)
+
                 section_model = LegalSectionModel(
                     id=section_id,
                     chapter_id=chapter_id,
@@ -115,25 +121,29 @@ def insert_scraped_document(db: LegalDocumentDB, doc, doc_id_override: str = Non
 
                 for article in section.articles:
                     article_position += 1
-                    _insert_article(session, doc_id, chapter_id, section_id, article, article_position)
+                    _insert_article(session, doc_id, chapter_id, section_id, article, article_position, seen_ids)
 
-        # Standalone articles (documents without chapters)
         for article in doc.articles:
             article_position += 1
-            _insert_article(session, doc_id, None, None, article, article_position)
+            _insert_article(session, doc_id, None, None, article, article_position, seen_ids)
 
         session.commit()
         logger.info(f"Inserted document {doc_id} with {article_position} articles")
         return True
 
 
-def _insert_article(session, doc_id, chapter_id, section_id, article, position):
+def _insert_article(session, doc_id, chapter_id, section_id, article, position, seen_ids=None):
     """Insert a single article with its clauses and points."""
+    if seen_ids is None:
+        seen_ids = set()
+
     article_id = make_article_id(doc_id, article.number)
+    if article_id in seen_ids:
+        logger.warning(f"Duplicate article ID {article_id}, appending position suffix")
+        article_id = f"{article_id}_{position}"
+    seen_ids.add(article_id)
 
-    # Build raw_text from article content
     raw_text = article.content or ""
-
     article_model = LegalArticleModel(
         id=article_id,
         document_id=doc_id,
@@ -149,6 +159,10 @@ def _insert_article(session, doc_id, chapter_id, section_id, article, position):
 
     for clause in article.clauses:
         clause_id = make_clause_id(article_id, clause.number)
+        if clause_id in seen_ids:
+            clause_id = f"{clause_id}_{id(clause) % 10000}"
+        seen_ids.add(clause_id)
+
         clause_model = LegalClauseModel(
             id=clause_id,
             article_id=article_id,
@@ -159,6 +173,10 @@ def _insert_article(session, doc_id, chapter_id, section_id, article, position):
 
         for point in clause.points:
             point_id = make_point_id(clause_id, point.letter)
+            if point_id in seen_ids:
+                point_id = f"{point_id}_{id(point) % 10000}"
+            seen_ids.add(point_id)
+
             point_model = LegalPointModel(
                 id=point_id,
                 clause_id=clause_id,

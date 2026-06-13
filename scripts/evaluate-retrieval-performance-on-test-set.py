@@ -583,11 +583,8 @@ def main():
 
         output_data = {"summary": summary_now, "results": json_results}
         os.makedirs(os.path.dirname(output_path) or ".", exist_ok=True)
-        # Write to temp file first, then rename for atomicity
-        tmp_path = output_path + ".tmp"
-        with open(tmp_path, "w", encoding="utf-8") as f:
+        with open(output_path, "w", encoding="utf-8") as f:
             json.dump(output_data, f, ensure_ascii=False, indent=2)
-        os.replace(tmp_path, output_path)
 
     def process_single_question(task_data: dict) -> dict:
         """Process a single question with retry on rate limit."""

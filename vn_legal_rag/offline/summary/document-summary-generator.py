@@ -128,7 +128,7 @@ class DocumentSummaryCheckpoint:
         temp_path = self.checkpoint_path.with_suffix(".tmp")
         with open(temp_path, "w", encoding="utf-8") as f:
             json.dump(data, f, ensure_ascii=False, indent=2)
-        temp_path.rename(self.checkpoint_path)
+        temp_path.replace(self.checkpoint_path)
 
     def add_summary(self, summary: DocumentSummary) -> None:
         """Add summary and save checkpoint."""

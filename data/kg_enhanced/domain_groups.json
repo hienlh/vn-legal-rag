@@ -1,0 +1,73 @@
+{
+  "domain_groups": {
+    "59-2020-QH14": {
+      "label": "Luật Doanh nghiệp 2020 số 59/2020/QH14 áp dụng 2025",
+      "anchor_doc_id": "59-2020-QH14",
+      "domain_keywords": [
+        "doanh nghiệp nhà nước",
+        "tên doanh nghiệp",
+        "100% vốn điều lệ",
+        "tiền thưởng",
+        "điều kiện thành lập",
+        "Tổ chức chính trị",
+        "doanh nghiệp",
+        "Doanh nghiệp trực tiếp phục vụ quốc phòng",
+        "chủ sở hữu hưởng lợi",
+        "mã số doanh nghiệp",
+        "thù lao kiểm soát viên",
+        "Quản lý lao động",
+        "tiền lương",
+        "không cung cấp **nội dung**. Để phân tích đúng",
+        "Chuyển đổi công ty nhà nước"
+      ],
+      "documents": [
+        "59-2020-QH14",
+        "01-2021-ND",
+        "47-2021-ND",
+        "23-2022-ND",
+        "16-2023-ND",
+        "89-2024-ND",
+        "44-2025-ND",
+        "168-2025-ND",
+        "248-2025-ND"
+      ],
+      "doc_count": 9
+    },
+    "36-2024-QH15": {
+      "label": "Luật trật tự, an toàn giao thông đường bộ số 36/2024/QH15 áp dụng năm 2025",
+      "anchor_doc_id": "36-2024-QH15",
+      "domain_keywords": [
+        "chính sách Nhà nước",
+        "biện pháp khắc phục hậu quả",
+        "Nghị định 168/2024",
+        "hợp tác quốc tế",
+        "Luật trật tự an toàn giao thông đường bộ",
+        "xử phạt vi phạm hành chính",
+        "tuyên truyền phổ biến",
+        "nguyên tắc bảo đảm",
+        "nguyên tắc áp dụng",
+        "giao thông đường bộ",
+        "chứng chỉ hành nghề",
+        "hành vi bị cấm",
+        "giao thông đường sắt",
+        "hình thức xử phạt",
+        "Nghị định 100/2019"
+      ],
+      "documents": [
+        "36-2024-QH15",
+        "168-2024-ND-CP",
+        "100-2019-ND-CP"
+      ],
+      "doc_count": 3
+    },
+    "other": {
+      "label": "Khác",
+      "anchor_doc_id": null,
+      "domain_keywords": [],
+      "documents": [
+        "65-2022-ND"
+      ],
+      "doc_count": 1
+    }
+  }
+}

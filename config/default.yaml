@@ -5,7 +5,7 @@ domain: "legal"
 llm:
   provider: "anthropic"  # openai, anthropic, gemini
   model: "claude-sonnet-4-20250514"
-  base_url: "http://localhost:3210/proxy"  # PPM proxy
+  base_url: "http://localhost:3333/proxy"  # PPM proxy (local)
   use_cache: true
   cache_db: "data/llm_cache.db"
 
