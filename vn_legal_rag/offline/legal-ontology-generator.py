@@ -35,7 +35,13 @@ Từ danh sách entities và relations được cung cấp, hãy tạo ontology 
 3. **Quy tắc**:
    - Tên class/property bằng tiếng Anh (chuẩn OWL)
    - Label và comment bằng tiếng Việt
-   - Hierarchy không quá 4 cấp
+   - BẮT BUỘC xây dựng phân cấp ĐÚNG 4 CẤP (taxonomy 4 tầng), KHÔNG nông hơn:
+     * Cấp 1: lớp gốc duy nhất "Thing" (Sự vật) — TẤT CẢ class khác kế thừa trực tiếp/gián tiếp từ đây
+     * Cấp 2: các nhóm trừu tượng lớn (VD: LegalEntity, LegalDocument, LegalConcept, LegalAct, Sanction, QuantitativeValue)
+     * Cấp 3: phân loại trung gian (VD: Organization, PersonRole, NormativeDocument, LegalProcedure, AdministrativePenalty, MonetaryValue)
+     * Cấp 4: lớp cụ thể (VD: GovernmentAgency, BusinessEntity, Law, Decree, Charter)
+   - Mỗi class cấp 2/3/4 phải có parent thuộc cấp ngay trên nó (cấp 2 parent="Thing", cấp 3 parent là class cấp 2, cấp 4 parent là class cấp 3)
+   - Tạo khoảng 14-20 class, có ít nhất vài nhánh đạt đủ cấp 4
    - Tránh tạo class quá cụ thể (overfitting)
 
 OUTPUT JSON:
