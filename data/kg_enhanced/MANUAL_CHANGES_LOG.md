@@ -95,6 +95,20 @@ merged via --stt-list/--merge-with.
 4. STT 279 ("tư vấn quản trị nội bộ") is a vague query expecting ~50 governance
    articles — effectively unanswerable, ~1 permanent miss.
 
+### Change 8: Regenerate ontology.json (2026-06-15)
+**Files:** `data/kg_enhanced/ontology.json` (regenerated), `vn_legal_rag/offline/legal-ontology-generator.py` (fix), `scripts/regenerate-ontology-from-kg.py` (new)
+**What:** Original ontology.json was lost with WSL (git had stale versions: 552d3e9=12cls,
+ea4b386=10cls, 4ce3223=30cls — none matched thesis "14 types/4 levels"). Regenerated
+fresh from legal_kg.json via LLM (Sonnet 4): **25 classes, depth 3, 54 properties**,
+English PascalCase + Vietnamese labels, OWL hierarchy.
+**Generator fixes:** (1) wired `generate_json` (provider had no `generate_structured`);
+(2) raised max_tokens 2000→8000 (full ontology JSON was truncating mid-output);
+(3) script passes cache_db=None (provider ignores use_cache flag, was returning stale
+cached failure).
+**Note:** Ontology is the conceptual layer (entity classes) — NOT used at query time
+(ontology_expansion is a placeholder), so does not affect benchmark. Class count 25 vs
+thesis's 14 differs due to LLM non-determinism; the exact paper version is unrecoverable.
+
 ## Pending Changes
 - KG relationships (currently 0): Need to add entity-to-entity relationships for PPR propagation
 - Ranking weight tuning: dual_level weights may need adjustment

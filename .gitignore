@@ -10,6 +10,7 @@ data/kg_enhanced/*
 !data/kg_enhanced/chapter_summaries.json
 !data/kg_enhanced/document_summaries.json
 !data/kg_enhanced/domain_groups.json
+!data/kg_enhanced/ontology.json
 !data/kg_enhanced/MANUAL_CHANGES_LOG.md
 data/kg_enhanced/*checkpoint*.json
 data/benchmark/*

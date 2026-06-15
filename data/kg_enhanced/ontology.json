@@ -1,0 +1,890 @@
+{
+  "base_uri": "https://hienle.tech/legal/ontology#",
+  "classes": [
+    {
+      "name": "Thing",
+      "label": "Sự vật",
+      "parent": null,
+      "description": "Lớp gốc của ontology",
+      "uri": "https://hienle.tech/legal/ontology#Thing"
+    },
+    {
+      "name": "LegalEntity",
+      "label": "Thực thể pháp lý",
+      "parent": null,
+      "description": "Lớp trừu tượng gốc: mọi chủ thể tham gia quan hệ pháp luật",
+      "uri": "https://hienle.tech/legal/ontology#LegalEntity"
+    },
+    {
+      "name": "Organization",
+      "label": "Tổ chức",
+      "parent": "LegalEntity",
+      "description": "Tổ chức, cơ quan, doanh nghiệp có tư cách pháp lý",
+      "uri": "https://hienle.tech/legal/ontology#Organization"
+    },
+    {
+      "name": "GovernmentAgency",
+      "label": "Cơ quan nhà nước",
+      "parent": "Organization",
+      "description": "Cơ quan công quyền có thẩm quyền ban hành, thực thi pháp luật (VD: Cơ quan đăng ký kinh doanh, Bộ, UBND)",
+      "uri": "https://hienle.tech/legal/ontology#GovernmentAgency"
+    },
+    {
+      "name": "BusinessEntity",
+      "label": "Tổ chức kinh doanh",
+      "parent": "Organization",
+      "description": "Doanh nghiệp, hộ kinh doanh, chi nhánh, tổ chức hoạt động kinh tế",
+      "uri": "https://hienle.tech/legal/ontology#BusinessEntity"
+    },
+    {
+      "name": "PersonRole",
+      "label": "Vai trò / Chức danh",
+      "parent": "LegalEntity",
+      "description": "Chức danh, vai trò pháp lý của cá nhân trong tổ chức hoặc quan hệ pháp luật (VD: Kiểm soát viên, Chủ tịch công ty, người đại diện theo pháp luật)",
+      "uri": "https://hienle.tech/legal/ontology#PersonRole"
+    },
+    {
+      "name": "LegalDocument",
+      "label": "Văn bản pháp lý",
+      "parent": null,
+      "description": "Lớp trừu tượng gốc: mọi loại văn bản có giá trị pháp lý",
+      "uri": "https://hienle.tech/legal/ontology#LegalDocument"
+    },
+    {
+      "name": "NormativeDocument",
+      "label": "Văn bản quy phạm pháp luật",
+      "parent": "LegalDocument",
+      "description": "Luật, nghị định, thông tư, quyết định mang tính quy phạm chung",
+      "uri": "https://hienle.tech/legal/ontology#NormativeDocument"
+    },
+    {
+      "name": "AdministrativeDocument",
+      "label": "Văn bản hành chính / Hồ sơ",
+      "parent": "LegalDocument",
+      "description": "Giấy tờ, hồ sơ, tài liệu pháp lý cụ thể phát sinh trong quá trình thực thi (VD: Điều lệ công ty, Giấy tờ pháp lý cá nhân)",
+      "uri": "https://hienle.tech/legal/ontology#AdministrativeDocument"
+    },
+    {
+      "name": "LegalConcept",
+      "label": "Khái niệm pháp lý",
+      "parent": null,
+      "description": "Lớp trừu tượng gốc: thuật ngữ, khái niệm, phạm trù được sử dụng trong văn bản pháp luật",
+      "uri": "https://hienle.tech/legal/ontology#LegalConcept"
+    },
+    {
+      "name": "LegalTerm",
+      "label": "Thuật ngữ pháp lý",
+      "parent": "LegalConcept",
+      "description": "Khái niệm chuyên ngành được định nghĩa trong văn bản pháp luật (VD: doanh nghiệp, hộ kinh doanh, vốn điều lệ)",
+      "uri": "https://hienle.tech/legal/ontology#LegalTerm"
+    },
+    {
+      "name": "LegalCondition",
+      "label": "Điều kiện pháp lý",
+      "parent": "LegalConcept",
+      "description": "Điều kiện, tiêu chuẩn cần đáp ứng hoặc hoàn cảnh làm phát sinh hiệu lực pháp luật (VD: mất khả năng thanh toán, điều kiện đảm bảo kết nối)",
+      "uri": "https://hienle.tech/legal/ontology#LegalCondition"
+    },
+    {
+      "name": "LegalSector",
+      "label": "Lĩnh vực pháp luật",
+      "parent": "LegalConcept",
+      "description": "Ngành, lĩnh vực mà văn bản pháp luật điều chỉnh (VD: Giao thông đường bộ, Doanh nghiệp)",
+      "uri": "https://hienle.tech/legal/ontology#LegalSector"
+    },
+    {
+      "name": "LegalAct",
+      "label": "Hành vi pháp lý",
+      "parent": null,
+      "description": "Lớp trừu tượng gốc: hành vi, thủ tục, hoạt động được pháp luật điều chỉnh",
+      "uri": "https://hienle.tech/legal/ontology#LegalAct"
+    },
+    {
+      "name": "LegalProcedure",
+      "label": "Thủ tục pháp lý / Hành chính",
+      "parent": "LegalAct",
+      "description": "Quy trình, thủ tục cần thực hiện theo quy định (VD: thủ tục đăng ký doanh nghiệp, góp vốn)",
+      "uri": "https://hienle.tech/legal/ontology#LegalProcedure"
+    },
+    {
+      "name": "ProhibitedAct",
+      "label": "Hành vi bị cấm / Vi phạm",
+      "parent": "LegalAct",
+      "description": "Hành vi pháp luật cấm hoặc hạn chế, có thể dẫn đến chế tài",
+      "uri": "https://hienle.tech/legal/ontology#ProhibitedAct"
+    },
+    {
+      "name": "PermittedAct",
+      "label": "Hành vi được phép / Quyền năng",
+      "parent": "LegalAct",
+      "description": "Hành vi được pháp luật cho phép hoặc công nhận",
+      "uri": "https://hienle.tech/legal/ontology#PermittedAct"
+    },
+    {
+      "name": "Sanction",
+      "label": "Chế tài pháp lý",
+      "parent": null,
+      "description": "Lớp trừu tượng gốc: hình thức xử lý vi phạm, biện pháp cưỡng chế theo pháp luật",
+      "uri": "https://hienle.tech/legal/ontology#Sanction"
+    },
+    {
+      "name": "AdministrativePenalty",
+      "label": "Hình thức xử phạt hành chính",
+      "parent": "Sanction",
+      "description": "Mức phạt tiền, cảnh cáo, đình chỉ hoạt động và hình thức xử phạt hành chính khác",
+      "uri": "https://hienle.tech/legal/ontology#AdministrativePenalty"
+    },
+    {
+      "name": "RemediationMeasure",
+      "label": "Biện pháp khắc phục hậu quả",
+      "parent": "Sanction",
+      "description": "Biện pháp buộc khắc phục hậu quả, hoàn trả lợi ích bất hợp pháp",
+      "uri": "https://hienle.tech/legal/ontology#RemediationMeasure"
+    },
+    {
+      "name": "QuantitativeValue",
+      "label": "Giá trị định lượng",
+      "parent": null,
+      "description": "Lớp trừu tượng gốc: các giá trị số, đo lường xuất hiện trong văn bản pháp luật",
+      "uri": "https://hienle.tech/legal/ontology#QuantitativeValue"
+    },
+    {
+      "name": "MonetaryValue",
+      "label": "Giá trị tiền tệ",
+      "parent": "QuantitativeValue",
+      "description": "Khoản tiền, ngân sách, mức phạt tiền (VD: 100 tỷ đồng, ngân sách nhà nước, 200.000–400.000 đồng)",
+      "uri": "https://hienle.tech/legal/ontology#MonetaryValue"
+    },
+    {
+      "name": "Ratio",
+      "label": "Tỷ lệ / Ngưỡng định lượng",
+      "parent": "QuantitativeValue",
+      "description": "Tỷ lệ phần trăm, nồng độ, tốc độ hoặc ngưỡng kỹ thuật trong quy định (VD: 50% vốn điều lệ, 0,25 mg/lít khí thở, trên 35 km/h)",
+      "uri": "https://hienle.tech/legal/ontology#Ratio"
+    },
+    {
+      "name": "TimeLimit",
+      "label": "Thời hạn / Thời gian",
+      "parent": "QuantitativeValue",
+      "description": "Thời hạn, khoảng thời gian hoặc mốc thời gian theo quy định (VD: 10 ngày làm việc, 30 tháng 6 năm sau)",
+      "uri": "https://hienle.tech/legal/ontology#TimeLimit"
+    },
+    {
+      "name": "Asset",
+      "label": "Tài sản",
+      "parent": null,
+      "description": "Tài sản, tài nguyên, tài sản vô hình có giá trị kinh tế và pháp lý (VD: vàng, bí quyết kỹ thuật, công nghệ)",
+      "uri": "https://hienle.tech/legal/ontology#Asset"
+    }
+  ],
+  "properties": [
+    {
+      "name": "requires",
+      "label": "yêu cầu",
+      "type": "object",
+      "domain": [
+        "NormativeDocument"
+      ],
+      "range": [
+        "LegalCondition"
+      ],
+      "description": "Chủ thể/quy định đặt ra yêu cầu với đối tượng khác",
+      "uri": "https://hienle.tech/legal/ontology#requires"
+    },
+    {
+      "name": "appliesTo",
+      "label": "áp dụng cho",
+      "type": "object",
+      "domain": [
+        "NormativeDocument"
+      ],
+      "range": [
+        "Organization"
+      ],
+      "description": "Văn bản/quy định áp dụng cho đối tượng cụ thể",
+      "uri": "https://hienle.tech/legal/ontology#appliesTo"
+    },
+    {
+      "name": "hasRight",
+      "label": "có quyền",
+      "type": "object",
+      "domain": [
+        "Organization"
+      ],
+      "range": [
+        "LegalAct"
+      ],
+      "description": "Chủ thể được pháp luật trao quyền thực hiện hành vi",
+      "uri": "https://hienle.tech/legal/ontology#hasRight"
+    },
+    {
+      "name": "references",
+      "label": "tham chiếu đến",
+      "type": "object",
+      "domain": [
+        "LegalDocument"
+      ],
+      "range": [
+        "LegalDocument"
+      ],
+      "description": "Văn bản/điều khoản dẫn chiếu đến văn bản khác",
+      "uri": "https://hienle.tech/legal/ontology#references"
+    },
+    {
+      "name": "hasCondition",
+      "label": "có điều kiện",
+      "type": "object",
+      "domain": [
+        "LegalAct"
+      ],
+      "range": [
+        "LegalCondition"
+      ],
+      "description": "Hành vi/quy định chỉ phát sinh hiệu lực khi thỏa mãn điều kiện",
+      "uri": "https://hienle.tech/legal/ontology#hasCondition"
+    },
+    {
+      "name": "includes",
+      "label": "bao gồm",
+      "type": "object",
+      "domain": [
+        "LegalConcept"
+      ],
+      "range": [
+        "LegalConcept"
+      ],
+      "description": "Quan hệ bao hàm, liệt kê thành phần con",
+      "uri": "https://hienle.tech/legal/ontology#includes"
+    },
+    {
+      "name": "hasObligation",
+      "label": "có nghĩa vụ",
+      "type": "object",
+      "domain": [
+        "Organization"
+      ],
+      "range": [
+        "LegalAct"
+      ],
+      "description": "Chủ thể bị pháp luật buộc phải thực hiện hành vi",
+      "uri": "https://hienle.tech/legal/ontology#hasObligation"
+    },
+    {
+      "name": "belongsTo",
+      "label": "thuộc về",
+      "type": "object",
+      "domain": [
+        "PersonRole"
+      ],
+      "range": [
+        "Organization"
+      ],
+      "description": "Quan hệ sở hữu, thành viên hoặc phân loại phân cấp",
+      "uri": "https://hienle.tech/legal/ontology#belongsTo"
+    },
+    {
+      "name": "relatedTo",
+      "label": "liên quan đến",
+      "type": "object",
+      "domain": [
+        "LegalConcept"
+      ],
+      "range": [
+        "LegalConcept"
+      ],
+      "description": "Quan hệ liên quan chung, chưa xác định cụ thể chiều hướng",
+      "uri": "https://hienle.tech/legal/ontology#relatedTo"
+    },
+    {
+      "name": "hasAuthority",
+      "label": "có thẩm quyền",
+      "type": "object",
+      "domain": [
+        "Organization"
+      ],
+      "range": [
+        "LegalAct"
+      ],
+      "description": "Cơ quan/chức danh được trao thẩm quyền thực hiện hành vi pháp lý",
+      "uri": "https://hienle.tech/legal/ontology#hasAuthority"
+    },
+    {
+      "name": "hasTimeLimit",
+      "label": "có thời hạn",
+      "type": "object",
+      "domain": [
+        "LegalAct"
+      ],
+      "range": [
+        "TimeLimit"
+      ],
+      "description": "Hành vi/thủ tục bị ràng buộc bởi thời hạn cụ thể",
+      "uri": "https://hienle.tech/legal/ontology#hasTimeLimit"
+    },
+    {
+      "name": "manages",
+      "label": "quản lý",
+      "type": "object",
+      "domain": [
+        "GovernmentAgency"
+      ],
+      "range": [
+        "Organization"
+      ],
+      "description": "Tổ chức thực hiện chức năng quản lý nhà nước hoặc quản trị nội bộ",
+      "uri": "https://hienle.tech/legal/ontology#manages"
+    },
+    {
+      "name": "hasSanction",
+      "label": "có chế tài",
+      "type": "object",
+      "domain": [
+        "ProhibitedAct"
+      ],
+      "range": [
+        "Sanction"
+      ],
+      "description": "Hành vi vi phạm kéo theo chế tài pháp lý",
+      "uri": "https://hienle.tech/legal/ontology#hasSanction"
+    },
+    {
+      "name": "recognizes",
+      "label": "công nhận",
+      "type": "object",
+      "domain": [
+        "GovernmentAgency"
+      ],
+      "range": [
+        "Organization"
+      ],
+      "description": "Cơ quan nhà nước chính thức công nhận tư cách, quyền lợi hoặc khái niệm",
+      "uri": "https://hienle.tech/legal/ontology#recognizes"
+    },
+    {
+      "name": "defines",
+      "label": "định nghĩa",
+      "type": "object",
+      "domain": [
+        "NormativeDocument"
+      ],
+      "range": [
+        "LegalTerm"
+      ],
+      "description": "Văn bản quy phạm cung cấp định nghĩa chính thức cho thuật ngữ",
+      "uri": "https://hienle.tech/legal/ontology#defines"
+    },
+    {
+      "name": "prohibits",
+      "label": "cấm",
+      "type": "object",
+      "domain": [
+        "NormativeDocument"
+      ],
+      "range": [
+        "ProhibitedAct"
+      ],
+      "description": "Văn bản/cơ quan cấm thực hiện hành vi nhất định",
+      "uri": "https://hienle.tech/legal/ontology#prohibits"
+    },
+    {
+      "name": "guarantees",
+      "label": "bảo đảm",
+      "type": "object",
+      "domain": [
+        "Organization"
+      ],
+      "range": [
+        "LegalConcept"
+      ],
+      "description": "Chủ thể cam kết hoặc có trách nhiệm đảm bảo điều kiện/quyền lợi",
+      "uri": "https://hienle.tech/legal/ontology#guarantees"
+    },
+    {
+      "name": "delegates",
+      "label": "ủy quyền",
+      "type": "object",
+      "domain": [
+        "Organization"
+      ],
+      "range": [
+        "Organization"
+      ],
+      "description": "Chủ thể chuyển giao quyền hạn cho chủ thể khác thực hiện",
+      "uri": "https://hienle.tech/legal/ontology#delegates"
+    },
+    {
+      "name": "leadsTo",
+      "label": "dẫn đến",
+      "type": "object",
+      "domain": [
+        "ProhibitedAct"
+      ],
+      "range": [
+        "Sanction"
+      ],
+      "description": "Hành vi/điều kiện vi phạm dẫn đến hệ quả pháp lý",
+      "uri": "https://hienle.tech/legal/ontology#leadsTo"
+    },
+    {
+      "name": "issues",
+      "label": "cấp / cấp phép",
+      "type": "object",
+      "domain": [
+        "GovernmentAgency"
+      ],
+      "range": [
+        "LegalDocument"
+      ],
+      "description": "Cơ quan nhà nước cấp văn bản, giấy phép, quyết định",
+      "uri": "https://hienle.tech/legal/ontology#issues"
+    },
+    {
+      "name": "allows",
+      "label": "cho phép",
+      "type": "object",
+      "domain": [
+        "NormativeDocument"
+      ],
+      "range": [
+        "PermittedAct"
+      ],
+      "description": "Văn bản/cơ quan cho phép thực hiện hành vi hoặc hoạt động",
+      "uri": "https://hienle.tech/legal/ontology#allows"
+    },
+    {
+      "name": "promulgates",
+      "label": "ban hành",
+      "type": "object",
+      "domain": [
+        "GovernmentAgency"
+      ],
+      "range": [
+        "NormativeDocument"
+      ],
+      "description": "Cơ quan có thẩm quyền ban hành văn bản quy phạm pháp luật",
+      "uri": "https://hienle.tech/legal/ontology#promulgates"
+    },
+    {
+      "name": "replaces",
+      "label": "thay thế",
+      "type": "object",
+      "domain": [
+        "NormativeDocument"
+      ],
+      "range": [
+        "NormativeDocument"
+      ],
+      "description": "Văn bản mới thay thế toàn bộ hoặc một phần văn bản cũ",
+      "uri": "https://hienle.tech/legal/ontology#replaces"
+    },
+    {
+      "name": "amends",
+      "label": "sửa đổi / điều chỉnh",
+      "type": "object",
+      "domain": [
+        "NormativeDocument"
+      ],
+      "range": [
+        "NormativeDocument"
+      ],
+      "description": "Văn bản bổ sung, sửa đổi nội dung văn bản khác",
+      "uri": "https://hienle.tech/legal/ontology#amends"
+    },
+    {
+      "name": "inherits",
+      "label": "kế thừa",
+      "type": "object",
+      "domain": [
+        "Organization"
+      ],
+      "range": [
+        "Organization"
+      ],
+      "description": "Tổ chức/văn bản kế thừa quyền, nghĩa vụ hoặc hiệu lực từ tiền nhiệm",
+      "uri": "https://hienle.tech/legal/ontology#inherits"
+    },
+    {
+      "name": "takesEffect",
+      "label": "có hiệu lực",
+      "type": "object",
+      "domain": [
+        "NormativeDocument"
+      ],
+      "range": [
+        "NormativeDocument"
+      ],
+      "description": "Văn bản bắt đầu có hiệu lực pháp lý",
+      "uri": "https://hienle.tech/legal/ontology#takesEffect"
+    },
+    {
+      "name": "expires",
+      "label": "hết hiệu lực",
+      "type": "object",
+      "domain": [
+        "NormativeDocument"
+      ],
+      "range": [
+        "NormativeDocument"
+      ],
+      "description": "Văn bản chấm dứt hiệu lực pháp lý",
+      "uri": "https://hienle.tech/legal/ontology#expires"
+    },
+    {
+      "name": "hasException",
+      "label": "có ngoại lệ",
+      "type": "object",
+      "domain": [
+        "LegalAct"
+      ],
+      "range": [
+        "LegalCondition"
+      ],
+      "description": "Quy định/hành vi có trường hợp ngoại lệ không áp dụng",
+      "uri": "https://hienle.tech/legal/ontology#hasException"
+    },
+    {
+      "name": "revokes",
+      "label": "thu hồi",
+      "type": "object",
+      "domain": [
+        "GovernmentAgency"
+      ],
+      "range": [
+        "LegalDocument"
+      ],
+      "description": "Cơ quan nhà nước rút lại văn bản, quyết định, giấy phép đã cấp",
+      "uri": "https://hienle.tech/legal/ontology#revokes"
+    },
+    {
+      "name": "penalizes",
+      "label": "xử phạt",
+      "type": "object",
+      "domain": [
+        "GovernmentAgency"
+      ],
+      "range": [
+        "Organization"
+      ],
+      "description": "Cơ quan nhà nước áp dụng chế tài đối với tổ chức/cá nhân vi phạm",
+      "uri": "https://hienle.tech/legal/ontology#penalizes"
+    },
+    {
+      "name": "subjectToSanction",
+      "label": "chịu chế tài",
+      "type": "object",
+      "domain": [
+        "Organization"
+      ],
+      "range": [
+        "Sanction"
+      ],
+      "description": "Tổ chức/hành vi phải chịu chế tài pháp lý",
+      "uri": "https://hienle.tech/legal/ontology#subjectToSanction"
+    },
+    {
+      "name": "regulates",
+      "label": "quy định / điều chỉnh",
+      "type": "object",
+      "domain": [
+        "NormativeDocument"
+      ],
+      "range": [
+        "LegalAct"
+      ],
+      "description": "Văn bản quy phạm đặt ra quy tắc cho đối tượng, hành vi",
+      "uri": "https://hienle.tech/legal/ontology#regulates"
+    },
+    {
+      "name": "hasRatio",
+      "label": "có tỷ lệ / ngưỡng",
+      "type": "object",
+      "domain": [
+        "LegalConcept"
+      ],
+      "range": [
+        "Ratio"
+      ],
+      "description": "Quy định gắn với tỷ lệ hoặc ngưỡng định lượng cụ thể",
+      "uri": "https://hienle.tech/legal/ontology#hasRatio"
+    },
+    {
+      "name": "hasMonetaryValue",
+      "label": "có giá trị tiền tệ",
+      "type": "object",
+      "domain": [
+        "Sanction"
+      ],
+      "range": [
+        "MonetaryValue"
+      ],
+      "description": "Chế tài, tài sản hoặc hoạt động gắn với giá trị tiền tệ",
+      "uri": "https://hienle.tech/legal/ontology#hasMonetaryValue"
+    },
+    {
+      "name": "reportsTo",
+      "label": "báo cáo đến",
+      "type": "object",
+      "domain": [
+        "Organization"
+      ],
+      "range": [
+        "GovernmentAgency"
+      ],
+      "description": "Tổ chức có nghĩa vụ báo cáo với cơ quan cấp trên hoặc giám sát",
+      "uri": "https://hienle.tech/legal/ontology#reportsTo"
+    },
+    {
+      "name": "sendsTo",
+      "label": "gửi đến",
+      "type": "object",
+      "domain": [
+        "Organization"
+      ],
+      "range": [
+        "Organization"
+      ],
+      "description": "Tổ chức gửi văn bản, thông báo đến chủ thể khác",
+      "uri": "https://hienle.tech/legal/ontology#sendsTo"
+    },
+    {
+      "name": "uses",
+      "label": "sử dụng",
+      "type": "object",
+      "domain": [
+        "Organization"
+      ],
+      "range": [
+        "Asset"
+      ],
+      "description": "Tổ chức/cá nhân sử dụng tài sản hoặc nguồn lực",
+      "uri": "https://hienle.tech/legal/ontology#uses"
+    },
+    {
+      "name": "isTypeOf",
+      "label": "là loại của",
+      "type": "object",
+      "domain": [
+        "LegalConcept"
+      ],
+      "range": [
+        "LegalConcept"
+      ],
+      "description": "Quan hệ phân loại: cá thể thuộc một loại khái niệm cụ thể",
+      "uri": "https://hienle.tech/legal/ontology#isTypeOf"
+    },
+    {
+      "name": "hasResponsibility",
+      "label": "có trách nhiệm",
+      "type": "object",
+      "domain": [
+        "Organization"
+      ],
+      "range": [
+        "LegalAct"
+      ],
+      "description": "Chủ thể chịu trách nhiệm pháp lý về một vấn đề cụ thể",
+      "uri": "https://hienle.tech/legal/ontology#hasResponsibility"
+    },
+    {
+      "name": "hasLegalName",
+      "label": "tên pháp lý",
+      "type": "data",
+      "domain": [
+        "LegalEntity"
+      ],
+      "range": [
+        "xsd:string"
+      ],
+      "description": "",
+      "uri": "https://hienle.tech/legal/ontology#hasLegalName"
+    },
+    {
+      "name": "hasDocumentNumber",
+      "label": "số hiệu văn bản",
+      "type": "data",
+      "domain": [
+        "NormativeDocument"
+      ],
+      "range": [
+        "xsd:string"
+      ],
+      "description": "Số ký hiệu của văn bản quy phạm (VD: 47/2021/NĐ-CP)",
+      "uri": "https://hienle.tech/legal/ontology#hasDocumentNumber"
+    },
+    {
+      "name": "hasIssuedDate",
+      "label": "ngày ban hành",
+      "type": "data",
+      "domain": [
+        "LegalDocument"
+      ],
+      "range": [
+        "xsd:date"
+      ],
+      "description": "",
+      "uri": "https://hienle.tech/legal/ontology#hasIssuedDate"
+    },
+    {
+      "name": "hasEffectiveDate",
+      "label": "ngày có hiệu lực",
+      "type": "data",
+      "domain": [
+        "NormativeDocument"
+      ],
+      "range": [
+        "xsd:date"
+      ],
+      "description": "",
+      "uri": "https://hienle.tech/legal/ontology#hasEffectiveDate"
+    },
+    {
+      "name": "hasExpirationDate",
+      "label": "ngày hết hiệu lực",
+      "type": "data",
+      "domain": [
+        "NormativeDocument"
+      ],
+      "range": [
+        "xsd:date"
+      ],
+      "description": "",
+      "uri": "https://hienle.tech/legal/ontology#hasExpirationDate"
+    },
+    {
+      "name": "hasMinAmount",
+      "label": "mức tiền tối thiểu (VNĐ)",
+      "type": "data",
+      "domain": [
+        "MonetaryValue"
+      ],
+      "range": [
+        "xsd:decimal"
+      ],
+      "description": "",
+      "uri": "https://hienle.tech/legal/ontology#hasMinAmount"
+    },
+    {
+      "name": "hasMaxAmount",
+      "label": "mức tiền tối đa (VNĐ)",
+      "type": "data",
+      "domain": [
+        "MonetaryValue"
+      ],
+      "range": [
+        "xsd:decimal"
+      ],
+      "description": "",
+      "uri": "https://hienle.tech/legal/ontology#hasMaxAmount"
+    },
+    {
+      "name": "hasPercentageValue",
+      "label": "giá trị tỷ lệ (%)",
+      "type": "data",
+      "domain": [
+        "Ratio"
+      ],
+      "range": [
+        "xsd:decimal"
+      ],
+      "description": "",
+      "uri": "https://hienle.tech/legal/ontology#hasPercentageValue"
+    },
+    {
+      "name": "hasThresholdValue",
+      "label": "giá trị ngưỡng kỹ thuật",
+      "type": "data",
+      "domain": [
+        "Ratio"
+      ],
+      "range": [
+        "xsd:string"
+      ],
+      "description": "Ngưỡng đo lường phi tiền tệ: tốc độ, nồng độ (VD: 0,25 mg/lít, 35 km/h)",
+      "uri": "https://hienle.tech/legal/ontology#hasThresholdValue"
+    },
+    {
+      "name": "hasDurationText",
+      "label": "nội dung thời hạn",
+      "type": "data",
+      "domain": [
+        "TimeLimit"
+      ],
+      "range": [
+        "xsd:string"
+      ],
+      "description": "Biểu diễn thời hạn dạng text khi không thể chuẩn hóa xsd:duration (VD: '10 ngày làm việc')",
+      "uri": "https://hienle.tech/legal/ontology#hasDurationText"
+    },
+    {
+      "name": "hasDescription",
+      "label": "mô tả / nội dung",
+      "type": "data",
+      "domain": [
+        "LegalConcept"
+      ],
+      "range": [
+        "xsd:string"
+      ],
+      "description": "",
+      "uri": "https://hienle.tech/legal/ontology#hasDescription"
+    },
+    {
+      "name": "hasArticleReference",
+      "label": "điều khoản tham chiếu",
+      "type": "data",
+      "domain": [
+        "LegalDocument"
+      ],
+      "range": [
+        "xsd:string"
+      ],
+      "description": "Số điều, khoản, điểm được viện dẫn (VD: 'Điều 17, khoản 2')",
+      "uri": "https://hienle.tech/legal/ontology#hasArticleReference"
+    },
+    {
+      "name": "hasConfidence",
+      "label": "Độ tin cậy",
+      "type": "data",
+      "domain": [
+        "Thing"
+      ],
+      "range": [
+        "xsd:decimal"
+      ],
+      "description": "",
+      "uri": "https://hienle.tech/legal/ontology#hasConfidence"
+    },
+    {
+      "name": "hasText",
+      "label": "Nội dung",
+      "type": "data",
+      "domain": [
+        "Thing"
+      ],
+      "range": [
+        "xsd:string"
+      ],
+      "description": "",
+      "uri": "https://hienle.tech/legal/ontology#hasText"
+    },
+    {
+      "name": "hasSourceId",
+      "label": "ID nguồn",
+      "type": "data",
+      "domain": [
+        "Thing"
+      ],
+      "range": [
+        "xsd:string"
+      ],
+      "description": "",
+      "uri": "https://hienle.tech/legal/ontology#hasSourceId"
+    }
+  ],
+  "metadata": {
+    "name": "VietnameseLegalOntology",
+    "generated_with": "llm",
+    "num_classes": 25,
+    "num_properties": 54
+  }
+}

@@ -316,11 +316,18 @@ Hãy tạo ontology phù hợp cho dữ liệu trên."""
         prompt = LEGAL_ONTOLOGY_PROMPT_VI + "\n\n" + text
 
         try:
-            result = self.llm_provider.generate_structured(
-                prompt,
-                model=self.llm_model,
-                temperature=0.2,
-            )
+            # Provider exposes generate_json (parses JSON from LLM); fall back to
+            # generate_structured if a provider implements that instead.
+            if hasattr(self.llm_provider, "generate_json"):
+                # max_tokens raised: full ontology JSON (~30 classes + properties)
+                # overflows the 2000-token default and truncates mid-JSON.
+                result = self.llm_provider.generate_json(
+                    prompt, temperature=0.2, max_tokens=8000
+                )
+            else:
+                result = self.llm_provider.generate_structured(
+                    prompt, model=self.llm_model, temperature=0.2
+                )
             return self._parse_llm_output(result, name)
         except Exception as e:
             logger.warning(f"LLM generation failed: {e}, falling back to rule-based")
